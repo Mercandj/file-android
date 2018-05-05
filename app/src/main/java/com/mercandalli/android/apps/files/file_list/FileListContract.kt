@@ -15,6 +15,8 @@ interface FileListContract {
         fun onRefresh()
 
         fun onPathChanged(path: String)
+
+        fun onPathSelected(path: String)
     }
 
     interface Screen {
@@ -34,5 +36,7 @@ interface FileListContract {
         fun showLoader()
 
         fun hideLoader()
+
+        fun selectPath(path: String)
     }
 }

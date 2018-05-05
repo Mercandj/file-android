@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.file_row
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -9,7 +10,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
-import com.mercandalli.android.apps.files.main.ApplicationGraph.Companion.init
 import com.mercandalli.sdk.files.api.File
 
 class FileRow @JvmOverloads constructor(
@@ -19,7 +19,7 @@ class FileRow @JvmOverloads constructor(
     private val userAction = FileRowPresenter(this)
     private val icon: ImageView
     private val title: TextView
-    private val arrayRight: View
+    private val arrayRight: ImageView
     private var fileClickListener: FileClickListener? = null
 
     init {
@@ -42,15 +42,30 @@ class FileRow @JvmOverloads constructor(
         if (directory) {
             icon.setImageResource(R.drawable.ic_folder_black_24dp)
             val color = ContextCompat.getColor(context, R.color.color_primary)
-            icon.setColorFilter(
-                    color,
-                    android.graphics.PorterDuff.Mode.SRC_IN)
+            icon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         } else {
             icon.setImageResource(R.drawable.ic_insert_drive_file_black_24dp)
-            icon.setColorFilter(
-                    Color.GRAY,
-                    android.graphics.PorterDuff.Mode.SRC_IN)
+            icon.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
+        }
+    }
 
+    override fun setRowSelected(selected: Boolean) {
+        if (selected) {
+            val selectedBackgroundColor = ContextCompat.getColor(
+                    context, R.color.view_file_row_selected_background)
+            setBackgroundColor(selectedBackgroundColor)
+            val selectedTitleColor = ContextCompat.getColor(
+                    context, R.color.view_file_row_selected_title)
+            title.setTextColor(selectedTitleColor)
+            icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+            arrayRight.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+        } else {
+            val backgroundColor = ContextCompat.getColor(
+                    context, R.color.view_file_row_background)
+            setBackgroundColor(backgroundColor)
+            val titleColor = ContextCompat.getColor(context, R.color.view_file_row_title)
+            title.setTextColor(titleColor)
+            arrayRight.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
         }
     }
 
@@ -58,8 +73,8 @@ class FileRow @JvmOverloads constructor(
         fileClickListener?.onFileClicked(file)
     }
 
-    fun setFile(file: File) {
-        userAction.onFileChanged(file)
+    fun setFile(file: File, selected: Boolean) {
+        userAction.onFileChanged(file, selected)
     }
 
     fun setFileClickListener(listener: FileClickListener?) {

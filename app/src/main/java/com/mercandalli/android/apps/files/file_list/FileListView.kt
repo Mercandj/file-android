@@ -12,8 +12,6 @@ import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_row.FileRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
-import com.mercandalli.android.apps.files.main.ApplicationGraph.Companion.init
-import com.mercandalli.android.apps.files.main.MainApplication
 import com.mercandalli.sdk.files.api.File
 
 class FileListView @JvmOverloads constructor(
@@ -85,6 +83,10 @@ class FileListView @JvmOverloads constructor(
         refresh.isRefreshing = true
     }
 
+    override fun selectPath(path: String) {
+        adapter.selectPath(path)
+    }
+
     override fun hideLoader() {
         refresh.isRefreshing = false
     }
@@ -99,6 +101,10 @@ class FileListView @JvmOverloads constructor(
 
     fun setFileClickListener(listener: FileRow.FileClickListener?) {
         fileClickListener = listener
+    }
+
+    fun onPathSelected(path: String) {
+        userAction.onPathSelected(path)
     }
 
     private fun createFileClickListener(): FileRow.FileClickListener {

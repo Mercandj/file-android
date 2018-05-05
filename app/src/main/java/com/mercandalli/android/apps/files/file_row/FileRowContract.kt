@@ -6,7 +6,7 @@ interface FileRowContract {
 
     interface UserAction {
 
-        fun onFileChanged(file: File)
+        fun onFileChanged(file: File, selected: Boolean)
 
         fun onRowClicked()
     }
@@ -18,6 +18,8 @@ interface FileRowContract {
         fun setArrowRightVisibility(visible: Boolean)
 
         fun setIcon(directory: Boolean)
+
+        fun setRowSelected(selected: Boolean)
 
         fun notifyRowClicked(file: File)
     }

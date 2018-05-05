@@ -18,5 +18,7 @@ interface FileHorizontalListsContract {
         fun setListsSize(size: Int)
 
         fun scrollEnd()
+
+        fun selectPath(path: String)
     }
 }

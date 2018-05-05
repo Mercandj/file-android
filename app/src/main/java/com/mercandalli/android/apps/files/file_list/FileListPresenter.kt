@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_list
 
+import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
 
@@ -34,6 +35,10 @@ class FileListPresenter(
         syncFileChildren()
     }
 
+    override fun onPathSelected(path: String) {
+        screen.selectPath(path)
+    }
+
     private fun syncFileChildren() {
         var fileChildrenResult = fileManager.getFileChildren(currentPath)
         if (fileChildrenResult.status == FileChildrenResult.UNLOADED ||
@@ -64,8 +69,11 @@ class FileListPresenter(
                     screen.showEmptyView()
                     screen.hideFiles()
                 } else {
+                    val filesSorted = files.sortedWith(compareBy({
+                        it.name
+                    }))
                     screen.hideEmptyView()
-                    screen.showFiles(files)
+                    screen.showFiles(filesSorted)
                 }
             }
         }

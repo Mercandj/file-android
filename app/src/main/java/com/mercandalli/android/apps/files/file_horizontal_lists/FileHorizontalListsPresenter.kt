@@ -18,12 +18,14 @@ class FileHorizontalListsPresenter(
         if (index == sizeLists - 1) {
             screen.createList(file.path, index + 1)
             screen.scrollEnd()
+            screen.selectPath(file.path)
             sizeLists++
             return
         }
         screen.setPath(file.path, index + 1)
         sizeLists = index + 2
         screen.setListsSize(index + 2)
+        screen.selectPath(file.path)
     }
 
 }

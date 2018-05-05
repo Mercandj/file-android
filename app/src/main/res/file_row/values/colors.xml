@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="view_file_row_background">#FFFFFF</color>
+    <color name="view_file_row_title">#444444</color>
+    <color name="view_file_row_selected_background">#03A9F4</color>
+    <color name="view_file_row_selected_title">@android:color/white</color>
+</resources>

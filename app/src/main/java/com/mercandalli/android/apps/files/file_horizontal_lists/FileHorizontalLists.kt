@@ -82,4 +82,10 @@ class FileHorizontalLists @JvmOverloads constructor(
             horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
         }, 100L)
     }
+
+    override fun selectPath(path: String) {
+        for (fileListView in fileListViews) {
+            fileListView.onPathSelected(path)
+        }
+    }
 }
