@@ -20,9 +20,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_space"
-        android:layout_marginEnd="@dimen/default_space_2"
+        android:layout_marginEnd="@dimen/default_space_3"
         android:layout_marginStart="@dimen/default_space_4"
         android:layout_marginTop="@dimen/default_space"
+        android:lines="1"
+        android:maxLines="1"
         android:textSize="@dimen/text_size_l_5"
         tools:text="@sample/files.json/data/title" />
 

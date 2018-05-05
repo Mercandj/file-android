@@ -20,12 +20,14 @@ class FileRow @JvmOverloads constructor(
     private val icon: ImageView
     private val title: TextView
     private val arrayRight: View
+    private var fileClickListener: FileClickListener? = null
 
     init {
         View.inflate(context, R.layout.view_file_row, this)
         icon = findViewById(R.id.view_file_row_icon)
         title = findViewById(R.id.view_file_row_title)
         arrayRight = findViewById(R.id.view_file_row_arrow_right)
+        setOnClickListener { userAction.onRowClicked() }
     }
 
     override fun setTitle(title: String) {
@@ -52,7 +54,19 @@ class FileRow @JvmOverloads constructor(
         }
     }
 
+    override fun notifyRowClicked(file: File) {
+        fileClickListener?.onFileClicked(file)
+    }
+
     fun setFile(file: File) {
         userAction.onFileChanged(file)
+    }
+
+    fun setFileClickListener(listener: FileClickListener?) {
+        fileClickListener = listener
+    }
+
+    interface FileClickListener {
+        fun onFileClicked(file: File)
     }
 }

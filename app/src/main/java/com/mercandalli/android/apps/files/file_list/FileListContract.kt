@@ -13,6 +13,8 @@ interface FileListContract {
         fun onResume()
 
         fun onRefresh()
+
+        fun onPathChanged(path: String)
     }
 
     interface Screen {

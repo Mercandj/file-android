@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.file_row.FileRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.files.main.ApplicationGraph.Companion.init
 import com.mercandalli.android.apps.files.main.MainApplication
@@ -20,7 +21,8 @@ class FileListView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
 
     private val userAction: FileListContract.UserAction
-    private val adapter = FileAdapter()
+    private var fileClickListener: FileRow.FileClickListener? = null
+    private val adapter = FileAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
     private val emptyView: TextView
@@ -54,10 +56,6 @@ class FileListView @JvmOverloads constructor(
         super.onDetachedFromWindow()
     }
 
-    fun onResume() {
-        userAction.onResume()
-    }
-
     override fun showEmptyView() {
         emptyView.visibility = View.VISIBLE
     }
@@ -89,6 +87,26 @@ class FileListView @JvmOverloads constructor(
 
     override fun hideLoader() {
         refresh.isRefreshing = false
+    }
+
+    fun onResume() {
+        userAction.onResume()
+    }
+
+    fun setPath(path: String) {
+        userAction.onPathChanged(path)
+    }
+
+    fun setFileClickListener(listener: FileRow.FileClickListener?) {
+        fileClickListener = listener
+    }
+
+    private fun createFileClickListener(): FileRow.FileClickListener {
+        return object : FileRow.FileClickListener {
+            override fun onFileClicked(file: File) {
+                fileClickListener?.onFileClicked(file)
+            }
+        }
     }
 
 }

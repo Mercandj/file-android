@@ -8,9 +8,11 @@ import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
 import com.mercandalli.android.apps.files.file_row.FileRow
 import com.mercandalli.sdk.files.api.File
 
-class FileAdapter : ListDelegationAdapter<List<Any>>() {
+class FileAdapter(
+        fileClickListener: FileRow.FileClickListener?
+) : ListDelegationAdapter<List<Any>>() {
 
-    private val fileAdapterDelegate = FileAdapterDelegate()
+    private val fileAdapterDelegate = FileAdapterDelegate(fileClickListener)
 
     init {
         delegatesManager.addDelegate(fileAdapterDelegate as AdapterDelegate<List<Any>>)
@@ -22,7 +24,9 @@ class FileAdapter : ListDelegationAdapter<List<Any>>() {
     }
 
     //region File
-    private class FileAdapterDelegate : AbsListItemAdapterDelegate<Any, Any, VideoRowHolder>() {
+    private class FileAdapterDelegate(
+            private val fileClickListener: FileRow.FileClickListener?
+    ) : AbsListItemAdapterDelegate<Any, Any, VideoRowHolder>() {
 
         override fun isForViewType(o: Any, list: List<Any>, i: Int): Boolean {
             return o is File
@@ -33,6 +37,7 @@ class FileAdapter : ListDelegationAdapter<List<Any>>() {
             videoRow.layoutParams = RecyclerView.LayoutParams(
                     RecyclerView.LayoutParams.MATCH_PARENT,
                     RecyclerView.LayoutParams.WRAP_CONTENT)
+            videoRow.setFileClickListener(fileClickListener)
             return VideoRowHolder(videoRow)
         }
 

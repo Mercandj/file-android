@@ -41,4 +41,10 @@
         android:text="Error"
         tools:visibility="gone" />
 
+    <View
+        android:layout_width="1dp"
+        android:layout_gravity="end"
+        android:layout_height="match_parent"
+        android:background="#18000000" />
+
 </merge>

@@ -29,6 +29,11 @@ class FileListPresenter(
         syncFileChildren(fileChildrenResult)
     }
 
+    override fun onPathChanged(path: String) {
+        currentPath = path
+        syncFileChildren()
+    }
+
     private fun syncFileChildren() {
         var fileChildrenResult = fileManager.getFileChildren(currentPath)
         if (fileChildrenResult.status == FileChildrenResult.UNLOADED ||
