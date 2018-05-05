@@ -2,6 +2,8 @@
 
 buildscript {
     ext.kotlin_version = '1.2.41'
+    ext.kotlin_coroutines_version = '0.22.5'
+    ext.support_version = '27.1.1'
     repositories {
         google()
         jcenter()
@@ -9,9 +11,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -24,4 +23,16 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    appVersionCode = 1_00_00
+    appVersionName = "1.00.00"
+
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.3"
+    targetSdkVersion = 27
+    minSdkVersion = 21
+
+    spoonEnable = false
 }
