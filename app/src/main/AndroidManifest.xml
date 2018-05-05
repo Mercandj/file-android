@@ -24,6 +24,11 @@
 
         </activity>
 
+        <activity
+            android:name=".permission.PermissionActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+
     </application>
 
 </manifest>

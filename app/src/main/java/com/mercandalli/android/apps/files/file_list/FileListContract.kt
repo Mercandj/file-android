@@ -9,6 +9,10 @@ interface FileListContract {
         fun onAttached()
 
         fun onDetached()
+
+        fun onResume()
+
+        fun onRefresh()
     }
 
     interface Screen {
@@ -29,5 +33,4 @@ interface FileListContract {
 
         fun hideLoader()
     }
-
 }

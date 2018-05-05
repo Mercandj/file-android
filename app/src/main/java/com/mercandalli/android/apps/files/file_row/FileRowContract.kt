@@ -6,14 +6,11 @@ interface FileRowContract {
 
     interface UserAction {
 
-        fun onAttached()
-
-        fun onDetached()
+        fun onFileChanged(file: File)
     }
 
     interface Screen {
 
-        fun showFile(file: File)
+        fun setTitle(title:String)
     }
-
 }

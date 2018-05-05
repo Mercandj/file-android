@@ -5,8 +5,35 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-    <com.mercandalli.android.apps.files.file_list.FileListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/toolbar_background_light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginEnd="@dimen/default_space_2"
+            android:layout_marginStart="@dimen/default_space_2"
+            android:text="FileSpace"
+            android:textColor="@color/toolbar_title_light"
+            android:textSize="@dimen/text_size_xl" />
+
+    </FrameLayout>
+
+    <com.mercandalli.android.apps.files.file_list.FileListView
+        android:id="@+id/activity_main_file_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toolbar_height" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:background="@drawable/shadow_bottom"
+        android:clickable="false" />
 
 </merge>

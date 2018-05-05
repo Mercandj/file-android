@@ -5,27 +5,40 @@ import com.mercandalli.sdk.files.api.FileManager
 
 class FileListPresenter(
         private val screen: FileListContract.Screen,
-        private val fileManager: FileManager
+        private val fileManager: FileManager,
+        private var currentPath: String
 ) : FileListContract.UserAction {
 
     private val fileChildrenResultListener = createFileChildrenResultListener()
-    private var currentPath = "/"
 
     override fun onAttached() {
         fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
-        var fileChildren = fileManager.getFileChildren(currentPath)
-        if (fileChildren.status == FileChildrenResult.UNLOADED) {
-            fileChildren = fileManager.loadFileChildren(currentPath)
-        }
-        syncFileChildren(fileChildren)
+        syncFileChildren()
     }
 
     override fun onDetached() {
         fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
     }
 
-    private fun syncFileChildren(
-            fileChildrenResult: FileChildrenResult = fileManager.getFileChildren(currentPath)) {
+    override fun onResume() {
+        syncFileChildren()
+    }
+
+    override fun onRefresh() {
+        val fileChildrenResult = fileManager.loadFileChildren(currentPath, true)
+        syncFileChildren(fileChildrenResult)
+    }
+
+    private fun syncFileChildren() {
+        var fileChildrenResult = fileManager.getFileChildren(currentPath)
+        if (fileChildrenResult.status == FileChildrenResult.UNLOADED ||
+                fileChildrenResult.status == FileChildrenResult.ERROR_NOT_FOLDER) {
+            fileChildrenResult = fileManager.loadFileChildren(currentPath)
+        }
+        syncFileChildren(fileChildrenResult)
+    }
+
+    private fun syncFileChildren(fileChildrenResult: FileChildrenResult) {
         when (fileChildrenResult.status) {
             FileChildrenResult.UNLOADED, FileChildrenResult.ERROR_NOT_FOLDER -> {
                 screen.hideEmptyView()
@@ -36,7 +49,6 @@ class FileListPresenter(
             FileChildrenResult.LOADING -> {
                 screen.hideEmptyView()
                 screen.hideErrorMessage()
-                screen.hideFiles()
                 screen.showLoader()
             }
             FileChildrenResult.LOADED_SUCCEEDED -> {
@@ -60,7 +72,8 @@ class FileListPresenter(
                 if (currentPath != path) {
                     return
                 }
-                syncFileChildren()
+                val fileChildren = fileManager.getFileChildren(currentPath)
+                syncFileChildren(fileChildren)
             }
         }
     }

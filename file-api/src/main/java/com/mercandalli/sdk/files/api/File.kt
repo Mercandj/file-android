@@ -1,8 +1,8 @@
 package com.mercandalli.sdk.files.api
 
 /**
- * Memo: goal is to keep file class as light as possible. All extract data like name, size, ext...
- * should not be part of this model.
+ * Memo: goal is to keep file class as light as possible. All extract data like size, ext...
+ * should not be part of this model. See [FileMetadataManager].
  * <br />
  * Why? - For example we want to load a big list of files, we want to have the possibility
  * to expose a "cold" load of this list as fast as possible with the minimum data possible.
@@ -26,5 +26,10 @@ data class File(
         /**
          * Is this file a file container (named folder/directory)
          */
-        val directory: Boolean
+        val directory: Boolean,
+
+        /**
+         * File name. If it's not a directory, contains extension.
+         */
+        val name: String
 )

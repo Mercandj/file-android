@@ -124,8 +124,8 @@ class FileManagerAndroid(
             }
             val iosFiles = ioFile.listFiles()
             val files = ArrayList<File>()
-            for (iosFile in iosFiles) {
-                val file = convertToFile(ioFile)
+            for (ioFileLoop in iosFiles) {
+                val file = convertToFile(ioFileLoop)
                 files.add(file)
             }
             return FileChildrenResult.createLoaded(path, files)
@@ -134,12 +134,14 @@ class FileManagerAndroid(
         @JvmStatic
         private fun convertToFile(ioFile: java.io.File): File {
             val path = ioFile.absolutePath
+            val name = ioFile.name
             val directory = ioFile.isDirectory
             val parentPath = parentPath(ioFile)
             return File(
                     path,
                     parentPath,
-                    directory)
+                    directory,
+                    name)
         }
 
         @JvmStatic
