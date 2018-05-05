@@ -62,8 +62,7 @@ class FileAdapter(
             private val view: FileRow) :
             RecyclerView.ViewHolder(view) {
         fun bind(file: File, selectedPath: String?) {
-            val selected = selectedPath?.startsWith(file.path) ?: false
-            view.setFile(file, selected)
+            view.setFile(file, selectedPath)
         }
     }
     //endregion File

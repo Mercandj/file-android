@@ -6,7 +6,7 @@ interface FileRowContract {
 
     interface UserAction {
 
-        fun onFileChanged(file: File, selected: Boolean)
+        fun onFileChanged(file: File, selectedPath: String?)
 
         fun onRowClicked()
     }

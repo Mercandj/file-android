@@ -73,8 +73,8 @@ class FileRow @JvmOverloads constructor(
         fileClickListener?.onFileClicked(file)
     }
 
-    fun setFile(file: File, selected: Boolean) {
-        userAction.onFileChanged(file, selected)
+    fun setFile(file: File, selectedPath: String?) {
+        userAction.onFileChanged(file, selectedPath)
     }
 
     fun setFileClickListener(listener: FileClickListener?) {
