@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.file_row.FileRow
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
 class FileHorizontalLists @JvmOverloads constructor(
@@ -24,7 +25,10 @@ class FileHorizontalLists @JvmOverloads constructor(
         View.inflate(context, R.layout.view_file_horizontal_lists, this)
         fileListViewContainer = findViewById(R.id.activity_main_file_list_view_container)
         horizontalScrollView = findViewById(R.id.activity_main_file_list_horizontal_scroll_view)
-        userAction = FileHorizontalListsPresenter(this)
+        val fileOpenManager = ApplicationGraph.getFileOpenManager()
+        userAction = FileHorizontalListsPresenter(
+                this,
+                fileOpenManager)
         val fileListView = createList(0)
         fileListViews.add(fileListView)
         fileListViewContainer.addView(fileListView)

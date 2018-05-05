@@ -1,9 +1,11 @@
 package com.mercandalli.android.apps.files.file_horizontal_lists
 
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileHorizontalListsPresenter(
-        private val screen: FileHorizontalListsContract.Screen
+        private val screen: FileHorizontalListsContract.Screen,
+        private val fileOpenManager: FileOpenManager
 ) : FileHorizontalListsContract.UserAction {
 
     private var sizeLists = 1
@@ -19,6 +21,7 @@ class FileHorizontalListsPresenter(
             return
         }
         if (!file.directory) {
+            fileOpenManager.open(path)
             return
         }
         if (index > sizeLists - 1) {

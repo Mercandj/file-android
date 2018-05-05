@@ -8,23 +8,43 @@ import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileOpenManager
 
 class ApplicationGraph(
         private val context: Context
 ) {
 
     private var fileManager: FileManager? = null
+    private var fileOpenManager: FileOpenManager? = null
+    private var fileModule: FileModule? = null
 
     fun getFileManagerInternal(): FileManager {
         if (fileManager == null) {
-            val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
-                override fun requestStoragePermission() {
-                    PermissionActivity.start(context)
-                }
+            if (fileModule == null) {
+                fileModule = createFileModule()
             }
-            fileManager = FileModule(context, permissionRequestAddOn).provideFileManager()
+            fileManager = fileModule!!.provideFileManager()
         }
         return fileManager!!
+    }
+
+    fun getFileOpenManagerInternal(): FileOpenManager {
+        if (fileOpenManager == null) {
+            if (fileModule == null) {
+                fileModule = createFileModule()
+            }
+            fileOpenManager = fileModule!!.provideFileOpenManager()
+        }
+        return fileOpenManager!!
+    }
+
+    private fun createFileModule(): FileModule {
+        val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
+            override fun requestStoragePermission() {
+                PermissionActivity.start(context)
+            }
+        }
+        return FileModule(context, permissionRequestAddOn)
     }
 
     companion object {
@@ -36,6 +56,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getFileManager(): FileManager {
             return graph!!.getFileManagerInternal()
+        }
+
+        @JvmStatic
+        fun getFileOpenManager(): FileOpenManager {
+            return graph!!.getFileOpenManagerInternal()
         }
 
         @JvmStatic
