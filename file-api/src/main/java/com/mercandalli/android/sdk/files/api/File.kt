@@ -9,8 +9,22 @@ package com.mercandalli.android.sdk.files.api
  * Sugar data like extension, name, size should be loaded afterward from the path.
  * <br />
  * So fields of this class should stay the minimum definition of a file. (for me, path and folder).
+ * Only defined data required to navigate across files.
  */
 data class File(
+
+        /**
+         * The file path (dom/tree representation)
+         */
         val path: String,
+
+        /**
+         * The parent file path or null if no parent (root for example).
+         */
+        val parentPath: String?,
+
+        /**
+         * Is this file a file container (named folder/directory)
+         */
         val directory: Boolean
 )

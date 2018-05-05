@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files
+package com.mercandalli.android.apps.files.main
 
 import com.mercandalli.android.sdk.files.api.FileManager
 import com.mercandalli.android.sdk.files.api.FileModule
@@ -11,7 +11,7 @@ class ApplicationGraph {
 
         @JvmStatic
         fun getFileManager(): FileManager {
-            if (!::fileManager.isInitialized) {
+            if (!Companion::fileManager.isInitialized) {
                 fileManager = FileModule().provideFileManager()
             }
             return fileManager
