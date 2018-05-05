@@ -8,5 +8,8 @@ class FileRowPresenter(
 
     override fun onFileChanged(file: File) {
         screen.setTitle(file.name)
+        val directory = file.directory
+        screen.setArrowRightVisibility(directory)
+        screen.setIcon(directory)
     }
 }

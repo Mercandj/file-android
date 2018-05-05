@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "idweb": -1,
+      "sourceId": 1,
+      "title": "Alarms",
+      "size": ""
+    },
+    {
+      "idweb": 1,
+      "sourceId": 1,
+      "title": "Music",
+      "size": ""
+    },
+    {
+      "idweb": 2,
+      "sourceId": 1,
+      "title": "Pictures",
+      "size": ""
+    },
+    {
+      "idweb": 3,
+      "sourceId": 1,
+      "title": "Movies",
+      "size": ""
+    },
+    {
+      "idweb": 4,
+      "sourceId": 1,
+      "title": "test.txt",
+      "size": "40 ko"
+    }
+  ]
+}

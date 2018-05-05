@@ -11,6 +11,10 @@ interface FileRowContract {
 
     interface Screen {
 
-        fun setTitle(title:String)
+        fun setTitle(title: String)
+
+        fun setArrowRightVisibility(visible: Boolean)
+
+        fun setIcon(directory: Boolean)
     }
 }

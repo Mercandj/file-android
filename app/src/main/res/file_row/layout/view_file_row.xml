@@ -2,17 +2,38 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:parentTag="android.widget.FrameLayout">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/view_file_row_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_folder_black_24dp"
+        android:tint="@color/color_primary" />
 
     <TextView
         android:id="@+id/view_file_row_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_space"
         android:layout_marginBottom="@dimen/default_space"
-        android:layout_marginStart="@dimen/default_space_2"
         android:layout_marginEnd="@dimen/default_space_2"
-        android:textSize="@dimen/text_size_l_5" />
+        android:layout_marginStart="@dimen/default_space_4"
+        android:layout_marginTop="@dimen/default_space"
+        android:textSize="@dimen/text_size_l_5"
+        tools:text="@sample/files.json/data/title" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/view_file_row_arrow_right"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/default_space"
+        android:layout_marginStart="@dimen/default_space"
+        android:src="@drawable/ic_play_arrow_black_24dp"
+        android:tint="#888888" />
 
 </merge>

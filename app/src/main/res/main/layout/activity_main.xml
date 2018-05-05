@@ -22,8 +22,8 @@
 
     </FrameLayout>
 
-    <com.mercandalli.android.apps.files.file_list.FileListView
-        android:id="@+id/activity_main_file_list_view"
+    <com.mercandalli.android.apps.files.file_horizontal_lists.FileHorizontalLists
+        android:id="@+id/activity_main_file_horizontal_lists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/toolbar_height" />

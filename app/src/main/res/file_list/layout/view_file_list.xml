@@ -19,7 +19,9 @@
             android:paddingBottom="6dp"
             android:paddingTop="6dp"
             android:scrollbarStyle="outsideOverlay"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            tools:itemCount="5"
+            tools:listitem="@layout/view_file_row_preview" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
