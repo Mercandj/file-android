@@ -1,7 +1,7 @@
 package com.mercandalli.android.apps.files.file_list
 
-import com.mercandalli.android.sdk.files.api.FileChildrenResult
-import com.mercandalli.android.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenResult
+import com.mercandalli.sdk.files.api.FileManager
 
 class FileListPresenter(
         private val screen: FileListContract.Screen,
@@ -27,7 +27,7 @@ class FileListPresenter(
     private fun syncFileChildren(
             fileChildrenResult: FileChildrenResult = fileManager.getFileChildren(currentPath)) {
         when (fileChildrenResult.status) {
-            FileChildrenResult.UNLOADED -> {
+            FileChildrenResult.UNLOADED, FileChildrenResult.ERROR_NOT_FOLDER -> {
                 screen.hideEmptyView()
                 screen.showErrorMessage()
                 screen.hideFiles()
@@ -39,7 +39,7 @@ class FileListPresenter(
                 screen.hideFiles()
                 screen.showLoader()
             }
-            FileChildrenResult.LOADED -> {
+            FileChildrenResult.LOADED_SUCCEEDED -> {
                 val files = fileChildrenResult.getFiles()
                 screen.hideErrorMessage()
                 screen.hideLoader()

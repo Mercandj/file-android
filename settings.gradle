@@ -1,1 +1,1 @@
-include ':app', ':file-api'
+include ':app', ':file-api', ':file-api-android'

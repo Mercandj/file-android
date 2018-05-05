@@ -1,4 +1,4 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.sdk.files.api
 
 /**
  * Memo: goal is to keep file class as light as possible. All extract data like name, size, ext...

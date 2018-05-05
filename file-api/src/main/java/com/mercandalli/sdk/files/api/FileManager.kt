@@ -1,4 +1,4 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.sdk.files.api
 
 interface FileManager {
 
@@ -6,7 +6,7 @@ interface FileManager {
 
     fun getFile(path: String): FileResult
 
-    fun loadFileChildren(path: String): FileChildrenResult
+    fun loadFileChildren(path: String, forceRefresh: Boolean = false): FileChildrenResult
 
     fun getFileChildren(path: String): FileChildrenResult
 

@@ -1,11 +1,17 @@
 package com.mercandalli.android.sdk.files.api
 
+import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileChildrenResult
+import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileResult
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
-class FileManagerAndroid : FileManager {
+class FileManagerAndroid(
+        private val permissionManager: PermissionManager
+) : FileManager {
 
     private val fileResultMap = HashMap<String, FileResult>()
     private val fileChildrenResultMap = HashMap<String, FileChildrenResult>()
@@ -13,7 +19,13 @@ class FileManagerAndroid : FileManager {
     private val fileChildrenResultListeners = ArrayList<FileManager.FileChildrenResultListener>()
 
     override fun loadFile(path: String): FileResult {
-        if (fileResultMap.contains(path) && fileResultMap[path]!!.status == FileResult.LOADING) {
+        if (fileResultMap.contains(path)) {
+            val status = fileResultMap[path]!!.status
+            if (status == FileResult.LOADING || status == FileResult.LOADED) {
+                return getFile(path)
+            }
+        }
+        if (permissionManager.shouldRequestStoragePermission()) {
             return getFile(path)
         }
         fileResultMap[path] = FileResult.createLoading(path)
@@ -38,8 +50,17 @@ class FileManagerAndroid : FileManager {
         return fileResultUnloaded
     }
 
-    override fun loadFileChildren(path: String): FileChildrenResult {
-        if (fileChildrenResultMap.contains(path) && fileChildrenResultMap[path]!!.status == FileResult.LOADING) {
+    override fun loadFileChildren(path: String, forceRefresh: Boolean): FileChildrenResult {
+        if (fileChildrenResultMap.contains(path)) {
+            val status = fileChildrenResultMap[path]!!.status
+            if (status == FileChildrenResult.LOADING) {
+                return getFileChildren(path)
+            }
+            if (status == FileChildrenResult.LOADED_SUCCEEDED && !forceRefresh) {
+                return getFileChildren(path)
+            }
+        }
+        if (permissionManager.shouldRequestStoragePermission()) {
             return getFileChildren(path)
         }
         fileChildrenResultMap[path] = FileChildrenResult.createLoading(path)
@@ -98,6 +119,9 @@ class FileManagerAndroid : FileManager {
         @JvmStatic
         private fun loadFileChildrenSync(path: String): FileChildrenResult {
             val ioFile = java.io.File(path)
+            if (!ioFile.isDirectory) {
+                return FileChildrenResult.createErrorNotFolder(path)
+            }
             val iosFiles = ioFile.listFiles()
             val files = ArrayList<File>()
             for (iosFile in iosFiles) {
