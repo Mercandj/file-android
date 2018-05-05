@@ -7,8 +7,17 @@ class FileHorizontalListsPresenter(
 ) : FileHorizontalListsContract.UserAction {
 
     private var sizeLists = 1
+    private var selectedPath: String? = null
 
     override fun onFileClicked(index: Int, file: File) {
+        val path = file.path
+        if (path == selectedPath) {
+            sizeLists = 1
+            screen.setListsSize(1)
+            selectedPath = null
+            screen.selectPath(selectedPath)
+            return
+        }
         if (!file.directory) {
             return
         }
@@ -16,16 +25,18 @@ class FileHorizontalListsPresenter(
             throw IllegalStateException("index:$index sizeLists-1:" + (sizeLists - 1))
         }
         if (index == sizeLists - 1) {
-            screen.createList(file.path, index + 1)
+            screen.createList(path, index + 1)
             screen.scrollEnd()
-            screen.selectPath(file.path)
+            selectedPath = path
+            screen.selectPath(path)
             sizeLists++
             return
         }
-        screen.setPath(file.path, index + 1)
+        screen.setPath(path, index + 1)
         sizeLists = index + 2
         screen.setListsSize(index + 2)
-        screen.selectPath(file.path)
+        selectedPath = path
+        screen.selectPath(path)
     }
 
 }

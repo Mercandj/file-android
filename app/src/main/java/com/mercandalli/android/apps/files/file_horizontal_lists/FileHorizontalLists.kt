@@ -83,7 +83,7 @@ class FileHorizontalLists @JvmOverloads constructor(
         }, 100L)
     }
 
-    override fun selectPath(path: String) {
+    override fun selectPath(path: String?) {
         for (fileListView in fileListViews) {
             fileListView.onPathSelected(path)
         }

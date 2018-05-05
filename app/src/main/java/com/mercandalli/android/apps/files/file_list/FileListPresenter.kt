@@ -35,7 +35,7 @@ class FileListPresenter(
         syncFileChildren()
     }
 
-    override fun onPathSelected(path: String) {
+    override fun onPathSelected(path: String?) {
         screen.selectPath(path)
     }
 

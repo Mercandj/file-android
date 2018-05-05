@@ -83,7 +83,7 @@ class FileListView @JvmOverloads constructor(
         refresh.isRefreshing = true
     }
 
-    override fun selectPath(path: String) {
+    override fun selectPath(path: String?) {
         adapter.selectPath(path)
     }
 
@@ -103,7 +103,7 @@ class FileListView @JvmOverloads constructor(
         fileClickListener = listener
     }
 
-    fun onPathSelected(path: String) {
+    fun onPathSelected(path: String?) {
         userAction.onPathSelected(path)
     }
 

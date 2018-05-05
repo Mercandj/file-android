@@ -23,7 +23,7 @@ class FileAdapter(
         notifyDataSetChanged()
     }
 
-    fun selectPath(path: String) {
+    fun selectPath(path: String?) {
         fileAdapterDelegate.selectPath(path)
         notifyDataSetChanged()
     }
@@ -53,7 +53,7 @@ class FileAdapter(
             playlistViewHolder.bind(model as File, selectedPath)
         }
 
-        fun selectPath(path: String) {
+        fun selectPath(path: String?) {
             selectedPath = path
         }
     }
