@@ -1,6 +1,5 @@
 package com.mercandalli.android.apps.files.file_list
 
-import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
 
@@ -41,8 +40,8 @@ class FileListPresenter(
 
     private fun syncFileChildren() {
         var fileChildrenResult = fileManager.getFileChildren(currentPath)
-        if (fileChildrenResult.status == FileChildrenResult.UNLOADED ||
-                fileChildrenResult.status == FileChildrenResult.ERROR_NOT_FOLDER) {
+        if (fileChildrenResult.status == FileChildrenResult.Status.UNLOADED ||
+                fileChildrenResult.status == FileChildrenResult.Status.ERROR_NOT_FOLDER) {
             fileChildrenResult = fileManager.loadFileChildren(currentPath)
         }
         syncFileChildren(fileChildrenResult)
@@ -50,18 +49,18 @@ class FileListPresenter(
 
     private fun syncFileChildren(fileChildrenResult: FileChildrenResult) {
         when (fileChildrenResult.status) {
-            FileChildrenResult.UNLOADED, FileChildrenResult.ERROR_NOT_FOLDER -> {
+            FileChildrenResult.Status.UNLOADED, FileChildrenResult.Status.ERROR_NOT_FOLDER -> {
                 screen.hideEmptyView()
                 screen.showErrorMessage()
                 screen.hideFiles()
                 screen.hideLoader()
             }
-            FileChildrenResult.LOADING -> {
+            FileChildrenResult.Status.LOADING -> {
                 screen.hideEmptyView()
                 screen.hideErrorMessage()
                 screen.showLoader()
             }
-            FileChildrenResult.LOADED_SUCCEEDED -> {
+            FileChildrenResult.Status.LOADED_SUCCEEDED -> {
                 val files = fileChildrenResult.getFiles()
                 screen.hideErrorMessage()
                 screen.hideLoader()

@@ -27,6 +27,7 @@ class FileRow @JvmOverloads constructor(
         icon = findViewById(R.id.view_file_row_icon)
         title = findViewById(R.id.view_file_row_title)
         arrayRight = findViewById(R.id.view_file_row_arrow_right)
+        getSelectableItemBackground(context, this)
         setOnClickListener { userAction.onRowClicked() }
     }
 
@@ -79,6 +80,16 @@ class FileRow @JvmOverloads constructor(
 
     fun setFileClickListener(listener: FileClickListener?) {
         fileClickListener = listener
+    }
+
+    companion object {
+        fun getSelectableItemBackground(context: Context, view: View) {
+            val attrs = intArrayOf(R.attr.selectableItemBackground)
+            val typedArray = context.obtainStyledAttributes(attrs)
+            val backgroundResource = typedArray.getResourceId(0, 0)
+            view.setBackgroundResource(backgroundResource)
+            typedArray.recycle()
+        }
     }
 
     interface FileClickListener {

@@ -18,10 +18,10 @@ class FileManagerAndroid(
     override fun loadFileChildren(path: String, forceRefresh: Boolean): FileChildrenResult {
         if (fileChildrenResultMap.contains(path)) {
             val status = fileChildrenResultMap[path]!!.status
-            if (status == FileChildrenResult.LOADING) {
+            if (status == FileChildrenResult.Status.LOADING) {
                 return getFileChildren(path)
             }
-            if (status == FileChildrenResult.LOADED_SUCCEEDED && !forceRefresh) {
+            if (status == FileChildrenResult.Status.LOADED_SUCCEEDED && !forceRefresh) {
                 return getFileChildren(path)
             }
         }
