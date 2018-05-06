@@ -14,28 +14,28 @@ class ApplicationGraph(
         private val context: Context
 ) {
 
-    private var fileManager: FileManager? = null
-    private var fileOpenManager: FileOpenManager? = null
-    private var fileModule: FileModule? = null
+    private lateinit var fileManager: FileManager
+    private lateinit var fileOpenManager: FileOpenManager
+    private lateinit var fileModule: FileModule
 
-    fun getFileManagerInternal(): FileManager {
-        if (fileManager == null) {
-            if (fileModule == null) {
+    private fun getFileManagerInternal(): FileManager {
+        if (!::fileManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
                 fileModule = createFileModule()
             }
-            fileManager = fileModule!!.provideFileManager()
+            fileManager = fileModule.provideFileManager()
         }
-        return fileManager!!
+        return fileManager
     }
 
-    fun getFileOpenManagerInternal(): FileOpenManager {
-        if (fileOpenManager == null) {
-            if (fileModule == null) {
+    private fun getFileOpenManagerInternal(): FileOpenManager {
+        if (!::fileOpenManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
                 fileModule = createFileModule()
             }
-            fileOpenManager = fileModule!!.provideFileOpenManager()
+            fileOpenManager = fileModule.provideFileOpenManager()
         }
-        return fileOpenManager!!
+        return fileOpenManager
     }
 
     private fun createFileModule(): FileModule {

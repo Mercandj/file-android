@@ -80,11 +80,13 @@ class FileManagerAndroid(
 
         @JvmStatic
         private fun convertToFile(ioFile: java.io.File): File {
+            val id = ioFile.absolutePath
             val path = ioFile.absolutePath
             val name = ioFile.name
             val directory = ioFile.isDirectory
             val parentPath = parentPath(ioFile)
             return File(
+                    id,
                     path,
                     parentPath,
                     directory,

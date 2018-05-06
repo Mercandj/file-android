@@ -6,7 +6,7 @@ dependencies {
     // Language
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'org.json:json:20180130'
+    compile 'org.json:json:20180130'
 }
 
 repositories {

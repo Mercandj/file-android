@@ -16,6 +16,11 @@ import org.json.JSONObject
 data class File(
 
         /**
+         * Unique uuid
+         */
+        val id: String,
+
+        /**
          * The file path (dom/tree representation)
          */
         val path: String,
@@ -40,11 +45,13 @@ data class File(
 
         @JvmStatic
         fun fromJson(jsonObject: JSONObject): File {
+            val id = jsonObject.getString("id")
             val path = jsonObject.getString("path")
             val parentPath = jsonObject.getString("parentPath")
             val directory = jsonObject.getBoolean("directory")
             val name = jsonObject.getString("name")
             return File(
+                    id,
                     path,
                     parentPath,
                     directory,
@@ -55,6 +62,7 @@ data class File(
         @JvmStatic
         fun toJson(file: File): JSONObject {
             val json = JSONObject()
+            json.put("id", file.id)
             json.put("path", file.path)
             json.put("parentPath", file.parentPath)
             json.put("directory", file.directory)

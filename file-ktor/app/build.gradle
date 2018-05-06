@@ -26,12 +26,19 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "ch.qos.logback:logback-classic:1.2.1"
+    compile 'org.json:json:20180130'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+static def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd')
+    return formattedDate
+}
+
 jar {
-    baseName project.name
+    baseName "file-ktor-" + getDate()
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
@@ -45,7 +52,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'MainKt'
     }
-    baseName = project.name
+    baseName = "file-ktor-" + getDate()
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
     destinationDir = file("$rootDir/build/")
