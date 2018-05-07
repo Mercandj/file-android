@@ -33,6 +33,7 @@ Thumbs.db
 build/
 out/
 app/out/
+server-static/
 
 #NDK
 obj/

@@ -5,23 +5,27 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
 class FileRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileRowContract.Screen {
 
-    private val userAction = FileRowPresenter(this)
+    private val userAction: FileRowPresenter
     private val icon: ImageView
     private val title: TextView
     private val arrayRight: ImageView
     private var fileClickListener: FileClickListener? = null
+    private var fileLongClickListener: FileLongClickListener? = null
 
     init {
         View.inflate(context, R.layout.view_file_row, this)
@@ -29,7 +33,18 @@ class FileRow @JvmOverloads constructor(
         title = findViewById(R.id.view_file_row_title)
         arrayRight = findViewById(R.id.view_file_row_arrow_right)
         foreground = getSelectableItemBackground(context)
+
+        val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
+        userAction = FileRowPresenter(
+                this,
+                fileDeleteManager
+        )
+
         setOnClickListener { userAction.onRowClicked() }
+        setOnLongClickListener {
+            userAction.onRowLongClicked()
+            return@setOnLongClickListener true
+        }
     }
 
     override fun setTitle(title: String) {
@@ -75,6 +90,14 @@ class FileRow @JvmOverloads constructor(
         fileClickListener?.onFileClicked(file)
     }
 
+    override fun notifyRowLongClicked(file: File) {
+        fileLongClickListener?.onFileLongClicked(file)
+    }
+
+    override fun showOverflowPopupMenu() {
+        showOverflowPopupMenu(this)
+    }
+
     fun setFile(file: File, selectedPath: String?) {
         userAction.onFileChanged(file, selectedPath)
     }
@@ -93,7 +116,29 @@ class FileRow @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Show a popup menu which allows the user to perform action.
+     *
+     * @param view : The [View] on which the popup menu should be anchored.
+     */
+    private fun showOverflowPopupMenu(view: View) {
+        val popupMenu = PopupMenu(context, view, Gravity.END)
+        popupMenu.menuInflater.inflate(R.menu.menu_file_row,
+                popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener({
+            when (it.itemId) {
+                R.id.menu_file_row_delete -> userAction.onDeleteClicked()
+            }
+            false
+        })
+        popupMenu.show()
+    }
+
     interface FileClickListener {
         fun onFileClicked(file: File)
+    }
+
+    interface FileLongClickListener {
+        fun onFileLongClicked(file: File)
     }
 }

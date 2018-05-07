@@ -7,6 +7,10 @@ interface FileHorizontalListsContract {
     interface UserAction {
 
         fun onFileClicked(index: Int, file: File)
+
+        fun onFileLongClicked(index: Int, file: File)
+
+        fun onFabClicked()
     }
 
     interface Screen {
@@ -20,5 +24,9 @@ interface FileHorizontalListsContract {
         fun scrollEnd()
 
         fun selectPath(path: String?)
+
+        fun showFab()
+
+        fun hideFab()
     }
 }

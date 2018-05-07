@@ -61,6 +61,13 @@ class FileManagerAndroid(
         fileChildrenResultListeners.remove(listener)
     }
 
+    fun refresh(path: String) {
+        if (!fileChildrenResultMap.containsKey(path)) {
+            return
+        }
+        loadFileChildren(path, true)
+    }
+
     companion object {
 
         @JvmStatic

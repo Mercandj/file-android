@@ -6,9 +6,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION_CODES.N
+import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.v4.content.FileProvider
 import android.widget.Toast
+import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 import java.io.File
@@ -20,7 +22,17 @@ class FileModule(
 
     fun provideFileManager(): FileManager {
         val permissionManager = PermissionManagerImpl(context, permissionRequestAddOn)
-        return FileManagerAndroid(permissionManager)
+        val fileManagerAndroid = FileManagerAndroid(permissionManager)
+        val fileObserver = RecursiveFileObserver(
+                Environment.getExternalStorageDirectory().absolutePath,
+                {
+                    if (it != null && !it.endsWith("/null")) {
+                        val path = File(it).parentFile.absolutePath
+                        fileManagerAndroid.refresh(path)
+                    }
+                })
+        fileObserver.startWatching()
+        return fileManagerAndroid
     }
 
     fun provideFileOpenManager(): FileOpenManager {
@@ -34,6 +46,15 @@ class FileModule(
             }
         }
         return FileOpenManagerAndroid(addOn)
+    }
+
+    fun provideFileDeleteManager(): FileDeleteManager {
+        val addOn: FileDeleteManagerAndroid.AddOn = object : FileDeleteManagerAndroid.AddOn {
+            override fun refreshSystemMediaScanDataBase(path: String) {
+                refreshSystemMediaScanDataBase(context, path)
+            }
+        }
+        return FileDeleteManagerAndroid(addOn)
     }
 
     companion object {
@@ -79,6 +100,17 @@ class FileModule(
                 Toast.makeText(context, "Oops, there is an error.",
                         Toast.LENGTH_SHORT).show()
             }
+        }
+
+        /**
+         * @param context : it is the reference where this method get called
+         * @param docPath : absolute path of file for which broadcast will be send to refresh media database
+         */
+        fun refreshSystemMediaScanDataBase(context: Context, docPath: String) {
+            val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+            val contentUri = Uri.fromFile(File(docPath))
+            mediaScanIntent.data = contentUri
+            context.sendBroadcast(mediaScanIntent)
         }
     }
 }

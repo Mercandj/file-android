@@ -9,6 +9,10 @@ interface FileRowContract {
         fun onFileChanged(file: File, selectedPath: String?)
 
         fun onRowClicked()
+
+        fun onRowLongClicked()
+
+        fun onDeleteClicked()
     }
 
     interface Screen {
@@ -22,5 +26,9 @@ interface FileRowContract {
         fun setRowSelected(selected: Boolean)
 
         fun notifyRowClicked(file: File)
+
+        fun notifyRowLongClicked(file: File)
+
+        fun showOverflowPopupMenu()
     }
 }

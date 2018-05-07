@@ -20,6 +20,7 @@ class FileListView @JvmOverloads constructor(
 
     private val userAction: FileListContract.UserAction
     private var fileClickListener: FileRow.FileClickListener? = null
+    private var fileLongClickListener: FileRow.FileLongClickListener? = null
     private val adapter = FileAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
@@ -101,6 +102,10 @@ class FileListView @JvmOverloads constructor(
 
     fun setFileClickListener(listener: FileRow.FileClickListener?) {
         fileClickListener = listener
+    }
+
+    fun setFileLongClickListener(listener: FileRow.FileLongClickListener?) {
+        fileLongClickListener = listener
     }
 
     fun onPathSelected(path: String?) {

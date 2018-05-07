@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.file_horizontal_lists
 
 import android.content.Context
+import android.support.design.widget.FloatingActionButton
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -18,13 +19,15 @@ class FileHorizontalLists @JvmOverloads constructor(
 
     private val userAction: FileHorizontalListsContract.UserAction
     private val fileListViews = ArrayList<FileListView>()
+    private val fab: FloatingActionButton
     private val fileListViewContainer: LinearLayout
     private val horizontalScrollView: HorizontalScrollView
 
     init {
         View.inflate(context, R.layout.view_file_horizontal_lists, this)
-        fileListViewContainer = findViewById(R.id.activity_main_file_list_view_container)
-        horizontalScrollView = findViewById(R.id.activity_main_file_list_horizontal_scroll_view)
+        fab = findViewById(R.id.view_file_horizontal_lists_fab)
+        fileListViewContainer = findViewById(R.id.view_file_horizontal_lists_list_view_container)
+        horizontalScrollView = findViewById(R.id.view_file_horizontal_lists_horizontal_scroll_view)
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         userAction = FileHorizontalListsPresenter(
                 this,
@@ -32,6 +35,9 @@ class FileHorizontalLists @JvmOverloads constructor(
         val fileListView = createList(0)
         fileListViews.add(fileListView)
         fileListViewContainer.addView(fileListView)
+        fab.setOnClickListener {
+            userAction.onFabClicked()
+        }
     }
 
     fun onResume() {
@@ -48,6 +54,11 @@ class FileHorizontalLists @JvmOverloads constructor(
         fileListView.setFileClickListener(object : FileRow.FileClickListener {
             override fun onFileClicked(file: File) {
                 userAction.onFileClicked(index, file)
+            }
+        })
+        fileListView.setFileLongClickListener(object : FileRow.FileLongClickListener {
+            override fun onFileLongClicked(file: File) {
+                userAction.onFileLongClicked(index, file)
             }
         })
         return fileListView
@@ -91,5 +102,13 @@ class FileHorizontalLists @JvmOverloads constructor(
         for (fileListView in fileListViews) {
             fileListView.onPathSelected(path)
         }
+    }
+
+    override fun showFab() {
+        fab.show()
+    }
+
+    override fun hideFab() {
+        fab.hide()
     }
 }
