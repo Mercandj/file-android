@@ -8,7 +8,9 @@ class FileDeleteManagerAndroid(
 
     override fun delete(path: String) {
         val ioFile = java.io.File(path)
+        val parentPath = ioFile.parentFile.absolutePath
         ioFile.delete()
         mediaScanner.refresh(path)
+        mediaScanner.refresh(parentPath)
     }
 }
