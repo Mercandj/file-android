@@ -38,9 +38,11 @@ class FileRow @JvmOverloads constructor(
         foreground = getSelectableItemBackground(context)
 
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         userAction = FileRowPresenter(
                 this,
-                fileDeleteManager
+                fileDeleteManager,
+                fileCopyCutManager
         )
 
         setOnClickListener { userAction.onRowClicked() }
@@ -131,6 +133,8 @@ class FileRow @JvmOverloads constructor(
                 popupMenu.menu)
         popupMenu.setOnMenuItemClickListener({
             when (it.itemId) {
+                R.id.menu_file_row_copy -> userAction.onCopyClicked()
+                R.id.menu_file_row_cut-> userAction.onCutClicked()
                 R.id.menu_file_row_delete -> userAction.onDeleteClicked()
             }
             false

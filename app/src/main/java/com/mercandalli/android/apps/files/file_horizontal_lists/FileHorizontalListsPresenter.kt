@@ -1,19 +1,33 @@
 package com.mercandalli.android.apps.files.file_horizontal_lists
 
+import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileHorizontalListsPresenter(
         private val screen: FileHorizontalListsContract.Screen,
-        private val fileOpenManager: FileOpenManager
+        private val fileOpenManager: FileOpenManager,
+        private val fileCopyCutManager: FileCopyCutManager,
+        private val rootPath: String
 ) : FileHorizontalListsContract.UserAction {
 
     private var sizeLists = 1
     private var selectedFile: File? = null
+    private val fileToPasteChangedListener = createFileToPasteChangedListener()
 
     init {
         screen.hideFab()
+    }
+
+    override fun onAttached() {
+        fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
+        syncFab()
+    }
+
+    override fun onDetached() {
+        fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
     }
 
     override fun onFileClicked(index: Int, file: File) {
@@ -50,6 +64,16 @@ class FileHorizontalListsPresenter(
     }
 
     override fun onFabClicked() {
+        val fileToPastePath = fileCopyCutManager.getFileToPastePath()
+        if (fileToPastePath != null) {
+            val pathOutput = when {
+                selectedFile == null -> rootPath
+                selectedFile!!.directory -> selectedFile!!.path
+                else -> java.io.File(selectedFile!!.path).parentFile.absolutePath
+            }
+            fileCopyCutManager.paste(pathOutput)
+            return
+        }
         if (selectedFile == null) {
             throw IllegalStateException("Fab should be hidden")
         }
@@ -60,13 +84,32 @@ class FileHorizontalListsPresenter(
         }
     }
 
+    private fun syncFab() {
+        val fileToPastePath = fileCopyCutManager.getFileToPastePath()
+        if (fileToPastePath != null) {
+            screen.setFabIcon(R.drawable.ic_content_paste_black_24dp)
+            screen.showFab()
+            return
+        }
+        if (selectedFile == null || selectedFile!!.directory) {
+            screen.hideFab()
+        } else {
+            screen.setFabIcon(R.drawable.ic_play_arrow_black_24dp)
+            screen.showFab()
+        }
+    }
+
     private fun setSelectedFile(file: File?) {
         selectedFile = file
         screen.selectPath(file?.path)
-        if (file == null || file.directory) {
-            screen.hideFab()
-        } else {
-            screen.showFab()
+        syncFab()
+    }
+
+    private fun createFileToPasteChangedListener(): FileCopyCutManager.FileToPasteChangedListener {
+        return object : FileCopyCutManager.FileToPasteChangedListener {
+            override fun onFileToPasteChanged() {
+                syncFab()
+            }
         }
     }
 }

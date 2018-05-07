@@ -10,6 +10,7 @@ import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.v4.content.FileProvider
 import android.widget.Toast
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileOpenManager
@@ -19,6 +20,8 @@ class FileModule(
         private val context: Context,
         private val permissionRequestAddOn: PermissionRequestAddOn
 ) {
+
+    private lateinit var mediaScanner: MediaScanner
 
     fun provideFileManager(): FileManager {
         val permissionManager = PermissionManagerImpl(context, permissionRequestAddOn)
@@ -31,6 +34,12 @@ class FileModule(
                         fileManagerAndroid.refresh(path)
                     }
                 })
+        val mediaScanner = getMediaScanner()
+        mediaScanner.setListener(object : MediaScanner.RefreshListener {
+            override fun onContentChanged(path: String) {
+                fileManagerAndroid.refresh(path)
+            }
+        })
         fileObserver.startWatching()
         return fileManagerAndroid
     }
@@ -49,12 +58,28 @@ class FileModule(
     }
 
     fun provideFileDeleteManager(): FileDeleteManager {
-        val addOn: FileDeleteManagerAndroid.AddOn = object : FileDeleteManagerAndroid.AddOn {
-            override fun refreshSystemMediaScanDataBase(path: String) {
-                refreshSystemMediaScanDataBase(context, path)
-            }
+        val mediaScanner = getMediaScanner()
+        return FileDeleteManagerAndroid(
+                mediaScanner
+        )
+    }
+
+    fun provideFileCopyCutManager(): FileCopyCutManager {
+        val mediaScanner = getMediaScanner()
+        return FileCopyCutManagerAndroid(
+                mediaScanner
+        )
+    }
+
+    private fun getMediaScanner(): MediaScanner {
+        if (!::mediaScanner.isInitialized) {
+            mediaScanner = MediaScannerAndroid(object : MediaScannerAndroid.AddOn {
+                override fun refreshSystemMediaScanDataBase(path: String) {
+                    refreshSystemMediaScanDataBase(context, path)
+                }
+            })
         }
-        return FileDeleteManagerAndroid(addOn)
+        return mediaScanner
     }
 
     companion object {

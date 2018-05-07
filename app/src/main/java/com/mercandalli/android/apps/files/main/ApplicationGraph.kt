@@ -7,6 +7,7 @@ import android.util.Log
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileOpenManager
@@ -18,6 +19,7 @@ class ApplicationGraph(
     private lateinit var fileManager: FileManager
     private lateinit var fileOpenManager: FileOpenManager
     private lateinit var fileDeleteManager: FileDeleteManager
+    private lateinit var fileCopyCutManager: FileCopyCutManager
     private lateinit var fileModule: FileModule
 
     private fun getFileManagerInternal(): FileManager {
@@ -50,6 +52,16 @@ class ApplicationGraph(
         return fileDeleteManager
     }
 
+    private fun getFileCopyCutManagerInternal(): FileCopyCutManager {
+        if (!::fileCopyCutManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
+                fileModule = createFileModule()
+            }
+            fileCopyCutManager = fileModule.provideFileCopyCutManager()
+        }
+        return fileCopyCutManager
+    }
+
     private fun createFileModule(): FileModule {
         val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
             override fun requestStoragePermission() {
@@ -78,6 +90,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getFileDeleteManager(): FileDeleteManager {
             return graph!!.getFileDeleteManagerInternal()
+        }
+
+        @JvmStatic
+        fun getFileCopyCutManager(): FileCopyCutManager {
+            return graph!!.getFileCopyCutManagerInternal()
         }
 
         @JvmStatic

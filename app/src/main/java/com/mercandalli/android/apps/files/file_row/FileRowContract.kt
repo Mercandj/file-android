@@ -12,6 +12,10 @@ interface FileRowContract {
 
         fun onRowLongClicked()
 
+        fun onCopyClicked()
+
+        fun onCutClicked()
+
         fun onDeleteClicked()
     }
 

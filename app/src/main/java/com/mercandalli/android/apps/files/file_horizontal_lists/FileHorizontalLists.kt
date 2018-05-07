@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.file_horizontal_lists
 
 import android.content.Context
+import android.os.Environment
 import android.support.design.widget.FloatingActionButton
 import android.util.AttributeSet
 import android.view.View
@@ -28,10 +29,16 @@ class FileHorizontalLists @JvmOverloads constructor(
         fab = findViewById(R.id.view_file_horizontal_lists_fab)
         fileListViewContainer = findViewById(R.id.view_file_horizontal_lists_list_view_container)
         horizontalScrollView = findViewById(R.id.view_file_horizontal_lists_horizontal_scroll_view)
+
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         userAction = FileHorizontalListsPresenter(
                 this,
-                fileOpenManager)
+                fileOpenManager,
+                fileCopyCutManager,
+                Environment.getExternalStorageDirectory().absolutePath
+        )
+
         val fileListView = createList(0)
         fileListViews.add(fileListView)
         fileListViewContainer.addView(fileListView)
@@ -40,28 +47,14 @@ class FileHorizontalLists @JvmOverloads constructor(
         }
     }
 
-    fun onResume() {
-        for (fileListView in fileListViews) {
-            fileListView.onResume()
-        }
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
     }
 
-    private fun createList(index: Int): FileListView {
-        val fileListView = FileListView(context)
-        fileListView.layoutParams = FrameLayout.LayoutParams(
-                context.resources.getDimensionPixelSize(R.dimen.file_horizontal_lists_list_width),
-                FrameLayout.LayoutParams.MATCH_PARENT)
-        fileListView.setFileClickListener(object : FileRow.FileClickListener {
-            override fun onFileClicked(file: File) {
-                userAction.onFileClicked(index, file)
-            }
-        })
-        fileListView.setFileLongClickListener(object : FileRow.FileLongClickListener {
-            override fun onFileLongClicked(file: File) {
-                userAction.onFileLongClicked(index, file)
-            }
-        })
-        return fileListView
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
     }
 
     override fun createList(path: String, index: Int) {
@@ -112,5 +105,33 @@ class FileHorizontalLists @JvmOverloads constructor(
 
     override fun hideFab() {
         fab.hide()
+    }
+
+    override fun setFabIcon(drawableRes: Int) {
+        fab.setImageResource(drawableRes)
+    }
+
+    fun onResume() {
+        for (fileListView in fileListViews) {
+            fileListView.onResume()
+        }
+    }
+
+    private fun createList(index: Int): FileListView {
+        val fileListView = FileListView(context)
+        fileListView.layoutParams = FrameLayout.LayoutParams(
+                context.resources.getDimensionPixelSize(R.dimen.file_horizontal_lists_list_width),
+                FrameLayout.LayoutParams.MATCH_PARENT)
+        fileListView.setFileClickListener(object : FileRow.FileClickListener {
+            override fun onFileClicked(file: File) {
+                userAction.onFileClicked(index, file)
+            }
+        })
+        fileListView.setFileLongClickListener(object : FileRow.FileLongClickListener {
+            override fun onFileLongClicked(file: File) {
+                userAction.onFileLongClicked(index, file)
+            }
+        })
+        return fileListView
     }
 }

@@ -2,7 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_file_row_copy"
+        android:title="@string/file_row_copy" />
+
+    <item
+        android:id="@+id/menu_file_row_cut"
+        android:title="@string/file_row_cut" />
+
+    <item
         android:id="@+id/menu_file_row_delete"
-        android:title="Delete" />
+        android:title="@string/file_row_delete" />
 
 </menu>

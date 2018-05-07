@@ -1,11 +1,13 @@
 package com.mercandalli.android.apps.files.file_row
 
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 
 class FileRowPresenter(
         private val screen: FileRowContract.Screen,
-        private val fileDeleteManager: FileDeleteManager
+        private val fileDeleteManager: FileDeleteManager,
+        private val fileCopyCutManager: FileCopyCutManager
 ) : FileRowContract.UserAction {
 
     private var file: File? = null
@@ -28,6 +30,14 @@ class FileRowPresenter(
     override fun onRowLongClicked() {
         screen.showOverflowPopupMenu()
         screen.notifyRowLongClicked(file!!)
+    }
+
+    override fun onCopyClicked() {
+        fileCopyCutManager.copy(file!!.path)
+    }
+
+    override fun onCutClicked() {
+        fileCopyCutManager.cut(file!!.path)
     }
 
     override fun onDeleteClicked() {

@@ -1,0 +1,5 @@
+<resources>
+    <string name="file_row_copy">Copy</string>
+    <string name="file_row_cut">Cut</string>
+    <string name="file_row_delete">Delete</string>
+</resources>
