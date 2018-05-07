@@ -9,8 +9,11 @@ import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -76,6 +79,7 @@ class FileRow @JvmOverloads constructor(
             title.setTextColor(selectedTitleColor)
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
             arrayRight.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+            title.isSelected = true
         } else {
             val backgroundColor = ContextCompat.getColor(
                     context, R.color.view_file_row_background)
