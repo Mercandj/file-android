@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
@@ -31,7 +30,7 @@
         android:layout_marginTop="@dimen/toolbar_height" />
 
     <eightbitlab.com.blurview.BlurView
-        android:id="@+id/blurView"
+        android:id="@+id/activity_main_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_bar_height"
         android:layout_gravity="bottom"

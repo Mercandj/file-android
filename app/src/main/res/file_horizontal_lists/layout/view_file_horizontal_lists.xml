@@ -28,7 +28,8 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/default_space_2"
+        android:layout_marginBottom="@dimen/bottom_bar_height_plus_24"
+        android:layout_marginEnd="@dimen/default_space_2"
         android:padding="0dp"
         android:src="@drawable/ic_play_arrow_black_24dp"
         android:tint="@android:color/white" />

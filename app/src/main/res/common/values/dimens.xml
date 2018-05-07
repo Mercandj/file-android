@@ -3,6 +3,7 @@
     <dimen name="toolbar_height">58dp</dimen>
     <dimen name="bottom_bar_height">58dp</dimen>
     <dimen name="bottom_bar_height_plus_6">64dp</dimen>
+    <dimen name="bottom_bar_height_plus_24">82dp</dimen>
 
     <!-- Default values -->
     <dimen name="default_space_quart">2dp</dimen>

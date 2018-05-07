@@ -17,24 +17,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fileHorizontalLists = findViewById(R.id.activity_main_file_horizontal_lists)
-
-
-        val radius = 2f
-        val decorView = window.decorView
-        //Activity's root View. Can also be root View of your layout (preferably)
-        val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
-        //set background, if your root layout doesn't have one
-        val windowBackground = decorView.background
-
-        findViewById<BlurView>(R.id.blurView).setupWith(rootView)
-                .windowBackground(windowBackground)
-                .blurAlgorithm(RenderScriptBlur(this))
-                .blurRadius(radius)
-                .setHasFixedTransformationMatrix(true)
+        setBottomBarBlur()
     }
 
     override fun onResume() {
         super.onResume()
         fileHorizontalLists.onResume()
+    }
+
+    private fun setBottomBarBlur() {
+        val radius = 2f
+        val decorView = window.decorView
+        val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
+        val windowBackground = decorView.background
+        findViewById<BlurView>(R.id.activity_main_bottom_bar).setupWith(rootView)
+                .windowBackground(windowBackground)
+                .blurAlgorithm(RenderScriptBlur(this))
+                .blurRadius(radius)
+                .setHasFixedTransformationMatrix(true)
     }
 }
