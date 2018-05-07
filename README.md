@@ -1,5 +1,11 @@
 # File application on Android - WorkInProgress
 
+<p align="center">
+	<a margin="20px 0" href="https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files">
+		<img  src="https://raw.github.com/Mercandj/file-android/master/config/screenshot/mercandalli_file_1.png" width="560" />
+	</a>
+</p>
+
 ## Commit rules
 
 In order to have a clean commit list and to easily find feature of a commit (goal, fix bug...), the commit message should respect some rules.
