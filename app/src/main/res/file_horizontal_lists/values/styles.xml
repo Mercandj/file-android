@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="HorizontalAppTheme" parent="AppTheme">
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrollbar</item>
+    </style>
+
+</resources>

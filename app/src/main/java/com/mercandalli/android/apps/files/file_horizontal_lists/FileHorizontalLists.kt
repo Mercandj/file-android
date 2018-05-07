@@ -73,6 +73,8 @@ class FileHorizontalLists @JvmOverloads constructor(
         fileListView.setPath(path)
         fileListViews.add(fileListView)
         fileListViewContainer.addView(fileListView)
+
+        horizontalScrollView.scrollBarFadeDuration = 10000
     }
 
     override fun setPath(path: String, index: Int) {

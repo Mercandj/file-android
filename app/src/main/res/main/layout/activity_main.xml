@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -28,12 +30,30 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/toolbar_height" />
 
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:layout_gravity="bottom"
+        android:scaleType="centerCrop"
+        app:blurOverlayColor="#aaffffff">
+
+    </eightbitlab.com.blurview.BlurView>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="6dp"
         android:layout_gravity="top"
         android:layout_marginTop="@dimen/toolbar_height"
         android:background="@drawable/shadow_bottom"
+        android:clickable="false" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/bottom_bar_height"
+        android:background="@drawable/shadow_top"
         android:clickable="false" />
 
 </merge>

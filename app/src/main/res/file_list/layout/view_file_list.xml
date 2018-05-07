@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="top"
             android:clipToPadding="false"
-            android:paddingBottom="6dp"
+            android:paddingBottom="@dimen/bottom_bar_height_plus_6"
             android:paddingTop="6dp"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
@@ -43,8 +43,9 @@
 
     <View
         android:layout_width="1dp"
-        android:layout_gravity="end"
         android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginBottom="@dimen/bottom_bar_height"
         android:background="#18000000" />
 
 </merge>
