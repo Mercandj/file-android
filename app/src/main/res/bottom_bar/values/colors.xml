@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bottom_bar_selected">@color/color_primary</color>
+    <color name="bottom_bar_not_selected">#b6b6b6</color>
+</resources>

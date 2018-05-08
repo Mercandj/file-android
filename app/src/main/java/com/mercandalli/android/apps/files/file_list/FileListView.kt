@@ -35,14 +35,28 @@ class FileListView @JvmOverloads constructor(
         recyclerView.adapter = adapter
         emptyView = findViewById(R.id.view_file_list_empty_view)
         error = findViewById(R.id.view_file_list_error)
-        val fileManager = ApplicationGraph.getFileManager()
-        userAction = FileListPresenter(
-                this,
-                fileManager,
-                Environment.getExternalStorageDirectory().absolutePath)
+        userAction = createUserAction()
         refresh.setOnRefreshListener {
             userAction.onRefresh()
         }
+    }
+
+    private fun createUserAction(): FileListContract.UserAction {
+        if (isInEditMode) {
+            return object : FileListContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
+                override fun onResume() {}
+                override fun onRefresh() {}
+                override fun onPathChanged(path: String) {}
+                override fun onPathSelected(path: String?) {}
+            }
+        }
+        val fileManager = ApplicationGraph.getFileManager()
+        return FileListPresenter(
+                this,
+                fileManager,
+                Environment.getExternalStorageDirectory().absolutePath)
     }
 
     override fun onAttachedToWindow() {

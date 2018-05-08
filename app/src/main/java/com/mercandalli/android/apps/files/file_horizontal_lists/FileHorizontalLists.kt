@@ -29,15 +29,7 @@ class FileHorizontalLists @JvmOverloads constructor(
         fab = findViewById(R.id.view_file_horizontal_lists_fab)
         fileListViewContainer = findViewById(R.id.view_file_horizontal_lists_list_view_container)
         horizontalScrollView = findViewById(R.id.view_file_horizontal_lists_horizontal_scroll_view)
-
-        val fileOpenManager = ApplicationGraph.getFileOpenManager()
-        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
-        userAction = FileHorizontalListsPresenter(
-                this,
-                fileOpenManager,
-                fileCopyCutManager,
-                Environment.getExternalStorageDirectory().absolutePath
-        )
+        userAction = createUserAction()
 
         val fileListView = createList(0)
         fileListViews.add(fileListView)
@@ -115,6 +107,26 @@ class FileHorizontalLists @JvmOverloads constructor(
         for (fileListView in fileListViews) {
             fileListView.onResume()
         }
+    }
+
+    private fun createUserAction(): FileHorizontalListsContract.UserAction {
+        if (isInEditMode) {
+            return object : FileHorizontalListsContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
+                override fun onFileClicked(index: Int, file: File) {}
+                override fun onFileLongClicked(index: Int, file: File) {}
+                override fun onFabClicked() {}
+            }
+        }
+        val fileOpenManager = ApplicationGraph.getFileOpenManager()
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
+        return FileHorizontalListsPresenter(
+                this,
+                fileOpenManager,
+                fileCopyCutManager,
+                Environment.getExternalStorageDirectory().absolutePath
+        )
     }
 
     private fun createList(index: Int): FileListView {

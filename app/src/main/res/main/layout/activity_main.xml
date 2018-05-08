@@ -37,6 +37,10 @@
         android:scaleType="centerCrop"
         app:blurOverlayColor="#aaffffff">
 
+        <com.mercandalli.android.apps.files.bottom_bar.BottomBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </eightbitlab.com.blurview.BlurView>
 
     <View

@@ -32,6 +32,7 @@ android {
             // Split resources.
             // https://medium.com/google-developer-experts/android-project-structure-alternative-way-29ce766682f0#.sjnhetuhb
             res.srcDirs = [
+                    'src/main/res/bottom_bar',
                     'src/main/res/common',
                     'src/main/res/file_horizontal_lists',
                     'src/main/res/file_list',

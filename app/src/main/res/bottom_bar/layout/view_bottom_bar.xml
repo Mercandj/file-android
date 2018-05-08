@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <LinearLayout
+        android:id="@+id/view_bottom_bar_section_file"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="@dimen/default_space_4"
+        android:layout_weight="1"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/view_bottom_bar_section_icon_file"
+            android:layout_width="@dimen/bottom_bar_icon_dimen"
+            android:layout_height="@dimen/bottom_bar_icon_dimen"
+            android:src="@drawable/ic_folder_black_24dp"
+            android:tint="@color/bottom_bar_selected" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Files"
+            android:textSize="@dimen/bottom_bar_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_bottom_bar_section_note"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/view_bottom_bar_section_icon_note"
+            android:layout_width="@dimen/bottom_bar_icon_dimen"
+            android:layout_height="@dimen/bottom_bar_icon_dimen"
+            android:src="@drawable/ic_create_black_24dp"
+            android:tint="@color/bottom_bar_not_selected" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textSize="@dimen/bottom_bar_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/view_bottom_bar_section_settings"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/default_space_4"
+        android:layout_marginStart="0dp"
+        android:layout_weight="1"
+        android:background="?android:selectableItemBackground"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/view_bottom_bar_section_icon_settings"
+            android:layout_width="@dimen/bottom_bar_icon_dimen"
+            android:layout_height="@dimen/bottom_bar_icon_dimen"
+            android:src="@drawable/ic_settings_black_24dp"
+            android:tint="@color/bottom_bar_not_selected" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="@dimen/bottom_bar_text_size" />
+
+    </LinearLayout>
+
+</merge>
