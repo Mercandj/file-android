@@ -36,6 +36,7 @@ android {
                     'src/main/res/file_horizontal_lists',
                     'src/main/res/file_list',
                     'src/main/res/file_row',
+                    'src/main/res/icon',
                     'src/main/res/main',
                     'src/main/res/permission'
             ]
