@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FileSpace</string>
+    <string name="oops_something_went_wrong">Oops, something went wrong :(</string>
 </resources>

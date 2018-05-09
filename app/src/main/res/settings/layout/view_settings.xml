@@ -5,13 +5,69 @@
     android:layout_height="match_parent"
     tools:parentTag="android.widget.FrameLayout">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/default_space_3"
-        android:layout_marginStart="@dimen/default_space_3"
-        android:gravity="center"
-        android:text="Version 1.00.00\n\nI hope you like this new version\nStill a lot of features and bug fixes to come =)" />
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/default_space_3"
+            android:layout_marginStart="@dimen/default_space_3"
+            android:gravity="center"
+            android:text="Version 1.00.00"
+            android:textSize="@dimen/text_size_xxl"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/default_space_3"
+            android:layout_marginStart="@dimen/default_space_3"
+            android:layout_marginTop="@dimen/default_space_2"
+            android:gravity="center"
+            android:text="I hope you like this new version\nStill a lot of features and bug fixes to come =)"
+            android:textSize="@dimen/text_size_l" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/view_settings_rate"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="260dp"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/default_space_1_5"
+            android:layout_marginEnd="@dimen/default_space_3"
+            android:layout_marginStart="@dimen/default_space_3"
+            android:layout_marginTop="@dimen/default_space_4"
+            android:background="@drawable/bg_default_btn"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="RATE THIS APP ❤️"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_xl" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/view_settings_team_apps"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="260dp"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/default_space_1_5"
+            android:layout_marginEnd="@dimen/default_space_3"
+            android:layout_marginStart="@dimen/default_space_3"
+            android:background="@drawable/bg_default_btn"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="MY OTHER GREAT APPS"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_xl" />
+
+    </LinearLayout>
 
 </merge>
