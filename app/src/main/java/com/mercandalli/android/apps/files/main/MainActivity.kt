@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
+import android.app.AlertDialog
+import android.app.TaskStackBuilder
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.bottom_bar.BottomBar
+import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.file_horizontal_lists.FileHorizontalLists
 import com.mercandalli.android.apps.files.note.NoteView
 import com.mercandalli.android.apps.files.settings.SettingsView
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
     private lateinit var bottomBar: BottomBar
     private lateinit var toolbarDelete: View
     private lateinit var toolbarShare: View
+    private lateinit var toolbarAdd: View
     private lateinit var userAction: MainActivityContract.UserAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +37,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         bottomBar = findViewById(R.id.activity_main_bottom_bar)
         toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
         toolbarShare = findViewById(R.id.activity_main_toolbar_share)
+        toolbarAdd = findViewById(R.id.activity_main_toolbar_add)
         window.setBackgroundDrawable(ColorDrawable(
                 ContextCompat.getColor(this, R.color.window_background_light)))
-
-        userAction = MainActivityPresenter(
-                this
-        )
+        userAction = createUserAction()
         bottomBar.setOnBottomBarClickListener(object : BottomBar.OnBottomBarClickListener {
             override fun onFileSectionClicked() {
                 userAction.onFileSectionClicked()
@@ -58,6 +60,14 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarShare.setOnClickListener {
             userAction.onToolbarShareClicked()
         }
+        toolbarAdd.setOnClickListener {
+            userAction.onToolbarAddClicked()
+        }
+        fileHorizontalLists.setFileHorizontalListsSelectedFileListener(object : FileHorizontalLists.FileHorizontalListsSelectedFileListener {
+            override fun onSelectedFilePathChanged(path: String?) {
+                userAction.onSelectedFilePathChanged(path)
+            }
+        })
         setBottomBarBlur()
     }
 
@@ -106,12 +116,46 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarShare.visibility = View.GONE
     }
 
+    override fun showToolbarAdd() {
+        toolbarAdd.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarAdd() {
+        toolbarAdd.visibility = View.GONE
+    }
+
     override fun deleteNote() {
         note.onDeleteClicked()
     }
 
     override fun shareNote() {
         note.onShareClicked()
+    }
+
+    override fun showFileCreationSelection() {
+        val menuAlert = AlertDialog.Builder(this)
+        val menuList = arrayOf<String>(getString(R.string.file_model_local_new_folder_file))
+        menuAlert.setTitle(getString(R.string.file_model_local_new_title))
+        menuAlert.setItems(menuList) { _, item ->
+            when (item) {
+                0 -> DialogUtils.prompt(
+                        this,
+                        getString(R.string.file_model_local_new_folder_file),
+                        getString(R.string.file_model_local_new_folder_file_description),
+                        getString(R.string.ok),
+                        DialogUtils.OnDialogUtilsStringListener { text -> userAction.onFileCreationConfirmed(text!!) },
+                        getString(android.R.string.cancel), null, null)
+            }
+        }
+        menuAlert.create().show()
+    }
+
+    private fun createUserAction(): MainActivityContract.UserAction {
+        val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
+        return MainActivityPresenter(
+                this,
+                fileCreatorManager
+        )
     }
 
     private fun setBottomBarBlur() {

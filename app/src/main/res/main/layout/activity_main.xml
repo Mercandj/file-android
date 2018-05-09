@@ -30,6 +30,16 @@
             android:paddingStart="6dp">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/activity_main_toolbar_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?android:selectableItemBackground"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_add_black_24dp" />
+
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

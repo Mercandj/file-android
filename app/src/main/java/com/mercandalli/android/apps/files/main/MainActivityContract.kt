@@ -13,6 +13,12 @@ interface MainActivityContract {
         fun onToolbarDeleteClicked()
 
         fun onToolbarShareClicked()
+
+        fun onToolbarAddClicked()
+
+        fun onFileCreationConfirmed(fileName: String)
+
+        fun onSelectedFilePathChanged(path: String?)
     }
 
     interface Screen {
@@ -37,8 +43,14 @@ interface MainActivityContract {
 
         fun hideToolbarShare()
 
+        fun showToolbarAdd()
+
+        fun hideToolbarAdd()
+
         fun deleteNote()
 
         fun shareNote()
+
+        fun showFileCreationSelection()
     }
 }

@@ -23,6 +23,7 @@ class FileHorizontalLists @JvmOverloads constructor(
     private val fab: FloatingActionButton
     private val fileListViewContainer: LinearLayout
     private val horizontalScrollView: HorizontalScrollView
+    private var fileHorizontalListsSelectedFileListener: FileHorizontalListsSelectedFileListener? = null
 
     init {
         View.inflate(context, R.layout.view_file_horizontal_lists, this)
@@ -89,6 +90,7 @@ class FileHorizontalLists @JvmOverloads constructor(
         for (fileListView in fileListViews) {
             fileListView.onPathSelected(path)
         }
+        fileHorizontalListsSelectedFileListener?.onSelectedFilePathChanged(path)
     }
 
     override fun showFab() {
@@ -107,6 +109,10 @@ class FileHorizontalLists @JvmOverloads constructor(
         for (fileListView in fileListViews) {
             fileListView.onResume()
         }
+    }
+
+    fun setFileHorizontalListsSelectedFileListener(listener: FileHorizontalListsSelectedFileListener?) {
+        fileHorizontalListsSelectedFileListener = listener
     }
 
     private fun createUserAction(): FileHorizontalListsContract.UserAction {
@@ -145,5 +151,9 @@ class FileHorizontalLists @JvmOverloads constructor(
             }
         })
         return fileListView
+    }
+
+    interface FileHorizontalListsSelectedFileListener {
+        fun onSelectedFilePathChanged(path: String?)
     }
 }

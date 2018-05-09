@@ -20,6 +20,7 @@ class ApplicationGraph(
     private lateinit var fileOpenManager: FileOpenManager
     private lateinit var fileDeleteManager: FileDeleteManager
     private lateinit var fileCopyCutManager: FileCopyCutManager
+    private lateinit var fileCreatorManager: FileCreatorManager
     private lateinit var fileRenameManager: FileRenameManager
     private lateinit var fileModule: FileModule
     private lateinit var noteManager: NoteManager
@@ -62,6 +63,16 @@ class ApplicationGraph(
             fileCopyCutManager = fileModule.provideFileCopyCutManager()
         }
         return fileCopyCutManager
+    }
+
+    private fun getFileCreatorManagerInternal(): FileCreatorManager {
+        if (!::fileCreatorManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
+                fileModule = createFileModule()
+            }
+            fileCreatorManager = fileModule.provideFileCreatorManager()
+        }
+        return fileCreatorManager
     }
 
     private fun getFileRenameManagerInternal(): FileRenameManager {
@@ -114,6 +125,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getFileCopyCutManager(): FileCopyCutManager {
             return graph!!.getFileCopyCutManagerInternal()
+        }
+
+        @JvmStatic
+        fun getFileCreatorManager(): FileCreatorManager {
+            return graph!!.getFileCreatorManagerInternal()
         }
 
         @JvmStatic

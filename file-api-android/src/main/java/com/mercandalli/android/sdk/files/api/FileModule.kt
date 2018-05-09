@@ -19,9 +19,11 @@ class FileModule(
 ) {
 
     private lateinit var mediaScanner: MediaScanner
+    private lateinit var permissionManager: PermissionManager
+
 
     fun provideFileManager(): FileManager {
-        val permissionManager = PermissionManagerImpl(context, permissionRequestAddOn)
+        val permissionManager = getPermissionManager()
         val fileManagerAndroid = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
                 Environment.getExternalStorageDirectory().absolutePath,
@@ -68,6 +70,15 @@ class FileModule(
         )
     }
 
+    fun provideFileCreatorManager(): FileCreatorManager {
+        val permissionManager = getPermissionManager()
+        val mediaScanner = getMediaScanner()
+        return FileCreatorManagerAndroid(
+                permissionManager,
+                mediaScanner
+        )
+    }
+
     fun provideFileRenameManager(): FileRenameManager {
         val mediaScanner = getMediaScanner()
         return FileRenameManagerAndroid(
@@ -84,6 +95,13 @@ class FileModule(
             })
         }
         return mediaScanner
+    }
+
+    private fun getPermissionManager(): PermissionManager {
+        if (!::permissionManager.isInitialized) {
+            permissionManager = PermissionManagerImpl(context, permissionRequestAddOn)
+        }
+        return permissionManager
     }
 
     companion object {
