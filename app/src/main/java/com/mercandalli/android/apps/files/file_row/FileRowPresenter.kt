@@ -3,11 +3,13 @@ package com.mercandalli.android.apps.files.file_row
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileRenameManager
 
 class FileRowPresenter(
         private val screen: FileRowContract.Screen,
         private val fileDeleteManager: FileDeleteManager,
-        private val fileCopyCutManager: FileCopyCutManager
+        private val fileCopyCutManager: FileCopyCutManager,
+        private val fileRenameManager: FileRenameManager
 ) : FileRowContract.UserAction {
 
     private var file: File? = null
@@ -41,7 +43,19 @@ class FileRowPresenter(
     }
 
     override fun onDeleteClicked() {
+        screen.showDeleteConfirmation(file!!.name)
+    }
+
+    override fun onDeleteConfirmedClicked() {
         fileDeleteManager.delete(file!!.path)
+    }
+
+    override fun onRenameClicked() {
+        screen.showRenamePrompt(file!!.name)
+    }
+
+    override fun onRenameConfirmedClicked(fileName: String) {
+        fileRenameManager.rename(file!!.path, fileName)
     }
 
     companion object {

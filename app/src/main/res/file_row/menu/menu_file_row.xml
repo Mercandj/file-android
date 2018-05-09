@@ -13,4 +13,8 @@
         android:id="@+id/menu_file_row_delete"
         android:title="@string/file_row_delete" />
 
+    <item
+        android:id="@+id/menu_file_row_rename"
+        android:title="@string/file_row_rename" />
+
 </menu>

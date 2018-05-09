@@ -10,10 +10,7 @@ import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
-import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileDeleteManager
-import com.mercandalli.sdk.files.api.FileManager
-import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.*
 
 class ApplicationGraph(
         private val context: Context
@@ -23,6 +20,7 @@ class ApplicationGraph(
     private lateinit var fileOpenManager: FileOpenManager
     private lateinit var fileDeleteManager: FileDeleteManager
     private lateinit var fileCopyCutManager: FileCopyCutManager
+    private lateinit var fileRenameManager: FileRenameManager
     private lateinit var fileModule: FileModule
     private lateinit var noteManager: NoteManager
 
@@ -66,6 +64,16 @@ class ApplicationGraph(
         return fileCopyCutManager
     }
 
+    private fun getFileRenameManagerInternal(): FileRenameManager {
+        if (!::fileRenameManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
+                fileModule = createFileModule()
+            }
+            fileRenameManager = fileModule.provideFileRenameManager()
+        }
+        return fileRenameManager
+    }
+
     private fun getNoteManagerInternal(): NoteManager {
         if (!::noteManager.isInitialized) {
             noteManager = NoteModule(context).provideNoteManager()
@@ -106,6 +114,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getFileCopyCutManager(): FileCopyCutManager {
             return graph!!.getFileCopyCutManagerInternal()
+        }
+
+        @JvmStatic
+        fun getFileRenameManager(): FileRenameManager {
+            return graph!!.getFileRenameManagerInternal()
         }
 
         @JvmStatic

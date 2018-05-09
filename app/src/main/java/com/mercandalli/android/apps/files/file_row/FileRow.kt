@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
@@ -23,7 +24,7 @@ class FileRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileRowContract.Screen {
 
-    private val userAction: FileRowPresenter
+    private val userAction: FileRowContract.UserAction
     private val icon: ImageView
     private val title: TextView
     private val arrayRight: ImageView
@@ -36,14 +37,7 @@ class FileRow @JvmOverloads constructor(
         title = findViewById(R.id.view_file_row_title)
         arrayRight = findViewById(R.id.view_file_row_arrow_right)
         foreground = getSelectableItemBackground(context)
-
-        val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
-        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
-        userAction = FileRowPresenter(
-                this,
-                fileDeleteManager,
-                fileCopyCutManager
-        )
+        userAction = createUserAction()
 
         setOnClickListener { userAction.onRowClicked() }
         setOnLongClickListener {
@@ -104,6 +98,21 @@ class FileRow @JvmOverloads constructor(
         showOverflowPopupMenu(this)
     }
 
+    override fun showDeleteConfirmation(fileName: String) {
+        DialogUtils.alert(context, "Delete file?",
+                "Do you want to delete: $fileName", "Yes",
+                { userAction.onDeleteConfirmedClicked() }, "No", {}
+        )
+    }
+
+    override fun showRenamePrompt(fileName: String) {
+        DialogUtils.prompt(context, "Rename file?",
+                "Enter a new name for: $fileName", "Rename",
+                { userAction.onRenameConfirmedClicked(it) }, "Dismiss", {},
+                fileName, "File name", {}
+        )
+    }
+
     fun setFile(file: File, selectedPath: String?) {
         userAction.onFileChanged(file, selectedPath)
     }
@@ -112,14 +121,29 @@ class FileRow @JvmOverloads constructor(
         fileClickListener = listener
     }
 
-    companion object {
-        fun getSelectableItemBackground(context: Context): Drawable? {
-            val attrs = intArrayOf(android.R.attr.selectableItemBackground /* index 0 */)
-            val ta = context.obtainStyledAttributes(attrs)
-            val drawableFromTheme = ta.getDrawable(0 /* index */)
-            ta.recycle()
-            return drawableFromTheme
+    private fun createUserAction(): FileRowContract.UserAction {
+        if (isInEditMode) {
+            return object : FileRowContract.UserAction {
+                override fun onFileChanged(file: File, selectedPath: String?) {}
+                override fun onRowClicked() {}
+                override fun onRowLongClicked() {}
+                override fun onCopyClicked() {}
+                override fun onCutClicked() {}
+                override fun onDeleteClicked() {}
+                override fun onDeleteConfirmedClicked() {}
+                override fun onRenameClicked() {}
+                override fun onRenameConfirmedClicked(fileName: String) {}
+            }
         }
+        val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
+        val fileRenameManager = ApplicationGraph.getFileRenameManager()
+        return FileRowPresenter(
+                this,
+                fileDeleteManager,
+                fileCopyCutManager,
+                fileRenameManager
+        )
     }
 
     /**
@@ -135,10 +159,21 @@ class FileRow @JvmOverloads constructor(
                 R.id.menu_file_row_copy -> userAction.onCopyClicked()
                 R.id.menu_file_row_cut -> userAction.onCutClicked()
                 R.id.menu_file_row_delete -> userAction.onDeleteClicked()
+                R.id.menu_file_row_rename -> userAction.onRenameClicked()
             }
             false
         })
         popupMenu.show()
+    }
+
+    companion object {
+        fun getSelectableItemBackground(context: Context): Drawable? {
+            val attrs = intArrayOf(android.R.attr.selectableItemBackground /* index 0 */)
+            val ta = context.obtainStyledAttributes(attrs)
+            val drawableFromTheme = ta.getDrawable(0 /* index */)
+            ta.recycle()
+            return drawableFromTheme
+        }
     }
 
     interface FileClickListener {

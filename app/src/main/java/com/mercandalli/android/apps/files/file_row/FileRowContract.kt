@@ -17,6 +17,12 @@ interface FileRowContract {
         fun onCutClicked()
 
         fun onDeleteClicked()
+
+        fun onDeleteConfirmedClicked()
+
+        fun onRenameClicked()
+
+        fun onRenameConfirmedClicked(fileName: String)
     }
 
     interface Screen {
@@ -34,5 +40,9 @@ interface FileRowContract {
         fun notifyRowLongClicked(file: File)
 
         fun showOverflowPopupMenu()
+
+        fun showDeleteConfirmation(fileName: String)
+
+        fun showRenamePrompt(fileName: String)
     }
 }

@@ -10,10 +10,7 @@ import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.v4.content.FileProvider
 import android.widget.Toast
-import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileDeleteManager
-import com.mercandalli.sdk.files.api.FileManager
-import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.*
 import java.io.File
 
 class FileModule(
@@ -67,6 +64,13 @@ class FileModule(
     fun provideFileCopyCutManager(): FileCopyCutManager {
         val mediaScanner = getMediaScanner()
         return FileCopyCutManagerAndroid(
+                mediaScanner
+        )
+    }
+
+    fun provideFileRenameManager(): FileRenameManager {
+        val mediaScanner = getMediaScanner()
+        return FileRenameManagerAndroid(
                 mediaScanner
         )
     }
