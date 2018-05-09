@@ -24,8 +24,11 @@ Commit messages are important. They are the only way to give context to the chan
 
 Do our future selves a favour and start writing better commit messages now :)
 
+## Some developer gradle tools
 
-## DEVELOPER
+* ```gradlew dependencyUpdates -Drevision=release -DoutputFormatter=json``` : Check [dependencies](https://github.com/ben-manes/gradle-versions-plugin)
+
+## Developer
 
 * Mercandalli Jonathan
 

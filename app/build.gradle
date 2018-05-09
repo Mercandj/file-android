@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
+// Check dependencies.
+// https://github.com/ben-manes/gradle-versions-plugin
+apply plugin: 'com.github.ben-manes.versions'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -14,6 +18,7 @@ android {
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "en", "fr"
 
         // https://github.com/Dimezis/BlurView
         renderscriptTargetApi rootProject.ext.targetSdkVersion
