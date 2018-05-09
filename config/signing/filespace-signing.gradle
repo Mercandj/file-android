@@ -1,0 +1,6 @@
+rootProject.ext.releaseFilespaceSigningConfig = {
+    storeFile file("../config/signing/filespace.jks")
+    storePassword ""
+    keyAlias ""
+    keyPassword ""
+}
