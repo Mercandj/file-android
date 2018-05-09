@@ -21,7 +21,6 @@ class NoteView @JvmOverloads constructor(
         View.inflate(context, R.layout.view_note, this)
         editText = findViewById(R.id.view_note_input)
         userAction = createUserAction()
-
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 

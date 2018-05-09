@@ -67,6 +67,14 @@
         android:layout_marginTop="@dimen/toolbar_height"
         android:visibility="gone" />
 
+    <com.mercandalli.android.apps.files.settings.SettingsView
+        android:id="@+id/activity_main_settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_bar_height"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:visibility="gone" />
+
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/activity_main_bottom_bar_container"
         android:layout_width="match_parent"

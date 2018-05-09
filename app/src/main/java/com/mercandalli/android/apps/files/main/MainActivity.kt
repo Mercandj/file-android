@@ -10,6 +10,7 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.file_horizontal_lists.FileHorizontalLists
 import com.mercandalli.android.apps.files.note.NoteView
+import com.mercandalli.android.apps.files.settings.SettingsView
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
 
     private lateinit var fileHorizontalLists: FileHorizontalLists
     private lateinit var note: NoteView
+    private lateinit var settings: SettingsView
     private lateinit var bottomBar: BottomBar
     private lateinit var toolbarDelete: View
     private lateinit var toolbarShare: View
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         setContentView(R.layout.activity_main)
         fileHorizontalLists = findViewById(R.id.activity_main_file_horizontal_lists)
         note = findViewById(R.id.activity_main_note)
+        settings = findViewById(R.id.activity_main_settings)
         bottomBar = findViewById(R.id.activity_main_bottom_bar)
         toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
         toolbarShare = findViewById(R.id.activity_main_toolbar_share)
@@ -80,11 +83,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
     }
 
     override fun showSettingsView() {
-
+        settings.visibility = View.VISIBLE
     }
 
     override fun hideSettingsView() {
-
+        settings.visibility = View.GONE
     }
 
     override fun showToolbarDelete() {
