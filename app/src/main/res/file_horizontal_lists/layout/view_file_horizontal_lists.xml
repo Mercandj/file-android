@@ -16,10 +16,23 @@
         android:scrollbarSize="6dp">
 
         <LinearLayout
-            android:id="@+id/view_file_horizontal_lists_list_view_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/view_file_horizontal_lists_list_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+            <com.mercandalli.android.apps.files.file_detail.FileDetailView
+                android:id="@+id/view_file_horizontal_lists_file_detail_view"
+                android:layout_width="@dimen/file_horizontal_lists_list_width"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </HorizontalScrollView>
 

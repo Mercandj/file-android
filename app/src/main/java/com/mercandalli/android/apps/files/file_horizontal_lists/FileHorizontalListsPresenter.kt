@@ -3,7 +3,6 @@ package com.mercandalli.android.apps.files.file_horizontal_lists
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileHorizontalListsPresenter(
@@ -35,14 +34,18 @@ class FileHorizontalListsPresenter(
             sizeLists = 1
             screen.setListsSize(1)
             setSelectedFile(null)
+            screen.hideFileDeDetailView()
             return
         }
         if (!file.directory) {
             sizeLists = index + 1
             screen.setListsSize(sizeLists)
             setSelectedFile(file)
+            screen.showFileDetailView(file)
+            screen.scrollEnd()
             return
         }
+        screen.hideFileDeDetailView()
         if (index > sizeLists - 1) {
             throw IllegalStateException("index:$index sizeLists-1:" + (sizeLists - 1))
         }

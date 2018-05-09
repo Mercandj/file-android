@@ -97,6 +97,7 @@ android {
             res.srcDirs = [
                     'src/main/res/bottom_bar',
                     'src/main/res/common',
+                    'src/main/res/file_detail',
                     'src/main/res/file_horizontal_lists',
                     'src/main/res/file_list',
                     'src/main/res/file_row',

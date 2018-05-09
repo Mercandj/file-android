@@ -2,10 +2,9 @@ package com.mercandalli.android.apps.files.main
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.v4.app.ActivityCompat
-import android.util.Log
+import com.mercandalli.android.apps.files.audio.AudioManager
+import com.mercandalli.android.apps.files.audio.AudioModule
 import com.mercandalli.android.apps.files.note.NoteManager
-import com.mercandalli.android.apps.files.note.NoteManagerSharedPreferences
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.sdk.files.api.FileModule
@@ -16,6 +15,7 @@ class ApplicationGraph(
         private val context: Context
 ) {
 
+    private lateinit var audioManager: AudioManager
     private lateinit var fileManager: FileManager
     private lateinit var fileOpenManager: FileOpenManager
     private lateinit var fileDeleteManager: FileDeleteManager
@@ -24,6 +24,13 @@ class ApplicationGraph(
     private lateinit var fileRenameManager: FileRenameManager
     private lateinit var fileModule: FileModule
     private lateinit var noteManager: NoteManager
+
+    private fun getAudioManagerInternal(): AudioManager {
+        if (!::audioManager.isInitialized) {
+            audioManager = AudioModule().provideAudioManager()
+        }
+        return audioManager
+    }
 
     private fun getFileManagerInternal(): FileManager {
         if (!::fileManager.isInitialized) {
@@ -106,6 +113,11 @@ class ApplicationGraph(
         @JvmStatic
         @SuppressLint("StaticFieldLeak")
         private var graph: ApplicationGraph? = null
+
+        @JvmStatic
+        fun getAudioManager(): AudioManager {
+            return graph!!.getAudioManagerInternal()
+        }
 
         @JvmStatic
         fun getFileManager(): FileManager {

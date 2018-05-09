@@ -34,5 +34,9 @@ interface FileHorizontalListsContract {
         fun hideFab()
 
         fun setFabIcon(drawableRes: Int)
+
+        fun showFileDetailView(file: File)
+
+        fun hideFileDeDetailView()
     }
 }

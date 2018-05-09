@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.file_detail.FileDetailView
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.file_row.FileRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -20,6 +21,7 @@ class FileHorizontalLists @JvmOverloads constructor(
 
     private val userAction: FileHorizontalListsContract.UserAction
     private val fileListViews = ArrayList<FileListView>()
+    private val fileDetailView: FileDetailView
     private val fab: FloatingActionButton
     private val fileListViewContainer: LinearLayout
     private val horizontalScrollView: HorizontalScrollView
@@ -28,6 +30,7 @@ class FileHorizontalLists @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_file_horizontal_lists, this)
         fab = findViewById(R.id.view_file_horizontal_lists_fab)
+        fileDetailView = findViewById(R.id.view_file_horizontal_lists_file_detail_view)
         fileListViewContainer = findViewById(R.id.view_file_horizontal_lists_list_view_container)
         horizontalScrollView = findViewById(R.id.view_file_horizontal_lists_horizontal_scroll_view)
         userAction = createUserAction()
@@ -60,7 +63,7 @@ class FileHorizontalLists @JvmOverloads constructor(
         fileListViews.add(fileListView)
         fileListViewContainer.addView(fileListView)
 
-        horizontalScrollView.scrollBarFadeDuration = 10000
+        horizontalScrollView.scrollBarFadeDuration = 10_000
     }
 
     override fun setPath(path: String, index: Int) {
@@ -103,6 +106,16 @@ class FileHorizontalLists @JvmOverloads constructor(
 
     override fun setFabIcon(drawableRes: Int) {
         fab.setImageResource(drawableRes)
+    }
+
+    override fun showFileDetailView(file: File) {
+        fileDetailView.visibility = View.VISIBLE
+        fileDetailView.setFile(file)
+    }
+
+    override fun hideFileDeDetailView() {
+        fileDetailView.visibility = View.GONE
+        fileDetailView.setFile(null)
     }
 
     fun onResume() {
