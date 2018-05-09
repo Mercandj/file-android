@@ -39,6 +39,7 @@ android {
                     'src/main/res/file_row',
                     'src/main/res/icon',
                     'src/main/res/main',
+                    'src/main/res/note',
                     'src/main/res/permission'
             ]
         }

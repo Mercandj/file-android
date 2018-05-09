@@ -66,6 +66,10 @@ class BottomBar @JvmOverloads constructor(
         sectionIconSettings.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
+    fun setOnBottomBarClickListener(listener: OnBottomBarClickListener?) {
+        clickListener = listener
+    }
+
     interface OnBottomBarClickListener {
 
         fun onFileSectionClicked()

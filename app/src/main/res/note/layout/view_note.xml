@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <EditText
+        android:id="@+id/view_note_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|start"
+        android:layout_margin="10dp"
+        android:background="#fff"
+        android:fontFamily="sans-serif-light"
+        android:gravity="top"
+        android:hint="Note"
+        android:imeOptions="flagNoExtractUi"
+        android:inputType="textFilter|textMultiLine|textNoSuggestions"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:translationZ="4dp"
+        tools:ignore="UnusedAttribute" />
+
+</merge>
