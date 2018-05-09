@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v4.app.ActivityCompat
 import android.util.Log
+import com.mercandalli.android.apps.files.note.NoteManager
+import com.mercandalli.android.apps.files.note.NoteManagerSharedPreferences
+import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
@@ -21,6 +24,7 @@ class ApplicationGraph(
     private lateinit var fileDeleteManager: FileDeleteManager
     private lateinit var fileCopyCutManager: FileCopyCutManager
     private lateinit var fileModule: FileModule
+    private lateinit var noteManager: NoteManager
 
     private fun getFileManagerInternal(): FileManager {
         if (!::fileManager.isInitialized) {
@@ -62,6 +66,13 @@ class ApplicationGraph(
         return fileCopyCutManager
     }
 
+    private fun getNoteManagerInternal(): NoteManager {
+        if (!::noteManager.isInitialized) {
+            noteManager = NoteModule(context).provideNoteManager()
+        }
+        return noteManager
+    }
+
     private fun createFileModule(): FileModule {
         val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
             override fun requestStoragePermission() {
@@ -95,6 +106,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getFileCopyCutManager(): FileCopyCutManager {
             return graph!!.getFileCopyCutManagerInternal()
+        }
+
+        @JvmStatic
+        fun getNoteManager(): NoteManager {
+            return graph!!.getNoteManagerInternal()
         }
 
         @JvmStatic

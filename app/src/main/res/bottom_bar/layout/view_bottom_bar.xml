@@ -10,12 +10,12 @@
         android:id="@+id/view_bottom_bar_section_file"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="@dimen/default_space_4"
         android:layout_weight="1"
         android:background="?android:selectableItemBackground"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="0dp"
+        android:paddingStart="@dimen/default_space_4">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_icon_file"
@@ -60,12 +60,12 @@
         android:id="@+id/view_bottom_bar_section_settings"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/default_space_4"
-        android:layout_marginStart="0dp"
         android:layout_weight="1"
         android:background="?android:selectableItemBackground"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/default_space_4"
+        android:paddingStart="0dp">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_icon_settings"
