@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="@dimen/default_space_3"
+        android:layout_marginStart="@dimen/default_space_3"
+        android:layout_marginTop="@dimen/default_space_2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_folder_black_24dp"
+            android:tint="@color/color_primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_space_2"
+            android:text="Storage"
+            android:textSize="@dimen/text_size_xxl"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_space"
+            android:gravity="center_horizontal"
+            android:text="We need access to your storage files to let you manage your files"
+            android:textSize="@dimen/text_size_l" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/activity_permission_allow"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="@dimen/default_space_1_5"
+        android:background="@drawable/bg_default_btn"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="ALLOW"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_xl" />
 
 </merge>

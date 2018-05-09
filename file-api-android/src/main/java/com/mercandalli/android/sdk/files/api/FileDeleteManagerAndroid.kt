@@ -10,9 +10,9 @@ class FileDeleteManagerAndroid(
         val ioFile = java.io.File(path)
         val parentPath = ioFile.parentFile.absolutePath
         if (ioFile.isDirectory) {
-            ioFile.delete()
-        } else {
             deleteDirectory(ioFile)
+        } else {
+            ioFile.delete()
         }
         mediaScanner.refresh(path)
         mediaScanner.refresh(parentPath)
