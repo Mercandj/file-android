@@ -5,6 +5,7 @@
     <color name="color_accent">#FF4081</color>
     <color name="color_accent_dark">#B31217</color>
 
+    <color name="splash_background_color">@android:color/white</color>
     <color name="toolbar_background_light">@color/color_primary</color>
     <color name="toolbar_title_light">@android:color/white</color>
     <color name="window_background_light">@android:color/white</color>

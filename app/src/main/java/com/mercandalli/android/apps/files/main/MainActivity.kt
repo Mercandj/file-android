@@ -1,7 +1,9 @@
 package com.mercandalli.android.apps.files.main
 
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import com.mercandalli.android.apps.files.R
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         fileHorizontalLists = findViewById(R.id.activity_main_file_horizontal_lists)
         note = findViewById(R.id.activity_main_note)
         bottomBar = findViewById(R.id.activity_main_bottom_bar)
+        window.setBackgroundDrawable(ColorDrawable(
+                ContextCompat.getColor(this, R.color.window_background_light)))
 
         userAction = MainActivityPresenter(
                 this

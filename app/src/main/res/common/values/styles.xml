@@ -9,4 +9,8 @@
         <item name="android:windowBackground">@color/window_background_light</item>
     </style>
 
+    <style name="HomeTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>
