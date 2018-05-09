@@ -9,6 +9,10 @@ interface MainActivityContract {
         fun onNoteSectionClicked()
 
         fun onSettingsSectionClicked()
+
+        fun onToolbarDeleteClicked()
+
+        fun onToolbarShareClicked()
     }
 
     interface Screen {
@@ -24,5 +28,17 @@ interface MainActivityContract {
         fun showSettingsView()
 
         fun hideSettingsView()
+
+        fun showToolbarDelete()
+
+        fun hideToolbarDelete()
+
+        fun showToolbarShare()
+
+        fun hideToolbarShare()
+
+        fun deleteNote()
+
+        fun shareNote()
     }
 }

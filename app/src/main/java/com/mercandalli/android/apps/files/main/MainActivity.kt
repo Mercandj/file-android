@@ -9,14 +9,17 @@ import android.view.ViewGroup
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.file_horizontal_lists.FileHorizontalLists
+import com.mercandalli.android.apps.files.note.NoteView
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 
 class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
 
     private lateinit var fileHorizontalLists: FileHorizontalLists
-    private lateinit var note: View
+    private lateinit var note: NoteView
     private lateinit var bottomBar: BottomBar
+    private lateinit var toolbarDelete: View
+    private lateinit var toolbarShare: View
     private lateinit var userAction: MainActivityContract.UserAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +28,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         fileHorizontalLists = findViewById(R.id.activity_main_file_horizontal_lists)
         note = findViewById(R.id.activity_main_note)
         bottomBar = findViewById(R.id.activity_main_bottom_bar)
+        toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
+        toolbarShare = findViewById(R.id.activity_main_toolbar_share)
         window.setBackgroundDrawable(ColorDrawable(
                 ContextCompat.getColor(this, R.color.window_background_light)))
 
@@ -44,6 +49,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                 userAction.onSettingsSectionClicked()
             }
         })
+        toolbarDelete.setOnClickListener {
+            userAction.onToolbarDeleteClicked()
+        }
+        toolbarShare.setOnClickListener {
+            userAction.onToolbarShareClicked()
+        }
         setBottomBarBlur()
     }
 
@@ -74,6 +85,30 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
 
     override fun hideSettingsView() {
 
+    }
+
+    override fun showToolbarDelete() {
+        toolbarDelete.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarDelete() {
+        toolbarDelete.visibility = View.GONE
+    }
+
+    override fun showToolbarShare() {
+        toolbarShare.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarShare() {
+        toolbarShare.visibility = View.GONE
+    }
+
+    override fun deleteNote() {
+        note.onDeleteClicked()
+    }
+
+    override fun shareNote() {
+        note.onShareClicked()
     }
 
     private fun setBottomBarBlur() {

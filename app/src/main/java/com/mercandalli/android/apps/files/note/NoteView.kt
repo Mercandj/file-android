@@ -37,9 +37,19 @@ class NoteView @JvmOverloads constructor(
         editText.setText(note)
     }
 
+    fun onShareClicked() {
+        userAction.onShareClicked()
+    }
+
+    fun onDeleteClicked() {
+        userAction.onDeleteClicked()
+    }
+
     private fun createUserAction(): NoteContract.UserAction {
         if (isInEditMode) {
             return object : NoteContract.UserAction {
+                override fun onShareClicked() {}
+                override fun onDeleteClicked() {}
                 override fun onTextChanged(text: String) {}
             }
         }

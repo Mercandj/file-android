@@ -5,6 +5,10 @@ interface NoteContract {
     interface UserAction {
 
         fun onTextChanged(text: String)
+
+        fun onShareClicked()
+
+        fun onDeleteClicked()
     }
 
     interface Screen {
