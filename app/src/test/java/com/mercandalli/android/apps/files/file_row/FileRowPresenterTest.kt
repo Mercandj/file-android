@@ -3,6 +3,7 @@ package com.mercandalli.android.apps.files.file_row
 import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileRenameManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -17,6 +18,8 @@ class FileRowPresenterTest {
     private var fileDeleteManager: FileDeleteManager? = null
     @Mock
     private var fileCopyCutManager: FileCopyCutManager? = null
+    @Mock
+    private var fileRenameManager: FileRenameManager? = null
 
     @Before
     fun setup() {
@@ -55,7 +58,8 @@ class FileRowPresenterTest {
         return FileRowPresenter(
                 screen!!,
                 fileDeleteManager!!,
-                fileCopyCutManager!!
+                fileCopyCutManager!!,
+                fileRenameManager!!
         )
     }
 }
