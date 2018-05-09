@@ -1,7 +1,6 @@
 package com.mercandalli.android.apps.files.main
 
 import android.app.AlertDialog
-import android.app.TaskStackBuilder
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
