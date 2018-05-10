@@ -10,6 +10,9 @@ interface SettingsContract {
     }
 
     interface Screen {
+
         fun openUrl(url: String)
+
+        fun showVersionName(versionName: String)
     }
 }

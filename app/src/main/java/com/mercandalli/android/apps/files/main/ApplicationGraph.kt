@@ -7,6 +7,8 @@ import com.mercandalli.android.apps.files.audio.AudioModule
 import com.mercandalli.android.apps.files.note.NoteManager
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
+import com.mercandalli.android.apps.files.version.VersionManager
+import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 import com.mercandalli.sdk.files.api.*
@@ -24,6 +26,7 @@ class ApplicationGraph(
     private lateinit var fileRenameManager: FileRenameManager
     private lateinit var fileModule: FileModule
     private lateinit var noteManager: NoteManager
+    private lateinit var versionManager: VersionManager
 
     private fun getAudioManagerInternal(): AudioManager {
         if (!::audioManager.isInitialized) {
@@ -99,6 +102,13 @@ class ApplicationGraph(
         return noteManager
     }
 
+    private fun getVersionManagerInternal(): VersionManager {
+        if (!::versionManager.isInitialized) {
+            versionManager = VersionModule(context).provideVersionManager()
+        }
+        return versionManager
+    }
+
     private fun createFileModule(): FileModule {
         val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
             override fun requestStoragePermission() {
@@ -152,6 +162,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getNoteManager(): NoteManager {
             return graph!!.getNoteManagerInternal()
+        }
+
+        @JvmStatic
+        fun getVersionManager(): VersionManager {
+            return graph!!.getVersionManagerInternal()
         }
 
         @JvmStatic

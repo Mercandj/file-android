@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="toolbar_height">58dp</dimen>
-    <dimen name="bottom_bar_height">58dp</dimen>
-    <dimen name="bottom_bar_height_plus_6">64dp</dimen>
-    <dimen name="bottom_bar_height_plus_24">82dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="bottom_bar_height">56dp</dimen>
+    <dimen name="bottom_bar_height_plus_6">62dp</dimen>
+    <dimen name="bottom_bar_height_plus_24">80dp</dimen>
 
     <!-- Default values -->
     <dimen name="default_space_quart">2dp</dimen>

@@ -83,6 +83,7 @@ class FileRow @JvmOverloads constructor(
             val titleColor = ContextCompat.getColor(context, R.color.view_file_row_title)
             title.setTextColor(titleColor)
             arrayRight.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
+            title.isSelected = false
         }
     }
 

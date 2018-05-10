@@ -6,16 +6,21 @@ import android.content.Intent
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
-import android.widget.FrameLayout
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class SettingsView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), SettingsContract.Screen {
+) : ScrollView(context, attrs, defStyleAttr), SettingsContract.Screen {
+
+    private val version: TextView
 
     init {
         View.inflate(context, R.layout.view_settings, this)
+        version = findViewById(R.id.view_settings_version_name)
         val userAction = createUserAction()
         findViewById<View>(R.id.view_settings_rate).setOnClickListener {
             userAction.onRateClicked()
@@ -35,6 +40,10 @@ class SettingsView @JvmOverloads constructor(
         }
     }
 
+    override fun showVersionName(versionName: String) {
+        version.text = context.getString(R.string.view_settings_version, versionName)
+    }
+
     private fun createUserAction(): SettingsContract.UserAction {
         if (isInEditMode) {
             return object : SettingsContract.UserAction {
@@ -42,6 +51,10 @@ class SettingsView @JvmOverloads constructor(
                 override fun onTeamAppsClicked() {}
             }
         }
-        return SettingsPresenter(this)
+        val versionManager = ApplicationGraph.getVersionManager()
+        return SettingsPresenter(
+                this,
+                versionManager
+        )
     }
 }
