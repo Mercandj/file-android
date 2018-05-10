@@ -36,7 +36,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textSize="@dimen/text_size_l_5"
-            tools:text="@sample/files.json/data/title" />
+            tools:text="@sample/files_folders.json/data/title" />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_file_row_arrow_right"

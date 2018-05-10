@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "idweb": -1,
+      "sourceId": 1,
+      "title": "Alarms",
+      "path": "/storage/0/Alarms",
+      "size": ""
+    },
+    {
+      "idweb": 1,
+      "sourceId": 1,
+      "title": "Music",
+      "path": "/storage/0/Music",
+      "size": ""
+    },
+    {
+      "idweb": 2,
+      "sourceId": 1,
+      "title": "Pictures",
+      "path": "/storage/0/Pictures",
+      "size": ""
+    },
+    {
+      "idweb": 3,
+      "sourceId": 1,
+      "title": "Movies",
+      "path": "/storage/0/Movies",
+      "size": ""
+    },
+    {
+      "idweb": 4,
+      "sourceId": 1,
+      "title": "test.txt",
+      "path": "/storage/0/test.txt",
+      "size": "40 ko"
+    }
+  ]
+}

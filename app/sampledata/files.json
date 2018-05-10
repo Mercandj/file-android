@@ -3,32 +3,16 @@
     {
       "idweb": -1,
       "sourceId": 1,
-      "title": "Alarms",
-      "size": ""
+      "title": "test.txt",
+      "path": "/storage/0/test.txt",
+      "size": "40 ko"
     },
     {
       "idweb": 1,
       "sourceId": 1,
-      "title": "Music",
-      "size": ""
-    },
-    {
-      "idweb": 2,
-      "sourceId": 1,
-      "title": "Pictures",
-      "size": ""
-    },
-    {
-      "idweb": 3,
-      "sourceId": 1,
-      "title": "Movies",
-      "size": ""
-    },
-    {
-      "idweb": 4,
-      "sourceId": 1,
-      "title": "test.txt",
-      "size": "40 ko"
+      "title": "music.mp3",
+      "path": "/storage/0/music.mp3",
+      "size": "40 mo"
     }
   ]
 }
