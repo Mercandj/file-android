@@ -1,10 +1,17 @@
-# File application on Android - WorkInProgress
+# File manager on Android
 
 <p align="center">
 	<a margin="20px 0" href="https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files">
-		<img  src="https://raw.github.com/Mercandj/file-android/master/config/screenshot/mercandalli_file_1.png" width="560" />
+		<img src="https://raw.github.com/Mercandj/file-android/master/config/screenshot/mercandalli_file_1.png" width="560" />
 	</a>
 </p>
+
+<a href='https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+    <img 
+    alt='Get it on Google Play' 
+    src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'
+    width="220"/>
+</a>
 
 ## Commit rules
 
