@@ -40,12 +40,29 @@
             tools:text="@sample/files.json/data/path" />
 
         <TextView
-            android:id="@+id/view_file_detail_size"
+            android:id="@+id/view_file_detail_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_space"
             android:textSize="@dimen/text_size_l"
             tools:text="@sample/files.json/data/size" />
+
+        <Button
+            android:id="@+id/view_file_detail_play_pause"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="90dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="@dimen/default_space_quart"
+            android:layout_marginEnd="@dimen/default_space_quart"
+            android:layout_marginStart="@dimen/default_space_quart"
+            android:layout_marginTop="@dimen/default_space_1_5"
+            android:background="@drawable/bg_default_btn"
+            android:paddingEnd="0dp"
+            android:paddingStart="0dp"
+            android:text="@string/view_file_detail_play"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_l" />
 
     </LinearLayout>
 

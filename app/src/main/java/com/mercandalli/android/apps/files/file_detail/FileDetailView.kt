@@ -17,13 +17,31 @@ class FileDetailView @JvmOverloads constructor(
     private val userAction: FileDetailContract.UserAction
     private val title: TextView
     private val path: TextView
+    private val length: TextView
+    private val playPause: TextView
 
     init {
         View.inflate(context, R.layout.view_file_detail, this)
         setBackgroundColor(ContextCompat.getColor(context, R.color.file_detail_background))
         title = findViewById(R.id.view_file_detail_title)
         path = findViewById(R.id.view_file_detail_path)
+        length = findViewById(R.id.view_file_detail_length)
+        playPause = findViewById(R.id.view_file_detail_play_pause)
         userAction = createUserAction()
+
+        playPause.setOnClickListener {
+            userAction.onPlayPauseClicked()
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
+    }
+
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
     }
 
     override fun setTitle(title: String) {
@@ -34,6 +52,22 @@ class FileDetailView @JvmOverloads constructor(
         this.path.text = path
     }
 
+    override fun setLength(length: String) {
+        this.length.text = length
+    }
+
+    override fun showPlayPauseButton() {
+        playPause.visibility = VISIBLE
+    }
+
+    override fun hidePlayPauseButton() {
+        playPause.visibility = GONE
+    }
+
+    override fun setPlayPauseButtonText(stringRes: Int) {
+        playPause.setText(stringRes)
+    }
+
     fun setFile(file: File?) {
         userAction.onFileChanged(file)
     }
@@ -41,13 +75,18 @@ class FileDetailView @JvmOverloads constructor(
     private fun createUserAction(): FileDetailContract.UserAction {
         if (isInEditMode) {
             return object : FileDetailContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
                 override fun onFileChanged(file: File?) {}
+                override fun onPlayPauseClicked() {}
             }
         }
         val audioManager = ApplicationGraph.getAudioManager()
         return FileDetailPresenter(
                 this,
-                audioManager
+                audioManager,
+                R.string.view_file_detail_play,
+                R.string.view_file_detail_pause
         )
     }
 }

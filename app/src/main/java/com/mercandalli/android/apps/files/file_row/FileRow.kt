@@ -9,11 +9,8 @@ import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
@@ -46,12 +43,26 @@ class FileRow @JvmOverloads constructor(
         }
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
+    }
+
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
+    }
+
     override fun setTitle(title: String) {
         this.title.text = title
     }
 
-    override fun setArrowRightVisibility(visible: Boolean) {
+    override fun setRightIconVisibility(visible: Boolean) {
         arrayRight.visibility = if (visible) VISIBLE else GONE
+    }
+
+    override fun setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes: Int) {
+        arrayRight.setImageResource(drawableRightIconDirectoryDrawableRes)
     }
 
     override fun setIcon(directory: Boolean) {
@@ -125,6 +136,8 @@ class FileRow @JvmOverloads constructor(
     private fun createUserAction(): FileRowContract.UserAction {
         if (isInEditMode) {
             return object : FileRowContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
                 override fun onFileChanged(file: File, selectedPath: String?) {}
                 override fun onRowClicked() {}
                 override fun onRowLongClicked() {}
@@ -139,11 +152,15 @@ class FileRow @JvmOverloads constructor(
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
+        val audioManager = ApplicationGraph.getAudioManager()
         return FileRowPresenter(
                 this,
                 fileDeleteManager,
                 fileCopyCutManager,
-                fileRenameManager
+                fileRenameManager,
+                audioManager,
+                R.drawable.ic_play_arrow_black_24dp,
+                R.drawable.ic_volume_up_black_24dp
         )
     }
 

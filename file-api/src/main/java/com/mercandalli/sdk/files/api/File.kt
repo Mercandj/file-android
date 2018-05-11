@@ -3,8 +3,7 @@ package com.mercandalli.sdk.files.api
 import org.json.JSONObject
 
 /**
- * Memo: goal is to keep file class as light as possible. All extract data like size, ext...
- * should not be part of this model.
+ * Memo: goal is to keep file class as light as possible.
  * <br />
  * Why? - For example we want to load a big list of files, we want to have the possibility
  * to expose a "cold" load of this list as fast as possible with the minimum data possible.
@@ -38,7 +37,13 @@ data class File(
         /**
          * File name. If it's not a directory, contains extension.
          */
-        val name: String
+        val name: String,
+
+        /**
+         * Returns the length of the file denoted by this abstract pathname.
+         * The return value is unspecified if this pathname denotes a directory.
+         */
+        val length: Long
 ) {
 
     companion object {
@@ -50,12 +55,14 @@ data class File(
             val parentPath = jsonObject.getString("parentPath")
             val directory = jsonObject.getBoolean("directory")
             val name = jsonObject.getString("name")
+            val length = jsonObject.getLong("length")
             return File(
                     id,
                     path,
                     parentPath,
                     directory,
-                    name
+                    name,
+                    length
             )
         }
 
@@ -67,6 +74,7 @@ data class File(
             json.put("parentPath", file.parentPath)
             json.put("directory", file.directory)
             json.put("name", file.name)
+            json.put("length", file.length)
             return json
         }
     }

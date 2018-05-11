@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_row
 
+import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -9,17 +10,30 @@ class FileRowPresenter(
         private val screen: FileRowContract.Screen,
         private val fileDeleteManager: FileDeleteManager,
         private val fileCopyCutManager: FileCopyCutManager,
-        private val fileRenameManager: FileRenameManager
+        private val fileRenameManager: FileRenameManager,
+        private val audioManager: AudioManager,
+        private val drawableRightIconDirectoryDrawableRes: Int,
+        private val drawableRightIconSoundDrawableRes: Int
 ) : FileRowContract.UserAction {
 
+    private val playListener = createPlayListener()
     private var file: File? = null
     private var selected = false
+
+    override fun onAttached() {
+        audioManager.registerPlayListener(playListener)
+        synchronizeRightIcon()
+    }
+
+    override fun onDetached() {
+        audioManager.unregisterPlayListener(playListener)
+    }
 
     override fun onFileChanged(file: File, selectedPath: String?) {
         this.file = file
         screen.setTitle(file.name)
         val directory = file.directory
-        screen.setArrowRightVisibility(directory)
+        screen.setRightIconVisibility(directory)
         screen.setIcon(directory)
         selected = isSelected(file.path, selectedPath)
         screen.setRowSelected(selected)
@@ -56,6 +70,37 @@ class FileRowPresenter(
 
     override fun onRenameConfirmedClicked(fileName: String) {
         fileRenameManager.rename(file!!.path, fileName)
+    }
+
+    private fun synchronizeRightIcon() {
+        if (file == null) {
+            return
+        }
+        if (file!!.directory) {
+            screen.setRightIconVisibility(true)
+            screen.setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes)
+            return
+        }
+        val sourcePath = audioManager.getSourcePath()
+        if (sourcePath == null || file!!.path != sourcePath) {
+            screen.setRightIconVisibility(false)
+            return
+        }
+        val playing = audioManager.isPlaying()
+        if (playing) {
+            screen.setRightIconVisibility(true)
+            screen.setRightIconDrawableRes(drawableRightIconSoundDrawableRes)
+        } else {
+            screen.setRightIconVisibility(false)
+        }
+    }
+
+    private fun createPlayListener(): AudioManager.PlayListener {
+        return object : AudioManager.PlayListener {
+            override fun onPlayPauseChanged() {
+                synchronizeRightIcon()
+            }
+        }
     }
 
     companion object {

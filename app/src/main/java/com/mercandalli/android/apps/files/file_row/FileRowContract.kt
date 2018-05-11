@@ -6,6 +6,10 @@ interface FileRowContract {
 
     interface UserAction {
 
+        fun onAttached()
+
+        fun onDetached()
+
         fun onFileChanged(file: File, selectedPath: String?)
 
         fun onRowClicked()
@@ -29,7 +33,9 @@ interface FileRowContract {
 
         fun setTitle(title: String)
 
-        fun setArrowRightVisibility(visible: Boolean)
+        fun setRightIconVisibility(visible: Boolean)
+
+        fun setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes: Int)
 
         fun setIcon(directory: Boolean)
 

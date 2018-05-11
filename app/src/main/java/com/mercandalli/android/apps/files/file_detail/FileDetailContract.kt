@@ -6,7 +6,13 @@ interface FileDetailContract {
 
     interface UserAction {
 
+        fun onAttached()
+
+        fun onDetached()
+
         fun onFileChanged(file: File?)
+
+        fun onPlayPauseClicked()
     }
 
     interface Screen {
@@ -14,5 +20,13 @@ interface FileDetailContract {
         fun setTitle(title: String)
 
         fun setPath(path: String)
+
+        fun setLength(length: String)
+
+        fun showPlayPauseButton()
+
+        fun hidePlayPauseButton()
+
+        fun setPlayPauseButtonText(stringRes: Int)
     }
 }
