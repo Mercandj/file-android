@@ -13,7 +13,8 @@ class FileTest {
                     "path",
                     "parentPath",
                     false,
-                    "name"
+                    "name",
+                    42
             )
         }
     }

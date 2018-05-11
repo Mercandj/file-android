@@ -1,8 +1,14 @@
 package com.mercandalli.android.apps.files.main
 
+import android.os.Bundle
+
 interface MainActivityContract {
 
     interface UserAction {
+
+        fun onRestoreInstanceState(savedInstanceState: Bundle?)
+
+        fun onSaveInstanceState(outState: Bundle?)
 
         fun onFileSectionClicked()
 

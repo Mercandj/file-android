@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         window.setBackgroundDrawable(ColorDrawable(
                 ContextCompat.getColor(this, R.color.window_background_light)))
         userAction = createUserAction()
+        userAction.onRestoreInstanceState(savedInstanceState)
         bottomBar.setOnBottomBarClickListener(object : BottomBar.OnBottomBarClickListener {
             override fun onFileSectionClicked() {
                 userAction.onFileSectionClicked()
@@ -68,6 +69,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
             }
         })
         setBottomBarBlur()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        userAction.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onResume() {

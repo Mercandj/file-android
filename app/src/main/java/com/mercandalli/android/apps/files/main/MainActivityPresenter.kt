@@ -1,6 +1,8 @@
 package com.mercandalli.android.apps.files.main
 
+import android.os.Bundle
 import android.os.Environment
+import com.mercandalli.android.apps.files.main.ApplicationGraph.Companion.init
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
 class MainActivityPresenter(
@@ -9,9 +11,27 @@ class MainActivityPresenter(
 ) : MainActivityContract.UserAction {
 
     private var selectedPath: String? = null
+    private var selectedSection: Int = SECTION_UNDEFINED
 
-    init {
-        selectFile()
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            selectFile()
+            return
+        }
+        val section = savedInstanceState.getInt("section", SECTION_UNDEFINED)
+        when (section) {
+            SECTION_FILE -> selectFile()
+            SECTION_NOTE -> selectNote()
+            SECTION_SETTINGS -> selectSettings()
+            else -> selectFile()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        if (outState == null) {
+            return
+        }
+        outState.putInt("section", selectedSection)
     }
 
     override fun onFileSectionClicked() {
@@ -49,6 +69,7 @@ class MainActivityPresenter(
     }
 
     private fun selectFile() {
+        selectedSection = SECTION_FILE
         screen.showFileView()
         screen.hideNoteView()
         screen.hideSettingsView()
@@ -58,6 +79,7 @@ class MainActivityPresenter(
     }
 
     private fun selectNote() {
+        selectedSection = SECTION_NOTE
         screen.hideFileView()
         screen.showNoteView()
         screen.hideSettingsView()
@@ -67,11 +89,19 @@ class MainActivityPresenter(
     }
 
     private fun selectSettings() {
+        selectedSection = SECTION_SETTINGS
         screen.hideFileView()
         screen.hideNoteView()
         screen.showSettingsView()
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
+    }
+
+    companion object {
+        private const val SECTION_UNDEFINED = 0
+        private const val SECTION_FILE = 1
+        private const val SECTION_NOTE = 2
+        private const val SECTION_SETTINGS = 3
     }
 }

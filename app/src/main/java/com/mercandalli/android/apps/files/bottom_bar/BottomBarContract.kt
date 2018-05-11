@@ -1,8 +1,14 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
+import android.os.Bundle
+
 interface BottomBarContract {
 
     interface UserAction {
+
+        fun onSaveInstanceState(saveState: Bundle)
+
+        fun onRestoreInstanceState(state: Bundle)
 
         fun onFileClicked()
 

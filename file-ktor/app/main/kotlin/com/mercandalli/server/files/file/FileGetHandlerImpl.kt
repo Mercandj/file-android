@@ -14,7 +14,8 @@ class FileGetHandlerImpl(
                 "path",
                 "parentPath",
                 true,
-                "RootDir"
+                "RootDir",
+                0
         )
         return File.toJson(file).toString()
     }

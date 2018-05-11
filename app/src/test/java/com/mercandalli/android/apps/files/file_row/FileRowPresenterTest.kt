@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_row
 
+import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -20,6 +21,10 @@ class FileRowPresenterTest {
     private var fileCopyCutManager: FileCopyCutManager? = null
     @Mock
     private var fileRenameManager: FileRenameManager? = null
+    @Mock
+    private var audioManager: AudioManager? = null
+    private val drawableRightIconDirectoryDrawableRes: Int = 42
+    private val drawableRightIconSoundDrawableRes: Int = 44
 
     @Before
     fun setup() {
@@ -59,7 +64,10 @@ class FileRowPresenterTest {
                 screen!!,
                 fileDeleteManager!!,
                 fileCopyCutManager!!,
-                fileRenameManager!!
+                fileRenameManager!!,
+                audioManager!!,
+                drawableRightIconDirectoryDrawableRes,
+                drawableRightIconSoundDrawableRes
         )
     }
 }
