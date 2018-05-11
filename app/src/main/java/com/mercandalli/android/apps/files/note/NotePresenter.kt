@@ -19,6 +19,10 @@ class NotePresenter(
     }
 
     override fun onDeleteClicked() {
+        screen.showDeleteConfirmation()
+    }
+
+    override fun onDeleteConfirmedClicked() {
         noteManager.delete()
         val note = noteManager.getNote()
         screen.setNote(note)

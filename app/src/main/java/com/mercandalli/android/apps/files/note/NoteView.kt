@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class NoteView @JvmOverloads constructor(
@@ -36,6 +37,13 @@ class NoteView @JvmOverloads constructor(
         editText.setText(note)
     }
 
+    override fun showDeleteConfirmation() {
+        DialogUtils.alert(context, "Delete note?",
+                "Do you want note", "Yes",
+                { userAction.onDeleteConfirmedClicked() }, "No", {}
+        )
+    }
+
     fun onShareClicked() {
         userAction.onShareClicked()
     }
@@ -47,9 +55,10 @@ class NoteView @JvmOverloads constructor(
     private fun createUserAction(): NoteContract.UserAction {
         if (isInEditMode) {
             return object : NoteContract.UserAction {
+                override fun onTextChanged(text: String) {}
                 override fun onShareClicked() {}
                 override fun onDeleteClicked() {}
-                override fun onTextChanged(text: String) {}
+                override fun onDeleteConfirmedClicked() {}
             }
         }
         val noteManager = ApplicationGraph.getNoteManager()

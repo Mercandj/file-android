@@ -9,10 +9,14 @@ interface NoteContract {
         fun onShareClicked()
 
         fun onDeleteClicked()
+
+        fun onDeleteConfirmedClicked()
     }
 
     interface Screen {
 
         fun setNote(note: String)
+
+        fun showDeleteConfirmation()
     }
 }
