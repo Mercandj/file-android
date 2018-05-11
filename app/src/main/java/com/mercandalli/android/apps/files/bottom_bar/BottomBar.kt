@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.mercandalli.android.apps.files.R
-import kotlin.text.Typography.section
 
 class BottomBar @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

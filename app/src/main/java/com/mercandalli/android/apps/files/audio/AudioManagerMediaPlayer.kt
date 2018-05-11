@@ -1,13 +1,12 @@
 package com.mercandalli.android.apps.files.audio
 
-import android.media.MediaPlayer
-
 class AudioManagerMediaPlayer(
-        private val mediaPlayer: MediaPlayer
+        private val mediaPlayer: MediaPlayerWrapper
 ) : AudioManager {
 
     private val sourceListeners = ArrayList<AudioManager.SourceListener>()
     private val playListeners = ArrayList<AudioManager.PlayListener>()
+    private val completionListeners = ArrayList<AudioManager.CompletionListener>()
     private var path: String? = null
 
     init {
@@ -15,6 +14,10 @@ class AudioManagerMediaPlayer(
             for (listener in playListeners) {
                 listener.onPlayPauseChanged()
             }
+            for (listener in completionListeners) {
+                listener.onCompleted()
+            }
+            path = null
         }
         mediaPlayer.setOnPreparedListener {
             play()
@@ -68,6 +71,10 @@ class AudioManagerMediaPlayer(
         return pathLowerCase.endsWith(".mp3") || pathLowerCase.endsWith(".wav")
     }
 
+    override fun getProgressPercent(): Float {
+        return mediaPlayer.currentPosition.toFloat() / mediaPlayer.duration
+    }
+
     override fun registerSourceListener(listener: AudioManager.SourceListener) {
         if (sourceListeners.contains(listener)) {
             return
@@ -88,5 +95,29 @@ class AudioManagerMediaPlayer(
 
     override fun unregisterPlayListener(listener: AudioManager.PlayListener) {
         playListeners.remove(listener)
+    }
+
+    override fun registerCompletionListener(listener: AudioManager.CompletionListener) {
+        if (completionListeners.contains(listener)) {
+            return
+        }
+        completionListeners.add(listener)
+    }
+
+    override fun unregisterCompletionListener(listener: AudioManager.CompletionListener) {
+        completionListeners.remove(listener)
+    }
+
+    interface MediaPlayerWrapper {
+        val isPlaying: Boolean
+        val currentPosition: Int
+        val duration: Int
+        fun setOnPreparedListener(function: () -> Unit)
+        fun setOnCompletionListener(function: () -> Unit)
+        fun start()
+        fun pause()
+        fun reset()
+        fun setDataSource(path: String)
+        fun prepareAsync()
     }
 }

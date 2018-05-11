@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioModule
+import com.mercandalli.android.apps.files.audio.AudioQueueManager
+import com.mercandalli.android.apps.files.audio.AudioQueueManagerImpl
 import com.mercandalli.android.apps.files.note.NoteManager
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
@@ -18,6 +20,8 @@ class ApplicationGraph(
 ) {
 
     private lateinit var audioManager: AudioManager
+    private lateinit var audioQueueManager: AudioQueueManager
+    private lateinit var audioModule: AudioModule
     private lateinit var fileManager: FileManager
     private lateinit var fileOpenManager: FileOpenManager
     private lateinit var fileDeleteManager: FileDeleteManager
@@ -30,9 +34,25 @@ class ApplicationGraph(
 
     private fun getAudioManagerInternal(): AudioManager {
         if (!::audioManager.isInitialized) {
-            audioManager = AudioModule().provideAudioManager()
+            if (!::audioModule.isInitialized) {
+                audioModule = AudioModule()
+            }
+            audioManager = audioModule.provideAudioManager()
         }
         return audioManager
+    }
+
+    private fun getAudioQueueManagerInternal(): AudioQueueManager {
+        if (!::audioQueueManager.isInitialized) {
+            if (!::audioModule.isInitialized) {
+                audioModule = AudioModule()
+            }
+            val audioManager = getAudioManagerInternal()
+            audioQueueManager = audioModule.provideAudioQueueManager(
+                    audioManager
+            )
+        }
+        return audioQueueManager
     }
 
     private fun getFileManagerInternal(): FileManager {
@@ -127,6 +147,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getAudioManager(): AudioManager {
             return graph!!.getAudioManagerInternal()
+        }
+
+        @JvmStatic
+        fun getAudioQueueManager(): AudioQueueManager {
+            return graph!!.getAudioQueueManagerInternal()
         }
 
         @JvmStatic

@@ -5,14 +5,16 @@
       "sourceId": 1,
       "title": "test.txt",
       "path": "/storage/0/test.txt",
-      "size": "40 ko"
+      "size": "40 ko",
+      "lastModified": "26/10/2017"
     },
     {
       "idweb": 1,
       "sourceId": 1,
       "title": "music.mp3",
       "path": "/storage/0/music.mp3",
-      "size": "40 mo"
+      "size": "40 mo",
+      "lastModified": "26/10/2017"
     }
   ]
 }

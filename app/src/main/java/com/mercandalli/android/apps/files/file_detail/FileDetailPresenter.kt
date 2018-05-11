@@ -2,11 +2,16 @@ package com.mercandalli.android.apps.files.file_detail
 
 import android.annotation.SuppressLint
 import com.mercandalli.android.apps.files.audio.AudioManager
+import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import java.util.*
 
 class FileDetailPresenter(
         private val screen: FileDetailContract.Screen,
         private val audioManager: AudioManager,
+        private val audioQueueManager: AudioQueueManager,
+        private val fileDeleteManager: FileDeleteManager,
         private val playStringRes: Int,
         private val pauseStringRes: Int
 ) : FileDetailContract.UserAction {
@@ -28,6 +33,7 @@ class FileDetailPresenter(
         if (file == null) {
             screen.setTitle("")
             screen.setPath("")
+            screen.setLastModified("")
             screen.hidePlayPauseButton()
             return
         }
@@ -37,6 +43,7 @@ class FileDetailPresenter(
         screen.setTitle(file.name)
         screen.setPath(file.path)
         screen.setLength(humanReadableByteCount(file.length))
+        screen.setLastModified(Date(file.lastModified).toString())
         if (audioManager.isSupportedPath(file.path)) {
             screen.showPlayPauseButton()
         } else {
@@ -60,6 +67,28 @@ class FileDetailPresenter(
         }
     }
 
+    override fun onNextClicked() {
+        val nextPath = audioQueueManager.next(file!!.path)
+        audioManager.reset()
+        audioManager.setSourcePath(nextPath)
+        audioManager.prepareAsync()
+    }
+
+    override fun onPreviousClicked() {
+        val previousPath = audioQueueManager.previous(file!!.path)
+        audioManager.reset()
+        audioManager.setSourcePath(previousPath)
+        audioManager.prepareAsync()
+    }
+
+    override fun onDeleteClicked() {
+        screen.showDeleteConfirmation(file!!.name)
+    }
+
+    override fun onDeleteConfirmedClicked() {
+        fileDeleteManager.delete(file!!.path)
+    }
+
     private fun synchronizePlayButton() {
         if (file == null) {
             return
@@ -67,13 +96,19 @@ class FileDetailPresenter(
         val sourcePath = audioManager.getSourcePath()
         if (file!!.path != sourcePath) {
             screen.setPlayPauseButtonText(playStringRes)
+            screen.hideNextButton()
+            screen.hidePreviousButton()
             return
         }
         val playing = audioManager.isPlaying()
         if (playing) {
             screen.setPlayPauseButtonText(pauseStringRes)
+            screen.showNextButton()
+            screen.showPreviousButton()
         } else {
             screen.setPlayPauseButtonText(playStringRes)
+            screen.hideNextButton()
+            screen.hidePreviousButton()
         }
     }
 

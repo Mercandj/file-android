@@ -1,7 +1,6 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
 import android.os.Bundle
-import com.mercandalli.android.apps.files.main.MainActivityPresenter
 
 class BottomBarPresenter(
         private val screen: BottomBarContract.Screen,

@@ -14,18 +14,18 @@ import android.view.View
 import android.view.Window
 import com.mercandalli.android.apps.files.R
 
-class PermissionActivity : AppCompatActivity() {
+class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
+
+    private lateinit var userAction: PermissionContract.UserAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_permission)
         findViewById<View>(R.id.activity_permission_allow).setOnClickListener {
-            ActivityCompat.requestPermissions(
-                    this,
-                    PERMISSIONS,
-                    REQUEST_CODE)
+            userAction.onPermissionAllowClicked()
         }
+        userAction = createUserAction()
     }
 
     override fun onRequestPermissionsResult(
@@ -41,6 +41,19 @@ class PermissionActivity : AppCompatActivity() {
         } else {
             showSnackbar("This app needs this permission to work", Snackbar.LENGTH_LONG)
         }
+    }
+
+    override fun requestStoragePermission() {
+        ActivityCompat.requestPermissions(
+                this,
+                PERMISSIONS,
+                REQUEST_CODE)
+    }
+
+    private fun createUserAction(): PermissionContract.UserAction {
+        return PermissionPresenter(
+                this
+        )
     }
 
     private fun showSnackbar(@StringRes text: Int, duration: Int) {

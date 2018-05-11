@@ -1,4 +1,9 @@
 <resources>
     <string name="view_file_detail_play">Play</string>
     <string name="view_file_detail_pause">Pause</string>
+    <string name="view_file_detail_next">Next</string>
+    <string name="view_file_detail_previous">Previous</string>
+    <string name="view_file_detail_path">Path: %1$s</string>
+    <string name="view_file_detail_size">Size: %1$s</string>
+    <string name="view_file_detail_last_modified">Last modified: %1$s</string>
 </resources>

@@ -43,7 +43,13 @@ data class File(
          * Returns the length of the file denoted by this abstract pathname.
          * The return value is unspecified if this pathname denotes a directory.
          */
-        val length: Long
+        val length: Long,
+
+        /**
+         * Returns the time that the file denoted by this abstract pathname was
+         * last modified.
+         */
+        val lastModified: Long
 ) {
 
     companion object {
@@ -56,13 +62,15 @@ data class File(
             val directory = jsonObject.getBoolean("directory")
             val name = jsonObject.getString("name")
             val length = jsonObject.getLong("length")
+            val lastModified = jsonObject.getLong("lastModified")
             return File(
                     id,
                     path,
                     parentPath,
                     directory,
                     name,
-                    length
+                    length,
+                    lastModified
             )
         }
 
@@ -75,6 +83,7 @@ data class File(
             json.put("directory", file.directory)
             json.put("name", file.name)
             json.put("length", file.length)
+            json.put("lastModified", file.lastModified)
             return json
         }
     }

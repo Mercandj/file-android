@@ -18,6 +18,8 @@ interface AudioManager {
 
     fun isSupportedPath(path: String): Boolean
 
+    fun getProgressPercent(): Float
+
     fun registerSourceListener(listener: SourceListener)
 
     fun unregisterSourceListener(listener: SourceListener)
@@ -26,11 +28,23 @@ interface AudioManager {
 
     fun unregisterPlayListener(listener: PlayListener)
 
+    fun registerCompletionListener(listener: CompletionListener)
+
+    fun unregisterCompletionListener(listener: CompletionListener)
+
     interface SourceListener {
         fun onAudioSourceChanged()
     }
 
     interface PlayListener {
         fun onPlayPauseChanged()
+    }
+
+    interface CompletionListener {
+        fun onCompleted()
+    }
+
+    interface ProgressListener {
+        fun onProgressChanged()
     }
 }

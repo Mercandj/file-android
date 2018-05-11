@@ -93,13 +93,15 @@ class FileManagerAndroid(
             val directory = ioFile.isDirectory
             val parentPath = parentPath(ioFile)
             val length = ioFile.length()
+            val lastModified = ioFile.lastModified()
             return File(
                     id,
                     path,
                     parentPath,
                     directory,
                     name,
-                    length)
+                    length,
+                    lastModified)
         }
 
         @JvmStatic

@@ -2,7 +2,6 @@ package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
 import android.os.Environment
-import com.mercandalli.android.apps.files.main.ApplicationGraph.Companion.init
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
 class MainActivityPresenter(

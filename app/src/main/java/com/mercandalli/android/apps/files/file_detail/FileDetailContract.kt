@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.file_detail
 
 import com.mercandalli.sdk.files.api.File
+import java.util.*
 
 interface FileDetailContract {
 
@@ -13,6 +14,14 @@ interface FileDetailContract {
         fun onFileChanged(file: File?)
 
         fun onPlayPauseClicked()
+
+        fun onNextClicked()
+
+        fun onPreviousClicked()
+
+        fun onDeleteClicked()
+
+        fun onDeleteConfirmedClicked()
     }
 
     interface Screen {
@@ -23,10 +32,22 @@ interface FileDetailContract {
 
         fun setLength(length: String)
 
+        fun setLastModified(lastModifiedDateString: String)
+
         fun showPlayPauseButton()
 
         fun hidePlayPauseButton()
 
+        fun showNextButton()
+
+        fun hideNextButton()
+
+        fun showPreviousButton()
+
+        fun hidePreviousButton()
+
         fun setPlayPauseButtonText(stringRes: Int)
+
+        fun showDeleteConfirmation(fileName: String)
     }
 }
