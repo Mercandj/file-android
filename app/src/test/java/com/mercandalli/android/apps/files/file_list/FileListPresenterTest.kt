@@ -33,6 +33,7 @@ class FileListPresenterTest {
         files.add(FileTest.createFakeFile())
         Mockito.`when`(fileManager!!.getFileChildren(path)).thenReturn(
                 FileChildrenResult.createLoaded(path, files))
+        Mockito.`when`(fileSortManager!!.sort(files)).thenReturn(files)
         val presenter = createInstanceToTest()
 
         // When

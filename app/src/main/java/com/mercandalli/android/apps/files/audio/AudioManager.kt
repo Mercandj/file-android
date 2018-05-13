@@ -43,8 +43,4 @@ interface AudioManager {
     interface CompletionListener {
         fun onCompleted()
     }
-
-    interface ProgressListener {
-        fun onProgressChanged()
-    }
 }

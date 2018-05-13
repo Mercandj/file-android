@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_space_2"
-            android:text="Storage"
+            android:text="@string/activity_permissions_title"
             android:textSize="@dimen/text_size_xxl"
             android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_space"
             android:gravity="center_horizontal"
-            android:text="We need access to your storage files to let you manage your files"
+            android:text="@string/activity_permissions_description"
             android:textSize="@dimen/text_size_l" />
 
     </LinearLayout>
@@ -50,7 +50,7 @@
         android:background="@drawable/bg_default_btn"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
-        android:text="ALLOW"
+        android:text="@string/activity_permissions_button"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_xl" />

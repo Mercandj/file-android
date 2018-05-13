@@ -1,0 +1,5 @@
+<resources>
+    <string name="activity_permissions_title">Storage</string>
+    <string name="activity_permissions_description">FileSpace a besoin de la permission storage pour vous permettre l\'accès à vos fichiers</string>
+    <string name="activity_permissions_button">GO</string>
+</resources>
