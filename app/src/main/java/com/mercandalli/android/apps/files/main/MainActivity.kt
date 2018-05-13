@@ -148,8 +148,14 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                         getString(R.string.file_model_local_new_folder_file),
                         getString(R.string.file_model_local_new_folder_file_description),
                         getString(R.string.ok),
-                        DialogUtils.OnDialogUtilsStringListener { text -> userAction.onFileCreationConfirmed(text!!) },
-                        getString(android.R.string.cancel), null, null)
+                        object : DialogUtils.OnDialogUtilsStringListener {
+                            override fun onDialogUtilsStringCalledBack(text: String) {
+                                userAction.onFileCreationConfirmed(text)
+                            }
+                        },
+                        getString(android.R.string.cancel),
+                        null,
+                        null)
             }
         }
         menuAlert.create().show()

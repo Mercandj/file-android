@@ -38,9 +38,17 @@ class NoteView @JvmOverloads constructor(
     }
 
     override fun showDeleteConfirmation() {
-        DialogUtils.alert(context, "Delete note?",
+        DialogUtils.alert(
+                context,
+                "Delete note?",
                 "Do you want note", "Yes",
-                { userAction.onDeleteConfirmedClicked() }, "No", {}
+                object : DialogUtils.OnDialogUtilsListener {
+                    override fun onDialogUtilsCalledBack() {
+                        userAction.onDeleteConfirmedClicked()
+                    }
+                },
+                "No",
+                null
         )
     }
 

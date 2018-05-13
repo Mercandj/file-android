@@ -111,17 +111,35 @@ class FileRow @JvmOverloads constructor(
     }
 
     override fun showDeleteConfirmation(fileName: String) {
-        DialogUtils.alert(context, "Delete file?",
-                "Do you want to delete: $fileName", "Yes",
-                { userAction.onDeleteConfirmedClicked() }, "No", {}
+        DialogUtils.alert(
+                context,
+                "Delete file?",
+                "Do you want to delete: $fileName",
+                "Yes",
+                object : DialogUtils.OnDialogUtilsListener {
+                    override fun onDialogUtilsCalledBack() {
+                        userAction.onDeleteConfirmedClicked()
+                    }
+                },
+                "No",
+                null
         )
     }
 
     override fun showRenamePrompt(fileName: String) {
         DialogUtils.prompt(context, "Rename file?",
-                "Enter a new name for: $fileName", "Rename",
-                { userAction.onRenameConfirmedClicked(it) }, "Dismiss", {},
-                fileName, "File name", {}
+                "Enter a new name for: $fileName",
+                "Rename",
+                object : DialogUtils.OnDialogUtilsStringListener {
+                    override fun onDialogUtilsStringCalledBack(text: String) {
+                        userAction.onRenameConfirmedClicked(text)
+                    }
+                },
+                "Dismiss",
+                null,
+                fileName,
+                "File name",
+                null
         )
     }
 

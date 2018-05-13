@@ -109,9 +109,18 @@ class FileDetailView @JvmOverloads constructor(
     }
 
     override fun showDeleteConfirmation(fileName: String) {
-        DialogUtils.alert(context, "Delete file?",
-                "Do you want to delete: $fileName", "Yes",
-                { userAction.onDeleteConfirmedClicked() }, "No", {}
+        DialogUtils.alert(
+                context,
+                "Delete file?",
+                "Do you want to delete: $fileName",
+                "Yes",
+                object : DialogUtils.OnDialogUtilsListener {
+                    override fun onDialogUtilsCalledBack() {
+                        userAction.onDeleteConfirmedClicked()
+                    }
+                },
+                "No",
+                null
         )
     }
 
