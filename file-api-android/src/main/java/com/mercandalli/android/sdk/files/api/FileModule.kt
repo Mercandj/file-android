@@ -21,7 +21,6 @@ class FileModule(
     private lateinit var mediaScanner: MediaScanner
     private lateinit var permissionManager: PermissionManager
 
-
     fun provideFileManager(): FileManager {
         val permissionManager = getPermissionManager()
         val fileManagerAndroid = FileManagerAndroid(permissionManager)
@@ -84,6 +83,10 @@ class FileModule(
         return FileRenameManagerAndroid(
                 mediaScanner
         )
+    }
+
+    fun provideFileSortManager(): FileSortManager {
+        return FileSortManagerImpl()
     }
 
     private fun getMediaScanner(): MediaScanner {

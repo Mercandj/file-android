@@ -7,6 +7,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     compile 'org.json:json:20180130'
+
+    // Testing-only dependencies
+    testImplementation 'junit:junit:4.12'
 }
 
 repositories {

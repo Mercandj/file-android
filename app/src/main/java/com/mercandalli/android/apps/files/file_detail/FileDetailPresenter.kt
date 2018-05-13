@@ -12,8 +12,8 @@ class FileDetailPresenter(
         private val audioManager: AudioManager,
         private val audioQueueManager: AudioQueueManager,
         private val fileDeleteManager: FileDeleteManager,
-        private val playStringRes: Int,
-        private val pauseStringRes: Int
+        private val playDrawableRes: Int,
+        private val pauseDrawableRes: Int
 ) : FileDetailContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -46,8 +46,12 @@ class FileDetailPresenter(
         screen.setLastModified(Date(file.lastModified).toString())
         if (audioManager.isSupportedPath(file.path)) {
             screen.showPlayPauseButton()
+            screen.showNextButton()
+            screen.showPreviousButton()
         } else {
             screen.hidePlayPauseButton()
+            screen.hideNextButton()
+            screen.hidePreviousButton()
         }
         synchronizePlayButton()
     }
@@ -95,21 +99,11 @@ class FileDetailPresenter(
         }
         val sourcePath = audioManager.getSourcePath()
         if (file!!.path != sourcePath) {
-            screen.setPlayPauseButtonText(playStringRes)
-            screen.hideNextButton()
-            screen.hidePreviousButton()
+            screen.setPlayPauseButtonImage(playDrawableRes)
             return
         }
         val playing = audioManager.isPlaying()
-        if (playing) {
-            screen.setPlayPauseButtonText(pauseStringRes)
-            screen.showNextButton()
-            screen.showPreviousButton()
-        } else {
-            screen.setPlayPauseButtonText(playStringRes)
-            screen.hideNextButton()
-            screen.hidePreviousButton()
-        }
+        screen.setPlayPauseButtonImage(if (playing) pauseDrawableRes else playDrawableRes)
     }
 
     private fun createPlayListener(): AudioManager.PlayListener {

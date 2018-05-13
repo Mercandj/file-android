@@ -2,10 +2,12 @@ package com.mercandalli.android.apps.files.file_list
 
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileSortManager
 
 class FileListPresenter(
         private val screen: FileListContract.Screen,
         private val fileManager: FileManager,
+        private val fileSortManager: FileSortManager,
         private var currentPath: String
 ) : FileListContract.UserAction {
 
@@ -68,9 +70,7 @@ class FileListPresenter(
                     screen.showEmptyView()
                     screen.hideFiles()
                 } else {
-                    val filesSorted = files.sortedWith(compareBy({
-                        it.name
-                    }))
+                    val filesSorted = fileSortManager.sort(files)
                     screen.hideEmptyView()
                     screen.showFiles(filesSorted)
                 }

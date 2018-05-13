@@ -46,7 +46,7 @@ interface FileDetailContract {
 
         fun hidePreviousButton()
 
-        fun setPlayPauseButtonText(stringRes: Int)
+        fun setPlayPauseButtonImage(drawableRes: Int)
 
         fun showDeleteConfirmation(fileName: String)
     }

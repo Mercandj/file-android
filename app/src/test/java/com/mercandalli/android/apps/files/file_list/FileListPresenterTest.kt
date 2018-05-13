@@ -4,6 +4,7 @@ import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileSortManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -16,6 +17,8 @@ class FileListPresenterTest {
     private val screen: FileListContract.Screen? = null
     @Mock
     private val fileManager: FileManager? = null
+    @Mock
+    private val fileSortManager: FileSortManager? = null
 
     @Before
     fun setup() {
@@ -45,8 +48,8 @@ class FileListPresenterTest {
         return FileListPresenter(
                 screen!!,
                 fileManager!!,
+                fileSortManager!!,
                 currentPath
         )
     }
-
 }

@@ -17,7 +17,6 @@ class AudioManagerMediaPlayer(
             for (listener in completionListeners) {
                 listener.onCompleted()
             }
-            path = null
         }
         mediaPlayer.setOnPreparedListener {
             play()

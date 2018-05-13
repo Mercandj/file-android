@@ -8,6 +8,9 @@ import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManagerImpl
 import com.mercandalli.android.apps.files.note.NoteManager
 import com.mercandalli.android.apps.files.note.NoteModule
+import com.mercandalli.android.apps.files.notification.NotificationAudioManager
+import com.mercandalli.android.apps.files.notification.NotificationAudioManagerImpl
+import com.mercandalli.android.apps.files.notification.NotificationModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.android.apps.files.version.VersionModule
@@ -28,14 +31,19 @@ class ApplicationGraph(
     private lateinit var fileCopyCutManager: FileCopyCutManager
     private lateinit var fileCreatorManager: FileCreatorManager
     private lateinit var fileRenameManager: FileRenameManager
+    private lateinit var fileSortManager: FileSortManager
     private lateinit var fileModule: FileModule
     private lateinit var noteManager: NoteManager
+    private lateinit var notificationAudioManager: NotificationAudioManager
     private lateinit var versionManager: VersionManager
 
     private fun getAudioManagerInternal(): AudioManager {
         if (!::audioManager.isInitialized) {
             if (!::audioModule.isInitialized) {
-                audioModule = AudioModule()
+                val fileSortManager = getFileSortManager()
+                audioModule = AudioModule(
+                        fileSortManager
+                )
             }
             audioManager = audioModule.provideAudioManager()
         }
@@ -45,7 +53,10 @@ class ApplicationGraph(
     private fun getAudioQueueManagerInternal(): AudioQueueManager {
         if (!::audioQueueManager.isInitialized) {
             if (!::audioModule.isInitialized) {
-                audioModule = AudioModule()
+                val fileSortManager = getFileSortManager()
+                audioModule = AudioModule(
+                        fileSortManager
+                )
             }
             val audioManager = getAudioManagerInternal()
             audioQueueManager = audioModule.provideAudioQueueManager(
@@ -115,11 +126,35 @@ class ApplicationGraph(
         return fileRenameManager
     }
 
+    private fun getFileSortManagerInternal(): FileSortManager {
+        if (!::fileSortManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
+                fileModule = createFileModule()
+            }
+            fileSortManager = fileModule.provideFileSortManager()
+        }
+        return fileSortManager
+    }
+
     private fun getNoteManagerInternal(): NoteManager {
         if (!::noteManager.isInitialized) {
             noteManager = NoteModule(context).provideNoteManager()
         }
         return noteManager
+    }
+
+    private fun getNotificationAudioManagerInternal(): NotificationAudioManager {
+        if (!::notificationAudioManager.isInitialized) {
+            val audioManager = getAudioManager()
+            val audioQueueManager = getAudioQueueManager()
+            val notificationModule = NotificationModule(
+                    context,
+                    audioManager,
+                    audioQueueManager
+            )
+            notificationAudioManager = notificationModule.provideNotificationAudioManager()
+        }
+        return notificationAudioManager
     }
 
     private fun getVersionManagerInternal(): VersionManager {
@@ -185,8 +220,18 @@ class ApplicationGraph(
         }
 
         @JvmStatic
+        fun getFileSortManager(): FileSortManager {
+            return graph!!.getFileSortManagerInternal()
+        }
+
+        @JvmStatic
         fun getNoteManager(): NoteManager {
             return graph!!.getNoteManagerInternal()
+        }
+
+        @JvmStatic
+        fun getNotificationAudioManager(): NotificationAudioManager {
+            return graph!!.getNotificationAudioManagerInternal()
         }
 
         @JvmStatic

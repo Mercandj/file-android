@@ -53,9 +53,11 @@ class FileListView @JvmOverloads constructor(
             }
         }
         val fileManager = ApplicationGraph.getFileManager()
+        val fileSortManager = ApplicationGraph.getFileSortManager()
         return FileListPresenter(
                 this,
                 fileManager,
+                fileSortManager,
                 Environment.getExternalStorageDirectory().absolutePath)
     }
 

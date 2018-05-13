@@ -1,8 +1,11 @@
 package com.mercandalli.android.apps.files.audio
 
 import android.media.MediaPlayer
+import com.mercandalli.sdk.files.api.FileSortManager
 
-class AudioModule {
+class AudioModule(
+        private val fileSortManager: FileSortManager
+) {
 
     fun provideAudioManager(): AudioManager {
         val mediaPlayer = MediaPlayer()
@@ -52,7 +55,8 @@ class AudioModule {
 
     fun provideAudioQueueManager(audioManager: AudioManager): AudioQueueManager {
         return AudioQueueManagerImpl(
-                audioManager
+                audioManager,
+                fileSortManager
         )
     }
 }

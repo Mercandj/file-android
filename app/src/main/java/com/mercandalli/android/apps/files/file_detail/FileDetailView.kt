@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
@@ -20,7 +21,7 @@ class FileDetailView @JvmOverloads constructor(
     private val path: TextView
     private val length: TextView
     private val lastModified: TextView
-    private val playPause: TextView
+    private val playPause: ImageView
     private val next: View
     private val previous: View
     private val delete: View
@@ -103,8 +104,8 @@ class FileDetailView @JvmOverloads constructor(
         previous.visibility = GONE
     }
 
-    override fun setPlayPauseButtonText(stringRes: Int) {
-        playPause.setText(stringRes)
+    override fun setPlayPauseButtonImage(drawableRes: Int) {
+        playPause.setImageResource(drawableRes)
     }
 
     override fun showDeleteConfirmation(fileName: String) {
@@ -139,8 +140,8 @@ class FileDetailView @JvmOverloads constructor(
                 audioManager,
                 audioQueueManager,
                 fileDeleteManager,
-                R.string.view_file_detail_play,
-                R.string.view_file_detail_pause
+                R.drawable.ic_play_arrow_black_24dp,
+                R.drawable.ic_pause_black_24dp
         )
     }
 }

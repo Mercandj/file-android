@@ -24,5 +24,8 @@ class MainApplication : Application() {
                 audioManager.prepareAsync()
             }
         })
+
+        val notificationAudioManager = ApplicationGraph.getNotificationAudioManager()
+        notificationAudioManager.initialize()
     }
 }

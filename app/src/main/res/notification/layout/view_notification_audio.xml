@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/view_notification_audio_background">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:src="@drawable/ic_sd_storage_black_24dp" />
+
+    <TextView
+        android:id="@+id/titre_notif"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="144dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="marquee"
+        android:focusable="false"
+        android:gravity="center_vertical"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="2"
+        android:paddingLeft="60dp"
+        android:scrollHorizontally="true"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        tools:text="Titre" />
+
+    <ImageView
+        android:id="@+id/prev"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="108dp"
+        android:contentDescription="@string/view_file_detail_previous"
+        android:padding="3dp"
+        android:src="@drawable/ic_skip_previous_black_24dp"
+        android:tint="@color/view_notification_audio_icon_tint"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/activity_file_audio_play"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="72dp"
+        android:contentDescription="@string/view_file_detail_play"
+        android:padding="3dp"
+        android:src="@drawable/ic_pause_black_24dp"
+        android:tint="@color/view_notification_audio_icon_tint"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/activity_file_audio_next"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="36dp"
+        android:contentDescription="@string/view_file_detail_next"
+        android:padding="3dp"
+        android:src="@drawable/ic_skip_next_black_24dp"
+        android:tint="@color/view_notification_audio_icon_tint"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:padding="5dp"
+        android:src="@drawable/ic_close_black_24dp"
+        android:tint="@color/view_notification_audio_icon_tint"
+        tools:ignore="RtlHardcoded" />
+
+</FrameLayout>

@@ -20,12 +20,14 @@
             android:src="@drawable/ic_insert_drive_file_black_24dp"
             android:tint="#808080" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/view_file_detail_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/default_space_1_5"
+            android:layout_marginStart="@dimen/default_space_1_5"
             android:layout_marginTop="@dimen/default_space_1_5"
+            android:gravity="center_horizontal"
             android:textSize="@dimen/text_size_xl"
             tools:text="@sample/files.json/data/title" />
 
@@ -59,56 +61,60 @@
             android:textSize="@dimen/text_size_l"
             tools:text="@sample/files.json/data/lastModified" />
 
-        <Button
-            android:id="@+id/view_file_detail_play_pause"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="90dp"
-            android:layout_height="32dp"
-            android:layout_marginBottom="@dimen/default_space_quart"
-            android:layout_marginEnd="@dimen/default_space_1_5"
-            android:layout_marginStart="@dimen/default_space_1_5"
-            android:layout_marginTop="@dimen/default_space_1_5"
-            android:background="@drawable/bg_default_btn"
-            android:paddingEnd="0dp"
-            android:paddingStart="0dp"
-            android:text="@string/view_file_detail_play"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_l" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/view_file_detail_play_next"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="90dp"
-            android:layout_height="32dp"
-            android:layout_marginBottom="@dimen/default_space_quart"
-            android:layout_marginEnd="@dimen/default_space_1_5"
-            android:layout_marginStart="@dimen/default_space_1_5"
-            android:layout_marginTop="@dimen/default_space"
-            android:background="@drawable/bg_default_btn"
-            android:paddingEnd="0dp"
-            android:paddingStart="0dp"
-            android:text="@string/view_file_detail_next"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_l" />
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/view_file_detail_play_previous"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="@dimen/default_space_quart"
+                android:layout_marginEnd="@dimen/default_space_half"
+                android:layout_marginStart="@dimen/default_space_1_5"
+                android:layout_marginTop="@dimen/default_space_2"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default_btn"
+                android:paddingEnd="0dp"
+                android:paddingStart="0dp"
+                android:src="@drawable/ic_skip_previous_black_24dp"
+                android:tint="@android:color/white" />
 
-        <Button
-            android:id="@+id/view_file_detail_play_previous"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="90dp"
-            android:layout_height="32dp"
-            android:layout_marginBottom="@dimen/default_space_quart"
-            android:layout_marginEnd="@dimen/default_space_1_5"
-            android:layout_marginStart="@dimen/default_space_1_5"
-            android:layout_marginTop="@dimen/default_space"
-            android:background="@drawable/bg_default_btn"
-            android:paddingEnd="0dp"
-            android:paddingStart="0dp"
-            android:text="@string/view_file_detail_previous"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_l" />
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/view_file_detail_play_pause"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="@dimen/default_space_quart"
+                android:layout_marginEnd="@dimen/default_space_half"
+                android:layout_marginStart="@dimen/default_space_half"
+                android:layout_marginTop="@dimen/default_space_2"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default_btn"
+                android:paddingEnd="0dp"
+                android:paddingStart="0dp"
+                android:src="@drawable/ic_play_arrow_black_24dp"
+                android:tint="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/view_file_detail_play_next"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="@dimen/default_space_quart"
+                android:layout_marginEnd="@dimen/default_space_1_5"
+                android:layout_marginStart="@dimen/default_space_half"
+                android:layout_marginTop="@dimen/default_space_2"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default_btn"
+                android:paddingEnd="0dp"
+                android:paddingStart="0dp"
+                android:src="@drawable/ic_skip_next_black_24dp"
+                android:tint="@android:color/white" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/view_file_detail_delete"
