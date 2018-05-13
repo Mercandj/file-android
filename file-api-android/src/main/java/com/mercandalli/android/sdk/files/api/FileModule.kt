@@ -1,5 +1,6 @@
 package com.mercandalli.android.sdk.files.api
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -49,6 +50,9 @@ class FileModule(
                 intent.action = Intent.ACTION_VIEW
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 intent.setDataAndType(getUriFromFile(context, File(path)), mime)
+                if (context !is Activity) {
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
                 startActivity(context, intent)
             }
         }

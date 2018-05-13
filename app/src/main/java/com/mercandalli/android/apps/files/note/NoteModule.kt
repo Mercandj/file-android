@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.note
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 
@@ -13,11 +14,14 @@ class NoteModule(
                 Context.MODE_PRIVATE)
         val addOn: NoteManagerSharedPreferences.AddOn = object : NoteManagerSharedPreferences.AddOn {
             override fun shareText(text: String) {
-                val sendIntent = Intent()
-                sendIntent.action = Intent.ACTION_SEND
-                sendIntent.putExtra(Intent.EXTRA_TEXT, text)
-                sendIntent.type = "text/plain"
-                context.startActivity(sendIntent)
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND
+                intent.putExtra(Intent.EXTRA_TEXT, text)
+                intent.type = "text/plain"
+                if (context !is Activity) {
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                context.startActivity(intent)
             }
         }
         return NoteManagerSharedPreferences(
