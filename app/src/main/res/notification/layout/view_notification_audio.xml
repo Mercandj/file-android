@@ -10,7 +10,8 @@
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:padding="8dp"
-        android:src="@drawable/ic_sd_storage_black_24dp" />
+        android:src="@drawable/ic_sd_storage_black_24dp"
+        android:tint="@color/color_primary" />
 
     <TextView
         android:id="@+id/titre_notif"
@@ -18,16 +19,16 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="144dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
         android:ellipsize="marquee"
         android:focusable="false"
         android:gravity="center_vertical"
         android:marqueeRepeatLimit="marquee_forever"
         android:maxLines="2"
-        android:paddingLeft="60dp"
         android:scrollHorizontally="true"
-        android:textColor="#fff"
+        android:textColor="@color/view_notification_audio_text"
         android:textSize="14sp"
         tools:ignore="RtlHardcoded,RtlSymmetry"
         tools:text="Titre" />
@@ -38,8 +39,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
         android:layout_marginRight="108dp"
+        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/view_file_detail_previous"
-        android:padding="3dp"
+        android:padding="6dp"
         android:src="@drawable/ic_skip_previous_black_24dp"
         android:tint="@color/view_notification_audio_icon_tint"
         tools:ignore="RtlHardcoded" />
@@ -50,8 +52,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
         android:layout_marginRight="72dp"
+        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/view_file_detail_play"
-        android:padding="3dp"
+        android:padding="7dp"
         android:src="@drawable/ic_pause_black_24dp"
         android:tint="@color/view_notification_audio_icon_tint"
         tools:ignore="RtlHardcoded" />
@@ -62,8 +65,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
         android:layout_marginRight="36dp"
+        android:background="?android:selectableItemBackground"
         android:contentDescription="@string/view_file_detail_next"
-        android:padding="3dp"
+        android:padding="6dp"
         android:src="@drawable/ic_skip_next_black_24dp"
         android:tint="@color/view_notification_audio_icon_tint"
         tools:ignore="RtlHardcoded" />
@@ -73,7 +77,8 @@
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
-        android:padding="5dp"
+        android:background="?android:selectableItemBackground"
+        android:padding="9dp"
         android:src="@drawable/ic_close_black_24dp"
         android:tint="@color/view_notification_audio_icon_tint"
         tools:ignore="RtlHardcoded" />

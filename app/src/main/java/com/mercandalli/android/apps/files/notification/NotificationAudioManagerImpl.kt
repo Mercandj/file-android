@@ -5,7 +5,6 @@ import com.mercandalli.android.apps.files.audio.AudioQueueManager
 
 class NotificationAudioManagerImpl(
         private val audioManager: AudioManager,
-        private val audioQueueManager: AudioQueueManager,
         private val addOn: AddOn
 ) : NotificationAudioManager {
 
@@ -17,13 +16,21 @@ class NotificationAudioManagerImpl(
         })
     }
 
+    override fun hideNotification() {
+        addOn.cancelNotification(NOTIFICATION_AUDIO_ID)
+    }
+
     private fun synchronizeNotificationWithAudioSource() {
         val sourcePath = audioManager.getSourcePath()
         if (sourcePath == null) {
             addOn.cancelNotification(NOTIFICATION_AUDIO_ID)
             return
         }
-        addOn.createNotification(NOTIFICATION_AUDIO_ID)
+        val fileName = addOn.pathToFileName(sourcePath)
+        addOn.createNotification(
+                NOTIFICATION_AUDIO_ID,
+                fileName
+        )
     }
 
     companion object {
@@ -32,8 +39,10 @@ class NotificationAudioManagerImpl(
 
     interface AddOn {
 
-        fun createNotification(notificationId: Int)
+        fun createNotification(notificationId: Int, fileName: String)
 
         fun cancelNotification(notificationId: Int)
+
+        fun pathToFileName(path: String): String
     }
 }

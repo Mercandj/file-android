@@ -146,11 +146,9 @@ class ApplicationGraph(
     private fun getNotificationAudioManagerInternal(): NotificationAudioManager {
         if (!::notificationAudioManager.isInitialized) {
             val audioManager = getAudioManager()
-            val audioQueueManager = getAudioQueueManager()
             val notificationModule = NotificationModule(
                     context,
-                    audioManager,
-                    audioQueueManager
+                    audioManager
             )
             notificationAudioManager = notificationModule.provideNotificationAudioManager()
         }

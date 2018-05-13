@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="view_notification_audio_background">@android:color/white</color>
-    <color name="view_notification_audio_icon_tint">#444444</color>
+    <color name="view_notification_audio_icon_tint">#777777</color>
+    <color name="view_notification_audio_text">#666666</color>
 </resources>
