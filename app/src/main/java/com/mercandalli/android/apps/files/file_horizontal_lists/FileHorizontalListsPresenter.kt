@@ -3,10 +3,12 @@ package com.mercandalli.android.apps.files.file_horizontal_lists
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
+import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileHorizontalListsPresenter(
         private val screen: FileHorizontalListsContract.Screen,
+        private val fileManager: FileManager,
         private val fileOpenManager: FileOpenManager,
         private val fileCopyCutManager: FileCopyCutManager,
         private val rootPath: String
@@ -23,6 +25,18 @@ class FileHorizontalListsPresenter(
     override fun onAttached() {
         fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncFab()
+
+        fileManager.registerFileChildrenResultListener(object : FileManager.FileChildrenResultListener {
+            override fun onFileChildrenResultChanged(path: String) {
+                if (selectedFile == null) {
+                    return
+                }
+                val selectedPath = selectedFile!!.path
+                if (!java.io.File(selectedPath).exists()) {
+                    setSelectedFile(null)
+                }
+            }
+        })
     }
 
     override fun onDetached() {
@@ -34,7 +48,7 @@ class FileHorizontalListsPresenter(
             sizeLists = 1
             screen.setListsSize(1)
             setSelectedFile(null)
-            screen.hideFileDeDetailView()
+            screen.hideFileDetailView()
             return
         }
         if (!file.directory) {
@@ -45,7 +59,7 @@ class FileHorizontalListsPresenter(
             screen.scrollEnd()
             return
         }
-        screen.hideFileDeDetailView()
+        screen.hideFileDetailView()
         if (index > sizeLists - 1) {
             throw IllegalStateException("index:$index sizeLists-1:" + (sizeLists - 1))
         }
@@ -105,6 +119,9 @@ class FileHorizontalListsPresenter(
     private fun setSelectedFile(file: File?) {
         selectedFile = file
         screen.selectPath(file?.path)
+        if (file == null) {
+            screen.hideFileDetailView()
+        }
         syncFab()
     }
 

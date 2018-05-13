@@ -113,7 +113,7 @@ class FileHorizontalLists @JvmOverloads constructor(
         fileDetailView.setFile(file)
     }
 
-    override fun hideFileDeDetailView() {
+    override fun hideFileDetailView() {
         fileDetailView.visibility = View.GONE
         fileDetailView.setFile(null)
     }
@@ -138,10 +138,12 @@ class FileHorizontalLists @JvmOverloads constructor(
                 override fun onFabClicked() {}
             }
         }
+        val fileManager = ApplicationGraph.getFileManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         return FileHorizontalListsPresenter(
                 this,
+                fileManager,
                 fileOpenManager,
                 fileCopyCutManager,
                 Environment.getExternalStorageDirectory().absolutePath

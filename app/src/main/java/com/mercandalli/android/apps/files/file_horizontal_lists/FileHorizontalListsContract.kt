@@ -37,6 +37,6 @@ interface FileHorizontalListsContract {
 
         fun showFileDetailView(file: File)
 
-        fun hideFileDeDetailView()
+        fun hideFileDetailView()
     }
 }
