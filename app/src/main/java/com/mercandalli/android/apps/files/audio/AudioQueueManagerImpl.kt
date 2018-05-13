@@ -13,7 +13,7 @@ class AudioQueueManagerImpl(
         val ioFilesSorted = fileSortManager.sortIoFiles(ioFiles)
         var currentNextPath = nextPath(path, ioFilesSorted)
         while (!audioManager.isSupportedPath(currentNextPath)) {
-            currentNextPath = nextPath(path, ioFilesSorted)
+            currentNextPath = nextPath(currentNextPath, ioFilesSorted)
         }
         return currentNextPath
     }
@@ -23,7 +23,7 @@ class AudioQueueManagerImpl(
         val ioFilesSorted = fileSortManager.sortIoFiles(ioFiles)
         var currentPreviousPath = previousPath(path, ioFilesSorted)
         while (!audioManager.isSupportedPath(currentPreviousPath)) {
-            currentPreviousPath = previousPath(path, ioFilesSorted)
+            currentPreviousPath = previousPath(currentPreviousPath, ioFilesSorted)
         }
         return currentPreviousPath
     }
