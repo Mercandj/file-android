@@ -37,14 +37,15 @@ class FileDetailPresenter(
             screen.hidePlayPauseButton()
             return
         }
-        if (file.directory) {
+        val (_, path, _, directory, name, length, lastModified) = file
+        if (directory) {
             throw IllegalStateException("Directory not supported for now")
         }
-        screen.setTitle(file.name)
-        screen.setPath(file.path)
-        screen.setLength(humanReadableByteCount(file.length))
-        screen.setLastModified(Date(file.lastModified).toString())
-        if (audioManager.isSupportedPath(file.path)) {
+        screen.setTitle(name)
+        screen.setPath(path)
+        screen.setLength(humanReadableByteCount(length))
+        screen.setLastModified(Date(lastModified).toString())
+        if (audioManager.isSupportedPath(path)) {
             screen.showPlayPauseButton()
             screen.showNextButton()
             screen.showPreviousButton()
