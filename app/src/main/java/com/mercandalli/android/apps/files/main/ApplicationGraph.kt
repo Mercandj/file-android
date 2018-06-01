@@ -12,6 +12,9 @@ import com.mercandalli.android.apps.files.notification.NotificationAudioManager
 import com.mercandalli.android.apps.files.notification.NotificationAudioManagerImpl
 import com.mercandalli.android.apps.files.notification.NotificationModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
+import com.mercandalli.android.apps.files.settings.SettingsManager
+import com.mercandalli.android.apps.files.settings.SettingsManagerImpl
+import com.mercandalli.android.apps.files.settings.SettingsModule
 import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.sdk.files.api.FileModule
@@ -35,6 +38,7 @@ class ApplicationGraph(
     private lateinit var fileModule: FileModule
     private lateinit var noteManager: NoteManager
     private lateinit var notificationAudioManager: NotificationAudioManager
+    private lateinit var settingsManager: SettingsManager
     private lateinit var versionManager: VersionManager
 
     private fun getAudioManagerInternal(): AudioManager {
@@ -155,6 +159,13 @@ class ApplicationGraph(
         return notificationAudioManager
     }
 
+    private fun getSettingsManagerInternal(): SettingsManager {
+        if (!::settingsManager.isInitialized) {
+            settingsManager = SettingsModule().provideSettingsManager()
+        }
+        return settingsManager
+    }
+
     private fun getVersionManagerInternal(): VersionManager {
         if (!::versionManager.isInitialized) {
             versionManager = VersionModule(context).provideVersionManager()
@@ -230,6 +241,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getNotificationAudioManager(): NotificationAudioManager {
             return graph!!.getNotificationAudioManagerInternal()
+        }
+
+        @JvmStatic
+        fun getSettingsManager(): SettingsManager {
+            return graph!!.getSettingsManagerInternal()
         }
 
         @JvmStatic

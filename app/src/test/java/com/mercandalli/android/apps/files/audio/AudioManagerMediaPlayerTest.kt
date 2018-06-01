@@ -87,6 +87,24 @@ class AudioManagerMediaPlayerTest {
     }
 
     @Test
+    fun isWmaSupported() {
+        // Given
+        val audioManager = createInstanceToTest()
+        val pathToChecks = ArrayList<String>()
+        pathToChecks.add("totoOo_- .Wma")
+        pathToChecks.add("01 Piste 1.wma")
+        pathToChecks.add("SdCard/TesMp3.wma")
+
+        for (pathToCheck in pathToChecks) {
+            // When
+            val supportedPath = audioManager.isSupportedPath(pathToCheck)
+
+            // Then
+            Assert.assertTrue("$pathToCheck should be supported", supportedPath)
+        }
+    }
+
+    @Test
     fun isFlacNotSupported() {
         // Given
         val audioManager = createInstanceToTest()

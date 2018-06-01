@@ -156,6 +156,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                         getString(android.R.string.cancel),
                         null,
                         null)
+                else -> throw IllegalStateException("Unsupported item: $item")
             }
         }
         menuAlert.create().show()
