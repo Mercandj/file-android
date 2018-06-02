@@ -6,9 +6,9 @@ class FileOpenManagerAndroid(
         private val addOn: AddOn
 ) : FileOpenManager {
 
-    override fun open(path: String) {
-        val mime = extractMime(path)
-        addOn.startActivity(path, mime)
+    override fun open(path: String, mime: String?) {
+        val mimeToUse = mime ?: extractMime(path)
+        addOn.startActivity(path, mimeToUse)
     }
 
     companion object {

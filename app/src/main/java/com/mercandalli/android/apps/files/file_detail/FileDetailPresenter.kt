@@ -64,6 +64,14 @@ class FileDetailPresenter(
         fileOpenManager.open(file!!.path)
     }
 
+    override fun onOpenAsClicked() {
+        screen.showOpenAsSelection()
+    }
+
+    override fun onOpenAsConfirmedClicked(typeMime: String) {
+        fileOpenManager.open(file!!.path, typeMime)
+    }
+
     override fun onPlayPauseClicked() {
         if (audioManager.getSourcePath() != file!!.path) {
             audioManager.reset()

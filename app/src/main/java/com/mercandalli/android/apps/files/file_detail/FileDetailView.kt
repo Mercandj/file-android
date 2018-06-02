@@ -1,7 +1,11 @@
 package com.mercandalli.android.apps.files.file_detail
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -48,6 +52,9 @@ class FileDetailView @JvmOverloads constructor(
         }
         findViewById<View>(R.id.view_file_detail_open).setOnClickListener {
             userAction.onOpenClicked()
+        }
+        findViewById<View>(R.id.view_file_detail_open_as).setOnClickListener {
+            userAction.onOpenAsClicked()
         }
         findViewById<View>(R.id.view_file_detail_share).setOnClickListener {
             userAction.onShareClicked()
@@ -154,6 +161,29 @@ class FileDetailView @JvmOverloads constructor(
         )
     }
 
+    override fun showOpenAsSelection() {
+        val menuAlert = AlertDialog.Builder(context)
+        val menuList = arrayOf(
+                "Text",
+                "Image",
+                "Audio",
+                "Video",
+                "Other")
+        menuAlert.setTitle("Open as:")
+        menuAlert.setItems(menuList) { _, item ->
+            val typeMime: String = when (item) {
+                0 -> "text/plain"
+                1 -> "image/*"
+                2 -> "audio/*"
+                3 -> "video/*"
+                else -> "*/*"
+            }
+            userAction.onOpenAsConfirmedClicked(typeMime)
+        }
+        val menuDrop = menuAlert.create()
+        menuDrop.show()
+    }
+
     fun setFile(file: File?) {
         userAction.onFileChanged(file)
     }
@@ -165,6 +195,8 @@ class FileDetailView @JvmOverloads constructor(
                 override fun onDetached() {}
                 override fun onFileChanged(file: File?) {}
                 override fun onOpenClicked() {}
+                override fun onOpenAsClicked() {}
+                override fun onOpenAsConfirmedClicked(typeMime: String) {}
                 override fun onPlayPauseClicked() {}
                 override fun onNextClicked() {}
                 override fun onPreviousClicked() {}

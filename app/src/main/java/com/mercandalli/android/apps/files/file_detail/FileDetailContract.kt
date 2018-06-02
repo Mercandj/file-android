@@ -15,6 +15,10 @@ interface FileDetailContract {
 
         fun onOpenClicked()
 
+        fun onOpenAsClicked()
+
+        fun onOpenAsConfirmedClicked(typeMime: String)
+
         fun onPlayPauseClicked()
 
         fun onNextClicked()
@@ -63,5 +67,7 @@ interface FileDetailContract {
         fun showDeleteConfirmation(fileName: String)
 
         fun showRenamePrompt(fileName: String)
+
+        fun showOpenAsSelection()
     }
 }
