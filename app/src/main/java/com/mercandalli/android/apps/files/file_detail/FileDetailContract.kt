@@ -69,5 +69,7 @@ interface FileDetailContract {
         fun showRenamePrompt(fileName: String)
 
         fun showOpenAsSelection()
+
+        fun showToast(deleteFailedTextRes: Int)
     }
 }

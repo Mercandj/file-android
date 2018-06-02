@@ -6,16 +6,17 @@ class FileDeleteManagerAndroid(
         private val mediaScanner: MediaScanner
 ) : FileDeleteManager {
 
-    override fun delete(path: String) {
+    override fun delete(path: String): Boolean {
         val ioFile = java.io.File(path)
         val parentPath = ioFile.parentFile.absolutePath
-        if (ioFile.isDirectory) {
+        val deleteSucceeded = if (ioFile.isDirectory) {
             deleteDirectory(ioFile)
         } else {
             ioFile.delete()
         }
         mediaScanner.refresh(path)
         mediaScanner.refresh(parentPath)
+        return deleteSucceeded
     }
 
     companion object {

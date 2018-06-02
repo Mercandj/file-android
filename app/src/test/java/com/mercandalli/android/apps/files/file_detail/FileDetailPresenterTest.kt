@@ -30,6 +30,7 @@ class FileDetailPresenterTest {
     private val fileCopyCutManager: FileCopyCutManager? = null
     private val playStringRes: Int = 42
     private val pauseStringRes: Int = 43
+    private val deleteFailedTextRes: Int = 44
 
     @Before
     fun setup() {
@@ -60,7 +61,8 @@ class FileDetailPresenterTest {
                 fileRenameManager!!,
                 fileShareManager!!,
                 playStringRes,
-                pauseStringRes
+                pauseStringRes,
+                deleteFailedTextRes
         )
     }
 }

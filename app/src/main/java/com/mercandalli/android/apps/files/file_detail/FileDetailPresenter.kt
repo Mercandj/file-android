@@ -16,7 +16,8 @@ class FileDetailPresenter(
         private val fileRenameManager: FileRenameManager,
         private val fileShareManager: FileShareManager,
         private val playDrawableRes: Int,
-        private val pauseDrawableRes: Int
+        private val pauseDrawableRes: Int,
+        private val deleteFailedTextRes: Int
 ) : FileDetailContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -106,7 +107,10 @@ class FileDetailPresenter(
     }
 
     override fun onDeleteConfirmedClicked() {
-        fileDeleteManager.delete(file!!.path)
+        val deleteSucceeded = fileDeleteManager.delete(file!!.path)
+        if (!deleteSucceeded) {
+            screen.showToast(deleteFailedTextRes)
+        }
     }
 
     override fun onRenameClicked() {

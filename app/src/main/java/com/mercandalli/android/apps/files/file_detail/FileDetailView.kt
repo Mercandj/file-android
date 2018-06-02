@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -184,6 +185,10 @@ class FileDetailView @JvmOverloads constructor(
         menuDrop.show()
     }
 
+    override fun showToast(deleteFailedTextRes: Int) {
+        Toast.makeText(context, deleteFailedTextRes, Toast.LENGTH_LONG).show()
+    }
+
     fun setFile(file: File?) {
         userAction.onFileChanged(file)
     }
@@ -226,7 +231,8 @@ class FileDetailView @JvmOverloads constructor(
                 fileRenameManager,
                 fileShareManager,
                 R.drawable.ic_play_arrow_black_24dp,
-                R.drawable.ic_pause_black_24dp
+                R.drawable.ic_pause_black_24dp,
+                R.string.view_file_detail_delete_failed
         )
     }
 }
