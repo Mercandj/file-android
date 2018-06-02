@@ -116,15 +116,106 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/view_file_detail_delete"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:background="?android:selectableItemBackground"
-            android:padding="13dp"
-            android:src="@drawable/ic_delete_black_24dp"
-            android:tint="#808080" />
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/view_file_detail_open"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginBottom="@dimen/default_space_quart"
+            android:layout_marginEnd="@dimen/default_space_half"
+            android:layout_marginStart="@dimen/default_space_1_5"
+            android:layout_marginTop="@dimen/default_space_1_5"
+            android:layout_weight="1"
+            android:background="@drawable/bg_white_btn"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_skip_next_black_24dp"
+            android:text="OPEN"
+            android:tint="@android:color/white" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/view_file_detail_open_as"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginBottom="@dimen/default_space_quart"
+            android:layout_marginEnd="@dimen/default_space_half"
+            android:layout_marginStart="@dimen/default_space_1_5"
+            android:layout_marginTop="@dimen/default_space"
+            android:layout_weight="1"
+            android:background="@drawable/bg_white_btn"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_skip_next_black_24dp"
+            android:text="OPEN AS"
+            android:tint="@android:color/white" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/view_file_detail_rename"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginBottom="@dimen/default_space_quart"
+            android:layout_marginEnd="@dimen/default_space_half"
+            android:layout_marginStart="@dimen/default_space_1_5"
+            android:layout_marginTop="@dimen/default_space"
+            android:layout_weight="1"
+            android:background="@drawable/bg_white_btn"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:src="@drawable/ic_skip_next_black_24dp"
+            android:text="RENAME"
+            android:tint="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/view_file_detail_share"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:selectableItemBackground"
+                android:padding="13dp"
+                android:src="@drawable/ic_share_black_24dp"
+                android:tint="#808080" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/view_file_detail_copy"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:selectableItemBackground"
+                android:padding="13dp"
+                android:src="@drawable/ic_content_copy_black_24dp"
+                android:tint="#808080" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/view_file_detail_cut"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:selectableItemBackground"
+                android:padding="13dp"
+                android:src="@drawable/ic_content_cut_black_24dp"
+                android:tint="#808080" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/view_file_detail_delete"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="?android:selectableItemBackground"
+                android:padding="13dp"
+                android:src="@drawable/ic_delete_black_24dp"
+                android:tint="#808080" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

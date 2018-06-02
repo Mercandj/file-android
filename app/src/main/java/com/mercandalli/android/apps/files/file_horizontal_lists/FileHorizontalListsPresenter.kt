@@ -111,8 +111,7 @@ class FileHorizontalListsPresenter(
         if (selectedFile == null || selectedFile!!.directory) {
             screen.hideFab()
         } else {
-            screen.setFabIcon(R.drawable.ic_play_arrow_black_24dp)
-            screen.showFab()
+            screen.hideFab()
         }
     }
 

@@ -90,6 +90,23 @@ class FileModule(
         )
     }
 
+    fun provideFileShareManager(): FileShareManager {
+        val addOn: FileShareManagerAndroid.AddOn = object : FileShareManagerAndroid.AddOn {
+            override fun startActivity(path: String, mime: String) {
+                val intent = Intent()
+                intent.action = Intent.ACTION_SEND
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                intent.setDataAndType(getUriFromFile(context, File(path)), mime)
+                if (context !is Activity) {
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                }
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                startActivity(context, intent)
+            }
+        }
+        return FileShareManagerAndroid(addOn)
+    }
+
     fun provideFileSortManager(): FileSortManager {
         return FileSortManagerImpl()
     }

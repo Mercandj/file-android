@@ -3,15 +3,18 @@ package com.mercandalli.android.apps.files.file_detail
 import android.annotation.SuppressLint
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
-import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.*
 import java.util.*
 
 class FileDetailPresenter(
         private val screen: FileDetailContract.Screen,
         private val audioManager: AudioManager,
         private val audioQueueManager: AudioQueueManager,
+        private val fileOpenManager: FileOpenManager,
         private val fileDeleteManager: FileDeleteManager,
+        private val fileCopyCutManager: FileCopyCutManager,
+        private val fileRenameManager: FileRenameManager,
+        private val fileShareManager: FileShareManager,
         private val playDrawableRes: Int,
         private val pauseDrawableRes: Int
 ) : FileDetailContract.UserAction {
@@ -57,6 +60,10 @@ class FileDetailPresenter(
         synchronizePlayButton()
     }
 
+    override fun onOpenClicked() {
+        fileOpenManager.open(file!!.path)
+    }
+
     override fun onPlayPauseClicked() {
         if (audioManager.getSourcePath() != file!!.path) {
             audioManager.reset()
@@ -92,6 +99,26 @@ class FileDetailPresenter(
 
     override fun onDeleteConfirmedClicked() {
         fileDeleteManager.delete(file!!.path)
+    }
+
+    override fun onRenameClicked() {
+        screen.showRenamePrompt(file!!.name)
+    }
+
+    override fun onRenameConfirmedClicked(fileName: String) {
+        fileRenameManager.rename(file!!.path, fileName)
+    }
+
+    override fun onShareClicked() {
+        fileShareManager.share(file!!.path)
+    }
+
+    override fun onCopyClicked() {
+        fileCopyCutManager.copy(file!!.path)
+    }
+
+    override fun onCutClicked() {
+        fileCopyCutManager.cut(file!!.path)
     }
 
     private fun synchronizePlayButton() {

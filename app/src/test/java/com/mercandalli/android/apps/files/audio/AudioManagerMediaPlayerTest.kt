@@ -100,7 +100,7 @@ class AudioManagerMediaPlayerTest {
             val supportedPath = audioManager.isSupportedPath(pathToCheck)
 
             // Then
-            Assert.assertTrue("$pathToCheck should be supported", supportedPath)
+            Assert.assertFalse("$pathToCheck should be supported", supportedPath)
         }
     }
 

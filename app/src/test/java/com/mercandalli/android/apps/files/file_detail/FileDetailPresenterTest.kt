@@ -3,7 +3,7 @@ package com.mercandalli.android.apps.files.file_detail
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.file.FileTest
-import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -19,7 +19,15 @@ class FileDetailPresenterTest {
     @Mock
     private val audioQueueManager: AudioQueueManager? = null
     @Mock
+    private val fileOpenManager: FileOpenManager? = null
+    @Mock
     private val fileDeleteManager: FileDeleteManager? = null
+    @Mock
+    private val fileRenameManager: FileRenameManager? = null
+    @Mock
+    private val fileShareManager: FileShareManager? = null
+    @Mock
+    private val fileCopyCutManager: FileCopyCutManager? = null
     private val playStringRes: Int = 42
     private val pauseStringRes: Int = 43
 
@@ -46,7 +54,11 @@ class FileDetailPresenterTest {
                 screen!!,
                 audioManager!!,
                 audioQueueManager!!,
+                fileOpenManager!!,
                 fileDeleteManager!!,
+                fileCopyCutManager!!,
+                fileRenameManager!!,
+                fileShareManager!!,
                 playStringRes,
                 pauseStringRes
         )

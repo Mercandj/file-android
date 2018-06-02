@@ -24,7 +24,6 @@ class FileDetailView @JvmOverloads constructor(
     private val playPause: ImageView
     private val next: View
     private val previous: View
-    private val delete: View
 
     init {
         View.inflate(context, R.layout.view_file_detail, this)
@@ -36,7 +35,6 @@ class FileDetailView @JvmOverloads constructor(
         playPause = findViewById(R.id.view_file_detail_play_pause)
         next = findViewById(R.id.view_file_detail_play_next)
         previous = findViewById(R.id.view_file_detail_play_previous)
-        delete = findViewById(R.id.view_file_detail_delete)
         userAction = createUserAction()
 
         playPause.setOnClickListener {
@@ -48,7 +46,22 @@ class FileDetailView @JvmOverloads constructor(
         previous.setOnClickListener {
             userAction.onPreviousClicked()
         }
-        delete.setOnClickListener {
+        findViewById<View>(R.id.view_file_detail_open).setOnClickListener {
+            userAction.onOpenClicked()
+        }
+        findViewById<View>(R.id.view_file_detail_share).setOnClickListener {
+            userAction.onShareClicked()
+        }
+        findViewById<View>(R.id.view_file_detail_rename).setOnClickListener {
+            userAction.onRenameClicked()
+        }
+        findViewById<View>(R.id.view_file_detail_copy).setOnClickListener {
+            userAction.onCopyClicked()
+        }
+        findViewById<View>(R.id.view_file_detail_cut).setOnClickListener {
+            userAction.onCutClicked()
+        }
+        findViewById<View>(R.id.view_file_detail_delete).setOnClickListener {
             userAction.onDeleteClicked()
         }
     }
@@ -124,6 +137,23 @@ class FileDetailView @JvmOverloads constructor(
         )
     }
 
+    override fun showRenamePrompt(fileName: String) {
+        DialogUtils.prompt(context, "Rename file?",
+                "Enter a new name for: $fileName",
+                "Rename",
+                object : DialogUtils.OnDialogUtilsStringListener {
+                    override fun onDialogUtilsStringCalledBack(text: String) {
+                        userAction.onRenameConfirmedClicked(text)
+                    }
+                },
+                "Dismiss",
+                null,
+                fileName,
+                "File name",
+                null
+        )
+    }
+
     fun setFile(file: File?) {
         userAction.onFileChanged(file)
     }
@@ -134,21 +164,35 @@ class FileDetailView @JvmOverloads constructor(
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onFileChanged(file: File?) {}
+                override fun onOpenClicked() {}
                 override fun onPlayPauseClicked() {}
                 override fun onNextClicked() {}
                 override fun onPreviousClicked() {}
                 override fun onDeleteClicked() {}
                 override fun onDeleteConfirmedClicked() {}
+                override fun onRenameClicked() {}
+                override fun onRenameConfirmedClicked(fileName: String) {}
+                override fun onShareClicked() {}
+                override fun onCopyClicked() {}
+                override fun onCutClicked() {}
             }
         }
         val audioManager = ApplicationGraph.getAudioManager()
         val audioQueueManager = ApplicationGraph.getAudioQueueManager()
+        val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
+        val fileRenameManager = ApplicationGraph.getFileRenameManager()
+        val fileShareManager = ApplicationGraph.getFileShareManager()
         return FileDetailPresenter(
                 this,
                 audioManager,
                 audioQueueManager,
+                fileOpenManager,
                 fileDeleteManager,
+                fileCopyCutManager,
+                fileRenameManager,
+                fileShareManager,
                 R.drawable.ic_play_arrow_black_24dp,
                 R.drawable.ic_pause_black_24dp
         )

@@ -33,6 +33,7 @@ class ApplicationGraph(
     private lateinit var fileDeleteManager: FileDeleteManager
     private lateinit var fileCopyCutManager: FileCopyCutManager
     private lateinit var fileCreatorManager: FileCreatorManager
+    private lateinit var fileShareManager: FileShareManager
     private lateinit var fileRenameManager: FileRenameManager
     private lateinit var fileSortManager: FileSortManager
     private lateinit var fileModule: FileModule
@@ -130,6 +131,16 @@ class ApplicationGraph(
         return fileRenameManager
     }
 
+    private fun getFileShareManagerInternal(): FileShareManager {
+        if (!::fileShareManager.isInitialized) {
+            if (!::fileModule.isInitialized) {
+                fileModule = createFileModule()
+            }
+            fileShareManager = fileModule.provideFileShareManager()
+        }
+        return fileShareManager
+    }
+
     private fun getFileSortManagerInternal(): FileSortManager {
         if (!::fileSortManager.isInitialized) {
             if (!::fileModule.isInitialized) {
@@ -221,6 +232,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getFileCreatorManager(): FileCreatorManager {
             return graph!!.getFileCreatorManagerInternal()
+        }
+
+        @JvmStatic
+        fun getFileShareManager(): FileShareManager {
+            return graph!!.getFileShareManagerInternal()
         }
 
         @JvmStatic

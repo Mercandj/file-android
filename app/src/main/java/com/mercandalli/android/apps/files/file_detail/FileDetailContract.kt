@@ -13,6 +13,8 @@ interface FileDetailContract {
 
         fun onFileChanged(file: File?)
 
+        fun onOpenClicked()
+
         fun onPlayPauseClicked()
 
         fun onNextClicked()
@@ -22,6 +24,16 @@ interface FileDetailContract {
         fun onDeleteClicked()
 
         fun onDeleteConfirmedClicked()
+
+        fun onRenameClicked()
+
+        fun onRenameConfirmedClicked(fileName: String)
+
+        fun onShareClicked()
+
+        fun onCopyClicked()
+
+        fun onCutClicked()
     }
 
     interface Screen {
@@ -49,5 +61,7 @@ interface FileDetailContract {
         fun setPlayPauseButtonImage(drawableRes: Int)
 
         fun showDeleteConfirmation(fileName: String)
+
+        fun showRenamePrompt(fileName: String)
     }
 }

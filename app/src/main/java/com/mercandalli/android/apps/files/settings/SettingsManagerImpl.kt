@@ -5,7 +5,7 @@ class SettingsManagerImpl : SettingsManager {
     private var isDeveloper = false
 
     override fun isDeveloperMode(): Boolean {
-        return isDeveloperMode()
+        return isDeveloper
     }
 
     override fun setDeveloperMode(enable: Boolean) {
