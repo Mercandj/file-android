@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.main
 
 import android.app.AlertDialog
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -69,6 +70,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
             }
         })
         setBottomBarBlur()
+    }
+
+    override fun onDestroy() {
+        userAction.onDestroy()
+        super.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -162,11 +168,19 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         menuAlert.create().show()
     }
 
+    override fun setWindowBackgroundColorRes(windowBackgroundColorRes: Int) {
+        window.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(
+                this,
+                windowBackgroundColorRes)))
+    }
+
     private fun createUserAction(): MainActivityContract.UserAction {
         val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         return MainActivityPresenter(
                 this,
-                fileCreatorManager
+                fileCreatorManager,
+                themeManager
         )
     }
 

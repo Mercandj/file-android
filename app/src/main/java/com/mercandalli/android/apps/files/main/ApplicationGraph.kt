@@ -15,6 +15,8 @@ import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.apps.files.settings.SettingsManager
 import com.mercandalli.android.apps.files.settings.SettingsManagerImpl
 import com.mercandalli.android.apps.files.settings.SettingsModule
+import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.sdk.files.api.FileModule
@@ -40,6 +42,7 @@ class ApplicationGraph(
     private lateinit var noteManager: NoteManager
     private lateinit var notificationAudioManager: NotificationAudioManager
     private lateinit var settingsManager: SettingsManager
+    private lateinit var themeManager: ThemeManager
     private lateinit var versionManager: VersionManager
 
     private fun getAudioManagerInternal(): AudioManager {
@@ -177,6 +180,13 @@ class ApplicationGraph(
         return settingsManager
     }
 
+    private fun getThemeManagerInternal(): ThemeManager {
+        if (!::themeManager.isInitialized) {
+            themeManager = ThemeModule().provideThemeManager(context)
+        }
+        return themeManager
+    }
+
     private fun getVersionManagerInternal(): VersionManager {
         if (!::versionManager.isInitialized) {
             versionManager = VersionModule(context).provideVersionManager()
@@ -262,6 +272,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getSettingsManager(): SettingsManager {
             return graph!!.getSettingsManagerInternal()
+        }
+
+        @JvmStatic
+        fun getThemeManager(): ThemeManager {
+            return graph!!.getThemeManagerInternal()
         }
 
         @JvmStatic

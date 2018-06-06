@@ -6,6 +6,8 @@ interface MainActivityContract {
 
     interface UserAction {
 
+        fun onDestroy()
+
         fun onRestoreInstanceState(savedInstanceState: Bundle?)
 
         fun onSaveInstanceState(outState: Bundle?)
@@ -58,5 +60,7 @@ interface MainActivityContract {
         fun shareNote()
 
         fun showFileCreationSelection()
+
+        fun setWindowBackgroundColorRes(windowBackgroundColorRes: Int)
     }
 }

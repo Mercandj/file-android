@@ -43,17 +43,16 @@ class NotificationModule(
 
                 val remoteViews = RemoteViews(context.packageName, R.layout.view_notification_audio)
 
-                remoteViews.setTextViewText(R.id.titre_notif,
-                        fileName)
-                remoteViews.setOnClickPendingIntent(R.id.titre_notif,
+                remoteViews.setTextViewText(R.id.view_notification_audio_title, fileName)
+                remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_title,
                         getNotificationIntentActivity(context))
-                remoteViews.setOnClickPendingIntent(R.id.close,
+                remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_close,
                         getNotificationIntentClose(context))
-                remoteViews.setOnClickPendingIntent(R.id.activity_file_audio_play,
+                remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_play_pause,
                         getNotificationIntentPlayPause(context))
-                remoteViews.setOnClickPendingIntent(R.id.activity_file_audio_next,
+                remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_next,
                         getNotificationIntentNext(context))
-                remoteViews.setOnClickPendingIntent(R.id.prev,
+                remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_previous,
                         getNotificationIntentPrevious(context))
 
                 NotificationManagerCompat.from(context).notify(notificationId,
@@ -62,20 +61,6 @@ class NotificationModule(
                                 .setAutoCancel(false)
                                 .setOngoing(true)
                                 .setContent(remoteViews)
-                                /*.addAction(R.mipmap.ic_launcher,
-                                        "Next",
-                                        getNotificationIntentNext(context))
-                                .addAction(R.mipmap.ic_launcher,
-                                        "Play/Pause",
-                                        getNotificationIntentPlayPause(context))
-                                .addAction(R.mipmap.ic_launcher,
-                                        "Previous",
-                                        getNotificationIntentPrevious(context))
-                                .extend(NotificationCompat.WearableExtender()
-                                        .setBackground(BitmapUtils.drawableToBitmap(
-                                                ContextCompat.getDrawable(
-                                                        context,
-                                                        R.drawable.ic_music_note_white_24dp))))*/
                                 .setDeleteIntent(getNotificationIntentPause(context))
                                 .setContentIntent(PendingIntent.getActivity(context, 0,
                                         Intent(context, MainActivity::class.java),

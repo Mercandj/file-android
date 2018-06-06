@@ -1,6 +1,8 @@
 package com.mercandalli.android.apps.files.file_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
+import com.mercandalli.android.apps.files.theme.DarkTheme
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -12,6 +14,7 @@ class FileRowPresenter(
         private val fileCopyCutManager: FileCopyCutManager,
         private val fileRenameManager: FileRenameManager,
         private val audioManager: AudioManager,
+        private val themeManager: ThemeManager,
         private val drawableRightIconDirectoryDrawableRes: Int,
         private val drawableRightIconSoundDrawableRes: Int
 ) : FileRowContract.UserAction {
@@ -95,11 +98,20 @@ class FileRowPresenter(
         }
     }
 
-    private fun createPlayListener(): AudioManager.PlayListener {
-        return object : AudioManager.PlayListener {
-            override fun onPlayPauseChanged() {
-                synchronizeRightIcon()
-            }
+    private fun createPlayListener() = object : AudioManager.PlayListener {
+        override fun onPlayPauseChanged() {
+            synchronizeRightIcon()
+        }
+    }
+
+    private fun syncWithCurrentTheme() {
+        val theme = themeManager.theme
+        screen.setTextColorRes(theme.textPrimaryColorRes)
+    }
+
+    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
+        override fun onCurrentThemeChanged() {
+            syncWithCurrentTheme()
         }
     }
 

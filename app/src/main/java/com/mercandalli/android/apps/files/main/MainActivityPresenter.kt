@@ -2,15 +2,27 @@ package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
 import android.os.Environment
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
 class MainActivityPresenter(
         private val screen: MainActivityContract.Screen,
-        private val fileCreatorManager: FileCreatorManager
+        private val fileCreatorManager: FileCreatorManager,
+        private val themeManager: ThemeManager
 ) : MainActivityContract.UserAction {
 
     private var selectedPath: String? = null
     private var selectedSection: Int = SECTION_UNDEFINED
+    private val themeListener = createThemeListener()
+
+    init {
+        themeManager.registerThemeListener(themeListener)
+        syncWithCurrentTheme()
+    }
+
+    override fun onDestroy() {
+        themeManager.unregisterThemeListener(themeListener)
+    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -95,6 +107,19 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
+    }
+
+    private fun syncWithCurrentTheme() {
+        val theme = themeManager.theme
+        screen.setWindowBackgroundColorRes(theme.windowBackgroundColorRes)
+    }
+
+    private fun createThemeListener(): ThemeManager.OnCurrentThemeChangeListener {
+        return object : ThemeManager.OnCurrentThemeChangeListener {
+            override fun onCurrentThemeChanged() {
+                syncWithCurrentTheme()
+            }
+        }
     }
 
     companion object {

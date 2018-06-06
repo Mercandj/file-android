@@ -14,7 +14,7 @@
         android:tint="@color/color_primary" />
 
     <TextView
-        android:id="@+id/titre_notif"
+        android:id="@+id/view_notification_audio_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
@@ -34,7 +34,7 @@
         tools:text="Titre" />
 
     <ImageView
-        android:id="@+id/prev"
+        android:id="@+id/view_notification_audio_previous"
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
@@ -47,7 +47,7 @@
         tools:ignore="RtlHardcoded" />
 
     <ImageView
-        android:id="@+id/activity_file_audio_play"
+        android:id="@+id/view_notification_audio_play_pause"
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
@@ -60,7 +60,7 @@
         tools:ignore="RtlHardcoded" />
 
     <ImageView
-        android:id="@+id/activity_file_audio_next"
+        android:id="@+id/view_notification_audio_next"
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
@@ -73,7 +73,7 @@
         tools:ignore="RtlHardcoded" />
 
     <ImageView
-        android:id="@+id/close"
+        android:id="@+id/view_notification_audio_close"
         android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"

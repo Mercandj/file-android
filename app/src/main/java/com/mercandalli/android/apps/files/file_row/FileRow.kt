@@ -143,6 +143,10 @@ class FileRow @JvmOverloads constructor(
         )
     }
 
+    override fun setTextColorRes(textColorRes: Int) {
+        title.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
     fun setFile(file: File, selectedPath: String?) {
         userAction.onFileChanged(file, selectedPath)
     }
@@ -171,12 +175,14 @@ class FileRow @JvmOverloads constructor(
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val audioManager = ApplicationGraph.getAudioManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         return FileRowPresenter(
                 this,
                 fileDeleteManager,
                 fileCopyCutManager,
                 fileRenameManager,
                 audioManager,
+                themeManager,
                 R.drawable.ic_play_arrow_black_24dp,
                 R.drawable.ic_volume_up_black_24dp
         )

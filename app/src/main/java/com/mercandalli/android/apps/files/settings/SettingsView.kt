@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -17,17 +18,36 @@ class SettingsView @JvmOverloads constructor(
 ) : ScrollView(context, attrs, defStyleAttr), SettingsContract.Screen {
 
     private val version: TextView
+    private val themeCheckBox: CheckBox
+    private val userAction: SettingsContract.UserAction
 
     init {
         View.inflate(context, R.layout.view_settings, this)
         version = findViewById(R.id.view_settings_version_name)
-        val userAction = createUserAction()
+        themeCheckBox = findViewById(R.id.view_settings_theme)
+        userAction = createUserAction()
         findViewById<View>(R.id.view_settings_rate).setOnClickListener {
             userAction.onRateClicked()
         }
         findViewById<View>(R.id.view_settings_team_apps).setOnClickListener {
             userAction.onTeamAppsClicked()
         }
+        findViewById<View>(R.id.view_settings_theme_row).setOnClickListener {
+            userAction.onThemeRowClicked(!themeCheckBox.isChecked)
+        }
+        themeCheckBox.setOnCheckedChangeListener { _, isChecked ->
+            userAction.onThemeCheckboxCheckedChange(isChecked)
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
+    }
+
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
     }
 
     override fun openUrl(url: String) {
@@ -44,17 +64,27 @@ class SettingsView @JvmOverloads constructor(
         version.text = context.getString(R.string.view_settings_version, versionName)
     }
 
+    override fun setThemeCheckboxChecked(checked: Boolean) {
+        themeCheckBox.isChecked = checked
+    }
+
     private fun createUserAction(): SettingsContract.UserAction {
         if (isInEditMode) {
             return object : SettingsContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
                 override fun onRateClicked() {}
                 override fun onTeamAppsClicked() {}
+                override fun onThemeRowClicked(checked: Boolean) {}
+                override fun onThemeCheckboxCheckedChange(checked: Boolean) {}
             }
         }
         val versionManager = ApplicationGraph.getVersionManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         return SettingsPresenter(
                 this,
-                versionManager
+                versionManager,
+                themeManager
         )
     }
 }

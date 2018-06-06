@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.file_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileRenameManager
@@ -23,6 +24,8 @@ class FileRowPresenterTest {
     private var fileRenameManager: FileRenameManager? = null
     @Mock
     private var audioManager: AudioManager? = null
+    @Mock
+    private var themeManager: ThemeManager? = null
     private val drawableRightIconDirectoryDrawableRes: Int = 42
     private val drawableRightIconSoundDrawableRes: Int = 44
 
@@ -66,6 +69,7 @@ class FileRowPresenterTest {
                 fileCopyCutManager!!,
                 fileRenameManager!!,
                 audioManager!!,
+                themeManager!!,
                 drawableRightIconDirectoryDrawableRes,
                 drawableRightIconSoundDrawableRes
         )

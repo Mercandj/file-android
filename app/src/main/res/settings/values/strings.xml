@@ -3,4 +3,8 @@
     <string name="view_settings_description">I hope you like this version\nStill a lot of features to come =)️</string>
     <string name="view_settings_rate_text️">RATE THIS APP ❤️</string>
     <string name="view_settings_team_apps_text">OTHER GREAT APPS</string>
+
+    <string name="view_settings_theme_section_label">Theme</string>
+    <string name="view_settings_theme_label">Theme</string>
+    <string name="view_settings_theme_sublabel">Dark theme</string>
 </resources>

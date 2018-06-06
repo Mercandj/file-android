@@ -50,5 +50,7 @@ interface FileRowContract {
         fun showDeleteConfirmation(fileName: String)
 
         fun showRenamePrompt(fileName: String)
+
+        fun setTextColorRes(textColorRes: Int)
     }
 }
