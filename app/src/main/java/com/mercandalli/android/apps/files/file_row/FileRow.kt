@@ -184,7 +184,8 @@ class FileRow @JvmOverloads constructor(
                 audioManager,
                 themeManager,
                 R.drawable.ic_play_arrow_black_24dp,
-                R.drawable.ic_volume_up_black_24dp
+                R.drawable.ic_volume_up_black_24dp,
+                R.color.view_file_row_selected_title
         )
     }
 
