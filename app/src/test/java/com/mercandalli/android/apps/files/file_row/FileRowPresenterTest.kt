@@ -28,6 +28,7 @@ class FileRowPresenterTest {
     private var themeManager: ThemeManager? = null
     private val drawableRightIconDirectoryDrawableRes: Int = 42
     private val drawableRightIconSoundDrawableRes: Int = 44
+    private val selectedTextColorRes: Int = 45
 
     @Before
     fun setup() {
@@ -71,7 +72,8 @@ class FileRowPresenterTest {
                 audioManager!!,
                 themeManager!!,
                 drawableRightIconDirectoryDrawableRes,
-                drawableRightIconSoundDrawableRes
+                drawableRightIconSoundDrawableRes,
+                selectedTextColorRes
         )
     }
 }
