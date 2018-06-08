@@ -91,7 +91,7 @@
         android:layout_height="@dimen/bottom_bar_height"
         android:layout_gravity="bottom"
         android:scaleType="centerCrop"
-        app:blurOverlayColor="#aaffffff">
+        app:blurOverlayColor="@color/activity_main_blur_overlay_color_light">
 
         <com.mercandalli.android.apps.files.bottom_bar.BottomBar
             android:id="@+id/activity_main_bottom_bar"

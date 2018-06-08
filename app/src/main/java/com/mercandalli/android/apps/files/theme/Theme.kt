@@ -10,4 +10,6 @@ open class Theme(
         @ColorRes
         val textPrimaryColorRes: Int,
         @ColorRes
-        val textSecondaryColorRes: Int)
+        val textSecondaryColorRes: Int,
+        @ColorRes
+        val bottomBarBlurOverlay: Int)

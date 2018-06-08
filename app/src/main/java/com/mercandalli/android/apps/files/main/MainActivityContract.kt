@@ -62,5 +62,7 @@ interface MainActivityContract {
         fun showFileCreationSelection()
 
         fun setWindowBackgroundColorRes(windowBackgroundColorRes: Int)
+
+        fun setBottomBarBlurOverlayColorRes(bottomBarBlurOverlayRes: Int)
     }
 }

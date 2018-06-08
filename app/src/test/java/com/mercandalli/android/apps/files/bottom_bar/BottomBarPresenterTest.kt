@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -10,6 +11,8 @@ class BottomBarPresenterTest {
 
     @Mock
     private val screen: BottomBarContract.Screen? = null
+    @Mock
+    private val themeManager: ThemeManager? = null
     private val selectedColor: Int = 42
     private val notSelectedColor: Int = 43
 
@@ -66,6 +69,7 @@ class BottomBarPresenterTest {
     private fun createInstanceToTest(): BottomBarPresenter {
         return BottomBarPresenter(
                 screen!!,
+                themeManager!!,
                 selectedColor,
                 notSelectedColor
         )

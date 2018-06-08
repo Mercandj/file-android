@@ -1,8 +1,8 @@
 package com.mercandalli.android.apps.files.main
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
     private lateinit var toolbarDelete: View
     private lateinit var toolbarShare: View
     private lateinit var toolbarAdd: View
+    private lateinit var bottomBarBlurView: BlurView
     private lateinit var userAction: MainActivityContract.UserAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
         toolbarShare = findViewById(R.id.activity_main_toolbar_share)
         toolbarAdd = findViewById(R.id.activity_main_toolbar_add)
+        bottomBarBlurView = findViewById(R.id.activity_main_bottom_bar_container)
         window.setBackgroundDrawable(ColorDrawable(
                 ContextCompat.getColor(this, R.color.window_background_light)))
         userAction = createUserAction()
@@ -69,7 +71,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                 userAction.onSelectedFilePathChanged(path)
             }
         })
-        setBottomBarBlur()
+        val decorView = window.decorView
+        bottomBarBlurView.setupWith(decorView.findViewById<View>(android.R.id.content) as ViewGroup)
+                .windowBackground(decorView.background)
+                .blurAlgorithm(RenderScriptBlur(this))
+                .blurRadius(2f)
+                .setHasFixedTransformationMatrix(true)
     }
 
     override fun onDestroy() {
@@ -174,6 +181,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                 windowBackgroundColorRes)))
     }
 
+    override fun setBottomBarBlurOverlayColorRes(bottomBarBlurOverlayRes: Int) {
+        bottomBarBlurView.setOverlayColor(ContextCompat.getColor(
+                this,
+                bottomBarBlurOverlayRes))
+    }
+
     private fun createUserAction(): MainActivityContract.UserAction {
         val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
         val themeManager = ApplicationGraph.getThemeManager()
@@ -182,17 +195,5 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                 fileCreatorManager,
                 themeManager
         )
-    }
-
-    private fun setBottomBarBlur() {
-        val radius = 2f
-        val decorView = window.decorView
-        val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
-        val windowBackground = decorView.background
-        findViewById<BlurView>(R.id.activity_main_bottom_bar_container).setupWith(rootView)
-                .windowBackground(windowBackground)
-                .blurAlgorithm(RenderScriptBlur(this))
-                .blurRadius(radius)
-                .setHasFixedTransformationMatrix(true)
     }
 }

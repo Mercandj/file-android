@@ -7,7 +7,7 @@
     tools:parentTag="android.widget.LinearLayout">
 
     <LinearLayout
-        android:id="@+id/view_bottom_bar_section_file"
+        android:id="@+id/view_bottom_bar_file_section"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -18,13 +18,14 @@
         android:paddingStart="@dimen/default_space_4">
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/view_bottom_bar_section_icon_file"
+            android:id="@+id/view_bottom_bar_section_file_icon"
             android:layout_width="@dimen/bottom_bar_icon_dimen"
             android:layout_height="@dimen/bottom_bar_icon_dimen"
             android:src="@drawable/ic_folder_black_24dp"
             android:tint="@color/bottom_bar_selected" />
 
         <TextView
+            android:id="@+id/view_bottom_bar_section_file_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Files"
@@ -33,7 +34,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/view_bottom_bar_section_note"
+        android:id="@+id/view_bottom_bar_note_section"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -42,13 +43,14 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/view_bottom_bar_section_icon_note"
+            android:id="@+id/view_bottom_bar_section_note_icon"
             android:layout_width="@dimen/bottom_bar_icon_dimen"
             android:layout_height="@dimen/bottom_bar_icon_dimen"
             android:src="@drawable/ic_create_black_24dp"
             android:tint="@color/bottom_bar_not_selected" />
 
         <TextView
+            android:id="@+id/view_bottom_bar_section_note_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Notes"
@@ -57,7 +59,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/view_bottom_bar_section_settings"
+        android:id="@+id/view_bottom_bar_settings_section"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -68,13 +70,14 @@
         android:paddingStart="0dp">
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/view_bottom_bar_section_icon_settings"
+            android:id="@+id/view_bottom_bar_section_settings_icon"
             android:layout_width="@dimen/bottom_bar_icon_dimen"
             android:layout_height="@dimen/bottom_bar_icon_dimen"
             android:src="@drawable/ic_settings_black_24dp"
             android:tint="@color/bottom_bar_not_selected" />
 
         <TextView
+            android:id="@+id/view_bottom_bar_section_settings_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Settings"

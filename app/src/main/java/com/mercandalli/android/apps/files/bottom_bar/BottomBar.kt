@@ -9,39 +9,51 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class BottomBar @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), BottomBarContract.Screen {
 
     private val userAction: BottomBarContract.UserAction
-    private val sectionIconFile: ImageView
-    private val sectionIconNote: ImageView
-    private val sectionIconSettings: ImageView
+    private val sectionFileIcon: ImageView
+    private val sectionFileText: TextView
+    private val sectionNoteIcon: ImageView
+    private val sectionNoteText: TextView
+    private val sectionSettingsIcon: ImageView
+    private val sectionSettingsText: TextView
     private var clickListener: OnBottomBarClickListener? = null
 
     init {
         View.inflate(context, R.layout.view_bottom_bar, this)
-        sectionIconFile = findViewById(R.id.view_bottom_bar_section_icon_file)
-        sectionIconNote = findViewById(R.id.view_bottom_bar_section_icon_note)
-        sectionIconSettings = findViewById(R.id.view_bottom_bar_section_icon_settings)
-
-        userAction = BottomBarPresenter(
-                this,
-                ContextCompat.getColor(context, R.color.bottom_bar_selected),
-                ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
-        )
-
-        findViewById<View>(R.id.view_bottom_bar_section_file).setOnClickListener {
+        sectionFileIcon = findViewById(R.id.view_bottom_bar_section_file_icon)
+        sectionFileText = findViewById(R.id.view_bottom_bar_section_file_text)
+        sectionNoteIcon = findViewById(R.id.view_bottom_bar_section_note_icon)
+        sectionNoteText = findViewById(R.id.view_bottom_bar_section_note_text)
+        sectionSettingsIcon = findViewById(R.id.view_bottom_bar_section_settings_icon)
+        sectionSettingsText = findViewById(R.id.view_bottom_bar_section_settings_text)
+        userAction = createUserAction()
+        findViewById<View>(R.id.view_bottom_bar_file_section).setOnClickListener {
             userAction.onFileClicked()
         }
-        findViewById<View>(R.id.view_bottom_bar_section_note).setOnClickListener {
+        findViewById<View>(R.id.view_bottom_bar_note_section).setOnClickListener {
             userAction.onNoteClicked()
         }
-        findViewById<View>(R.id.view_bottom_bar_section_settings).setOnClickListener {
+        findViewById<View>(R.id.view_bottom_bar_settings_section).setOnClickListener {
             userAction.onSettingsClicked()
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
+    }
+
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
     }
 
     override fun onSaveInstanceState(): Parcelable {
@@ -75,19 +87,52 @@ class BottomBar @JvmOverloads constructor(
     }
 
     override fun setFileIconColor(color: Int) {
-        sectionIconFile.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        sectionFileIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
     override fun setNoteIconColor(color: Int) {
-        sectionIconNote.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        sectionNoteIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
     override fun setSettingsIconColor(color: Int) {
-        sectionIconSettings.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        sectionSettingsIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    }
+
+    override fun setSectionFileTextColorRes(textColorRes: Int) {
+        sectionFileText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setSectionNoteTextColorRes(textColorRes: Int) {
+        sectionNoteText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setSectionSettingsTextColorRes(textColorRes: Int) {
+        sectionSettingsText.setTextColor(ContextCompat.getColor(context, textColorRes))
     }
 
     fun setOnBottomBarClickListener(listener: OnBottomBarClickListener?) {
         clickListener = listener
+    }
+
+    private fun createUserAction(): BottomBarContract.UserAction {
+        if (isInEditMode) {
+            return object : BottomBarContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
+                override fun onSaveInstanceState(saveState: Bundle) {}
+                override fun onRestoreInstanceState(state: Bundle) {}
+                override fun onFileClicked() {}
+                override fun onNoteClicked() {}
+                override fun onSettingsClicked() {}
+            }
+        }
+        val themeManager = ApplicationGraph.getThemeManager()
+        return BottomBarPresenter(
+                this,
+                themeManager,
+                ContextCompat.getColor(context, R.color.bottom_bar_selected),
+                ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
+        )
     }
 
     interface OnBottomBarClickListener {

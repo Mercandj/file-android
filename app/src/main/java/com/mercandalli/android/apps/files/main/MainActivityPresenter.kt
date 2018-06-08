@@ -112,6 +112,7 @@ class MainActivityPresenter(
     private fun syncWithCurrentTheme() {
         val theme = themeManager.theme
         screen.setWindowBackgroundColorRes(theme.windowBackgroundColorRes)
+        screen.setBottomBarBlurOverlayColorRes(theme.bottomBarBlurOverlay)
     }
 
     private fun createThemeListener(): ThemeManager.OnCurrentThemeChangeListener {
