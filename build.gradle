@@ -33,9 +33,9 @@ ext {
     appVersionCode = 1_00_06
     appVersionName = "1.00.06"
 
-    compileSdkVersion = 27
+    compileSdkVersion = 28
     buildToolsVersion = "27.0.3"
-    targetSdkVersion = 27
+    targetSdkVersion = 28
     minSdkVersion = 21
 
     spoonEnable = false
