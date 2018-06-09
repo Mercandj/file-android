@@ -10,8 +10,6 @@ interface FileListContract {
 
         fun onDetached()
 
-        fun onResume()
-
         fun onRefresh()
 
         fun onFileClicked(file: File)

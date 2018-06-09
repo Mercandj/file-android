@@ -51,17 +51,18 @@ class FileListView @JvmOverloads constructor(
             return object : FileListContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
-                override fun onResume() {}
                 override fun onRefresh() {}
                 override fun onFileClicked(file: File) {}
                 override fun onFabUpArrowClicked() {}
             }
         }
         val fileManager = ApplicationGraph.getFileManager()
+        val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         return FileListPresenter(
                 this,
                 fileManager,
+                fileOpenManager,
                 fileSortManager,
                 Environment.getExternalStorageDirectory().absolutePath)
     }
@@ -120,10 +121,6 @@ class FileListView @JvmOverloads constructor(
 
     override fun hideFabUpArrow() {
         fab.hide()
-    }
-
-    fun onResume() {
-        userAction.onResume()
     }
 
     fun setFileLongClickListener(listener: FileListRow.FileLongClickListener?) {
