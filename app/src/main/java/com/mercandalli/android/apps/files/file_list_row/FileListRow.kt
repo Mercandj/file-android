@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.support.v7.widget.PopupMenu
 import android.util.AttributeSet
 import android.view.Gravity
@@ -22,21 +23,24 @@ class FileListRow @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), FileListRowContract.Screen {
 
     private val userAction: FileListRowContract.UserAction
+    private val card: CardView
     private val icon: ImageView
     private val title: TextView
+    private val subtitle: TextView
     private val arrayRight: ImageView
     private var fileClickListener: FileClickListener? = null
     private var fileLongClickListener: FileLongClickListener? = null
 
     init {
         View.inflate(context, R.layout.view_file_list_row, this)
+        card = findViewById(R.id.view_file_list_row_card)
         icon = findViewById(R.id.view_file_list_row_icon)
         title = findViewById(R.id.view_file_list_row_title)
+        subtitle = findViewById(R.id.view_file_list_row_subtitle)
         arrayRight = findViewById(R.id.view_file_list_row_arrow_right)
-        foreground = getSelectableItemBackground(context)
         userAction = createUserAction()
 
-        setOnClickListener { userAction.onRowClicked() }
+        card.setOnClickListener { userAction.onRowClicked() }
         setOnLongClickListener {
             userAction.onRowLongClicked()
             return@setOnLongClickListener true
@@ -55,6 +59,10 @@ class FileListRow @JvmOverloads constructor(
 
     override fun setTitle(title: String) {
         this.title.text = title
+    }
+
+    override fun setSubtitle(subtitle: String) {
+        this.subtitle.text = subtitle
     }
 
     override fun setRightIconVisibility(visible: Boolean) {
@@ -207,16 +215,6 @@ class FileListRow @JvmOverloads constructor(
             false
         })
         popupMenu.show()
-    }
-
-    companion object {
-        fun getSelectableItemBackground(context: Context): Drawable? {
-            val attrs = intArrayOf(android.R.attr.selectableItemBackground /* index 0 */)
-            val ta = context.obtainStyledAttributes(attrs)
-            val drawableFromTheme = ta.getDrawable(0 /* index */)
-            ta.recycle()
-            return drawableFromTheme
-        }
     }
 
     interface FileClickListener {

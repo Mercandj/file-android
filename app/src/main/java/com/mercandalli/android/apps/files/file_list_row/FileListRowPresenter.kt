@@ -40,6 +40,7 @@ class FileListRowPresenter(
         this.file = file
         screen.setTitle(file.name)
         val directory = file.directory
+        screen.setSubtitle(if (file.directory) "Directory" else "File")
         screen.setRightIconVisibility(directory)
         screen.setIcon(directory)
         selected = isSelected(file.path, selectedPath)

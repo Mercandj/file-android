@@ -19,7 +19,6 @@ class FileListView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
 
     private val userAction: FileListContract.UserAction
-    private var fileClickListener: FileListRow.FileClickListener? = null
     private var fileLongClickListener: FileListRow.FileLongClickListener? = null
     private val adapter = FileListAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
@@ -32,7 +31,7 @@ class FileListView @JvmOverloads constructor(
         refresh = findViewById(R.id.view_file_list_refresh)
         recyclerView = findViewById(R.id.view_file_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
         emptyView = findViewById(R.id.view_file_list_empty_view)
         error = findViewById(R.id.view_file_list_error)
         userAction = createUserAction()
@@ -48,8 +47,7 @@ class FileListView @JvmOverloads constructor(
                 override fun onDetached() {}
                 override fun onResume() {}
                 override fun onRefresh() {}
-                override fun onPathChanged(path: String) {}
-                override fun onPathSelected(path: String?) {}
+                override fun onFileClicked(file: File) {}
             }
         }
         val fileManager = ApplicationGraph.getFileManager()
@@ -112,26 +110,14 @@ class FileListView @JvmOverloads constructor(
         userAction.onResume()
     }
 
-    fun setPath(path: String) {
-        userAction.onPathChanged(path)
-    }
-
-    fun setFileClickListener(listener: FileListRow.FileClickListener?) {
-        fileClickListener = listener
-    }
-
     fun setFileLongClickListener(listener: FileListRow.FileLongClickListener?) {
         fileLongClickListener = listener
-    }
-
-    fun onPathSelected(path: String?) {
-        userAction.onPathSelected(path)
     }
 
     private fun createFileClickListener(): FileListRow.FileClickListener {
         return object : FileListRow.FileClickListener {
             override fun onFileClicked(file: File) {
-                fileClickListener?.onFileClicked(file)
+                userAction.onFileClicked(file)
             }
         }
     }

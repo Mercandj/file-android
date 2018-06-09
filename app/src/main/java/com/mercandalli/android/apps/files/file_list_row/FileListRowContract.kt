@@ -33,6 +33,8 @@ interface FileListRowContract {
 
         fun setTitle(title: String)
 
+        fun setSubtitle(subtitle: String)
+
         fun setRightIconVisibility(visible: Boolean)
 
         fun setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes: Int)

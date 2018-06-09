@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_list
 
+import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileSortManager
@@ -31,13 +32,12 @@ class FileListPresenter(
         syncFileChildren(fileChildrenResult)
     }
 
-    override fun onPathChanged(path: String) {
-        currentPath = path
-        syncFileChildren()
-    }
-
-    override fun onPathSelected(path: String?) {
-        screen.selectPath(path)
+    override fun onFileClicked(file: File) {
+        if (file.directory) {
+            currentPath = file.path
+            val fileChildrenResult = fileManager.loadFileChildren(file.path, true)
+            syncFileChildren(fileChildrenResult)
+        }
     }
 
     private fun syncFileChildren() {

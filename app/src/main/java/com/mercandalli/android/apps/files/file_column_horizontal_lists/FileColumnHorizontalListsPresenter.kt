@@ -17,6 +17,7 @@ class FileColumnHorizontalListsPresenter(
     private var sizeLists = 1
     private var selectedFile: File? = null
     private val fileToPasteChangedListener = createFileToPasteChangedListener()
+    private val fileChildrenResultListener = createFileChildrenResultListener()
 
     init {
         screen.hideFab()
@@ -25,22 +26,12 @@ class FileColumnHorizontalListsPresenter(
     override fun onAttached() {
         fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncFab()
-
-        fileManager.registerFileChildrenResultListener(object : FileManager.FileChildrenResultListener {
-            override fun onFileChildrenResultChanged(path: String) {
-                if (selectedFile == null) {
-                    return
-                }
-                val selectedPath = selectedFile!!.path
-                if (!java.io.File(selectedPath).exists()) {
-                    setSelectedFile(null)
-                }
-            }
-        })
+        fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 
     override fun onDetached() {
         fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
+        fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
     }
 
     override fun onFileClicked(index: Int, file: File) {
@@ -128,6 +119,18 @@ class FileColumnHorizontalListsPresenter(
         return object : FileCopyCutManager.FileToPasteChangedListener {
             override fun onFileToPasteChanged() {
                 syncFab()
+            }
+        }
+    }
+
+    private fun createFileChildrenResultListener() = object : FileManager.FileChildrenResultListener {
+        override fun onFileChildrenResultChanged(path: String) {
+            if (selectedFile == null) {
+                return
+            }
+            val selectedPath = selectedFile!!.path
+            if (!java.io.File(selectedPath).exists()) {
+                setSelectedFile(null)
             }
         }
     }

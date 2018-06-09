@@ -14,9 +14,7 @@ interface FileListContract {
 
         fun onRefresh()
 
-        fun onPathChanged(path: String)
-
-        fun onPathSelected(path: String?)
+        fun onFileClicked(file: File)
     }
 
     interface Screen {
