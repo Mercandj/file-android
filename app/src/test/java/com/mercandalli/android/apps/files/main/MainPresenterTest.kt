@@ -6,6 +6,7 @@ import com.mercandalli.sdk.files.api.FileCreatorManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
@@ -19,6 +20,8 @@ class MainPresenterTest {
     private var themeManager: ThemeManager? = null
     @Mock
     private var theme: Theme? = null
+    @Mock
+    private var mainActivityFileUiStorage: MainActivityFileUiStorage? = null
 
     @Before
     fun setup() {
@@ -29,6 +32,8 @@ class MainPresenterTest {
     @Test
     fun onFileSectionClickedShowsFileView() {
         // Given
+        `when`(mainActivityFileUiStorage!!.getCurrentFileUi()).thenReturn(
+                MainActivityFileUiStorage.SECTION_FILE_COLUMN)
         val presenter = createInstanceToTest()
         reset(screen)
 
@@ -67,7 +72,8 @@ class MainPresenterTest {
         return MainActivityPresenter(
                 screen!!,
                 fileCreatorManager!!,
-                themeManager!!
+                themeManager!!,
+                mainActivityFileUiStorage!!
         )
     }
 }

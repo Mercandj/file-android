@@ -2,13 +2,16 @@ package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
 import android.os.Environment
+import com.mercandalli.android.apps.files.main.MainActivityFileUiStorage.Companion.SECTION_FILE_COLUMN
+import com.mercandalli.android.apps.files.main.MainActivityFileUiStorage.Companion.SECTION_FILE_LIST
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
 class MainActivityPresenter(
         private val screen: MainActivityContract.Screen,
         private val fileCreatorManager: FileCreatorManager,
-        private val themeManager: ThemeManager
+        private val themeManager: ThemeManager,
+        private val mainActivityFileUiStorage: MainActivityFileUiStorage
 ) : MainActivityContract.UserAction {
 
     private var selectedPath: String? = null
@@ -26,7 +29,7 @@ class MainActivityPresenter(
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            selectFileColumn()
+            selectFile()
             return
         }
         val section = savedInstanceState.getInt("section", SECTION_UNDEFINED)
@@ -47,7 +50,7 @@ class MainActivityPresenter(
     }
 
     override fun onFileSectionClicked() {
-        selectFileColumn()
+        selectFile()
     }
 
     override fun onNoteSectionClicked() {
@@ -88,7 +91,17 @@ class MainActivityPresenter(
         selectedPath = path
     }
 
+    private fun selectFile() {
+        val currentFileUi = mainActivityFileUiStorage.getCurrentFileUi()
+        when (currentFileUi) {
+            MainActivityFileUiStorage.SECTION_FILE_LIST -> selectFileList()
+            MainActivityFileUiStorage.SECTION_FILE_COLUMN -> selectFileColumn()
+            else -> throw IllegalStateException("Unsupported currentFileUi: $currentFileUi")
+        }
+    }
+
     private fun selectFileList() {
+        mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_LIST)
         selectedSection = SECTION_FILE_LIST
         screen.showFileListView()
         screen.hideFileColumnView()
@@ -102,6 +115,7 @@ class MainActivityPresenter(
     }
 
     private fun selectFileColumn() {
+        mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_COLUMN)
         selectedSection = SECTION_FILE_COLUMN
         screen.hideFileListView()
         screen.showFileColumnView()

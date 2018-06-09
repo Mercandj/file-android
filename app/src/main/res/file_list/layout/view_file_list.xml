@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="top"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/bottom_bar_height_plus_6"
+            android:paddingBottom="@dimen/bottom_bar_height_plus_fab"
             android:paddingTop="6dp"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
@@ -47,5 +48,15 @@
         android:layout_gravity="end"
         android:layout_marginBottom="@dimen/bottom_bar_height"
         android:background="#18000000" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/view_file_list_fab"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="@dimen/bottom_bar_height_plus_16"
+        android:layout_marginEnd="@dimen/default_space_1_5"
+        android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+        app:fabSize="mini" />
 
 </merge>

@@ -36,12 +36,12 @@ public class ScaleAnimationAdapter extends RecyclerView.Adapter<ViewHolder> impl
     /**
      * The animation duration for each {@link RecyclerView}.
      */
-    private int mDuration = 300;
+    private int mDuration = 220;
 
     /**
      * The animation offset duration between each {@link RecyclerView}.
      */
-    private int mOffsetDuration = 100;
+    private int mOffsetDuration = 50;
 
     /**
      * The animation {@link Interpolator}.

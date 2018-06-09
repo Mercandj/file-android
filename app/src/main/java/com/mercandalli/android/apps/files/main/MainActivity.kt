@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.file_column_horizontal_lists.FileColumnHorizontalLists
 import com.mercandalli.android.apps.files.file_list.FileListView
+import com.mercandalli.android.apps.files.note.NoteManagerSharedPreferences
 import com.mercandalli.android.apps.files.note.NoteView
 import com.mercandalli.android.apps.files.settings.SettingsView
 import eightbitlab.com.blurview.BlurView
@@ -226,10 +228,16 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
     private fun createUserAction(): MainActivityContract.UserAction {
         val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
         val themeManager = ApplicationGraph.getThemeManager()
+        val sharedPreferences = getSharedPreferences(
+                MainActivityFileUiStorageSharedPreference.PREFERENCE_NAME,
+                Context.MODE_PRIVATE)
+        val mainActivityFileUiStorage = MainActivityFileUiStorageSharedPreference(
+                sharedPreferences)
         return MainActivityPresenter(
                 this,
                 fileCreatorManager,
-                themeManager
+                themeManager,
+                mainActivityFileUiStorage
         )
     }
 }

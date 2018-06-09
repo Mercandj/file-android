@@ -9,9 +9,10 @@ class FileListPresenter(
         private val screen: FileListContract.Screen,
         private val fileManager: FileManager,
         private val fileSortManager: FileSortManager,
-        private var currentPath: String
+        private val currentPathParam: String
 ) : FileListContract.UserAction {
 
+    private var currentPath = currentPathParam
     private val fileChildrenResultListener = createFileChildrenResultListener()
 
     override fun onAttached() {
@@ -35,9 +36,17 @@ class FileListPresenter(
     override fun onFileClicked(file: File) {
         if (file.directory) {
             currentPath = file.path
-            val fileChildrenResult = fileManager.loadFileChildren(file.path, true)
-            syncFileChildren(fileChildrenResult)
+            syncFileChildren()
         }
+    }
+
+    override fun onFabUpArrowClicked() {
+        if (currentPath == currentPathParam) {
+            return
+        }
+        val ioFile = java.io.File(currentPath)
+        currentPath = ioFile.parent
+        syncFileChildren()
     }
 
     private fun syncFileChildren() {
@@ -47,6 +56,11 @@ class FileListPresenter(
             fileChildrenResult = fileManager.loadFileChildren(currentPath)
         }
         syncFileChildren(fileChildrenResult)
+        if (currentPathParam == currentPath) {
+            screen.hideFabUpArrow()
+        } else {
+            screen.showFabUpArrow()
+        }
     }
 
     private fun syncFileChildren(fileChildrenResult: FileChildrenResult) {

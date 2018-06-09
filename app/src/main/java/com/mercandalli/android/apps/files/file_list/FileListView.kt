@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
 import android.os.Environment
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -25,6 +26,7 @@ class FileListView @JvmOverloads constructor(
     private val recyclerView: RecyclerView
     private val emptyView: TextView
     private val error: View
+    private val fab: FloatingActionButton
 
     init {
         View.inflate(context, R.layout.view_file_list, this)
@@ -34,9 +36,13 @@ class FileListView @JvmOverloads constructor(
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
         emptyView = findViewById(R.id.view_file_list_empty_view)
         error = findViewById(R.id.view_file_list_error)
+        fab = findViewById(R.id.view_file_list_fab)
         userAction = createUserAction()
         refresh.setOnRefreshListener {
             userAction.onRefresh()
+        }
+        fab.setOnClickListener {
+            userAction.onFabUpArrowClicked()
         }
     }
 
@@ -48,6 +54,7 @@ class FileListView @JvmOverloads constructor(
                 override fun onResume() {}
                 override fun onRefresh() {}
                 override fun onFileClicked(file: File) {}
+                override fun onFabUpArrowClicked() {}
             }
         }
         val fileManager = ApplicationGraph.getFileManager()
@@ -88,6 +95,7 @@ class FileListView @JvmOverloads constructor(
     override fun showFiles(files: List<File>) {
         recyclerView.visibility = View.VISIBLE
         adapter.populate(files)
+        recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
     }
 
     override fun hideFiles() {
@@ -104,6 +112,14 @@ class FileListView @JvmOverloads constructor(
 
     override fun hideLoader() {
         refresh.isRefreshing = false
+    }
+
+    override fun showFabUpArrow() {
+        fab.show()
+    }
+
+    override fun hideFabUpArrow() {
+        fab.hide()
     }
 
     fun onResume() {

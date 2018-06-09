@@ -15,6 +15,8 @@ interface FileListContract {
         fun onRefresh()
 
         fun onFileClicked(file: File)
+
+        fun onFabUpArrowClicked()
     }
 
     interface Screen {
@@ -36,5 +38,9 @@ interface FileListContract {
         fun hideLoader()
 
         fun selectPath(path: String?)
+
+        fun showFabUpArrow()
+
+        fun hideFabUpArrow()
     }
 }
