@@ -8,6 +8,6 @@
     android:layout_marginTop="3dp"
     tools:layout_marginStart="6dp">
 
-    <include layout="@layout/view_file_row" />
+    <include layout="@layout/view_file_column_row" />
 
 </FrameLayout>

@@ -36,7 +36,7 @@ class MainPresenterTest {
         presenter.onFileSectionClicked()
 
         // Then
-        verify(screen)!!.showFileView()
+        verify(screen)!!.showFileColumnView()
     }
 
     @Test

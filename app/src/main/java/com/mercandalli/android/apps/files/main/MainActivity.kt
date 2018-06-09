@@ -11,6 +11,7 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.file_column_horizontal_lists.FileColumnHorizontalLists
+import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.note.NoteView
 import com.mercandalli.android.apps.files.settings.SettingsView
 import eightbitlab.com.blurview.BlurView
@@ -18,6 +19,7 @@ import eightbitlab.com.blurview.RenderScriptBlur
 
 class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
 
+    private lateinit var fileList: FileListView
     private lateinit var fileColumnHorizontalLists: FileColumnHorizontalLists
     private lateinit var note: NoteView
     private lateinit var settings: SettingsView
@@ -25,13 +27,15 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
     private lateinit var toolbarDelete: View
     private lateinit var toolbarShare: View
     private lateinit var toolbarAdd: View
-    private lateinit var toolbarFileViewSwitcher: View
+    private lateinit var toolbarFileList: View
+    private lateinit var toolbarFileColumn: View
     private lateinit var bottomBarBlurView: BlurView
     private lateinit var userAction: MainActivityContract.UserAction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fileList = findViewById(R.id.activity_main_file_list)
         fileColumnHorizontalLists = findViewById(R.id.activity_main_file_horizontal_lists)
         note = findViewById(R.id.activity_main_note)
         settings = findViewById(R.id.activity_main_settings)
@@ -39,7 +43,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
         toolbarShare = findViewById(R.id.activity_main_toolbar_share)
         toolbarAdd = findViewById(R.id.activity_main_toolbar_add)
-        toolbarFileViewSwitcher = findViewById(R.id.activity_main_toolbar_file_view_switcher)
+        toolbarFileList = findViewById(R.id.activity_main_toolbar_file_list)
+        toolbarFileColumn = findViewById(R.id.activity_main_toolbar_file_column)
         bottomBarBlurView = findViewById(R.id.activity_main_bottom_bar_container)
         window.setBackgroundDrawable(ColorDrawable(
                 ContextCompat.getColor(this, R.color.window_background_light)))
@@ -67,8 +72,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarAdd.setOnClickListener {
             userAction.onToolbarAddClicked()
         }
-        toolbarFileViewSwitcher.setOnClickListener {
-            userAction.onToolbarFileViewSwitcherClicked()
+        toolbarFileColumn.setOnClickListener {
+            userAction.onToolbarFileColumnClicked()
+        }
+        toolbarFileList.setOnClickListener {
+            userAction.onToolbarFileListClicked()
         }
         fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(object : FileColumnHorizontalLists.FileHorizontalListsSelectedFileListener {
             override fun onSelectedFilePathChanged(path: String?) {
@@ -98,11 +106,19 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         fileColumnHorizontalLists.onResume()
     }
 
-    override fun showFileView() {
+    override fun showFileListView() {
+        fileList.visibility = View.VISIBLE
+    }
+
+    override fun hideFileListView() {
+        fileList.visibility = View.GONE
+    }
+
+    override fun showFileColumnView() {
         fileColumnHorizontalLists.visibility = View.VISIBLE
     }
 
-    override fun hideFileView() {
+    override fun hideFileColumnView() {
         fileColumnHorizontalLists.visibility = View.GONE
     }
 
@@ -146,12 +162,20 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarAdd.visibility = View.GONE
     }
 
-    override fun showToolbarFileViewSwitcher() {
-        toolbarFileViewSwitcher.visibility = View.VISIBLE
+    override fun showToolbarFileColumn() {
+        toolbarFileColumn.visibility = View.VISIBLE
     }
 
-    override fun hideToolbarFileViewSwitcher() {
-        toolbarFileViewSwitcher.visibility = View.GONE
+    override fun hideToolbarFileColumn() {
+        toolbarFileColumn.visibility = View.GONE
+    }
+
+    override fun showToolbarFileList() {
+        toolbarFileList.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarFileList() {
+        toolbarFileList.visibility = View.GONE
     }
 
     override fun deleteNote() {

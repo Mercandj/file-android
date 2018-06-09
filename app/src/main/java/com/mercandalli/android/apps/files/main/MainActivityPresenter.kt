@@ -26,15 +26,16 @@ class MainActivityPresenter(
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            selectFile()
+            selectFileColumn()
             return
         }
         val section = savedInstanceState.getInt("section", SECTION_UNDEFINED)
         when (section) {
-            SECTION_FILE -> selectFile()
+            SECTION_FILE_LIST -> selectFileList()
+            SECTION_FILE_COLUMN -> selectFileColumn()
             SECTION_NOTE -> selectNote()
             SECTION_SETTINGS -> selectSettings()
-            else -> selectFile()
+            else -> selectFileColumn()
         }
     }
 
@@ -46,7 +47,7 @@ class MainActivityPresenter(
     }
 
     override fun onFileSectionClicked() {
-        selectFile()
+        selectFileColumn()
     }
 
     override fun onNoteSectionClicked() {
@@ -69,8 +70,12 @@ class MainActivityPresenter(
         screen.showFileCreationSelection()
     }
 
-    override fun onToolbarFileViewSwitcherClicked() {
+    override fun onToolbarFileColumnClicked() {
+        selectFileColumn()
+    }
 
+    override fun onToolbarFileListClicked() {
+        selectFileList()
     }
 
     override fun onFileCreationConfirmed(fileName: String) {
@@ -83,37 +88,56 @@ class MainActivityPresenter(
         selectedPath = path
     }
 
-    private fun selectFile() {
-        selectedSection = SECTION_FILE
-        screen.showFileView()
+    private fun selectFileList() {
+        selectedSection = SECTION_FILE_LIST
+        screen.showFileListView()
+        screen.hideFileColumnView()
         screen.hideNoteView()
         screen.hideSettingsView()
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.showToolbarAdd()
-        screen.showToolbarFileViewSwitcher()
+        screen.showToolbarFileColumn()
+        screen.hideToolbarFileList()
+    }
+
+    private fun selectFileColumn() {
+        selectedSection = SECTION_FILE_COLUMN
+        screen.hideFileListView()
+        screen.showFileColumnView()
+        screen.hideNoteView()
+        screen.hideSettingsView()
+        screen.hideToolbarDelete()
+        screen.hideToolbarShare()
+        screen.showToolbarAdd()
+        screen.hideToolbarFileColumn()
+        screen.showToolbarFileList()
     }
 
     private fun selectNote() {
         selectedSection = SECTION_NOTE
-        screen.hideFileView()
+        screen.hideFileListView()
+        screen.hideFileColumnView()
         screen.showNoteView()
         screen.hideSettingsView()
         screen.showToolbarDelete()
         screen.showToolbarShare()
         screen.hideToolbarAdd()
-        screen.hideToolbarFileViewSwitcher()
+        screen.hideToolbarFileColumn()
+        screen.hideToolbarFileList()
     }
 
     private fun selectSettings() {
         selectedSection = SECTION_SETTINGS
-        screen.hideFileView()
+        screen.hideFileListView()
+        screen.hideFileColumnView()
         screen.hideNoteView()
         screen.showSettingsView()
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
-        screen.hideToolbarFileViewSwitcher()
+        screen.hideToolbarFileColumn()
+        screen.hideToolbarFileList()
     }
 
     private fun syncWithCurrentTheme() {
@@ -132,8 +156,9 @@ class MainActivityPresenter(
 
     companion object {
         private const val SECTION_UNDEFINED = 0
-        private const val SECTION_FILE = 1
-        private const val SECTION_NOTE = 2
-        private const val SECTION_SETTINGS = 3
+        private const val SECTION_FILE_LIST = SECTION_UNDEFINED + 1
+        private const val SECTION_FILE_COLUMN = SECTION_FILE_LIST + 1
+        private const val SECTION_NOTE = SECTION_FILE_COLUMN + 1
+        private const val SECTION_SETTINGS = SECTION_NOTE + 1
     }
 }

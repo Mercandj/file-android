@@ -101,6 +101,8 @@ android {
                     'src/main/res/file_column_horizontal_lists',
                     'src/main/res/file_column_list',
                     'src/main/res/file_column_row',
+                    'src/main/res/file_list',
+                    'src/main/res/file_list_row',
                     'src/main/res/icon',
                     'src/main/res/main',
                     'src/main/res/note',

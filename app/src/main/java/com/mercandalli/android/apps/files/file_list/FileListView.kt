@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_column_list
+package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
 import android.os.Environment
@@ -10,40 +10,40 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
-import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
+import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
-class FileColumnListView @JvmOverloads constructor(
+class FileListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), FileColumnListContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
 
-    private val userAction: FileColumnListContract.UserAction
-    private var fileColumnClickListener: FileColumnRow.FileClickListener? = null
-    private var fileColumnLongClickListener: FileColumnRow.FileLongClickListener? = null
-    private val adapter = FileColumnAdapter(createFileClickListener())
+    private val userAction: FileListContract.UserAction
+    private var fileClickListener: FileListRow.FileClickListener? = null
+    private var fileLongClickListener: FileListRow.FileLongClickListener? = null
+    private val adapter = FileListAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
     private val emptyView: TextView
     private val error: View
 
     init {
-        View.inflate(context, R.layout.view_file_column_list, this)
-        refresh = findViewById(R.id.view_file_column_list_refresh)
-        recyclerView = findViewById(R.id.view_file_column_list_recycler_view)
+        View.inflate(context, R.layout.view_file_list, this)
+        refresh = findViewById(R.id.view_file_list_refresh)
+        recyclerView = findViewById(R.id.view_file_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-        emptyView = findViewById(R.id.view_file_column_list_empty_view)
-        error = findViewById(R.id.view_file_column_list_error)
+        emptyView = findViewById(R.id.view_file_list_empty_view)
+        error = findViewById(R.id.view_file_list_error)
         userAction = createUserAction()
         refresh.setOnRefreshListener {
             userAction.onRefresh()
         }
     }
 
-    private fun createUserAction(): FileColumnListContract.UserAction {
+    private fun createUserAction(): FileListContract.UserAction {
         if (isInEditMode) {
-            return object : FileColumnListContract.UserAction {
+            return object : FileListContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onResume() {}
@@ -54,7 +54,7 @@ class FileColumnListView @JvmOverloads constructor(
         }
         val fileManager = ApplicationGraph.getFileManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
-        return FileColumnListPresenter(
+        return FileListPresenter(
                 this,
                 fileManager,
                 fileSortManager,
@@ -116,22 +116,22 @@ class FileColumnListView @JvmOverloads constructor(
         userAction.onPathChanged(path)
     }
 
-    fun setFileClickListener(listener: FileColumnRow.FileClickListener?) {
-        fileColumnClickListener = listener
+    fun setFileClickListener(listener: FileListRow.FileClickListener?) {
+        fileClickListener = listener
     }
 
-    fun setFileLongClickListener(listener: FileColumnRow.FileLongClickListener?) {
-        fileColumnLongClickListener = listener
+    fun setFileLongClickListener(listener: FileListRow.FileLongClickListener?) {
+        fileLongClickListener = listener
     }
 
     fun onPathSelected(path: String?) {
         userAction.onPathSelected(path)
     }
 
-    private fun createFileClickListener(): FileColumnRow.FileClickListener {
-        return object : FileColumnRow.FileClickListener {
+    private fun createFileClickListener(): FileListRow.FileClickListener {
+        return object : FileListRow.FileClickListener {
             override fun onFileClicked(file: File) {
-                fileColumnClickListener?.onFileClicked(file)
+                fileClickListener?.onFileClicked(file)
             }
         }
     }

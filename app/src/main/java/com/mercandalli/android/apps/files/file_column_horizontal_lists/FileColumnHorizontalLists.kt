@@ -28,11 +28,11 @@ class FileColumnHorizontalLists @JvmOverloads constructor(
     private var fileHorizontalListsSelectedFileListener: FileHorizontalListsSelectedFileListener? = null
 
     init {
-        View.inflate(context, R.layout.view_file_horizontal_lists, this)
-        fab = findViewById(R.id.view_file_horizontal_lists_fab)
-        fileColumnDetailView = findViewById(R.id.view_file_horizontal_lists_file_detail_view)
-        fileListViewContainer = findViewById(R.id.view_file_horizontal_lists_list_view_container)
-        horizontalScrollView = findViewById(R.id.view_file_horizontal_lists_horizontal_scroll_view)
+        View.inflate(context, R.layout.view_file_column_horizontal_lists, this)
+        fab = findViewById(R.id.view_file_column_horizontal_lists_fab)
+        fileColumnDetailView = findViewById(R.id.view_file_column_horizontal_lists_file_detail_view)
+        fileListViewContainer = findViewById(R.id.view_file_column_horizontal_lists_list_view_container)
+        horizontalScrollView = findViewById(R.id.view_file_column_horizontal_lists_horizontal_scroll_view)
         userAction = createUserAction()
 
         val fileListView = createList(0)

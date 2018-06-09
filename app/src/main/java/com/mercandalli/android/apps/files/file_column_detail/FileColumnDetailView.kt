@@ -28,15 +28,15 @@ class FileColumnDetailView @JvmOverloads constructor(
     private val previous: View
 
     init {
-        View.inflate(context, R.layout.view_file_detail, this)
+        View.inflate(context, R.layout.view_file_column_detail, this)
         setBackgroundColor(ContextCompat.getColor(context, R.color.file_detail_background))
-        title = findViewById(R.id.view_file_detail_title)
-        path = findViewById(R.id.view_file_detail_path)
-        length = findViewById(R.id.view_file_detail_length)
-        lastModified = findViewById(R.id.view_file_detail_last_modified)
-        playPause = findViewById(R.id.view_file_detail_play_pause)
-        next = findViewById(R.id.view_file_detail_play_next)
-        previous = findViewById(R.id.view_file_detail_play_previous)
+        title = findViewById(R.id.view_file_column_detail_title)
+        path = findViewById(R.id.view_file_column_detail_path)
+        length = findViewById(R.id.view_file_column_detail_length)
+        lastModified = findViewById(R.id.view_file_column_detail_last_modified)
+        playPause = findViewById(R.id.view_file_column_detail_play_pause)
+        next = findViewById(R.id.view_file_column_detail_play_next)
+        previous = findViewById(R.id.view_file_column_detail_play_previous)
         userAction = createUserAction()
 
         playPause.setOnClickListener {
@@ -48,25 +48,25 @@ class FileColumnDetailView @JvmOverloads constructor(
         previous.setOnClickListener {
             userAction.onPreviousClicked()
         }
-        findViewById<View>(R.id.view_file_detail_open).setOnClickListener {
+        findViewById<View>(R.id.view_file_colmun_detail_open).setOnClickListener {
             userAction.onOpenClicked()
         }
-        findViewById<View>(R.id.view_file_detail_open_as).setOnClickListener {
+        findViewById<View>(R.id.view_file_column_detail_open_as).setOnClickListener {
             userAction.onOpenAsClicked()
         }
-        findViewById<View>(R.id.view_file_detail_share).setOnClickListener {
+        findViewById<View>(R.id.view_file_colmun_detail_share).setOnClickListener {
             userAction.onShareClicked()
         }
-        findViewById<View>(R.id.view_file_detail_rename).setOnClickListener {
+        findViewById<View>(R.id.view_file_colmun_detail_rename).setOnClickListener {
             userAction.onRenameClicked()
         }
-        findViewById<View>(R.id.view_file_detail_copy).setOnClickListener {
+        findViewById<View>(R.id.view_file_colmun_detail_copy).setOnClickListener {
             userAction.onCopyClicked()
         }
-        findViewById<View>(R.id.view_file_detail_cut).setOnClickListener {
+        findViewById<View>(R.id.view_file_colmun_detail_cut).setOnClickListener {
             userAction.onCutClicked()
         }
-        findViewById<View>(R.id.view_file_detail_delete).setOnClickListener {
+        findViewById<View>(R.id.view_file_colmun_detail_delete).setOnClickListener {
             userAction.onDeleteClicked()
         }
     }

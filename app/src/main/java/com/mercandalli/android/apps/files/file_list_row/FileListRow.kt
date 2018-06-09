@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_column_row
+package com.mercandalli.android.apps.files.file_list_row
 
 import android.content.Context
 import android.graphics.Color
@@ -17,11 +17,11 @@ import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
-class FileColumnRow @JvmOverloads constructor(
+class FileListRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), FileColumnRowContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr), FileListRowContract.Screen {
 
-    private val userAction: FileColumnRowContract.UserAction
+    private val userAction: FileListRowContract.UserAction
     private val icon: ImageView
     private val title: TextView
     private val arrayRight: ImageView
@@ -29,10 +29,10 @@ class FileColumnRow @JvmOverloads constructor(
     private var fileLongClickListener: FileLongClickListener? = null
 
     init {
-        View.inflate(context, R.layout.view_file_column_row, this)
-        icon = findViewById(R.id.view_file_column_row_icon)
-        title = findViewById(R.id.view_file_column_row_title)
-        arrayRight = findViewById(R.id.view_file_column_row_arrow_right)
+        View.inflate(context, R.layout.view_file_list_row, this)
+        icon = findViewById(R.id.view_file_list_row_icon)
+        title = findViewById(R.id.view_file_list_row_title)
+        arrayRight = findViewById(R.id.view_file_list_row_arrow_right)
         foreground = getSelectableItemBackground(context)
         userAction = createUserAction()
 
@@ -155,9 +155,9 @@ class FileColumnRow @JvmOverloads constructor(
         fileClickListener = listener
     }
 
-    private fun createUserAction(): FileColumnRowContract.UserAction {
+    private fun createUserAction(): FileListRowContract.UserAction {
         if (isInEditMode) {
-            return object : FileColumnRowContract.UserAction {
+            return object : FileListRowContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onFileChanged(file: File, selectedPath: String?) {}
@@ -176,7 +176,7 @@ class FileColumnRow @JvmOverloads constructor(
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        return FileColumnRowPresenter(
+        return FileListRowPresenter(
                 this,
                 fileDeleteManager,
                 fileCopyCutManager,

@@ -7,7 +7,7 @@
     tools:parentTag="android.widget.FrameLayout">
 
     <HorizontalScrollView
-        android:id="@+id/view_file_horizontal_lists_horizontal_scroll_view"
+        android:id="@+id/view_file_column_horizontal_lists_horizontal_scroll_view"
         style="@style/HorizontalAppTheme"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,13 +21,13 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/view_file_horizontal_lists_list_view_container"
+                android:id="@+id/view_file_column_horizontal_lists_list_view_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
 
             <com.mercandalli.android.apps.files.file_column_detail.FileColumnDetailView
-                android:id="@+id/view_file_horizontal_lists_file_detail_view"
+                android:id="@+id/view_file_column_horizontal_lists_file_detail_view"
                 android:layout_width="@dimen/file_detail_width"
                 android:layout_height="match_parent"
                 android:visibility="gone" />
@@ -37,7 +37,7 @@
     </HorizontalScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/view_file_horizontal_lists_fab"
+        android:id="@+id/view_file_column_horizontal_lists_fab"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="end|bottom"

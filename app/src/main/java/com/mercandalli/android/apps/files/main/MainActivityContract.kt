@@ -24,7 +24,9 @@ interface MainActivityContract {
 
         fun onToolbarAddClicked()
 
-        fun onToolbarFileViewSwitcherClicked()
+        fun onToolbarFileColumnClicked()
+
+        fun onToolbarFileListClicked()
 
         fun onFileCreationConfirmed(fileName: String)
 
@@ -33,9 +35,13 @@ interface MainActivityContract {
 
     interface Screen {
 
-        fun showFileView()
+        fun showFileListView()
 
-        fun hideFileView()
+        fun hideFileListView()
+
+        fun showFileColumnView()
+
+        fun hideFileColumnView()
 
         fun showNoteView()
 
@@ -57,9 +63,13 @@ interface MainActivityContract {
 
         fun hideToolbarAdd()
 
-        fun showToolbarFileViewSwitcher()
+        fun showToolbarFileColumn()
 
-        fun hideToolbarFileViewSwitcher()
+        fun hideToolbarFileColumn()
+
+        fun showToolbarFileList()
+
+        fun hideToolbarFileList()
 
         fun deleteNote()
 
