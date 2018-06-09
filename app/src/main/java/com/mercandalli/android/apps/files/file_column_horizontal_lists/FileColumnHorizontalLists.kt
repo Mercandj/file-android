@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_horizontal_lists
+package com.mercandalli.android.apps.files.file_column_horizontal_lists
 
 import android.content.Context
 import android.os.Environment
@@ -9,19 +9,19 @@ import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import com.mercandalli.android.apps.files.R
-import com.mercandalli.android.apps.files.file_detail.FileDetailView
-import com.mercandalli.android.apps.files.file_list.FileListView
-import com.mercandalli.android.apps.files.file_row.FileRow
+import com.mercandalli.android.apps.files.file_column_detail.FileColumnDetailView
+import com.mercandalli.android.apps.files.file_column_list.FileColumnListView
+import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
-class FileHorizontalLists @JvmOverloads constructor(
+class FileColumnHorizontalLists @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), FileHorizontalListsContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr), FileColumnHorizontalListsContract.Screen {
 
-    private val userAction: FileHorizontalListsContract.UserAction
-    private val fileListViews = ArrayList<FileListView>()
-    private val fileDetailView: FileDetailView
+    private val userAction: FileColumnHorizontalListsContract.UserAction
+    private val fileListViews = ArrayList<FileColumnListView>()
+    private val fileColumnDetailView: FileColumnDetailView
     private val fab: FloatingActionButton
     private val fileListViewContainer: LinearLayout
     private val horizontalScrollView: HorizontalScrollView
@@ -30,7 +30,7 @@ class FileHorizontalLists @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_file_horizontal_lists, this)
         fab = findViewById(R.id.view_file_horizontal_lists_fab)
-        fileDetailView = findViewById(R.id.view_file_horizontal_lists_file_detail_view)
+        fileColumnDetailView = findViewById(R.id.view_file_horizontal_lists_file_detail_view)
         fileListViewContainer = findViewById(R.id.view_file_horizontal_lists_list_view_container)
         horizontalScrollView = findViewById(R.id.view_file_horizontal_lists_horizontal_scroll_view)
         userAction = createUserAction()
@@ -109,13 +109,13 @@ class FileHorizontalLists @JvmOverloads constructor(
     }
 
     override fun showFileDetailView(file: File) {
-        fileDetailView.visibility = View.VISIBLE
-        fileDetailView.setFile(file)
+        fileColumnDetailView.visibility = View.VISIBLE
+        fileColumnDetailView.setFile(file)
     }
 
     override fun hideFileDetailView() {
-        fileDetailView.visibility = View.GONE
-        fileDetailView.setFile(null)
+        fileColumnDetailView.visibility = View.GONE
+        fileColumnDetailView.setFile(null)
     }
 
     fun onResume() {
@@ -128,9 +128,9 @@ class FileHorizontalLists @JvmOverloads constructor(
         fileHorizontalListsSelectedFileListener = listener
     }
 
-    private fun createUserAction(): FileHorizontalListsContract.UserAction {
+    private fun createUserAction(): FileColumnHorizontalListsContract.UserAction {
         if (isInEditMode) {
-            return object : FileHorizontalListsContract.UserAction {
+            return object : FileColumnHorizontalListsContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onFileClicked(index: Int, file: File) {}
@@ -141,7 +141,7 @@ class FileHorizontalLists @JvmOverloads constructor(
         val fileManager = ApplicationGraph.getFileManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
-        return FileHorizontalListsPresenter(
+        return FileColumnHorizontalListsPresenter(
                 this,
                 fileManager,
                 fileOpenManager,
@@ -150,17 +150,17 @@ class FileHorizontalLists @JvmOverloads constructor(
         )
     }
 
-    private fun createList(index: Int): FileListView {
-        val fileListView = FileListView(context)
+    private fun createList(index: Int): FileColumnListView {
+        val fileListView = FileColumnListView(context)
         fileListView.layoutParams = FrameLayout.LayoutParams(
                 context.resources.getDimensionPixelSize(R.dimen.file_horizontal_lists_list_width),
                 FrameLayout.LayoutParams.MATCH_PARENT)
-        fileListView.setFileClickListener(object : FileRow.FileClickListener {
+        fileListView.setFileClickListener(object : FileColumnRow.FileClickListener {
             override fun onFileClicked(file: File) {
                 userAction.onFileClicked(index, file)
             }
         })
-        fileListView.setFileLongClickListener(object : FileRow.FileLongClickListener {
+        fileListView.setFileLongClickListener(object : FileColumnRow.FileLongClickListener {
             override fun onFileLongClicked(file: File) {
                 userAction.onFileLongClicked(index, file)
             }

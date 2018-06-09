@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_row
+package com.mercandalli.android.apps.files.file_column_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.file.FileTest
@@ -12,10 +12,10 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
-class FileRowPresenterTest {
+class FileColumnRowPresenterTest {
 
     @Mock
-    private var screen: FileRowContract.Screen? = null
+    private var screen: FileColumnRowContract.Screen? = null
     @Mock
     private var fileDeleteManager: FileDeleteManager? = null
     @Mock
@@ -63,8 +63,8 @@ class FileRowPresenterTest {
         verify(fileCopyCutManager)!!.cut(file.path)
     }
 
-    private fun createInstanceToTest(): FileRowPresenter {
-        return FileRowPresenter(
+    private fun createInstanceToTest(): FileColumnRowPresenter {
+        return FileColumnRowPresenter(
                 screen!!,
                 fileDeleteManager!!,
                 fileCopyCutManager!!,

@@ -69,6 +69,10 @@ class MainActivityPresenter(
         screen.showFileCreationSelection()
     }
 
+    override fun onToolbarFileViewSwitcherClicked() {
+
+    }
+
     override fun onFileCreationConfirmed(fileName: String) {
         val path = if (selectedPath == null) Environment.getExternalStorageDirectory().absolutePath
         else selectedPath
@@ -87,6 +91,7 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.showToolbarAdd()
+        screen.showToolbarFileViewSwitcher()
     }
 
     private fun selectNote() {
@@ -97,6 +102,7 @@ class MainActivityPresenter(
         screen.showToolbarDelete()
         screen.showToolbarShare()
         screen.hideToolbarAdd()
+        screen.hideToolbarFileViewSwitcher()
     }
 
     private fun selectSettings() {
@@ -107,6 +113,7 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
+        screen.hideToolbarFileViewSwitcher()
     }
 
     private fun syncWithCurrentTheme() {

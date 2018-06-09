@@ -1,15 +1,14 @@
-package com.mercandalli.android.apps.files.file_row
+package com.mercandalli.android.apps.files.file_column_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
-import com.mercandalli.android.apps.files.theme.DarkTheme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileRenameManager
 
-class FileRowPresenter(
-        private val screen: FileRowContract.Screen,
+class FileColumnRowPresenter(
+        private val screen: FileColumnRowContract.Screen,
         private val fileDeleteManager: FileDeleteManager,
         private val fileCopyCutManager: FileCopyCutManager,
         private val fileRenameManager: FileRenameManager,
@@ -18,7 +17,7 @@ class FileRowPresenter(
         private val drawableRightIconDirectoryDrawableRes: Int,
         private val drawableRightIconSoundDrawableRes: Int,
         private val selectedTextColorRes: Int
-) : FileRowContract.UserAction {
+) : FileColumnRowContract.UserAction {
 
     private val playListener = createPlayListener()
     private val themeListener = createThemeListener()

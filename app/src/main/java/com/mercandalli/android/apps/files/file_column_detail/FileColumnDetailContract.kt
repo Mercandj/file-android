@@ -1,9 +1,8 @@
-package com.mercandalli.android.apps.files.file_detail
+package com.mercandalli.android.apps.files.file_column_detail
 
 import com.mercandalli.sdk.files.api.File
-import java.util.*
 
-interface FileDetailContract {
+interface FileColumnDetailContract {
 
     interface UserAction {
 

@@ -24,6 +24,8 @@ interface MainActivityContract {
 
         fun onToolbarAddClicked()
 
+        fun onToolbarFileViewSwitcherClicked()
+
         fun onFileCreationConfirmed(fileName: String)
 
         fun onSelectedFilePathChanged(path: String?)
@@ -54,6 +56,10 @@ interface MainActivityContract {
         fun showToolbarAdd()
 
         fun hideToolbarAdd()
+
+        fun showToolbarFileViewSwitcher()
+
+        fun hideToolbarFileViewSwitcher()
 
         fun deleteNote()
 

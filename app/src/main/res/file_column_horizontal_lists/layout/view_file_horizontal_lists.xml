@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
 
-            <com.mercandalli.android.apps.files.file_detail.FileDetailView
+            <com.mercandalli.android.apps.files.file_column_detail.FileColumnDetailView
                 android:id="@+id/view_file_horizontal_lists_file_detail_view"
                 android:layout_width="@dimen/file_detail_width"
                 android:layout_height="match_parent"

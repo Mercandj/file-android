@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_list
+package com.mercandalli.android.apps.files.file_column_list
 
 import android.content.Context
 import android.os.Environment
@@ -10,18 +10,18 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
-import com.mercandalli.android.apps.files.file_row.FileRow
+import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
-class FileListView @JvmOverloads constructor(
+class FileColumnListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr), FileColumnListContract.Screen {
 
-    private val userAction: FileListContract.UserAction
-    private var fileClickListener: FileRow.FileClickListener? = null
-    private var fileLongClickListener: FileRow.FileLongClickListener? = null
-    private val adapter = FileAdapter(createFileClickListener())
+    private val userAction: FileColumnListContract.UserAction
+    private var fileColumnClickListener: FileColumnRow.FileClickListener? = null
+    private var fileColumnLongClickListener: FileColumnRow.FileLongClickListener? = null
+    private val adapter = FileColumnAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
     private val emptyView: TextView
@@ -41,9 +41,9 @@ class FileListView @JvmOverloads constructor(
         }
     }
 
-    private fun createUserAction(): FileListContract.UserAction {
+    private fun createUserAction(): FileColumnListContract.UserAction {
         if (isInEditMode) {
-            return object : FileListContract.UserAction {
+            return object : FileColumnListContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onResume() {}
@@ -54,7 +54,7 @@ class FileListView @JvmOverloads constructor(
         }
         val fileManager = ApplicationGraph.getFileManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
-        return FileListPresenter(
+        return FileColumnListPresenter(
                 this,
                 fileManager,
                 fileSortManager,
@@ -116,22 +116,22 @@ class FileListView @JvmOverloads constructor(
         userAction.onPathChanged(path)
     }
 
-    fun setFileClickListener(listener: FileRow.FileClickListener?) {
-        fileClickListener = listener
+    fun setFileClickListener(listener: FileColumnRow.FileClickListener?) {
+        fileColumnClickListener = listener
     }
 
-    fun setFileLongClickListener(listener: FileRow.FileLongClickListener?) {
-        fileLongClickListener = listener
+    fun setFileLongClickListener(listener: FileColumnRow.FileLongClickListener?) {
+        fileColumnLongClickListener = listener
     }
 
     fun onPathSelected(path: String?) {
         userAction.onPathSelected(path)
     }
 
-    private fun createFileClickListener(): FileRow.FileClickListener {
-        return object : FileRow.FileClickListener {
+    private fun createFileClickListener(): FileColumnRow.FileClickListener {
+        return object : FileColumnRow.FileClickListener {
             override fun onFileClicked(file: File) {
-                fileClickListener?.onFileClicked(file)
+                fileColumnClickListener?.onFileClicked(file)
             }
         }
     }

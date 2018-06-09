@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_row
+package com.mercandalli.android.apps.files.file_column_row
 
 import android.content.Context
 import android.graphics.Color
@@ -17,11 +17,11 @@ import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
-class FileRow @JvmOverloads constructor(
+class FileColumnRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), FileRowContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr), FileColumnRowContract.Screen {
 
-    private val userAction: FileRowContract.UserAction
+    private val userAction: FileColumnRowContract.UserAction
     private val icon: ImageView
     private val title: TextView
     private val arrayRight: ImageView
@@ -155,9 +155,9 @@ class FileRow @JvmOverloads constructor(
         fileClickListener = listener
     }
 
-    private fun createUserAction(): FileRowContract.UserAction {
+    private fun createUserAction(): FileColumnRowContract.UserAction {
         if (isInEditMode) {
-            return object : FileRowContract.UserAction {
+            return object : FileColumnRowContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onFileChanged(file: File, selectedPath: String?) {}
@@ -176,7 +176,7 @@ class FileRow @JvmOverloads constructor(
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        return FileRowPresenter(
+        return FileColumnRowPresenter(
                 this,
                 fileDeleteManager,
                 fileCopyCutManager,

@@ -30,6 +30,16 @@
             android:paddingStart="6dp">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/activity_main_toolbar_file_view_switcher"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?android:selectableItemBackground"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:src="@drawable/ic_view_column_black_24dp" />
+
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_add"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -63,7 +73,7 @@
 
     </FrameLayout>
 
-    <com.mercandalli.android.apps.files.file_horizontal_lists.FileHorizontalLists
+    <com.mercandalli.android.apps.files.file_column_horizontal_lists.FileColumnHorizontalLists
         android:id="@+id/activity_main_file_horizontal_lists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

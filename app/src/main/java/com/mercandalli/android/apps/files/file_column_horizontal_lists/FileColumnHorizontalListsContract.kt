@@ -1,8 +1,8 @@
-package com.mercandalli.android.apps.files.file_horizontal_lists
+package com.mercandalli.android.apps.files.file_column_horizontal_lists
 
 import com.mercandalli.sdk.files.api.File
 
-interface FileHorizontalListsContract {
+interface FileColumnHorizontalListsContract {
 
     interface UserAction {
 

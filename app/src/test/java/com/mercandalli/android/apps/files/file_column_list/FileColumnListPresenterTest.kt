@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_list
+package com.mercandalli.android.apps.files.file_column_list
 
 import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.sdk.files.api.File
@@ -11,10 +11,10 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class FileListPresenterTest {
+class FileColumnListPresenterTest {
 
     @Mock
-    private val screen: FileListContract.Screen? = null
+    private val screen: FileColumnListContract.Screen? = null
     @Mock
     private val fileManager: FileManager? = null
     @Mock
@@ -45,8 +45,8 @@ class FileListPresenterTest {
 
     private fun createInstanceToTest(
             currentPath: String = "/path"
-    ): FileListPresenter {
-        return FileListPresenter(
+    ): FileColumnListPresenter {
+        return FileColumnListPresenter(
                 screen!!,
                 fileManager!!,
                 fileSortManager!!,

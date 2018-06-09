@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_horizontal_lists
+package com.mercandalli.android.apps.files.file_column_horizontal_lists
 
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
@@ -6,13 +6,13 @@ import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
-class FileHorizontalListsPresenter(
-        private val screen: FileHorizontalListsContract.Screen,
+class FileColumnHorizontalListsPresenter(
+        private val screen: FileColumnHorizontalListsContract.Screen,
         private val fileManager: FileManager,
         private val fileOpenManager: FileOpenManager,
         private val fileCopyCutManager: FileCopyCutManager,
         private val rootPath: String
-) : FileHorizontalListsContract.UserAction {
+) : FileColumnHorizontalListsContract.UserAction {
 
     private var sizeLists = 1
     private var selectedFile: File? = null

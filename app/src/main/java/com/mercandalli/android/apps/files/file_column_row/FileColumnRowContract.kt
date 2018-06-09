@@ -1,8 +1,8 @@
-package com.mercandalli.android.apps.files.file_row
+package com.mercandalli.android.apps.files.file_column_row
 
 import com.mercandalli.sdk.files.api.File
 
-interface FileRowContract {
+interface FileColumnRowContract {
 
     interface UserAction {
 

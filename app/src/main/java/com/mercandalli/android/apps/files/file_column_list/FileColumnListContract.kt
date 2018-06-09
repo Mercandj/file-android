@@ -1,8 +1,8 @@
-package com.mercandalli.android.apps.files.file_list
+package com.mercandalli.android.apps.files.file_column_list
 
 import com.mercandalli.sdk.files.api.File
 
-interface FileListContract {
+interface FileColumnListContract {
 
     interface UserAction {
 

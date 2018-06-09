@@ -1,15 +1,15 @@
-package com.mercandalli.android.apps.files.file_list
+package com.mercandalli.android.apps.files.file_column_list
 
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileSortManager
 
-class FileListPresenter(
-        private val screen: FileListContract.Screen,
+class FileColumnListPresenter(
+        private val screen: FileColumnListContract.Screen,
         private val fileManager: FileManager,
         private val fileSortManager: FileSortManager,
         private var currentPath: String
-) : FileListContract.UserAction {
+) : FileColumnListContract.UserAction {
 
     private val fileChildrenResultListener = createFileChildrenResultListener()
 

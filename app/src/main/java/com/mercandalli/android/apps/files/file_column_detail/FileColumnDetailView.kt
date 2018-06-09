@@ -1,11 +1,8 @@
-package com.mercandalli.android.apps.files.file_detail
+package com.mercandalli.android.apps.files.file_column_detail
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.startActivity
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -17,11 +14,11 @@ import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
-class FileDetailView @JvmOverloads constructor(
+class FileColumnDetailView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ScrollView(context, attrs, defStyleAttr), FileDetailContract.Screen {
+) : ScrollView(context, attrs, defStyleAttr), FileColumnDetailContract.Screen {
 
-    private val userAction: FileDetailContract.UserAction
+    private val userAction: FileColumnDetailContract.UserAction
     private val title: TextView
     private val path: TextView
     private val length: TextView
@@ -193,9 +190,9 @@ class FileDetailView @JvmOverloads constructor(
         userAction.onFileChanged(file)
     }
 
-    private fun createUserAction(): FileDetailContract.UserAction {
+    private fun createUserAction(): FileColumnDetailContract.UserAction {
         if (isInEditMode) {
-            return object : FileDetailContract.UserAction {
+            return object : FileColumnDetailContract.UserAction {
                 override fun onAttached() {}
                 override fun onDetached() {}
                 override fun onFileChanged(file: File?) {}
@@ -221,7 +218,7 @@ class FileDetailView @JvmOverloads constructor(
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val fileShareManager = ApplicationGraph.getFileShareManager()
-        return FileDetailPresenter(
+        return FileColumnDetailPresenter(
                 this,
                 audioManager,
                 audioQueueManager,

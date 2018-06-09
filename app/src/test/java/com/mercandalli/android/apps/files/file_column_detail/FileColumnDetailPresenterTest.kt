@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_detail
+package com.mercandalli.android.apps.files.file_column_detail
 
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
@@ -10,10 +10,10 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
-class FileDetailPresenterTest {
+class FileColumnDetailPresenterTest {
 
     @Mock
-    private val screen: FileDetailContract.Screen? = null
+    private val screen: FileColumnDetailContract.Screen? = null
     @Mock
     private val audioManager: AudioManager? = null
     @Mock
@@ -50,8 +50,8 @@ class FileDetailPresenterTest {
         verify(screen)!!.setTitle(file.name)
     }
 
-    private fun createInstanceToTest(): FileDetailPresenter {
-        return FileDetailPresenter(
+    private fun createInstanceToTest(): FileColumnDetailPresenter {
+        return FileColumnDetailPresenter(
                 screen!!,
                 audioManager!!,
                 audioQueueManager!!,

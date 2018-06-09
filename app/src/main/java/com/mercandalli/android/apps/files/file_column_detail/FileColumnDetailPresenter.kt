@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file_detail
+package com.mercandalli.android.apps.files.file_column_detail
 
 import android.annotation.SuppressLint
 import com.mercandalli.android.apps.files.audio.AudioManager
@@ -6,8 +6,8 @@ import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.sdk.files.api.*
 import java.util.*
 
-class FileDetailPresenter(
-        private val screen: FileDetailContract.Screen,
+class FileColumnDetailPresenter(
+        private val screen: FileColumnDetailContract.Screen,
         private val audioManager: AudioManager,
         private val audioQueueManager: AudioQueueManager,
         private val fileOpenManager: FileOpenManager,
@@ -18,7 +18,7 @@ class FileDetailPresenter(
         private val playDrawableRes: Int,
         private val pauseDrawableRes: Int,
         private val deleteFailedTextRes: Int
-) : FileDetailContract.UserAction {
+) : FileColumnDetailContract.UserAction {
 
     private val playListener = createPlayListener()
     private var file: File? = null
