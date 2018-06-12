@@ -38,5 +38,9 @@ interface FileColumnListContract {
         fun hideLoader()
 
         fun selectPath(path: String?)
+
+        fun setEmptyTextColorRes(textColorRes: Int)
+
+        fun setErrorTextColorRes(textColorRes: Int)
     }
 }

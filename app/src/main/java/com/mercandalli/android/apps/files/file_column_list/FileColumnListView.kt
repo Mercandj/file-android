@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.file_column_list
 
 import android.content.Context
 import android.os.Environment
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -24,8 +25,8 @@ class FileColumnListView @JvmOverloads constructor(
     private val adapter = FileColumnAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
-    private val emptyView: TextView
-    private val error: View
+    private val emptyTextView: TextView
+    private val errorTextView: TextView
 
     init {
         View.inflate(context, R.layout.view_file_column_list, this)
@@ -33,8 +34,8 @@ class FileColumnListView @JvmOverloads constructor(
         recyclerView = findViewById(R.id.view_file_column_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-        emptyView = findViewById(R.id.view_file_column_list_empty_view)
-        error = findViewById(R.id.view_file_column_list_error)
+        emptyTextView = findViewById(R.id.view_file_column_list_empty_view)
+        errorTextView = findViewById(R.id.view_file_column_list_error)
         userAction = createUserAction()
         refresh.setOnRefreshListener {
             userAction.onRefresh()
@@ -54,10 +55,12 @@ class FileColumnListView @JvmOverloads constructor(
         }
         val fileManager = ApplicationGraph.getFileManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         return FileColumnListPresenter(
                 this,
                 fileManager,
                 fileSortManager,
+                themeManager,
                 Environment.getExternalStorageDirectory().absolutePath)
     }
 
@@ -72,19 +75,19 @@ class FileColumnListView @JvmOverloads constructor(
     }
 
     override fun showEmptyView() {
-        emptyView.visibility = View.VISIBLE
+        emptyTextView.visibility = View.VISIBLE
     }
 
     override fun hideEmptyView() {
-        emptyView.visibility = View.GONE
+        emptyTextView.visibility = View.GONE
     }
 
     override fun showErrorMessage() {
-        error.visibility = View.VISIBLE
+        errorTextView.visibility = View.VISIBLE
     }
 
     override fun hideErrorMessage() {
-        error.visibility = View.GONE
+        errorTextView.visibility = View.GONE
     }
 
     override fun showFiles(files: List<File>) {
@@ -106,6 +109,14 @@ class FileColumnListView @JvmOverloads constructor(
 
     override fun hideLoader() {
         refresh.isRefreshing = false
+    }
+
+    override fun setEmptyTextColorRes(textColorRes: Int) {
+        emptyTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setErrorTextColorRes(textColorRes: Int) {
+        errorTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
     }
 
     fun onResume() {

@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_column_list
 
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileSortManager
@@ -8,18 +9,23 @@ class FileColumnListPresenter(
         private val screen: FileColumnListContract.Screen,
         private val fileManager: FileManager,
         private val fileSortManager: FileSortManager,
+        private val themeManager: ThemeManager,
         private var currentPath: String
 ) : FileColumnListContract.UserAction {
 
     private val fileChildrenResultListener = createFileChildrenResultListener()
+    private val themeListener = createThemeListener()
 
     override fun onAttached() {
         fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
         syncFileChildren()
+        themeManager.registerThemeListener(themeListener)
+        syncWithCurrentTheme()
     }
 
     override fun onDetached() {
         fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        themeManager.unregisterThemeListener(themeListener)
     }
 
     override fun onResume() {
@@ -75,6 +81,18 @@ class FileColumnListPresenter(
                     screen.showFiles(filesSorted)
                 }
             }
+        }
+    }
+
+    private fun syncWithCurrentTheme() {
+        val theme = themeManager.theme
+        screen.setEmptyTextColorRes(theme.textPrimaryColorRes)
+        screen.setErrorTextColorRes(theme.textSecondaryColorRes)
+    }
+
+    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
+        override fun onCurrentThemeChanged() {
+            syncWithCurrentTheme()
         }
     }
 
