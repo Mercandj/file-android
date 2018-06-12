@@ -22,6 +22,7 @@ class FileListView @JvmOverloads constructor(
 
     private val userAction: FileListContract.UserAction
     private var fileLongClickListener: FileListRow.FileLongClickListener? = null
+    private var fileListViewSelectedFileListener: FileListViewSelectedFileListener? = null
     private val adapter = FileListAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
@@ -134,8 +135,16 @@ class FileListView @JvmOverloads constructor(
         errorTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
     }
 
+    override fun notifyListenerCurrentPathChanged(currentPath: String) {
+        fileListViewSelectedFileListener?.onSelectedFilePathChanged(currentPath)
+    }
+
     fun setFileLongClickListener(listener: FileListRow.FileLongClickListener?) {
         fileLongClickListener = listener
+    }
+
+    fun setFileListViewSelectedFileListener(listener: FileListViewSelectedFileListener?) {
+        fileListViewSelectedFileListener = listener
     }
 
     private fun createFileClickListener(): FileListRow.FileClickListener {
@@ -144,6 +153,10 @@ class FileListView @JvmOverloads constructor(
                 userAction.onFileClicked(file)
             }
         }
+    }
+
+    interface FileListViewSelectedFileListener {
+        fun onSelectedFilePathChanged(path: String?)
     }
 
 }

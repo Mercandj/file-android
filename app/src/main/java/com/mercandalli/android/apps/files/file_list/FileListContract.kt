@@ -44,5 +44,7 @@ interface FileListContract {
         fun setEmptyTextColorRes(textColorRes: Int)
 
         fun setErrorTextColorRes(textColorRes: Int)
+
+        fun notifyListenerCurrentPathChanged(currentPath: String)
     }
 }

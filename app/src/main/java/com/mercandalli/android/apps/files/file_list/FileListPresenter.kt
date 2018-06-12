@@ -36,6 +36,7 @@ class FileListPresenter(
     override fun onFileClicked(file: File) {
         if (file.directory) {
             currentPath = file.path
+            screen.notifyListenerCurrentPathChanged(currentPath)
             syncFileChildren()
             return
         }
@@ -48,6 +49,7 @@ class FileListPresenter(
         }
         val ioFile = java.io.File(currentPath)
         currentPath = ioFile.parent
+        screen.notifyListenerCurrentPathChanged(currentPath)
         syncFileChildren()
     }
 

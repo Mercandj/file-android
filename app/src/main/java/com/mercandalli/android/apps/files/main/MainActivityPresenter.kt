@@ -2,8 +2,6 @@ package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
 import android.os.Environment
-import com.mercandalli.android.apps.files.main.MainActivityFileUiStorage.Companion.SECTION_FILE_COLUMN
-import com.mercandalli.android.apps.files.main.MainActivityFileUiStorage.Companion.SECTION_FILE_LIST
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
@@ -14,7 +12,7 @@ class MainActivityPresenter(
         private val mainActivityFileUiStorage: MainActivityFileUiStorage
 ) : MainActivityContract.UserAction {
 
-    private var selectedPath: String? = null
+    private var currentPath: String? = null
     private var selectedSection: Int = SECTION_UNDEFINED
     private val themeListener = createThemeListener()
 
@@ -82,13 +80,13 @@ class MainActivityPresenter(
     }
 
     override fun onFileCreationConfirmed(fileName: String) {
-        val path = if (selectedPath == null) Environment.getExternalStorageDirectory().absolutePath
-        else selectedPath
+        val path = if (currentPath == null) Environment.getExternalStorageDirectory().absolutePath
+        else currentPath
         fileCreatorManager.create(path!!, fileName)
     }
 
     override fun onSelectedFilePathChanged(path: String?) {
-        selectedPath = path
+        currentPath = path
     }
 
     private fun selectFile() {

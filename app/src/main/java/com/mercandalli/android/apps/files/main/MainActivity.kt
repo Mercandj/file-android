@@ -80,6 +80,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarFileList.setOnClickListener {
             userAction.onToolbarFileListClicked()
         }
+        fileList.setFileListViewSelectedFileListener(object : FileListView.FileListViewSelectedFileListener {
+            override fun onSelectedFilePathChanged(path: String?) {
+                userAction.onSelectedFilePathChanged(path)
+            }
+        })
         fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(object : FileColumnHorizontalLists.FileHorizontalListsSelectedFileListener {
             override fun onSelectedFilePathChanged(path: String?) {
                 userAction.onSelectedFilePathChanged(path)
