@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_list
 
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.*
 
 class FileListPresenter(
@@ -7,19 +8,24 @@ class FileListPresenter(
         private val fileManager: FileManager,
         private val fileOpenManager: FileOpenManager,
         private val fileSortManager: FileSortManager,
+        private val themeManager: ThemeManager,
         private val currentPathParam: String
 ) : FileListContract.UserAction {
 
     private var currentPath = currentPathParam
     private val fileChildrenResultListener = createFileChildrenResultListener()
+    private val themeListener = createThemeListener()
 
     override fun onAttached() {
         fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
         syncFileChildren()
+        themeManager.registerThemeListener(themeListener)
+        syncWithCurrentTheme()
     }
 
     override fun onDetached() {
         fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        themeManager.unregisterThemeListener(themeListener)
     }
 
     override fun onRefresh() {
@@ -85,6 +91,18 @@ class FileListPresenter(
                     screen.showFiles(filesSorted)
                 }
             }
+        }
+    }
+
+    private fun syncWithCurrentTheme() {
+        val theme = themeManager.theme
+        screen.setEmptyTextColorRes(theme.textPrimaryColorRes)
+        screen.setErrorTextColorRes(theme.textSecondaryColorRes)
+    }
+
+    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
+        override fun onCurrentThemeChanged() {
+            syncWithCurrentTheme()
         }
     }
 

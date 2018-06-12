@@ -3,6 +3,7 @@ package com.mercandalli.android.apps.files.file_list
 import android.content.Context
 import android.os.Environment
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -24,8 +25,8 @@ class FileListView @JvmOverloads constructor(
     private val adapter = FileListAdapter(createFileClickListener())
     private val refresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
-    private val emptyView: TextView
-    private val error: View
+    private val emptyTextView: TextView
+    private val errorTextView: TextView
     private val fab: FloatingActionButton
 
     init {
@@ -34,8 +35,8 @@ class FileListView @JvmOverloads constructor(
         recyclerView = findViewById(R.id.view_file_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
-        emptyView = findViewById(R.id.view_file_list_empty_view)
-        error = findViewById(R.id.view_file_list_error)
+        emptyTextView = findViewById(R.id.view_file_list_empty_view)
+        errorTextView = findViewById(R.id.view_file_list_error)
         fab = findViewById(R.id.view_file_list_fab)
         userAction = createUserAction()
         refresh.setOnRefreshListener {
@@ -59,11 +60,13 @@ class FileListView @JvmOverloads constructor(
         val fileManager = ApplicationGraph.getFileManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         return FileListPresenter(
                 this,
                 fileManager,
                 fileOpenManager,
                 fileSortManager,
+                themeManager,
                 Environment.getExternalStorageDirectory().absolutePath)
     }
 
@@ -78,19 +81,19 @@ class FileListView @JvmOverloads constructor(
     }
 
     override fun showEmptyView() {
-        emptyView.visibility = View.VISIBLE
+        emptyTextView.visibility = View.VISIBLE
     }
 
     override fun hideEmptyView() {
-        emptyView.visibility = View.GONE
+        emptyTextView.visibility = View.GONE
     }
 
     override fun showErrorMessage() {
-        error.visibility = View.VISIBLE
+        errorTextView.visibility = View.VISIBLE
     }
 
     override fun hideErrorMessage() {
-        error.visibility = View.GONE
+        errorTextView.visibility = View.GONE
     }
 
     override fun showFiles(files: List<File>) {
@@ -121,6 +124,14 @@ class FileListView @JvmOverloads constructor(
 
     override fun hideFabUpArrow() {
         fab.hide()
+    }
+
+    override fun setEmptyTextColorRes(textColorRes: Int) {
+        emptyTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setErrorTextColorRes(textColorRes: Int) {
+        errorTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
     }
 
     fun setFileLongClickListener(listener: FileListRow.FileLongClickListener?) {

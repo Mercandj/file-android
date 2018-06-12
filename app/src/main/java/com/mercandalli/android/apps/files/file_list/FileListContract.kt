@@ -40,5 +40,9 @@ interface FileListContract {
         fun showFabUpArrow()
 
         fun hideFabUpArrow()
+
+        fun setEmptyTextColorRes(textColorRes: Int)
+
+        fun setErrorTextColorRes(textColorRes: Int)
     }
 }
