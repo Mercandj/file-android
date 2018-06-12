@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.file_column_list
 
 import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
@@ -19,6 +20,8 @@ class FileColumnListPresenterTest {
     private val fileManager: FileManager? = null
     @Mock
     private val fileSortManager: FileSortManager? = null
+    @Mock
+    private val themeManager: ThemeManager? = null
 
     @Before
     fun setup() {
@@ -50,6 +53,7 @@ class FileColumnListPresenterTest {
                 screen!!,
                 fileManager!!,
                 fileSortManager!!,
+                themeManager!!,
                 currentPath
         )
     }
