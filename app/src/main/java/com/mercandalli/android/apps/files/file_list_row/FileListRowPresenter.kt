@@ -13,9 +13,7 @@ class FileListRowPresenter(
         private val fileCopyCutManager: FileCopyCutManager,
         private val fileRenameManager: FileRenameManager,
         private val audioManager: AudioManager,
-        private val themeManager: ThemeManager,
-        private val drawableRightIconDirectoryDrawableRes: Int,
-        private val drawableRightIconSoundDrawableRes: Int
+        private val themeManager: ThemeManager
 ) : FileListRowContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -39,7 +37,7 @@ class FileListRowPresenter(
         screen.setTitle(file.name)
         val directory = file.directory
         screen.setSubtitle(if (file.directory) "Directory" else "File")
-        screen.setRightIconVisibility(directory)
+        screen.setSoundIconVisibility(directory)
         screen.setIcon(directory)
     }
 
@@ -76,26 +74,28 @@ class FileListRowPresenter(
         fileRenameManager.rename(file!!.path, fileName)
     }
 
+    override fun onOverflowClicked() {
+        // TODO - Display menu
+    }
+
     private fun synchronizeRightIcon() {
         if (file == null) {
             return
         }
         if (file!!.directory) {
-            screen.setRightIconVisibility(true)
-            screen.setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes)
+            screen.setSoundIconVisibility(false)
             return
         }
         val sourcePath = audioManager.getSourcePath()
         if (sourcePath == null || file!!.path != sourcePath) {
-            screen.setRightIconVisibility(false)
+            screen.setSoundIconVisibility(false)
             return
         }
         val playing = audioManager.isPlaying()
         if (playing) {
-            screen.setRightIconVisibility(true)
-            screen.setRightIconDrawableRes(drawableRightIconSoundDrawableRes)
+            screen.setSoundIconVisibility(true)
         } else {
-            screen.setRightIconVisibility(false)
+            screen.setSoundIconVisibility(false)
         }
     }
 

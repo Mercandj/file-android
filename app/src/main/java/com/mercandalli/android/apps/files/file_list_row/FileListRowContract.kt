@@ -27,6 +27,8 @@ interface FileListRowContract {
         fun onRenameClicked()
 
         fun onRenameConfirmedClicked(fileName: String)
+
+        fun onOverflowClicked()
     }
 
     interface Screen {
@@ -35,9 +37,7 @@ interface FileListRowContract {
 
         fun setSubtitle(subtitle: String)
 
-        fun setRightIconVisibility(visible: Boolean)
-
-        fun setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes: Int)
+        fun setSoundIconVisibility(visible: Boolean)
 
         fun setIcon(directory: Boolean)
 

@@ -3,7 +3,6 @@ package com.mercandalli.android.apps.files.file_list_row
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.PopupMenu
@@ -27,7 +26,7 @@ class FileListRow @JvmOverloads constructor(
     private val icon: ImageView
     private val title: TextView
     private val subtitle: TextView
-    private val arrayRight: ImageView
+    private val sound: View
     private var fileClickListener: FileClickListener? = null
     private var fileLongClickListener: FileLongClickListener? = null
 
@@ -37,13 +36,16 @@ class FileListRow @JvmOverloads constructor(
         icon = findViewById(R.id.view_file_list_row_icon)
         title = findViewById(R.id.view_file_list_row_title)
         subtitle = findViewById(R.id.view_file_list_row_subtitle)
-        arrayRight = findViewById(R.id.view_file_list_row_arrow_right)
+        sound = findViewById(R.id.view_file_list_row_sound)
         userAction = createUserAction()
 
         card.setOnClickListener { userAction.onRowClicked() }
         setOnLongClickListener {
             userAction.onRowLongClicked()
             return@setOnLongClickListener true
+        }
+        findViewById<View>(R.id.view_file_list_row_overflow).setOnClickListener {
+            userAction.onOverflowClicked()
         }
     }
 
@@ -65,12 +67,8 @@ class FileListRow @JvmOverloads constructor(
         this.subtitle.text = subtitle
     }
 
-    override fun setRightIconVisibility(visible: Boolean) {
-        arrayRight.visibility = if (visible) VISIBLE else GONE
-    }
-
-    override fun setRightIconDrawableRes(drawableRightIconDirectoryDrawableRes: Int) {
-        arrayRight.setImageResource(drawableRightIconDirectoryDrawableRes)
+    override fun setSoundIconVisibility(visible: Boolean) {
+        sound.visibility = if (visible) VISIBLE else GONE
     }
 
     override fun setIcon(directory: Boolean) {
@@ -163,6 +161,7 @@ class FileListRow @JvmOverloads constructor(
                 override fun onDeleteConfirmedClicked() {}
                 override fun onRenameClicked() {}
                 override fun onRenameConfirmedClicked(fileName: String) {}
+                override fun onOverflowClicked() {}
             }
         }
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
@@ -176,9 +175,7 @@ class FileListRow @JvmOverloads constructor(
                 fileCopyCutManager,
                 fileRenameManager,
                 audioManager,
-                themeManager,
-                R.drawable.ic_play_arrow_black_24dp,
-                R.drawable.ic_volume_up_black_24dp
+                themeManager
         )
     }
 
