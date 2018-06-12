@@ -84,12 +84,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginEnd="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="3"
                     android:background="?android:selectableItemBackground"
-                    android:paddingBottom="4dp"
-                    android:paddingEnd="6dp"
-                    android:paddingStart="6dp"
-                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:paddingTop="7dp"
                     android:src="@drawable/ic_more_vert_black_24dp"
                     android:tint="#888888" />
 
@@ -99,11 +99,11 @@
                     android:layout_height="0dp"
                     android:layout_gravity="end|bottom"
                     android:layout_marginEnd="0dp"
-                    android:layout_weight="1"
-                    android:paddingBottom="10dp"
+                    android:layout_weight="2"
+                    android:paddingBottom="6dp"
                     android:paddingEnd="6dp"
                     android:paddingStart="6dp"
-                    android:paddingTop="4dp"
+                    android:paddingTop="0dp"
                     android:src="@drawable/ic_volume_up_black_24dp"
                     android:tint="#888888" />
 

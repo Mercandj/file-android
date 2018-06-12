@@ -26,6 +26,7 @@ class FileListRow @JvmOverloads constructor(
     private val icon: ImageView
     private val title: TextView
     private val subtitle: TextView
+    private val overflow: View
     private val sound: View
     private var fileClickListener: FileClickListener? = null
     private var fileLongClickListener: FileLongClickListener? = null
@@ -36,6 +37,7 @@ class FileListRow @JvmOverloads constructor(
         icon = findViewById(R.id.view_file_list_row_icon)
         title = findViewById(R.id.view_file_list_row_title)
         subtitle = findViewById(R.id.view_file_list_row_subtitle)
+        overflow = findViewById(R.id.view_file_list_row_overflow)
         sound = findViewById(R.id.view_file_list_row_sound)
         userAction = createUserAction()
 
@@ -44,7 +46,7 @@ class FileListRow @JvmOverloads constructor(
             userAction.onRowLongClicked()
             return@setOnLongClickListener true
         }
-        findViewById<View>(R.id.view_file_list_row_overflow).setOnClickListener {
+        overflow.setOnClickListener {
             userAction.onOverflowClicked()
         }
     }
@@ -68,7 +70,7 @@ class FileListRow @JvmOverloads constructor(
     }
 
     override fun setSoundIconVisibility(visible: Boolean) {
-        sound.visibility = if (visible) VISIBLE else GONE
+        sound.visibility = if (visible) VISIBLE else INVISIBLE
     }
 
     override fun setIcon(directory: Boolean) {
@@ -91,7 +93,7 @@ class FileListRow @JvmOverloads constructor(
     }
 
     override fun showOverflowPopupMenu() {
-        showOverflowPopupMenu(this)
+        showOverflowPopupMenu(overflow)
     }
 
     override fun showDeleteConfirmation(fileName: String) {

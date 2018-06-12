@@ -75,7 +75,7 @@ class FileListRowPresenter(
     }
 
     override fun onOverflowClicked() {
-        // TODO - Display menu
+        screen.showOverflowPopupMenu()
     }
 
     private fun synchronizeRightIcon() {
