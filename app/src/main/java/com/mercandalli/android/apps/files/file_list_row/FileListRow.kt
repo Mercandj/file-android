@@ -84,28 +84,6 @@ class FileListRow @JvmOverloads constructor(
         }
     }
 
-    override fun setRowSelected(selected: Boolean) {
-        if (selected) {
-            val selectedBackgroundColor = ContextCompat.getColor(
-                    context, R.color.view_file_row_selected_background)
-            setBackgroundColor(selectedBackgroundColor)
-            val selectedTitleColor = ContextCompat.getColor(
-                    context, R.color.view_file_row_selected_title)
-            title.setTextColor(selectedTitleColor)
-            icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
-            arrayRight.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
-            title.isSelected = true
-        } else {
-            val backgroundColor = ContextCompat.getColor(
-                    context, R.color.view_file_row_background)
-            setBackgroundColor(backgroundColor)
-            val titleColor = ContextCompat.getColor(context, R.color.view_file_row_title)
-            title.setTextColor(titleColor)
-            arrayRight.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
-            title.isSelected = false
-        }
-    }
-
     override fun notifyRowClicked(file: File) {
         fileClickListener?.onFileClicked(file)
     }
@@ -151,8 +129,16 @@ class FileListRow @JvmOverloads constructor(
         )
     }
 
-    override fun setTextColorRes(textColorRes: Int) {
+    override fun setTitleTextColorRes(textColorRes: Int) {
         title.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setSubtitleTextColorRes(textColorRes: Int) {
+        subtitle.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setCardBackgroundColorRes(cardBackgroundColorRes: Int) {
+        card.setCardBackgroundColor(ContextCompat.getColor(context, cardBackgroundColorRes))
     }
 
     fun setFile(file: File, selectedPath: String?) {
@@ -192,8 +178,7 @@ class FileListRow @JvmOverloads constructor(
                 audioManager,
                 themeManager,
                 R.drawable.ic_play_arrow_black_24dp,
-                R.drawable.ic_volume_up_black_24dp,
-                R.color.view_file_row_selected_title
+                R.drawable.ic_volume_up_black_24dp
         )
     }
 

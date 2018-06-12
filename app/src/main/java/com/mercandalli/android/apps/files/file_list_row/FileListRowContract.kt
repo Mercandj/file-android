@@ -41,8 +41,6 @@ interface FileListRowContract {
 
         fun setIcon(directory: Boolean)
 
-        fun setRowSelected(selected: Boolean)
-
         fun notifyRowClicked(file: File)
 
         fun notifyRowLongClicked(file: File)
@@ -53,6 +51,10 @@ interface FileListRowContract {
 
         fun showRenamePrompt(fileName: String)
 
-        fun setTextColorRes(textColorRes: Int)
+        fun setTitleTextColorRes(textColorRes: Int)
+
+        fun setSubtitleTextColorRes(textColorRes: Int)
+
+        fun setCardBackgroundColorRes(cardBackgroundColorRes: Int)
     }
 }

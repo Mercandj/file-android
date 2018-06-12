@@ -15,14 +15,12 @@ class FileListRowPresenter(
         private val audioManager: AudioManager,
         private val themeManager: ThemeManager,
         private val drawableRightIconDirectoryDrawableRes: Int,
-        private val drawableRightIconSoundDrawableRes: Int,
-        private val selectedTextColorRes: Int
+        private val drawableRightIconSoundDrawableRes: Int
 ) : FileListRowContract.UserAction {
 
     private val playListener = createPlayListener()
     private val themeListener = createThemeListener()
     private var file: File? = null
-    private var selected = false
 
     override fun onAttached() {
         audioManager.registerPlayListener(playListener)
@@ -43,8 +41,6 @@ class FileListRowPresenter(
         screen.setSubtitle(if (file.directory) "Directory" else "File")
         screen.setRightIconVisibility(directory)
         screen.setIcon(directory)
-        selected = isSelected(file.path, selectedPath)
-        screen.setRowSelected(selected)
     }
 
     override fun onRowClicked() {
@@ -111,7 +107,9 @@ class FileListRowPresenter(
 
     private fun syncWithCurrentTheme() {
         val theme = themeManager.theme
-        screen.setTextColorRes(if (selected) selectedTextColorRes else theme.textPrimaryColorRes)
+        screen.setTitleTextColorRes(theme.textPrimaryColorRes)
+        screen.setSubtitleTextColorRes(theme.textSecondaryColorRes)
+        screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)
     }
 
     private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {

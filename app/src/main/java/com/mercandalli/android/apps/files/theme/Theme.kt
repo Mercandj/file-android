@@ -12,4 +12,6 @@ open class Theme(
         @ColorRes
         val textSecondaryColorRes: Int,
         @ColorRes
-        val bottomBarBlurOverlay: Int)
+        val bottomBarBlurOverlay: Int,
+        @ColorRes
+        val cardBackgroundColorRes: Int)
