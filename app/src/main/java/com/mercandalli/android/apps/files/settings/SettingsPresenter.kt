@@ -45,6 +45,9 @@ class SettingsPresenter(
     private fun syncWithCurrentTheme() {
         val theme = themeManager.theme
         screen.setThemeCheckboxChecked(theme is DarkTheme)
+        screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)
+        screen.setTitlesTextColorRes(theme.textPrimaryColorRes)
+        screen.setSubtitlesTextColorRes(theme.textSecondaryColorRes)
     }
 
     private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {

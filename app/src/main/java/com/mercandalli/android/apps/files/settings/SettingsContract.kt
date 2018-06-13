@@ -24,5 +24,11 @@ interface SettingsContract {
         fun showVersionName(versionName: String)
 
         fun setThemeCheckboxChecked(checked: Boolean)
+
+        fun setCardBackgroundColorRes(cardBackgroundColorRes: Int)
+
+        fun setTitlesTextColorRes(titlesColorRes: Int)
+
+        fun setSubtitlesTextColorRes(subtitlesColorRes: Int)
     }
 }

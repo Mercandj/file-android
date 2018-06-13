@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/view_settings_version_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_space"
@@ -27,7 +28,7 @@
                 android:paddingTop="14dp">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/view_settings_version_name"
+                    android:id="@+id/view_settings_version_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -39,6 +40,7 @@
                     tools:text="Version 1.00.00" />
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/view_settings_version_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

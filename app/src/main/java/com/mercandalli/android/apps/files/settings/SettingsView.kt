@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.CheckBox
@@ -17,14 +19,24 @@ class SettingsView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr), SettingsContract.Screen {
 
-    private val version: TextView
+    private val versionTitle: TextView
+    private val versionSubtitle: TextView
     private val themeCheckBox: CheckBox
+    private val versionCard: CardView
+    private val themeCard: CardView
+    private val themeLabel: TextView
+    private val themeSublabel: TextView
     private val userAction: SettingsContract.UserAction
 
     init {
         View.inflate(context, R.layout.view_settings, this)
-        version = findViewById(R.id.view_settings_version_name)
+        versionTitle = findViewById(R.id.view_settings_version_title)
+        versionSubtitle = findViewById(R.id.view_settings_version_subtitle)
         themeCheckBox = findViewById(R.id.view_settings_theme)
+        versionCard = findViewById(R.id.view_settings_version_section)
+        themeCard = findViewById(R.id.view_settings_theme_section)
+        themeLabel = findViewById(R.id.view_settings_theme_label)
+        themeSublabel = findViewById(R.id.view_settings_theme_sublabel)
         userAction = createUserAction()
         findViewById<View>(R.id.view_settings_rate).setOnClickListener {
             userAction.onRateClicked()
@@ -61,11 +73,29 @@ class SettingsView @JvmOverloads constructor(
     }
 
     override fun showVersionName(versionName: String) {
-        version.text = context.getString(R.string.view_settings_version, versionName)
+        versionTitle.text = context.getString(R.string.view_settings_version, versionName)
     }
 
     override fun setThemeCheckboxChecked(checked: Boolean) {
         themeCheckBox.isChecked = checked
+    }
+
+    override fun setCardBackgroundColorRes(cardBackgroundColorRes: Int) {
+        val cardBackgroundColor = ContextCompat.getColor(context, cardBackgroundColorRes)
+        versionCard.setCardBackgroundColor(cardBackgroundColor)
+        themeCard.setCardBackgroundColor(cardBackgroundColor)
+    }
+
+    override fun setTitlesTextColorRes(titlesColorRes: Int) {
+        val titlesColor = ContextCompat.getColor(context, titlesColorRes)
+        versionTitle.setTextColor(titlesColor)
+        themeLabel.setTextColor(titlesColor)
+    }
+
+    override fun setSubtitlesTextColorRes(subtitlesColorRes: Int) {
+        val subtitlesColor = ContextCompat.getColor(context, subtitlesColorRes)
+        versionSubtitle.setTextColor(subtitlesColor)
+        themeSublabel.setTextColor(subtitlesColor)
     }
 
     private fun createUserAction(): SettingsContract.UserAction {
