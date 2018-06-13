@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.note
 
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -12,6 +13,8 @@ class NotePresenterTest {
     private val screen: NoteContract.Screen? = null
     @Mock
     private val noteManager: NoteManager? = null
+    @Mock
+    private val themeManager: ThemeManager? = null
 
     @Before
     fun setup() {
@@ -34,7 +37,8 @@ class NotePresenterTest {
     private fun createInstanceToTest(): NotePresenter {
         return NotePresenter(
                 screen!!,
-                noteManager!!
+                noteManager!!,
+                themeManager!!
         )
     }
 }

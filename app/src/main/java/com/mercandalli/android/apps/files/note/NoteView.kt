@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.note
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -33,6 +34,16 @@ class NoteView @JvmOverloads constructor(
         })
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
+    }
+
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
+    }
+
     override fun setNote(note: String) {
         editText.setText(note)
     }
@@ -52,6 +63,18 @@ class NoteView @JvmOverloads constructor(
         )
     }
 
+    override fun setTextColorRes(textColorRes: Int) {
+        editText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setTextHintColorRes(textColorRes: Int) {
+        editText.setHintTextColor(ContextCompat.getColor(context, textColorRes))
+    }
+
+    override fun setCardBackgroundColorRes(colorRes: Int) {
+        editText.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+    }
+
     fun onShareClicked() {
         userAction.onShareClicked()
     }
@@ -63,6 +86,8 @@ class NoteView @JvmOverloads constructor(
     private fun createUserAction(): NoteContract.UserAction {
         if (isInEditMode) {
             return object : NoteContract.UserAction {
+                override fun onAttached() {}
+                override fun onDetached() {}
                 override fun onTextChanged(text: String) {}
                 override fun onShareClicked() {}
                 override fun onDeleteClicked() {}
@@ -70,9 +95,11 @@ class NoteView @JvmOverloads constructor(
             }
         }
         val noteManager = ApplicationGraph.getNoteManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         return NotePresenter(
                 this,
-                noteManager
+                noteManager,
+                themeManager
         )
     }
 }

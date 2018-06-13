@@ -17,7 +17,7 @@
     <color name="toolbar_background_dark">@color/color_primary</color>
     <color name="toolbar_title_dark">@android:color/white</color>
     <color name="window_background_dark">@android:color/black</color>
-    <color name="text_primary_color_dark">#C9C9C9</color> <!-- 70% -->
-    <color name="text_secondary_color_dark">#8A8A8A</color>
+    <color name="text_primary_color_dark">#E0E0E0</color>
+    <color name="text_secondary_color_dark">#A5A5A5</color>
     <color name="card_background_color_dark">#222222</color>
 </resources>
