@@ -26,13 +26,13 @@ class FileModule(
         val permissionManager = getPermissionManager()
         val fileManagerAndroid = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
-                Environment.getExternalStorageDirectory().absolutePath,
-                {
-                    if (it != null && !it.endsWith("/null")) {
-                        val path = File(it).parentFile.absolutePath
-                        fileManagerAndroid.refresh(path)
-                    }
-                })
+                Environment.getExternalStorageDirectory().absolutePath
+        ) {
+            if (it != null && !it.endsWith("/null")) {
+                val path = File(it).parentFile.absolutePath
+                fileManagerAndroid.refresh(path)
+            }
+        }
         val mediaScanner = getMediaScanner()
         mediaScanner.setListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {

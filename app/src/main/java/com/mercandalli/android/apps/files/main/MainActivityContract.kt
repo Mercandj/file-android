@@ -28,6 +28,8 @@ interface MainActivityContract {
 
         fun onToolbarFileListClicked()
 
+        fun onToolbarFilePasteClicked()
+
         fun onFileCreationConfirmed(fileName: String)
 
         fun onSelectedFilePathChanged(path: String?)
@@ -71,6 +73,10 @@ interface MainActivityContract {
 
         fun hideToolbarFileList()
 
+        fun showToolbarFilePaste()
+
+        fun hideToolbarFilePaste()
+
         fun deleteNote()
 
         fun shareNote()
@@ -80,5 +86,7 @@ interface MainActivityContract {
         fun setWindowBackgroundColorRes(windowBackgroundColorRes: Int)
 
         fun setBottomBarBlurOverlayColorRes(bottomBarBlurOverlayRes: Int)
+
+        fun setPasteIconVisibility(visible: Boolean)
     }
 }

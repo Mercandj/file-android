@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
     private lateinit var toolbarDelete: View
     private lateinit var toolbarShare: View
     private lateinit var toolbarAdd: View
+    private lateinit var toolbarFilePaste: View
     private lateinit var toolbarFileList: View
     private lateinit var toolbarFileColumn: View
     private lateinit var bottomBarBlurView: BlurView
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
         toolbarShare = findViewById(R.id.activity_main_toolbar_share)
         toolbarAdd = findViewById(R.id.activity_main_toolbar_add)
+        toolbarFilePaste = findViewById(R.id.activity_main_toolbar_file_paste)
         toolbarFileList = findViewById(R.id.activity_main_toolbar_file_list)
         toolbarFileColumn = findViewById(R.id.activity_main_toolbar_file_column)
         bottomBarBlurView = findViewById(R.id.activity_main_bottom_bar_container)
@@ -79,6 +81,9 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         }
         toolbarFileList.setOnClickListener {
             userAction.onToolbarFileListClicked()
+        }
+        toolbarFilePaste.setOnClickListener {
+            userAction.onToolbarFilePasteClicked()
         }
         fileList.setFileListViewSelectedFileListener(object : FileListView.FileListViewSelectedFileListener {
             override fun onSelectedFilePathChanged(path: String?) {
@@ -185,6 +190,14 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         toolbarFileList.visibility = View.GONE
     }
 
+    override fun showToolbarFilePaste() {
+        toolbarFilePaste.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarFilePaste() {
+        toolbarFilePaste.visibility = View.GONE
+    }
+
     override fun deleteNote() {
         note.onDeleteClicked()
     }
@@ -230,8 +243,13 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                 bottomBarBlurOverlayRes))
     }
 
+    override fun setPasteIconVisibility(visible: Boolean) {
+        toolbarFilePaste.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
     private fun createUserAction(): MainActivityContract.UserAction {
         val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val themeManager = ApplicationGraph.getThemeManager()
         val sharedPreferences = getSharedPreferences(
                 MainActivityFileUiStorageSharedPreference.PREFERENCE_NAME,
@@ -241,6 +259,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
         return MainActivityPresenter(
                 this,
                 fileCreatorManager,
+                fileCopyCutManager,
                 themeManager,
                 mainActivityFileUiStorage
         )

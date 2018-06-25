@@ -3,11 +3,13 @@ package com.mercandalli.android.apps.files.main
 import android.os.Bundle
 import android.os.Environment
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
 class MainActivityPresenter(
         private val screen: MainActivityContract.Screen,
         private val fileCreatorManager: FileCreatorManager,
+        private val fileCopyCutManager: FileCopyCutManager,
         private val themeManager: ThemeManager,
         private val mainActivityFileUiStorage: MainActivityFileUiStorage
 ) : MainActivityContract.UserAction {
@@ -15,14 +17,18 @@ class MainActivityPresenter(
     private var currentPath: String? = null
     private var selectedSection: Int = SECTION_UNDEFINED
     private val themeListener = createThemeListener()
+    private val fileToPasteChangedListener = createFileToPasteChangedListener()
 
     init {
         themeManager.registerThemeListener(themeListener)
+        fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncWithCurrentTheme()
+        syncToolbarPasteIconVisibility()
     }
 
     override fun onDestroy() {
         themeManager.unregisterThemeListener(themeListener)
+        fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -79,6 +85,12 @@ class MainActivityPresenter(
         selectFileList()
     }
 
+    override fun onToolbarFilePasteClicked() {
+        val path = if (currentPath == null) Environment.getExternalStorageDirectory().absolutePath
+        else currentPath
+        fileCopyCutManager.paste(path!!)
+    }
+
     override fun onFileCreationConfirmed(fileName: String) {
         val path = if (currentPath == null) Environment.getExternalStorageDirectory().absolutePath
         else currentPath
@@ -110,6 +122,7 @@ class MainActivityPresenter(
         screen.showToolbarAdd()
         screen.showToolbarFileColumn()
         screen.hideToolbarFileList()
+        syncToolbarPasteIconVisibility()
     }
 
     private fun selectFileColumn() {
@@ -124,6 +137,7 @@ class MainActivityPresenter(
         screen.showToolbarAdd()
         screen.hideToolbarFileColumn()
         screen.showToolbarFileList()
+        syncToolbarPasteIconVisibility()
     }
 
     private fun selectNote() {
@@ -137,6 +151,7 @@ class MainActivityPresenter(
         screen.hideToolbarAdd()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
+        syncToolbarPasteIconVisibility()
     }
 
     private fun selectSettings() {
@@ -150,6 +165,7 @@ class MainActivityPresenter(
         screen.hideToolbarAdd()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
+        syncToolbarPasteIconVisibility()
     }
 
     private fun syncWithCurrentTheme() {
@@ -158,10 +174,27 @@ class MainActivityPresenter(
         screen.setBottomBarBlurOverlayColorRes(theme.bottomBarBlurOverlay)
     }
 
+    private fun syncToolbarPasteIconVisibility() {
+        if (selectedSection != SECTION_FILE_LIST && selectedSection != SECTION_FILE_COLUMN) {
+            screen.setPasteIconVisibility(false)
+            return
+        }
+        val fileToPastePath = fileCopyCutManager.getFileToPastePath()
+        screen.setPasteIconVisibility(fileToPastePath != null)
+    }
+
     private fun createThemeListener(): ThemeManager.OnCurrentThemeChangeListener {
         return object : ThemeManager.OnCurrentThemeChangeListener {
             override fun onCurrentThemeChanged() {
                 syncWithCurrentTheme()
+            }
+        }
+    }
+
+    private fun createFileToPasteChangedListener(): FileCopyCutManager.FileToPasteChangedListener {
+        return object : FileCopyCutManager.FileToPasteChangedListener {
+            override fun onFileToPasteChanged() {
+                syncToolbarPasteIconVisibility()
             }
         }
     }

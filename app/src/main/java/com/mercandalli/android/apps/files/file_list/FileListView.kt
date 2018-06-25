@@ -158,5 +158,4 @@ class FileListView @JvmOverloads constructor(
     interface FileListViewSelectedFileListener {
         fun onSelectedFilePathChanged(path: String?)
     }
-
 }

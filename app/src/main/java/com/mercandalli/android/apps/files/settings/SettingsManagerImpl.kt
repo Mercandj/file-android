@@ -11,5 +11,4 @@ class SettingsManagerImpl : SettingsManager {
     override fun setDeveloperMode(enable: Boolean) {
         isDeveloper = enable
     }
-
 }
