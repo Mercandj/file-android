@@ -27,180 +27,88 @@ class ApplicationGraph(
         private val context: Context
 ) {
 
-    private lateinit var audioManager: AudioManager
-    private lateinit var audioQueueManager: AudioQueueManager
-    private lateinit var audioModule: AudioModule
-    private lateinit var fileManager: FileManager
-    private lateinit var fileOpenManager: FileOpenManager
-    private lateinit var fileDeleteManager: FileDeleteManager
-    private lateinit var fileCopyCutManager: FileCopyCutManager
-    private lateinit var fileCreatorManager: FileCreatorManager
-    private lateinit var fileShareManager: FileShareManager
-    private lateinit var fileRenameManager: FileRenameManager
-    private lateinit var fileSortManager: FileSortManager
-    private lateinit var fileModule: FileModule
-    private lateinit var noteManager: NoteManager
-    private lateinit var notificationAudioManager: NotificationAudioManager
-    private lateinit var settingsManager: SettingsManager
-    private lateinit var themeManager: ThemeManager
-    private lateinit var versionManager: VersionManager
-
-    private fun getAudioManagerInternal(): AudioManager {
-        if (!::audioManager.isInitialized) {
-            if (!::audioModule.isInitialized) {
-                val fileSortManager = getFileSortManager()
-                audioModule = AudioModule(
-                        fileSortManager
-                )
-            }
-            audioManager = audioModule.provideAudioManager()
-        }
-        return audioManager
+    private val audioManagerInternal: AudioManager by lazy {
+        audioModuleInternal.provideAudioManager()
     }
 
-    private fun getAudioQueueManagerInternal(): AudioQueueManager {
-        if (!::audioQueueManager.isInitialized) {
-            if (!::audioModule.isInitialized) {
-                val fileSortManager = getFileSortManager()
-                audioModule = AudioModule(
-                        fileSortManager
-                )
-            }
-            val audioManager = getAudioManagerInternal()
-            audioQueueManager = audioModule.provideAudioQueueManager(
-                    audioManager
-            )
-        }
-        return audioQueueManager
+    private val audioQueueManagerInternal: AudioQueueManager by lazy {
+        audioModuleInternal.provideAudioQueueManager(
+                audioManagerInternal
+        )
     }
 
-    private fun getFileManagerInternal(): FileManager {
-        if (!::fileManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileManager = fileModule.provideFileManager()
-        }
-        return fileManager
+    private val audioModuleInternal: AudioModule by lazy {
+        val fileSortManager = getFileSortManager()
+        AudioModule(
+                fileSortManager
+        )
     }
 
-    private fun getFileOpenManagerInternal(): FileOpenManager {
-        if (!::fileOpenManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileOpenManager = fileModule.provideFileOpenManager()
-        }
-        return fileOpenManager
+    private val fileManagerInternal: FileManager by lazy {
+        fileModuleInternal.provideFileManager()
     }
 
-    private fun getFileDeleteManagerInternal(): FileDeleteManager {
-        if (!::fileDeleteManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileDeleteManager = fileModule.provideFileDeleteManager()
-        }
-        return fileDeleteManager
+    private val fileOpenManagerInternal: FileOpenManager by lazy {
+        fileModuleInternal.provideFileOpenManager()
     }
 
-    private fun getFileCopyCutManagerInternal(): FileCopyCutManager {
-        if (!::fileCopyCutManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileCopyCutManager = fileModule.provideFileCopyCutManager()
-        }
-        return fileCopyCutManager
+    private val fileDeleteManagerInternal: FileDeleteManager by lazy {
+        fileModuleInternal.provideFileDeleteManager()
     }
 
-    private fun getFileCreatorManagerInternal(): FileCreatorManager {
-        if (!::fileCreatorManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileCreatorManager = fileModule.provideFileCreatorManager()
-        }
-        return fileCreatorManager
+    private val fileCopyCutManagerInternal: FileCopyCutManager by lazy {
+        fileModuleInternal.provideFileCopyCutManager()
     }
 
-    private fun getFileRenameManagerInternal(): FileRenameManager {
-        if (!::fileRenameManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileRenameManager = fileModule.provideFileRenameManager()
-        }
-        return fileRenameManager
+    private val fileCreatorManagerInternal: FileCreatorManager by lazy {
+        fileModuleInternal.provideFileCreatorManager()
     }
 
-    private fun getFileShareManagerInternal(): FileShareManager {
-        if (!::fileShareManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileShareManager = fileModule.provideFileShareManager()
-        }
-        return fileShareManager
+    private val fileShareManagerInternal: FileShareManager by lazy {
+        fileModuleInternal.provideFileShareManager()
     }
 
-    private fun getFileSortManagerInternal(): FileSortManager {
-        if (!::fileSortManager.isInitialized) {
-            if (!::fileModule.isInitialized) {
-                fileModule = createFileModule()
-            }
-            fileSortManager = fileModule.provideFileSortManager()
-        }
-        return fileSortManager
+    private val fileRenameManagerInternal: FileRenameManager by lazy {
+        fileModuleInternal.provideFileRenameManager()
     }
 
-    private fun getNoteManagerInternal(): NoteManager {
-        if (!::noteManager.isInitialized) {
-            noteManager = NoteModule(context).provideNoteManager()
-        }
-        return noteManager
+    private val fileSortManagerInternal: FileSortManager by lazy {
+        fileModuleInternal.provideFileSortManager()
     }
 
-    private fun getNotificationAudioManagerInternal(): NotificationAudioManager {
-        if (!::notificationAudioManager.isInitialized) {
-            val audioManager = getAudioManager()
-            val notificationModule = NotificationModule(
-                    context,
-                    audioManager
-            )
-            notificationAudioManager = notificationModule.provideNotificationAudioManager()
-        }
-        return notificationAudioManager
-    }
-
-    private fun getSettingsManagerInternal(): SettingsManager {
-        if (!::settingsManager.isInitialized) {
-            settingsManager = SettingsModule().provideSettingsManager()
-        }
-        return settingsManager
-    }
-
-    private fun getThemeManagerInternal(): ThemeManager {
-        if (!::themeManager.isInitialized) {
-            themeManager = ThemeModule().provideThemeManager(context)
-        }
-        return themeManager
-    }
-
-    private fun getVersionManagerInternal(): VersionManager {
-        if (!::versionManager.isInitialized) {
-            versionManager = VersionModule(context).provideVersionManager()
-        }
-        return versionManager
-    }
-
-    private fun createFileModule(): FileModule {
+    private val fileModuleInternal: FileModule by lazy {
         val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
             override fun requestStoragePermission() {
                 PermissionActivity.start(context)
             }
         }
-        return FileModule(context, permissionRequestAddOn)
+        FileModule(context, permissionRequestAddOn)
+    }
+
+    private val noteManagerInternal: NoteManager by lazy {
+        NoteModule(context).provideNoteManager()
+    }
+
+    private val notificationAudioManagerInternal: NotificationAudioManager by lazy {
+        val audioManager = getAudioManager()
+        val notificationModule = NotificationModule(
+                context,
+                audioManager
+        )
+        notificationModule.provideNotificationAudioManager()
+
+    }
+
+    private val settingsManagerInternal: SettingsManager by lazy {
+        SettingsModule().provideSettingsManager()
+    }
+
+    private val themeManagerInternal: ThemeManager by lazy {
+        ThemeModule().provideThemeManager(context)
+    }
+
+    private val versionManagerInternal: VersionManager by lazy {
+        VersionModule(context).provideVersionManager()
     }
 
     companion object {
@@ -211,77 +119,77 @@ class ApplicationGraph(
 
         @JvmStatic
         fun getAudioManager(): AudioManager {
-            return graph!!.getAudioManagerInternal()
+            return graph!!.audioManagerInternal
         }
 
         @JvmStatic
         fun getAudioQueueManager(): AudioQueueManager {
-            return graph!!.getAudioQueueManagerInternal()
+            return graph!!.audioQueueManagerInternal
         }
 
         @JvmStatic
         fun getFileManager(): FileManager {
-            return graph!!.getFileManagerInternal()
+            return graph!!.fileManagerInternal
         }
 
         @JvmStatic
         fun getFileOpenManager(): FileOpenManager {
-            return graph!!.getFileOpenManagerInternal()
+            return graph!!.fileOpenManagerInternal
         }
 
         @JvmStatic
         fun getFileDeleteManager(): FileDeleteManager {
-            return graph!!.getFileDeleteManagerInternal()
+            return graph!!.fileDeleteManagerInternal
         }
 
         @JvmStatic
         fun getFileCopyCutManager(): FileCopyCutManager {
-            return graph!!.getFileCopyCutManagerInternal()
+            return graph!!.fileCopyCutManagerInternal
         }
 
         @JvmStatic
         fun getFileCreatorManager(): FileCreatorManager {
-            return graph!!.getFileCreatorManagerInternal()
+            return graph!!.fileCreatorManagerInternal
         }
 
         @JvmStatic
         fun getFileShareManager(): FileShareManager {
-            return graph!!.getFileShareManagerInternal()
+            return graph!!.fileShareManagerInternal
         }
 
         @JvmStatic
         fun getFileRenameManager(): FileRenameManager {
-            return graph!!.getFileRenameManagerInternal()
+            return graph!!.fileRenameManagerInternal
         }
 
         @JvmStatic
         fun getFileSortManager(): FileSortManager {
-            return graph!!.getFileSortManagerInternal()
+            return graph!!.fileSortManagerInternal
         }
 
         @JvmStatic
         fun getNoteManager(): NoteManager {
-            return graph!!.getNoteManagerInternal()
+            return graph!!.noteManagerInternal
         }
 
         @JvmStatic
         fun getNotificationAudioManager(): NotificationAudioManager {
-            return graph!!.getNotificationAudioManagerInternal()
+            return graph!!.notificationAudioManagerInternal
         }
 
         @JvmStatic
         fun getSettingsManager(): SettingsManager {
-            return graph!!.getSettingsManagerInternal()
+            return graph!!.settingsManagerInternal
         }
 
         @JvmStatic
         fun getThemeManager(): ThemeManager {
-            return graph!!.getThemeManagerInternal()
+            return graph!!.themeManagerInternal
         }
 
         @JvmStatic
         fun getVersionManager(): VersionManager {
-            return graph!!.getVersionManagerInternal()
+            return graph!!.versionManagerInternal
         }
 
         @JvmStatic
