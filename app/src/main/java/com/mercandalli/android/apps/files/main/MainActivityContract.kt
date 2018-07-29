@@ -6,6 +6,8 @@ interface MainActivityContract {
 
     interface UserAction {
 
+        fun onCreate()
+
         fun onDestroy()
 
         fun onRestoreInstanceState(savedInstanceState: Bundle?)

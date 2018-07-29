@@ -19,7 +19,7 @@ class MainActivityPresenter(
     private val themeListener = createThemeListener()
     private val fileToPasteChangedListener = createFileToPasteChangedListener()
 
-    init {
+    override fun onCreate() {
         themeManager.registerThemeListener(themeListener)
         fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncWithCurrentTheme()
@@ -169,7 +169,7 @@ class MainActivityPresenter(
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.theme
+        val theme = themeManager.getTheme()
         screen.setWindowBackgroundColorRes(theme.windowBackgroundColorRes)
         screen.setBottomBarBlurOverlayColorRes(theme.bottomBarBlurOverlay)
     }
@@ -183,19 +183,15 @@ class MainActivityPresenter(
         screen.setPasteIconVisibility(fileToPastePath != null)
     }
 
-    private fun createThemeListener(): ThemeManager.OnCurrentThemeChangeListener {
-        return object : ThemeManager.OnCurrentThemeChangeListener {
-            override fun onCurrentThemeChanged() {
-                syncWithCurrentTheme()
-            }
+    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
+        override fun onCurrentThemeChanged() {
+            syncWithCurrentTheme()
         }
     }
 
-    private fun createFileToPasteChangedListener(): FileCopyCutManager.FileToPasteChangedListener {
-        return object : FileCopyCutManager.FileToPasteChangedListener {
-            override fun onFileToPasteChanged() {
-                syncToolbarPasteIconVisibility()
-            }
+    private fun createFileToPasteChangedListener() = object : FileCopyCutManager.FileToPasteChangedListener {
+        override fun onFileToPasteChanged() {
+            syncToolbarPasteIconVisibility()
         }
     }
 

@@ -12,11 +12,12 @@ class MainActivityFileUiStorageSharedPreference(
         currentFileUi = sharedPreference.getInt("currentFileUi", currentFileUi)
     }
 
+    @MainActivityFileUiStorage.Companion.Section
     override fun getCurrentFileUi(): Int {
         return currentFileUi
     }
 
-    override fun setCurrentFileUi(section: Int) {
+    override fun setCurrentFileUi(@MainActivityFileUiStorage.Companion.Section section: Int) {
         if (currentFileUi == section) {
             return
         }

@@ -5,15 +5,12 @@ import android.content.Context
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioModule
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
-import com.mercandalli.android.apps.files.audio.AudioQueueManagerImpl
 import com.mercandalli.android.apps.files.note.NoteManager
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.notification.NotificationAudioManager
-import com.mercandalli.android.apps.files.notification.NotificationAudioManagerImpl
 import com.mercandalli.android.apps.files.notification.NotificationModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.apps.files.settings.SettingsManager
-import com.mercandalli.android.apps.files.settings.SettingsManagerImpl
 import com.mercandalli.android.apps.files.settings.SettingsModule
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.theme.ThemeModule

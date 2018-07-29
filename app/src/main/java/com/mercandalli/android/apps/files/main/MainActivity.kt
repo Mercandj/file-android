@@ -1,10 +1,12 @@
 package com.mercandalli.android.apps.files.main
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
@@ -13,46 +15,36 @@ import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.file_column_horizontal_lists.FileColumnHorizontalLists
 import com.mercandalli.android.apps.files.file_list.FileListView
-import com.mercandalli.android.apps.files.note.NoteManagerSharedPreferences
 import com.mercandalli.android.apps.files.note.NoteView
 import com.mercandalli.android.apps.files.settings.SettingsView
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 
-class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
+class MainActivity : AppCompatActivity(),
+        MainActivityContract.Screen {
 
-    private lateinit var fileList: FileListView
-    private lateinit var fileColumnHorizontalLists: FileColumnHorizontalLists
-    private lateinit var note: NoteView
-    private lateinit var settings: SettingsView
-    private lateinit var bottomBar: BottomBar
-    private lateinit var toolbarDelete: View
-    private lateinit var toolbarShare: View
-    private lateinit var toolbarAdd: View
-    private lateinit var toolbarFilePaste: View
-    private lateinit var toolbarFileList: View
-    private lateinit var toolbarFileColumn: View
-    private lateinit var bottomBarBlurView: BlurView
-    private lateinit var userAction: MainActivityContract.UserAction
+    private val fileList: FileListView by bind(R.id.activity_main_file_list)
+    private val fileColumnHorizontalLists: FileColumnHorizontalLists by bind(R.id.activity_main_file_horizontal_lists)
+    private val note: NoteView by bind(R.id.activity_main_note)
+    private val settings: SettingsView by bind(R.id.activity_main_settings)
+    private val bottomBar: BottomBar by bind(R.id.activity_main_bottom_bar)
+    private val toolbarDelete: View by bind(R.id.activity_main_toolbar_delete)
+    private val toolbarShare: View by bind(R.id.activity_main_toolbar_share)
+    private val toolbarAdd: View by bind(R.id.activity_main_toolbar_add)
+    private val toolbarFilePaste: View by bind(R.id.activity_main_toolbar_file_paste)
+    private val toolbarFileList: View by bind(R.id.activity_main_toolbar_file_list)
+    private val toolbarFileColumn: View by bind(R.id.activity_main_toolbar_file_column)
+    private val bottomBarBlurView: BlurView by bind(R.id.activity_main_bottom_bar_container)
+    private val userAction: MainActivityContract.UserAction by lazy {
+        createUserAction()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        fileList = findViewById(R.id.activity_main_file_list)
-        fileColumnHorizontalLists = findViewById(R.id.activity_main_file_horizontal_lists)
-        note = findViewById(R.id.activity_main_note)
-        settings = findViewById(R.id.activity_main_settings)
-        bottomBar = findViewById(R.id.activity_main_bottom_bar)
-        toolbarDelete = findViewById(R.id.activity_main_toolbar_delete)
-        toolbarShare = findViewById(R.id.activity_main_toolbar_share)
-        toolbarAdd = findViewById(R.id.activity_main_toolbar_add)
-        toolbarFilePaste = findViewById(R.id.activity_main_toolbar_file_paste)
-        toolbarFileList = findViewById(R.id.activity_main_toolbar_file_list)
-        toolbarFileColumn = findViewById(R.id.activity_main_toolbar_file_column)
-        bottomBarBlurView = findViewById(R.id.activity_main_bottom_bar_container)
         window.setBackgroundDrawable(ColorDrawable(
                 ContextCompat.getColor(this, R.color.window_background_light)))
-        userAction = createUserAction()
+        userAction.onCreate()
         userAction.onRestoreInstanceState(savedInstanceState)
         bottomBar.setOnBottomBarClickListener(object : BottomBar.OnBottomBarClickListener {
             override fun onFileSectionClicked() {
@@ -263,5 +255,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.Screen {
                 themeManager,
                 mainActivityFileUiStorage
         )
+    }
+
+    private fun <T : View> Activity.bind(@IdRes res: Int): Lazy<T> {
+        @Suppress("UNCHECKED_CAST")
+        return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
     }
 }

@@ -2,7 +2,7 @@ package com.mercandalli.android.apps.files.theme
 
 interface ThemeManager {
 
-    val theme: Theme
+    fun getTheme(): Theme
 
     fun setDarkEnable(enable: Boolean)
 

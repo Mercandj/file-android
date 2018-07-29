@@ -85,7 +85,7 @@ class FileColumnListPresenter(
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.theme
+        val theme = themeManager.getTheme()
         screen.setEmptyTextColorRes(theme.textPrimaryColorRes)
         screen.setErrorTextColorRes(theme.textSecondaryColorRes)
     }

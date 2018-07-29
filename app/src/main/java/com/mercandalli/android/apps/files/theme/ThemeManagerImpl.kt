@@ -3,7 +3,8 @@ package com.mercandalli.android.apps.files.theme
 import android.content.SharedPreferences
 
 internal class ThemeManagerImpl(
-        private val sharedPreferences: SharedPreferences) : ThemeManager {
+        private val sharedPreferences: SharedPreferences
+) : ThemeManager {
 
     private val lightTheme: Theme = LightTheme()
     private val darkTheme: Theme = DarkTheme()
@@ -14,8 +15,7 @@ internal class ThemeManagerImpl(
         currentThemeIndex = sharedPreferences.getInt("theme", 0)
     }
 
-    override val theme: Theme
-        get() = if (currentThemeIndex == 0) lightTheme else darkTheme
+    override fun getTheme(): Theme = if (currentThemeIndex == 0) lightTheme else darkTheme
 
     override fun setDarkEnable(enable: Boolean) {
         currentThemeIndex = if (enable) 1 else 0
@@ -25,9 +25,7 @@ internal class ThemeManagerImpl(
         }
     }
 
-    override fun isDarkEnable(): Boolean {
-        return currentThemeIndex != 0
-    }
+    override fun isDarkEnable() = currentThemeIndex != 0
 
     override fun registerThemeListener(listener: ThemeManager.OnCurrentThemeChangeListener) {
         if (listeners.contains(listener)) {

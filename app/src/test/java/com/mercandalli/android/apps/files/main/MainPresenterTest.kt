@@ -29,7 +29,7 @@ class MainPresenterTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        `when`(themeManager!!.theme).thenReturn(theme)
+        `when`(themeManager!!.getTheme()).thenReturn(theme)
     }
 
     @Test

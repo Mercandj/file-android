@@ -77,7 +77,7 @@ class BottomBarPresenter(
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.theme
+        val theme = themeManager.getTheme()
         screen.setSectionFileTextColorRes(theme.textPrimaryColorRes)
         screen.setSectionNoteTextColorRes(theme.textPrimaryColorRes)
         screen.setSectionSettingsTextColorRes(theme.textPrimaryColorRes)

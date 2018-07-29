@@ -43,7 +43,7 @@ class NotePresenter(
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.theme
+        val theme = themeManager.getTheme()
         screen.setTextColorRes(theme.textPrimaryColorRes)
         screen.setTextHintColorRes(theme.textSecondaryColorRes)
         screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)

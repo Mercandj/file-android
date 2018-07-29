@@ -109,7 +109,7 @@ class FileColumnRowPresenter(
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.theme
+        val theme = themeManager.getTheme()
         screen.setTextColorRes(if (selected) selectedTextColorRes else theme.textPrimaryColorRes)
     }
 

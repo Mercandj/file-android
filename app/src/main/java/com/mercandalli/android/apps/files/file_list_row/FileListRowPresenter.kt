@@ -106,7 +106,7 @@ class FileListRowPresenter(
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.theme
+        val theme = themeManager.getTheme()
         screen.setTitleTextColorRes(theme.textPrimaryColorRes)
         screen.setSubtitleTextColorRes(theme.textSecondaryColorRes)
         screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)

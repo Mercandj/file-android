@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
 import android.os.Environment
+import android.support.annotation.IdRes
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -20,55 +21,27 @@ class FileListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
 
-    private val userAction: FileListContract.UserAction
+    private val adapter = FileListAdapter(createFileClickListener())
+    private val refresh: SwipeRefreshLayout by bind(R.id.view_file_list_refresh)
+    private val recyclerView: RecyclerView by bind(R.id.view_file_list_recycler_view)
+    private val emptyTextView: TextView by bind(R.id.view_file_list_empty_view)
+    private val errorTextView: TextView by bind(R.id.view_file_list_error)
+    private val fab: FloatingActionButton by bind(R.id.view_file_list_fab)
+    private val userAction = createUserAction()
+
     private var fileLongClickListener: FileListRow.FileLongClickListener? = null
     private var fileListViewSelectedFileListener: FileListViewSelectedFileListener? = null
-    private val adapter = FileListAdapter(createFileClickListener())
-    private val refresh: SwipeRefreshLayout
-    private val recyclerView: RecyclerView
-    private val emptyTextView: TextView
-    private val errorTextView: TextView
-    private val fab: FloatingActionButton
 
     init {
         View.inflate(context, R.layout.view_file_list, this)
-        refresh = findViewById(R.id.view_file_list_refresh)
-        recyclerView = findViewById(R.id.view_file_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
-        emptyTextView = findViewById(R.id.view_file_list_empty_view)
-        errorTextView = findViewById(R.id.view_file_list_error)
-        fab = findViewById(R.id.view_file_list_fab)
-        userAction = createUserAction()
         refresh.setOnRefreshListener {
             userAction.onRefresh()
         }
         fab.setOnClickListener {
             userAction.onFabUpArrowClicked()
         }
-    }
-
-    private fun createUserAction(): FileListContract.UserAction {
-        if (isInEditMode) {
-            return object : FileListContract.UserAction {
-                override fun onAttached() {}
-                override fun onDetached() {}
-                override fun onRefresh() {}
-                override fun onFileClicked(file: File) {}
-                override fun onFabUpArrowClicked() {}
-            }
-        }
-        val fileManager = ApplicationGraph.getFileManager()
-        val fileOpenManager = ApplicationGraph.getFileOpenManager()
-        val fileSortManager = ApplicationGraph.getFileSortManager()
-        val themeManager = ApplicationGraph.getThemeManager()
-        return FileListPresenter(
-                this,
-                fileManager,
-                fileOpenManager,
-                fileSortManager,
-                themeManager,
-                Environment.getExternalStorageDirectory().absolutePath)
     }
 
     override fun onAttachedToWindow() {
@@ -147,12 +120,38 @@ class FileListView @JvmOverloads constructor(
         fileListViewSelectedFileListener = listener
     }
 
-    private fun createFileClickListener(): FileListRow.FileClickListener {
-        return object : FileListRow.FileClickListener {
-            override fun onFileClicked(file: File) {
-                userAction.onFileClicked(file)
-            }
+    private fun createUserAction() = if (isInEditMode) {
+        object : FileListContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onRefresh() {}
+            override fun onFileClicked(file: File) {}
+            override fun onFabUpArrowClicked() {}
         }
+    } else {
+        val fileManager = ApplicationGraph.getFileManager()
+        val fileOpenManager = ApplicationGraph.getFileOpenManager()
+        val fileSortManager = ApplicationGraph.getFileSortManager()
+        val themeManager = ApplicationGraph.getThemeManager()
+        FileListPresenter(
+                this,
+                fileManager,
+                fileOpenManager,
+                fileSortManager,
+                themeManager,
+                Environment.getExternalStorageDirectory().absolutePath
+        )
+    }
+
+    private fun createFileClickListener() = object : FileListRow.FileClickListener {
+        override fun onFileClicked(file: File) {
+            userAction.onFileClicked(file)
+        }
+    }
+
+    private fun <T : View> View.bind(@IdRes res: Int): Lazy<T> {
+        @Suppress("UNCHECKED_CAST")
+        return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
     }
 
     interface FileListViewSelectedFileListener {
