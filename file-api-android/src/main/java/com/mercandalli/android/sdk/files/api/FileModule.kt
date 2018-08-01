@@ -19,11 +19,19 @@ class FileModule(
         private val permissionRequestAddOn: PermissionRequestAddOn
 ) {
 
-    private lateinit var mediaScanner: MediaScanner
-    private lateinit var permissionManager: PermissionManager
+    private val mediaScanner: MediaScanner by lazy {
+        MediaScannerAndroid(object : MediaScannerAndroid.AddOn {
+            override fun refreshSystemMediaScanDataBase(path: String) {
+                refreshSystemMediaScanDataBase(context, path)
+            }
+        })
+    }
+
+    private val permissionManager: PermissionManager by lazy {
+        PermissionManagerImpl(context, permissionRequestAddOn)
+    }
 
     fun provideFileManager(): FileManager {
-        val permissionManager = getPermissionManager()
         val fileManagerAndroid = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
                 Environment.getExternalStorageDirectory().absolutePath
@@ -33,7 +41,6 @@ class FileModule(
                 fileManagerAndroid.refresh(path)
             }
         }
-        val mediaScanner = getMediaScanner()
         mediaScanner.setListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileManagerAndroid.refresh(path)
@@ -61,22 +68,18 @@ class FileModule(
     }
 
     fun provideFileDeleteManager(): FileDeleteManager {
-        val mediaScanner = getMediaScanner()
         return FileDeleteManagerAndroid(
                 mediaScanner
         )
     }
 
     fun provideFileCopyCutManager(): FileCopyCutManager {
-        val mediaScanner = getMediaScanner()
         return FileCopyCutManagerAndroid(
                 mediaScanner
         )
     }
 
     fun provideFileCreatorManager(): FileCreatorManager {
-        val permissionManager = getPermissionManager()
-        val mediaScanner = getMediaScanner()
         return FileCreatorManagerAndroid(
                 permissionManager,
                 mediaScanner
@@ -84,7 +87,6 @@ class FileModule(
     }
 
     fun provideFileRenameManager(): FileRenameManager {
-        val mediaScanner = getMediaScanner()
         return FileRenameManagerAndroid(
                 mediaScanner
         )
@@ -109,24 +111,6 @@ class FileModule(
 
     fun provideFileSortManager(): FileSortManager {
         return FileSortManagerImpl()
-    }
-
-    private fun getMediaScanner(): MediaScanner {
-        if (!::mediaScanner.isInitialized) {
-            mediaScanner = MediaScannerAndroid(object : MediaScannerAndroid.AddOn {
-                override fun refreshSystemMediaScanDataBase(path: String) {
-                    refreshSystemMediaScanDataBase(context, path)
-                }
-            })
-        }
-        return mediaScanner
-    }
-
-    private fun getPermissionManager(): PermissionManager {
-        if (!::permissionManager.isInitialized) {
-            permissionManager = PermissionManagerImpl(context, permissionRequestAddOn)
-        }
-        return permissionManager
     }
 
     companion object {
