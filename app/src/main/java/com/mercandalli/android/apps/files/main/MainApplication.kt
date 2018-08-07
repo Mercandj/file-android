@@ -1,7 +1,11 @@
 package com.mercandalli.android.apps.files.main
 
 import android.app.Application
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
+import com.mercandalli.android.apps.files.BuildConfig
 import com.mercandalli.android.apps.files.audio.AudioManager
+import io.fabric.sdk.android.Fabric
 
 /**
  * The [Application] of this project.
@@ -10,6 +14,9 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // Setup fabric
+        setupCrashlytics()
 
         ApplicationGraph.init(this)
 
@@ -27,5 +34,12 @@ class MainApplication : Application() {
 
         val notificationAudioManager = ApplicationGraph.getNotificationAudioManager()
         notificationAudioManager.initialize()
+    }
+
+    private fun setupCrashlytics() {
+        val crashlyticsKit = Crashlytics.Builder()
+                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build()
+        Fabric.with(this, crashlyticsKit)
     }
 }

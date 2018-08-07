@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
+import android.support.annotation.ColorRes
 
 interface MainActivityContract {
 
@@ -85,9 +86,9 @@ interface MainActivityContract {
 
         fun showFileCreationSelection()
 
-        fun setWindowBackgroundColorRes(windowBackgroundColorRes: Int)
+        fun setWindowBackgroundColorRes(@ColorRes colorRes: Int)
 
-        fun setBottomBarBlurOverlayColorRes(bottomBarBlurOverlayRes: Int)
+        fun setBottomBarBlurOverlayColorRes(@ColorRes colorRes: Int)
 
         fun setPasteIconVisibility(visible: Boolean)
     }

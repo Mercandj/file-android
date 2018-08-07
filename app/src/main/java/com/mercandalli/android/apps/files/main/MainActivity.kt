@@ -4,8 +4,10 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.ColorRes
 import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -35,64 +37,30 @@ class MainActivity : AppCompatActivity(),
     private val toolbarFileList: View by bind(R.id.activity_main_toolbar_file_list)
     private val toolbarFileColumn: View by bind(R.id.activity_main_toolbar_file_column)
     private val bottomBarBlurView: BlurView by bind(R.id.activity_main_bottom_bar_container)
-    private val userAction: MainActivityContract.UserAction by lazy {
-        createUserAction()
-    }
+    private val userAction by lazy { createUserAction() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        window.setBackgroundDrawable(ColorDrawable(
-                ContextCompat.getColor(this, R.color.window_background_light)))
         userAction.onCreate()
         userAction.onRestoreInstanceState(savedInstanceState)
-        bottomBar.setOnBottomBarClickListener(object : BottomBar.OnBottomBarClickListener {
-            override fun onFileSectionClicked() {
-                userAction.onFileSectionClicked()
-            }
-
-            override fun onNoteSectionClicked() {
-                userAction.onNoteSectionClicked()
-            }
-
-            override fun onSettingsSectionClicked() {
-                userAction.onSettingsSectionClicked()
-            }
-        })
-        toolbarDelete.setOnClickListener {
-            userAction.onToolbarDeleteClicked()
+        bottomBar.setOnBottomBarClickListener(createOnBottomBarClickListener())
+        toolbarDelete.setOnClickListener { userAction.onToolbarDeleteClicked() }
+        toolbarShare.setOnClickListener { userAction.onToolbarShareClicked() }
+        toolbarAdd.setOnClickListener { userAction.onToolbarAddClicked() }
+        toolbarFileColumn.setOnClickListener { userAction.onToolbarFileColumnClicked() }
+        toolbarFileList.setOnClickListener { userAction.onToolbarFileListClicked() }
+        toolbarFilePaste.setOnClickListener { userAction.onToolbarFilePasteClicked() }
+        fileList.setFileListViewSelectedFileListener(createFileListViewSelectedFileListener())
+        fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(createFileHorizontalListsSelectedFileListener())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            val decorView = window.decorView
+            bottomBarBlurView.setupWith(decorView.findViewById<View>(android.R.id.content) as ViewGroup)
+                    .windowBackground(decorView.background)
+                    .blurAlgorithm(RenderScriptBlur(this))
+                    .blurRadius(2f)
+                    .setHasFixedTransformationMatrix(true)
         }
-        toolbarShare.setOnClickListener {
-            userAction.onToolbarShareClicked()
-        }
-        toolbarAdd.setOnClickListener {
-            userAction.onToolbarAddClicked()
-        }
-        toolbarFileColumn.setOnClickListener {
-            userAction.onToolbarFileColumnClicked()
-        }
-        toolbarFileList.setOnClickListener {
-            userAction.onToolbarFileListClicked()
-        }
-        toolbarFilePaste.setOnClickListener {
-            userAction.onToolbarFilePasteClicked()
-        }
-        fileList.setFileListViewSelectedFileListener(object : FileListView.FileListViewSelectedFileListener {
-            override fun onSelectedFilePathChanged(path: String?) {
-                userAction.onSelectedFilePathChanged(path)
-            }
-        })
-        fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(object : FileColumnHorizontalLists.FileHorizontalListsSelectedFileListener {
-            override fun onSelectedFilePathChanged(path: String?) {
-                userAction.onSelectedFilePathChanged(path)
-            }
-        })
-        val decorView = window.decorView
-        bottomBarBlurView.setupWith(decorView.findViewById<View>(android.R.id.content) as ViewGroup)
-                .windowBackground(decorView.background)
-                .blurAlgorithm(RenderScriptBlur(this))
-                .blurRadius(2f)
-                .setHasFixedTransformationMatrix(true)
     }
 
     override fun onDestroy() {
@@ -223,20 +191,44 @@ class MainActivity : AppCompatActivity(),
         menuAlert.create().show()
     }
 
-    override fun setWindowBackgroundColorRes(windowBackgroundColorRes: Int) {
-        window.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(
-                this,
-                windowBackgroundColorRes)))
+    override fun setWindowBackgroundColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(this, colorRes)
+        window.setBackgroundDrawable(ColorDrawable(color))
     }
 
-    override fun setBottomBarBlurOverlayColorRes(bottomBarBlurOverlayRes: Int) {
-        bottomBarBlurView.setOverlayColor(ContextCompat.getColor(
-                this,
-                bottomBarBlurOverlayRes))
+    override fun setBottomBarBlurOverlayColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(this, colorRes)
+        bottomBarBlurView.setOverlayColor(color)
     }
 
     override fun setPasteIconVisibility(visible: Boolean) {
         toolbarFilePaste.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    private fun createOnBottomBarClickListener() = object : BottomBar.OnBottomBarClickListener {
+        override fun onFileSectionClicked() {
+            userAction.onFileSectionClicked()
+        }
+
+        override fun onNoteSectionClicked() {
+            userAction.onNoteSectionClicked()
+        }
+
+        override fun onSettingsSectionClicked() {
+            userAction.onSettingsSectionClicked()
+        }
+    }
+
+    private fun createFileHorizontalListsSelectedFileListener() = object : FileColumnHorizontalLists.FileHorizontalListsSelectedFileListener {
+        override fun onSelectedFilePathChanged(path: String?) {
+            userAction.onSelectedFilePathChanged(path)
+        }
+    }
+
+    private fun createFileListViewSelectedFileListener() = object : FileListView.FileListViewSelectedFileListener {
+        override fun onSelectedFilePathChanged(path: String?) {
+            userAction.onSelectedFilePathChanged(path)
+        }
     }
 
     private fun createUserAction(): MainActivityContract.UserAction {
