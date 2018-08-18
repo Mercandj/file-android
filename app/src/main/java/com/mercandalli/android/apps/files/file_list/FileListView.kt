@@ -2,7 +2,6 @@ package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
 import android.os.Environment
-import android.support.annotation.IdRes
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -21,19 +20,19 @@ class FileListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
 
+    private val view = View.inflate(context, R.layout.view_file_list, this)
+    private val refresh: SwipeRefreshLayout = view.findViewById(R.id.view_file_list_refresh)
+    private val recyclerView: RecyclerView = view.findViewById(R.id.view_file_list_recycler_view)
+    private val emptyTextView: TextView = view.findViewById(R.id.view_file_list_empty_view)
+    private val errorTextView: TextView = view.findViewById(R.id.view_file_list_error)
+    private val fab: FloatingActionButton = view.findViewById(R.id.view_file_list_fab)
     private val adapter = FileListAdapter(createFileClickListener())
-    private val refresh: SwipeRefreshLayout by bind(R.id.view_file_list_refresh)
-    private val recyclerView: RecyclerView by bind(R.id.view_file_list_recycler_view)
-    private val emptyTextView: TextView by bind(R.id.view_file_list_empty_view)
-    private val errorTextView: TextView by bind(R.id.view_file_list_error)
-    private val fab: FloatingActionButton by bind(R.id.view_file_list_fab)
     private val userAction = createUserAction()
 
     private var fileLongClickListener: FileListRow.FileLongClickListener? = null
     private var fileListViewSelectedFileListener: FileListViewSelectedFileListener? = null
 
     init {
-        View.inflate(context, R.layout.view_file_list, this)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
         refresh.setOnRefreshListener {
@@ -55,29 +54,29 @@ class FileListView @JvmOverloads constructor(
     }
 
     override fun showEmptyView() {
-        emptyTextView.visibility = View.VISIBLE
+        emptyTextView.visibility = VISIBLE
     }
 
     override fun hideEmptyView() {
-        emptyTextView.visibility = View.GONE
+        emptyTextView.visibility = GONE
     }
 
     override fun showErrorMessage() {
-        errorTextView.visibility = View.VISIBLE
+        errorTextView.visibility = VISIBLE
     }
 
     override fun hideErrorMessage() {
-        errorTextView.visibility = View.GONE
+        errorTextView.visibility = GONE
     }
 
     override fun showFiles(files: List<File>) {
-        recyclerView.visibility = View.VISIBLE
+        recyclerView.visibility = VISIBLE
         adapter.populate(files)
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
     }
 
     override fun hideFiles() {
-        recyclerView.visibility = View.GONE
+        recyclerView.visibility = GONE
     }
 
     override fun showLoader() {
@@ -147,11 +146,6 @@ class FileListView @JvmOverloads constructor(
         override fun onFileClicked(file: File) {
             userAction.onFileClicked(file)
         }
-    }
-
-    private fun <T : View> View.bind(@IdRes res: Int): Lazy<T> {
-        @Suppress("UNCHECKED_CAST")
-        return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
     }
 
     interface FileListViewSelectedFileListener {

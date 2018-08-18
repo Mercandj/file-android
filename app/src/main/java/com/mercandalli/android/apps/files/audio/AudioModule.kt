@@ -7,7 +7,7 @@ class AudioModule(
         private val fileSortManager: FileSortManager
 ) {
 
-    fun provideAudioManager(): AudioManager {
+    fun createAudioManager(): AudioManager {
         val mediaPlayer = MediaPlayer()
         return AudioManagerMediaPlayer(
                 object : AudioManagerMediaPlayer.MediaPlayerWrapper {
@@ -53,7 +53,7 @@ class AudioModule(
         )
     }
 
-    fun provideAudioQueueManager(audioManager: AudioManager): AudioQueueManager {
+    fun createAudioQueueManager(audioManager: AudioManager): AudioQueueManager {
         return AudioQueueManagerImpl(
                 audioManager,
                 fileSortManager

@@ -14,24 +14,15 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class NoteView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), NoteContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr),
+        NoteContract.Screen {
 
-    private val userAction: NoteContract.UserAction
-    private val editText: EditText
+    private val view = View.inflate(context, R.layout.view_note, this)
+    private val editText: EditText = view.findViewById(R.id.view_note_input)
+    private val userAction = createUserAction()
 
     init {
-        View.inflate(context, R.layout.view_note, this)
-        editText = findViewById(R.id.view_note_input)
-        userAction = createUserAction()
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                userAction.onTextChanged(s!!.toString())
-            }
-        })
+        editText.addTextChangedListener(createTextWatcher())
     }
 
     override fun onAttachedToWindow() {
@@ -101,5 +92,15 @@ class NoteView @JvmOverloads constructor(
                 noteManager,
                 themeManager
         )
+    }
+
+    private fun createTextWatcher() = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            userAction.onTextChanged(s!!.toString())
+        }
     }
 }

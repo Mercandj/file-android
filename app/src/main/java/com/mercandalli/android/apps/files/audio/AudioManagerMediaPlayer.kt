@@ -39,17 +39,13 @@ class AudioManagerMediaPlayer(
         }
     }
 
-    override fun isPlaying(): Boolean {
-        return mediaPlayer.isPlaying
-    }
+    override fun isPlaying() = mediaPlayer.isPlaying
 
     override fun reset() {
         mediaPlayer.reset()
     }
 
-    override fun getSourcePath(): String? {
-        return path
-    }
+    override fun getSourcePath() = path
 
     override fun setSourcePath(path: String?) {
         this.path = path

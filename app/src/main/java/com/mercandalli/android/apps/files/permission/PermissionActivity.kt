@@ -16,7 +16,7 @@ import com.mercandalli.android.apps.files.R
 
 class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
 
-    private lateinit var userAction: PermissionContract.UserAction
+    private val userAction = createUserAction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,6 @@ class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
         findViewById<View>(R.id.activity_permission_allow).setOnClickListener {
             userAction.onPermissionAllowClicked()
         }
-        userAction = createUserAction()
     }
 
     override fun onRequestPermissionsResult(

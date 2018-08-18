@@ -19,49 +19,23 @@ class FileColumnListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnListContract.Screen {
 
-    private val userAction: FileColumnListContract.UserAction
+    private val view = View.inflate(context, R.layout.view_file_column_list, this)
+    private val refresh: SwipeRefreshLayout = view.findViewById(R.id.view_file_column_list_refresh)
+    private val recyclerView: RecyclerView = view.findViewById(R.id.view_file_column_list_recycler_view)
+    private val emptyTextView: TextView = view.findViewById(R.id.view_file_column_list_empty_view)
+    private val errorTextView: TextView = view.findViewById(R.id.view_file_column_list_error)
+    private val adapter = FileColumnAdapter(createFileClickListener())
+    private val userAction = createUserAction()
+
     private var fileColumnClickListener: FileColumnRow.FileClickListener? = null
     private var fileColumnLongClickListener: FileColumnRow.FileLongClickListener? = null
-    private val adapter = FileColumnAdapter(createFileClickListener())
-    private val refresh: SwipeRefreshLayout
-    private val recyclerView: RecyclerView
-    private val emptyTextView: TextView
-    private val errorTextView: TextView
 
     init {
-        View.inflate(context, R.layout.view_file_column_list, this)
-        refresh = findViewById(R.id.view_file_column_list_refresh)
-        recyclerView = findViewById(R.id.view_file_column_list_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
-        emptyTextView = findViewById(R.id.view_file_column_list_empty_view)
-        errorTextView = findViewById(R.id.view_file_column_list_error)
-        userAction = createUserAction()
         refresh.setOnRefreshListener {
             userAction.onRefresh()
         }
-    }
-
-    private fun createUserAction(): FileColumnListContract.UserAction {
-        if (isInEditMode) {
-            return object : FileColumnListContract.UserAction {
-                override fun onAttached() {}
-                override fun onDetached() {}
-                override fun onResume() {}
-                override fun onRefresh() {}
-                override fun onPathChanged(path: String) {}
-                override fun onPathSelected(path: String?) {}
-            }
-        }
-        val fileManager = ApplicationGraph.getFileManager()
-        val fileSortManager = ApplicationGraph.getFileSortManager()
-        val themeManager = ApplicationGraph.getThemeManager()
-        return FileColumnListPresenter(
-                this,
-                fileManager,
-                fileSortManager,
-                themeManager,
-                Environment.getExternalStorageDirectory().absolutePath)
     }
 
     override fun onAttachedToWindow() {
@@ -75,28 +49,28 @@ class FileColumnListView @JvmOverloads constructor(
     }
 
     override fun showEmptyView() {
-        emptyTextView.visibility = View.VISIBLE
+        emptyTextView.visibility = VISIBLE
     }
 
     override fun hideEmptyView() {
-        emptyTextView.visibility = View.GONE
+        emptyTextView.visibility = GONE
     }
 
     override fun showErrorMessage() {
-        errorTextView.visibility = View.VISIBLE
+        errorTextView.visibility = VISIBLE
     }
 
     override fun hideErrorMessage() {
-        errorTextView.visibility = View.GONE
+        errorTextView.visibility = GONE
     }
 
     override fun showFiles(files: List<File>) {
-        recyclerView.visibility = View.VISIBLE
+        recyclerView.visibility = VISIBLE
         adapter.populate(files)
     }
 
     override fun hideFiles() {
-        recyclerView.visibility = View.GONE
+        recyclerView.visibility = GONE
     }
 
     override fun showLoader() {
@@ -139,12 +113,31 @@ class FileColumnListView @JvmOverloads constructor(
         userAction.onPathSelected(path)
     }
 
-    private fun createFileClickListener(): FileColumnRow.FileClickListener {
-        return object : FileColumnRow.FileClickListener {
-            override fun onFileClicked(file: File) {
-                fileColumnClickListener?.onFileClicked(file)
-            }
+    private fun createUserAction() = if (isInEditMode) {
+        object : FileColumnListContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onResume() {}
+            override fun onRefresh() {}
+            override fun onPathChanged(path: String) {}
+            override fun onPathSelected(path: String?) {}
         }
+    } else {
+        val fileManager = ApplicationGraph.getFileManager()
+        val fileSortManager = ApplicationGraph.getFileSortManager()
+        val themeManager = ApplicationGraph.getThemeManager()
+        FileColumnListPresenter(
+                this,
+                fileManager,
+                fileSortManager,
+                themeManager,
+                Environment.getExternalStorageDirectory().absolutePath
+        )
     }
 
+    private fun createFileClickListener() = object : FileColumnRow.FileClickListener {
+        override fun onFileClicked(file: File) {
+            fileColumnClickListener?.onFileClicked(file)
+        }
+    }
 }

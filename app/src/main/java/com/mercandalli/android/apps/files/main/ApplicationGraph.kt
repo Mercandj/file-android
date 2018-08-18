@@ -24,88 +24,29 @@ class ApplicationGraph(
         private val context: Context
 ) {
 
-    private val audioManagerInternal: AudioManager by lazy {
-        audioModuleInternal.provideAudioManager()
-    }
+    private val audioManagerInternal by lazy { audioModuleInternal.createAudioManager() }
+    private val audioQueueManagerInternal by lazy { audioModuleInternal.createAudioQueueManager(audioManagerInternal) }
+    private val audioModuleInternal by lazy { AudioModule(fileSortManagerInternal) }
+    private val fileManagerInternal by lazy { fileModuleInternal.createFileManager() }
+    private val fileOpenManagerInternal by lazy { fileModuleInternal.createFileOpenManager() }
+    private val fileDeleteManagerInternal by lazy { fileModuleInternal.createFileDeleteManager() }
+    private val fileCopyCutManagerInternal by lazy { fileModuleInternal.createFileCopyCutManager() }
+    private val fileCreatorManagerInternal by lazy { fileModuleInternal.createFileCreatorManager() }
+    private val fileShareManagerInternal by lazy { fileModuleInternal.createFileShareManager() }
+    private val fileRenameManagerInternal by lazy { fileModuleInternal.createFileRenameManager() }
+    private val fileSortManagerInternal by lazy { fileModuleInternal.createFileSortManager() }
+    private val fileModuleInternal by lazy { FileModule(context, createPermissionRequestAddOn()) }
+    private val noteManagerInternal by lazy { NoteModule(context).createNoteManager() }
+    private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
+    private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
+    private val settingsManagerInternal by lazy { SettingsModule().createSettingsManager() }
+    private val themeManagerInternal by lazy { ThemeModule().createThemeManager(context) }
+    private val versionManagerInternal by lazy { VersionModule(context).createVersionManager() }
 
-    private val audioQueueManagerInternal: AudioQueueManager by lazy {
-        audioModuleInternal.provideAudioQueueManager(
-                audioManagerInternal
-        )
-    }
-
-    private val audioModuleInternal: AudioModule by lazy {
-        val fileSortManager = getFileSortManager()
-        AudioModule(
-                fileSortManager
-        )
-    }
-
-    private val fileManagerInternal: FileManager by lazy {
-        fileModuleInternal.provideFileManager()
-    }
-
-    private val fileOpenManagerInternal: FileOpenManager by lazy {
-        fileModuleInternal.provideFileOpenManager()
-    }
-
-    private val fileDeleteManagerInternal: FileDeleteManager by lazy {
-        fileModuleInternal.provideFileDeleteManager()
-    }
-
-    private val fileCopyCutManagerInternal: FileCopyCutManager by lazy {
-        fileModuleInternal.provideFileCopyCutManager()
-    }
-
-    private val fileCreatorManagerInternal: FileCreatorManager by lazy {
-        fileModuleInternal.provideFileCreatorManager()
-    }
-
-    private val fileShareManagerInternal: FileShareManager by lazy {
-        fileModuleInternal.provideFileShareManager()
-    }
-
-    private val fileRenameManagerInternal: FileRenameManager by lazy {
-        fileModuleInternal.provideFileRenameManager()
-    }
-
-    private val fileSortManagerInternal: FileSortManager by lazy {
-        fileModuleInternal.provideFileSortManager()
-    }
-
-    private val fileModuleInternal: FileModule by lazy {
-        val permissionRequestAddOn: PermissionRequestAddOn = object : PermissionRequestAddOn {
-            override fun requestStoragePermission() {
-                PermissionActivity.start(context)
-            }
+    private fun createPermissionRequestAddOn() = object : PermissionRequestAddOn {
+        override fun requestStoragePermission() {
+            PermissionActivity.start(context)
         }
-        FileModule(context, permissionRequestAddOn)
-    }
-
-    private val noteManagerInternal: NoteManager by lazy {
-        NoteModule(context).provideNoteManager()
-    }
-
-    private val notificationAudioManagerInternal: NotificationAudioManager by lazy {
-        val audioManager = getAudioManager()
-        val notificationModule = NotificationModule(
-                context,
-                audioManager
-        )
-        notificationModule.provideNotificationAudioManager()
-
-    }
-
-    private val settingsManagerInternal: SettingsManager by lazy {
-        SettingsModule().provideSettingsManager()
-    }
-
-    private val themeManagerInternal: ThemeManager by lazy {
-        ThemeModule().provideThemeManager(context)
-    }
-
-    private val versionManagerInternal: VersionManager by lazy {
-        VersionModule(context).provideVersionManager()
     }
 
     companion object {

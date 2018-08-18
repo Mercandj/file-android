@@ -129,7 +129,7 @@ class FileCopyCutManagerAndroid(
 
     companion object {
 
-        fun copySync(pathInput: String, pathDirectoryOutput: String) {
+        private fun copySync(pathInput: String, pathDirectoryOutput: String) {
             try {
                 val dir = File(pathDirectoryOutput)
                 if (!dir.exists()) {
@@ -177,7 +177,7 @@ class FileCopyCutManagerAndroid(
             }
         }
 
-        fun cutSync(pathInput: String, pathDirectoryOutput: String) {
+        private fun cutSync(pathInput: String, pathDirectoryOutput: String) {
             val ioFileInput = java.io.File(pathInput)
             val ioFileOutputDirectory = java.io.File(pathDirectoryOutput)
             val outputPath = ioFileOutputDirectory.absolutePath + File.separator + ioFileInput.name

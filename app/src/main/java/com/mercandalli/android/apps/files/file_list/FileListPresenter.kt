@@ -108,15 +108,13 @@ class FileListPresenter(
         }
     }
 
-    private fun createFileChildrenResultListener(): FileManager.FileChildrenResultListener {
-        return object : FileManager.FileChildrenResultListener {
-            override fun onFileChildrenResultChanged(path: String) {
-                if (currentPath != path) {
-                    return
-                }
-                val fileChildren = fileManager.getFileChildren(currentPath)
-                syncFileChildren(fileChildren)
+    private fun createFileChildrenResultListener() = object : FileManager.FileChildrenResultListener {
+        override fun onFileChildrenResultChanged(path: String) {
+            if (currentPath != path) {
+                return
             }
+            val fileChildren = fileManager.getFileChildren(currentPath)
+            syncFileChildren(fileChildren)
         }
     }
 }

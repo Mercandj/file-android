@@ -24,7 +24,7 @@ class NotificationModule(
         private val audioManager: AudioManager
 ) {
 
-    fun provideNotificationAudioManager(): NotificationAudioManager {
+    fun createNotificationAudioManager(): NotificationAudioManager {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val addOn = object : NotificationAudioManagerImpl.AddOn {
 

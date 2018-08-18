@@ -4,7 +4,7 @@ import android.content.Context
 
 class ThemeModule {
 
-    fun provideThemeManager(
+    fun createThemeManager(
             context: Context
     ): ThemeManager {
         val sharedPreferences = context.getSharedPreferences(

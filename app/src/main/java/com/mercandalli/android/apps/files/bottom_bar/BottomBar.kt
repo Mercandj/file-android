@@ -17,24 +17,18 @@ class BottomBar @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), BottomBarContract.Screen {
 
-    private val userAction: BottomBarContract.UserAction
-    private val sectionFileIcon: ImageView
-    private val sectionFileText: TextView
-    private val sectionNoteIcon: ImageView
-    private val sectionNoteText: TextView
-    private val sectionSettingsIcon: ImageView
-    private val sectionSettingsText: TextView
+    private val view = View.inflate(context, R.layout.view_bottom_bar, this)
+    private val sectionFileIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_file_icon)
+    private val sectionFileText: TextView = view.findViewById(R.id.view_bottom_bar_section_file_text)
+    private val sectionNoteIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_note_icon)
+    private val sectionNoteText: TextView = view.findViewById(R.id.view_bottom_bar_section_note_text)
+    private val sectionSettingsIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_settings_icon)
+    private val sectionSettingsText: TextView = view.findViewById(R.id.view_bottom_bar_section_settings_text)
+    private val userAction = createUserAction()
+
     private var clickListener: OnBottomBarClickListener? = null
 
     init {
-        View.inflate(context, R.layout.view_bottom_bar, this)
-        sectionFileIcon = findViewById(R.id.view_bottom_bar_section_file_icon)
-        sectionFileText = findViewById(R.id.view_bottom_bar_section_file_text)
-        sectionNoteIcon = findViewById(R.id.view_bottom_bar_section_note_icon)
-        sectionNoteText = findViewById(R.id.view_bottom_bar_section_note_text)
-        sectionSettingsIcon = findViewById(R.id.view_bottom_bar_section_settings_icon)
-        sectionSettingsText = findViewById(R.id.view_bottom_bar_section_settings_text)
-        userAction = createUserAction()
         findViewById<View>(R.id.view_bottom_bar_file_section).setOnClickListener {
             userAction.onFileClicked()
         }
@@ -114,24 +108,25 @@ class BottomBar @JvmOverloads constructor(
         clickListener = listener
     }
 
-    private fun createUserAction(): BottomBarContract.UserAction {
-        if (isInEditMode) {
-            return object : BottomBarContract.UserAction {
-                override fun onAttached() {}
-                override fun onDetached() {}
-                override fun onSaveInstanceState(saveState: Bundle) {}
-                override fun onRestoreInstanceState(state: Bundle) {}
-                override fun onFileClicked() {}
-                override fun onNoteClicked() {}
-                override fun onSettingsClicked() {}
-            }
+    private fun createUserAction() = if (isInEditMode) {
+        object : BottomBarContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onSaveInstanceState(saveState: Bundle) {}
+            override fun onRestoreInstanceState(state: Bundle) {}
+            override fun onFileClicked() {}
+            override fun onNoteClicked() {}
+            override fun onSettingsClicked() {}
         }
+    } else {
         val themeManager = ApplicationGraph.getThemeManager()
-        return BottomBarPresenter(
+        val selectedColor = ContextCompat.getColor(context, R.color.bottom_bar_selected)
+        val notSelectedColor = ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
+        BottomBarPresenter(
                 this,
                 themeManager,
-                ContextCompat.getColor(context, R.color.bottom_bar_selected),
-                ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
+                selectedColor,
+                notSelectedColor
         )
     }
 

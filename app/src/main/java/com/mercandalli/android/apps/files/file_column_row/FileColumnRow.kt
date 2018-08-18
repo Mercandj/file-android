@@ -21,21 +21,17 @@ class FileColumnRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnRowContract.Screen {
 
-    private val userAction: FileColumnRowContract.UserAction
-    private val icon: ImageView
-    private val title: TextView
-    private val arrayRight: ImageView
+    private val view = View.inflate(context, R.layout.view_file_column_row, this)
+    private val icon: ImageView = view.findViewById(R.id.view_file_column_row_icon)
+    private val title: TextView = view.findViewById(R.id.view_file_column_row_title)
+    private val arrayRight: ImageView = view.findViewById(R.id.view_file_column_row_arrow_right)
+    private val userAction = createUserAction()
+
     private var fileClickListener: FileClickListener? = null
     private var fileLongClickListener: FileLongClickListener? = null
 
     init {
-        View.inflate(context, R.layout.view_file_column_row, this)
-        icon = findViewById(R.id.view_file_column_row_icon)
-        title = findViewById(R.id.view_file_column_row_title)
-        arrayRight = findViewById(R.id.view_file_column_row_arrow_right)
         foreground = getSelectableItemBackground(context)
-        userAction = createUserAction()
-
         setOnClickListener { userAction.onRowClicked() }
         setOnLongClickListener {
             userAction.onRowLongClicked()
@@ -155,28 +151,27 @@ class FileColumnRow @JvmOverloads constructor(
         fileClickListener = listener
     }
 
-    private fun createUserAction(): FileColumnRowContract.UserAction {
-        if (isInEditMode) {
-            return object : FileColumnRowContract.UserAction {
-                override fun onAttached() {}
-                override fun onDetached() {}
-                override fun onFileChanged(file: File, selectedPath: String?) {}
-                override fun onRowClicked() {}
-                override fun onRowLongClicked() {}
-                override fun onCopyClicked() {}
-                override fun onCutClicked() {}
-                override fun onDeleteClicked() {}
-                override fun onDeleteConfirmedClicked() {}
-                override fun onRenameClicked() {}
-                override fun onRenameConfirmedClicked(fileName: String) {}
-            }
+    private fun createUserAction() = if (isInEditMode) {
+        object : FileColumnRowContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onFileChanged(file: File, selectedPath: String?) {}
+            override fun onRowClicked() {}
+            override fun onRowLongClicked() {}
+            override fun onCopyClicked() {}
+            override fun onCutClicked() {}
+            override fun onDeleteClicked() {}
+            override fun onDeleteConfirmedClicked() {}
+            override fun onRenameClicked() {}
+            override fun onRenameConfirmedClicked(fileName: String) {}
         }
+    } else {
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        return FileColumnRowPresenter(
+        FileColumnRowPresenter(
                 this,
                 fileDeleteManager,
                 fileCopyCutManager,

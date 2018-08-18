@@ -18,26 +18,19 @@ class FileColumnDetailView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr), FileColumnDetailContract.Screen {
 
-    private val userAction: FileColumnDetailContract.UserAction
-    private val title: TextView
-    private val path: TextView
-    private val length: TextView
-    private val lastModified: TextView
-    private val playPause: ImageView
-    private val next: View
-    private val previous: View
+    private val view = View.inflate(context, R.layout.view_file_column_detail, this)
+    private val title: TextView = view.findViewById(R.id.view_file_column_detail_title)
+    private val path: TextView = view.findViewById(R.id.view_file_column_detail_path)
+    private val length: TextView = view.findViewById(R.id.view_file_column_detail_length)
+    private val lastModified: TextView = view.findViewById(R.id.view_file_column_detail_last_modified)
+    private val playPause: ImageView = view.findViewById(R.id.view_file_column_detail_play_pause)
+    private val next: View = view.findViewById(R.id.view_file_column_detail_play_next)
+    private val previous: View = view.findViewById(R.id.view_file_column_detail_play_previous)
+
+    private val userAction: FileColumnDetailContract.UserAction = createUserAction()
 
     init {
-        View.inflate(context, R.layout.view_file_column_detail, this)
         setBackgroundColor(ContextCompat.getColor(context, R.color.file_detail_background))
-        title = findViewById(R.id.view_file_column_detail_title)
-        path = findViewById(R.id.view_file_column_detail_path)
-        length = findViewById(R.id.view_file_column_detail_length)
-        lastModified = findViewById(R.id.view_file_column_detail_last_modified)
-        playPause = findViewById(R.id.view_file_column_detail_play_pause)
-        next = findViewById(R.id.view_file_column_detail_play_next)
-        previous = findViewById(R.id.view_file_column_detail_play_previous)
-        userAction = createUserAction()
 
         playPause.setOnClickListener {
             userAction.onPlayPauseClicked()
@@ -190,27 +183,26 @@ class FileColumnDetailView @JvmOverloads constructor(
         userAction.onFileChanged(file)
     }
 
-    private fun createUserAction(): FileColumnDetailContract.UserAction {
-        if (isInEditMode) {
-            return object : FileColumnDetailContract.UserAction {
-                override fun onAttached() {}
-                override fun onDetached() {}
-                override fun onFileChanged(file: File?) {}
-                override fun onOpenClicked() {}
-                override fun onOpenAsClicked() {}
-                override fun onOpenAsConfirmedClicked(typeMime: String) {}
-                override fun onPlayPauseClicked() {}
-                override fun onNextClicked() {}
-                override fun onPreviousClicked() {}
-                override fun onDeleteClicked() {}
-                override fun onDeleteConfirmedClicked() {}
-                override fun onRenameClicked() {}
-                override fun onRenameConfirmedClicked(fileName: String) {}
-                override fun onShareClicked() {}
-                override fun onCopyClicked() {}
-                override fun onCutClicked() {}
-            }
+    private fun createUserAction() = if (isInEditMode) {
+        object : FileColumnDetailContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onFileChanged(file: File?) {}
+            override fun onOpenClicked() {}
+            override fun onOpenAsClicked() {}
+            override fun onOpenAsConfirmedClicked(typeMime: String) {}
+            override fun onPlayPauseClicked() {}
+            override fun onNextClicked() {}
+            override fun onPreviousClicked() {}
+            override fun onDeleteClicked() {}
+            override fun onDeleteConfirmedClicked() {}
+            override fun onRenameClicked() {}
+            override fun onRenameConfirmedClicked(fileName: String) {}
+            override fun onShareClicked() {}
+            override fun onCopyClicked() {}
+            override fun onCutClicked() {}
         }
+    } else {
         val audioManager = ApplicationGraph.getAudioManager()
         val audioQueueManager = ApplicationGraph.getAudioQueueManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
@@ -218,7 +210,7 @@ class FileColumnDetailView @JvmOverloads constructor(
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val fileShareManager = ApplicationGraph.getFileShareManager()
-        return FileColumnDetailPresenter(
+        FileColumnDetailPresenter(
                 this,
                 audioManager,
                 audioQueueManager,

@@ -31,7 +31,7 @@ class FileModule(
         PermissionManagerImpl(context, permissionRequestAddOn)
     }
 
-    fun provideFileManager(): FileManager {
+    fun createFileManager(): FileManager {
         val fileManagerAndroid = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
                 Environment.getExternalStorageDirectory().absolutePath
@@ -50,8 +50,8 @@ class FileModule(
         return fileManagerAndroid
     }
 
-    fun provideFileOpenManager(): FileOpenManager {
-        val addOn: FileOpenManagerAndroid.AddOn = object : FileOpenManagerAndroid.AddOn {
+    fun createFileOpenManager(): FileOpenManager {
+        val addOn = object : FileOpenManagerAndroid.AddOn {
             override fun startActivity(path: String, mime: String) {
                 val intent = Intent()
                 intent.action = Intent.ACTION_VIEW
@@ -67,33 +67,25 @@ class FileModule(
         return FileOpenManagerAndroid(addOn)
     }
 
-    fun provideFileDeleteManager(): FileDeleteManager {
-        return FileDeleteManagerAndroid(
-                mediaScanner
-        )
-    }
+    fun createFileDeleteManager(): FileDeleteManager = FileDeleteManagerAndroid(
+            mediaScanner
+    )
 
-    fun provideFileCopyCutManager(): FileCopyCutManager {
-        return FileCopyCutManagerAndroid(
-                mediaScanner
-        )
-    }
+    fun createFileCopyCutManager(): FileCopyCutManager = FileCopyCutManagerAndroid(
+            mediaScanner
+    )
 
-    fun provideFileCreatorManager(): FileCreatorManager {
-        return FileCreatorManagerAndroid(
-                permissionManager,
-                mediaScanner
-        )
-    }
+    fun createFileCreatorManager(): FileCreatorManager = FileCreatorManagerAndroid(
+            permissionManager,
+            mediaScanner
+    )
 
-    fun provideFileRenameManager(): FileRenameManager {
-        return FileRenameManagerAndroid(
-                mediaScanner
-        )
-    }
+    fun createFileRenameManager(): FileRenameManager = FileRenameManagerAndroid(
+            mediaScanner
+    )
 
-    fun provideFileShareManager(): FileShareManager {
-        val addOn: FileShareManagerAndroid.AddOn = object : FileShareManagerAndroid.AddOn {
+    fun createFileShareManager(): FileShareManager {
+        val addOn = object : FileShareManagerAndroid.AddOn {
             override fun startActivity(path: String, mime: String) {
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
@@ -109,30 +101,32 @@ class FileModule(
         return FileShareManagerAndroid(addOn)
     }
 
-    fun provideFileSortManager(): FileSortManager {
-        return FileSortManagerImpl()
-    }
+    fun createFileSortManager(): FileSortManager = FileSortManagerImpl()
 
     companion object {
 
         private fun getUriFromFile(
                 context: Context,
-                file: File): Uri {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                getUriFromFileOverN(context, file)
-            } else Uri.fromFile(file)
+                file: File
+        ): Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            getUriFromFileOverN(context, file)
+        } else {
+            Uri.fromFile(file)
         }
 
-        private fun getUriFromFileOverN(context: Context, file: File): Uri {
-            return FileProvider.getUriForFile(
-                    context,
-                    context.applicationContext.packageName + ".provider",
-                    file)
-        }
+        private fun getUriFromFileOverN(
+                context: Context,
+                file: File
+        ): Uri = FileProvider.getUriForFile(
+                context,
+                context.applicationContext.packageName + ".provider",
+                file
+        )
 
         private fun startActivity(
                 context: Context,
-                intent: Intent) {
+                intent: Intent
+        ) {
             try {
                 if (Build.VERSION.SDK_INT >= N) {
                     startActivityOverN(context, intent)
@@ -148,7 +142,8 @@ class FileModule(
         @RequiresApi(api = N)
         private fun startActivityOverN(
                 context: Context,
-                intent: Intent) {
+                intent: Intent
+        ) {
             try {
                 context.startActivity(intent)
             } catch (e: Exception) { // Catch a FileUriExposedException.
@@ -162,7 +157,7 @@ class FileModule(
          * @param context : it is the reference where this method get called
          * @param docPath : absolute path of file for which broadcast will be send to refresh media database
          */
-        fun refreshSystemMediaScanDataBase(context: Context, docPath: String) {
+        private fun refreshSystemMediaScanDataBase(context: Context, docPath: String) {
             val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
             val contentUri = Uri.fromFile(File(docPath))
             mediaScanIntent.data = contentUri

@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.settings
 
+import android.support.annotation.ColorRes
+
 interface SettingsContract {
 
     interface UserAction {
@@ -25,10 +27,10 @@ interface SettingsContract {
 
         fun setThemeCheckboxChecked(checked: Boolean)
 
-        fun setCardBackgroundColorRes(cardBackgroundColorRes: Int)
+        fun setCardBackgroundColorRes(@ColorRes colorRes: Int)
 
-        fun setTitlesTextColorRes(titlesColorRes: Int)
+        fun setTitlesTextColorRes(@ColorRes colorRes: Int)
 
-        fun setSubtitlesTextColorRes(subtitlesColorRes: Int)
+        fun setSubtitlesTextColorRes(@ColorRes colorRes: Int)
     }
 }

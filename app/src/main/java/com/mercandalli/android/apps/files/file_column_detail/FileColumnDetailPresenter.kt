@@ -146,11 +146,9 @@ class FileColumnDetailPresenter(
         screen.setPlayPauseButtonImage(if (playing) pauseDrawableRes else playDrawableRes)
     }
 
-    private fun createPlayListener(): AudioManager.PlayListener {
-        return object : AudioManager.PlayListener {
-            override fun onPlayPauseChanged() {
-                synchronizePlayButton()
-            }
+    private fun createPlayListener() = object : AudioManager.PlayListener {
+        override fun onPlayPauseChanged() {
+            synchronizePlayButton()
         }
     }
 

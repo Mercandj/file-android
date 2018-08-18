@@ -21,26 +21,19 @@ class FileListRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileListRowContract.Screen {
 
-    private val userAction: FileListRowContract.UserAction
-    private val card: CardView
-    private val icon: ImageView
-    private val title: TextView
-    private val subtitle: TextView
-    private val overflow: View
-    private val sound: View
+    private val view = View.inflate(context, R.layout.view_file_list_row, this)
+    private val card: CardView = view.findViewById(R.id.view_file_list_row_card)
+    private val icon: ImageView = view.findViewById(R.id.view_file_list_row_icon)
+    private val title: TextView = view.findViewById(R.id.view_file_list_row_title)
+    private val subtitle: TextView = view.findViewById(R.id.view_file_list_row_subtitle)
+    private val overflow: View = view.findViewById(R.id.view_file_list_row_overflow)
+    private val sound: View = view.findViewById(R.id.view_file_list_row_sound)
+    private val userAction = createUserAction()
+
     private var fileClickListener: FileClickListener? = null
     private var fileLongClickListener: FileLongClickListener? = null
 
     init {
-        View.inflate(context, R.layout.view_file_list_row, this)
-        card = findViewById(R.id.view_file_list_row_card)
-        icon = findViewById(R.id.view_file_list_row_icon)
-        title = findViewById(R.id.view_file_list_row_title)
-        subtitle = findViewById(R.id.view_file_list_row_subtitle)
-        overflow = findViewById(R.id.view_file_list_row_overflow)
-        sound = findViewById(R.id.view_file_list_row_sound)
-        userAction = createUserAction()
-
         card.setOnClickListener { userAction.onRowClicked() }
         setOnLongClickListener {
             userAction.onRowLongClicked()
@@ -149,29 +142,28 @@ class FileListRow @JvmOverloads constructor(
         fileClickListener = listener
     }
 
-    private fun createUserAction(): FileListRowContract.UserAction {
-        if (isInEditMode) {
-            return object : FileListRowContract.UserAction {
-                override fun onAttached() {}
-                override fun onDetached() {}
-                override fun onFileChanged(file: File, selectedPath: String?) {}
-                override fun onRowClicked() {}
-                override fun onRowLongClicked() {}
-                override fun onCopyClicked() {}
-                override fun onCutClicked() {}
-                override fun onDeleteClicked() {}
-                override fun onDeleteConfirmedClicked() {}
-                override fun onRenameClicked() {}
-                override fun onRenameConfirmedClicked(fileName: String) {}
-                override fun onOverflowClicked() {}
-            }
+    private fun createUserAction() = if (isInEditMode) {
+        object : FileListRowContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onFileChanged(file: File, selectedPath: String?) {}
+            override fun onRowClicked() {}
+            override fun onRowLongClicked() {}
+            override fun onCopyClicked() {}
+            override fun onCutClicked() {}
+            override fun onDeleteClicked() {}
+            override fun onDeleteConfirmedClicked() {}
+            override fun onRenameClicked() {}
+            override fun onRenameConfirmedClicked(fileName: String) {}
+            override fun onOverflowClicked() {}
         }
+    } else {
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        return FileListRowPresenter(
+        FileListRowPresenter(
                 this,
                 fileDeleteManager,
                 fileCopyCutManager,

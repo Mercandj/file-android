@@ -1,6 +1,5 @@
 package com.mercandalli.android.apps.files.main
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
@@ -249,7 +248,7 @@ class MainActivity : AppCompatActivity(),
         )
     }
 
-    private fun <T : View> Activity.bind(@IdRes res: Int): Lazy<T> {
+    private fun <T : View> bind(@IdRes res: Int): Lazy<T> {
         @Suppress("UNCHECKED_CAST")
         return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
     }
