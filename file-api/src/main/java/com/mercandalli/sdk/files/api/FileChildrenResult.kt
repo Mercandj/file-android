@@ -9,9 +9,7 @@ data class FileChildrenResult(
         private val files: List<File>
 ) {
 
-    fun getFiles(): List<File> {
-        return ArrayList<File>(files)
-    }
+    fun getFiles(): List<File> = ArrayList<File>(files)
 
     enum class Status {
         ERROR_NOT_FOLDER,
@@ -23,23 +21,31 @@ data class FileChildrenResult(
     companion object {
 
         @JvmStatic
-        fun createUnloaded(path: String): FileChildrenResult {
-            return FileChildrenResult(path, Status.UNLOADED, ArrayList())
-        }
+        fun createUnloaded(path: String) = FileChildrenResult(
+                path,
+                Status.UNLOADED,
+                ArrayList()
+        )
 
         @JvmStatic
-        fun createLoading(path: String): FileChildrenResult {
-            return FileChildrenResult(path, Status.LOADING, ArrayList())
-        }
+        fun createLoading(path: String) = FileChildrenResult(
+                path,
+                Status.LOADING,
+                ArrayList()
+        )
 
         @JvmStatic
-        fun createLoaded(path: String, files: List<File>): FileChildrenResult {
-            return FileChildrenResult(path, Status.LOADED_SUCCEEDED, ArrayList(files))
-        }
+        fun createLoaded(path: String, files: List<File>) = FileChildrenResult(
+                path,
+                Status.LOADED_SUCCEEDED,
+                ArrayList(files)
+        )
 
         @JvmStatic
-        fun createErrorNotFolder(path: String): FileChildrenResult {
-            return FileChildrenResult(path, Status.ERROR_NOT_FOLDER, ArrayList())
-        }
+        fun createErrorNotFolder(path: String) = FileChildrenResult(
+                path,
+                Status.ERROR_NOT_FOLDER,
+                ArrayList()
+        )
     }
 }

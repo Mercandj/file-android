@@ -159,7 +159,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$support_version"
 
     // Third party - Monitoring
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
 
@@ -170,7 +170,7 @@ dependencies {
 
     // Testing-only dependencies
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'org.mockito:mockito-core:2.21.0'
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
