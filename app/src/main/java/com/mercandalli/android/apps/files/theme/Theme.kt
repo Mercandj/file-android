@@ -14,4 +14,7 @@ open class Theme(
         @ColorRes
         val bottomBarBlurOverlay: Int,
         @ColorRes
-        val cardBackgroundColorRes: Int)
+        val cardBackgroundColorRes: Int,
+        @ColorRes
+        val fileColumnDetailBackgroundColorRes: Int
+)

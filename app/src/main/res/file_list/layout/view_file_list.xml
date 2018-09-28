@@ -17,8 +17,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="top"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/bottom_bar_height_plus_fab"
             android:paddingTop="6dp"
+            android:paddingBottom="@dimen/bottom_bar_height_plus_fab"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
             tools:itemCount="5"
@@ -51,12 +51,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/view_file_list_fab"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="@dimen/bottom_bar_height_plus_16"
+        android:layout_marginStart="@dimen/default_space_1_5"
         android:layout_marginEnd="@dimen/default_space_1_5"
+        android:layout_marginBottom="@dimen/bottom_bar_height_plus_16"
+        android:scaleType="center"
         android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
-        app:fabSize="mini" />
+        app:fabCustomSize="52dp"
+        app:maxImageSize="24dp" />
 
 </merge>

@@ -3,6 +3,7 @@ package com.mercandalli.android.apps.files.file_column_detail
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.*
 import org.junit.Before
 import org.junit.Test
@@ -13,21 +14,23 @@ import org.mockito.MockitoAnnotations
 class FileColumnDetailPresenterTest {
 
     @Mock
-    private val screen: FileColumnDetailContract.Screen? = null
+    private lateinit var screen: FileColumnDetailContract.Screen
     @Mock
-    private val audioManager: AudioManager? = null
+    private lateinit var audioManager: AudioManager
     @Mock
-    private val audioQueueManager: AudioQueueManager? = null
+    private lateinit var audioQueueManager: AudioQueueManager
     @Mock
-    private val fileOpenManager: FileOpenManager? = null
+    private lateinit var fileOpenManager: FileOpenManager
     @Mock
-    private val fileDeleteManager: FileDeleteManager? = null
+    private lateinit var fileDeleteManager: FileDeleteManager
     @Mock
-    private val fileRenameManager: FileRenameManager? = null
+    private lateinit var fileRenameManager: FileRenameManager
     @Mock
-    private val fileShareManager: FileShareManager? = null
+    private lateinit var fileShareManager: FileShareManager
     @Mock
-    private val fileCopyCutManager: FileCopyCutManager? = null
+    private lateinit var fileCopyCutManager: FileCopyCutManager
+    @Mock
+    private lateinit var themeManager: ThemeManager
     private val playStringRes: Int = 42
     private val pauseStringRes: Int = 43
     private val deleteFailedTextRes: Int = 44
@@ -52,14 +55,15 @@ class FileColumnDetailPresenterTest {
 
     private fun createInstanceToTest(): FileColumnDetailPresenter {
         return FileColumnDetailPresenter(
-                screen!!,
-                audioManager!!,
-                audioQueueManager!!,
-                fileOpenManager!!,
-                fileDeleteManager!!,
-                fileCopyCutManager!!,
-                fileRenameManager!!,
-                fileShareManager!!,
+                screen,
+                audioManager,
+                audioQueueManager,
+                fileOpenManager,
+                fileDeleteManager,
+                fileCopyCutManager,
+                fileRenameManager,
+                fileShareManager,
+                themeManager,
                 playStringRes,
                 pauseStringRes,
                 deleteFailedTextRes

@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity(),
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val decorView = window.decorView
             bottomBarBlurView.setupWith(decorView.findViewById<View>(android.R.id.content) as ViewGroup)
-                    .windowBackground(decorView.background)
-                    .blurAlgorithm(RenderScriptBlur(this))
-                    .blurRadius(2f)
+                    .setFrameClearDrawable(decorView.background)
+                    .setBlurAlgorithm(RenderScriptBlur(this))
+                    .setBlurRadius(2f)
                     .setHasFixedTransformationMatrix(true)
         }
     }

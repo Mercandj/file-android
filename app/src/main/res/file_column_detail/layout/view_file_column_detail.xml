@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/file_horizontal_lists_list_width"
     android:layout_height="match_parent"
-    android:background="@color/file_detail_background"
+    android:background="@color/file_detail_background_light"
     tools:parentTag="android.widget.ScrollView">
 
     <LinearLayout

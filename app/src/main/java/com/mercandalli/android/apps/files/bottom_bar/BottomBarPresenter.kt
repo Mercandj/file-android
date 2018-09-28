@@ -83,11 +83,9 @@ class BottomBarPresenter(
         screen.setSectionSettingsTextColorRes(theme.textPrimaryColorRes)
     }
 
-    private fun createThemeListener(): ThemeManager.OnCurrentThemeChangeListener {
-        return object : ThemeManager.OnCurrentThemeChangeListener {
-            override fun onCurrentThemeChanged() {
-                syncWithCurrentTheme()
-            }
+    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
+        override fun onCurrentThemeChanged() {
+            syncWithCurrentTheme()
         }
     }
 

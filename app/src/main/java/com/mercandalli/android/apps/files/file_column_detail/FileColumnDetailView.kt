@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -16,7 +17,8 @@ import com.mercandalli.sdk.files.api.File
 
 class FileColumnDetailView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ScrollView(context, attrs, defStyleAttr), FileColumnDetailContract.Screen {
+) : ScrollView(context, attrs, defStyleAttr),
+        FileColumnDetailContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_detail, this)
     private val title: TextView = view.findViewById(R.id.view_file_column_detail_title)
@@ -30,8 +32,6 @@ class FileColumnDetailView @JvmOverloads constructor(
     private val userAction: FileColumnDetailContract.UserAction = createUserAction()
 
     init {
-        setBackgroundColor(ContextCompat.getColor(context, R.color.file_detail_background))
-
         playPause.setOnClickListener {
             userAction.onPlayPauseClicked()
         }
@@ -179,6 +179,19 @@ class FileColumnDetailView @JvmOverloads constructor(
         Toast.makeText(context, deleteFailedTextRes, Toast.LENGTH_LONG).show()
     }
 
+    override fun setTextPrimaryColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        title.setTextColor(color)
+        path.setTextColor(color)
+        length.setTextColor(color)
+        lastModified.setTextColor(color)
+    }
+
+    override fun setFileColumnDetailBackgroundColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        setBackgroundColor(color)
+    }
+
     fun setFile(file: File?) {
         userAction.onFileChanged(file)
     }
@@ -210,6 +223,7 @@ class FileColumnDetailView @JvmOverloads constructor(
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val fileShareManager = ApplicationGraph.getFileShareManager()
+        val themeManager = ApplicationGraph.getThemeManager()
         FileColumnDetailPresenter(
                 this,
                 audioManager,
@@ -219,6 +233,7 @@ class FileColumnDetailView @JvmOverloads constructor(
                 fileCopyCutManager,
                 fileRenameManager,
                 fileShareManager,
+                themeManager,
                 R.drawable.ic_play_arrow_black_24dp,
                 R.drawable.ic_pause_black_24dp,
                 R.string.view_file_detail_delete_failed

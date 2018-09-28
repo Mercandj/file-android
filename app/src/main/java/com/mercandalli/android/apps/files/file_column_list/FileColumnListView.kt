@@ -20,7 +20,7 @@ class FileColumnListView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnListContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_list, this)
-    private val refresh: androidx.swiperefreshlayout.widget.SwipeRefreshLayout = view.findViewById(R.id.view_file_column_list_refresh)
+    private val refresh: SwipeRefreshLayout = view.findViewById(R.id.view_file_column_list_refresh)
     private val recyclerView: androidx.recyclerview.widget.RecyclerView = view.findViewById(R.id.view_file_column_list_recycler_view)
     private val emptyTextView: TextView = view.findViewById(R.id.view_file_column_list_empty_view)
     private val errorTextView: TextView = view.findViewById(R.id.view_file_column_list_error)

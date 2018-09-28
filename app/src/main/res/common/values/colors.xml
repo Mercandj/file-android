@@ -13,11 +13,13 @@
     <color name="text_primary_color_light">#353535</color>
     <color name="text_secondary_color_light">#7e7e7e</color>
     <color name="card_background_color_light">@android:color/white</color>
+    <color name="file_column_detail_background_light">@color/file_detail_background_light</color>
 
     <color name="toolbar_background_dark">@color/color_primary</color>
     <color name="toolbar_title_dark">@android:color/white</color>
-    <color name="window_background_dark">@android:color/black</color>
+    <color name="window_background_dark">#1D1D1D</color>
     <color name="text_primary_color_dark">#E0E0E0</color>
     <color name="text_secondary_color_dark">#A5A5A5</color>
     <color name="card_background_color_dark">#222222</color>
+    <color name="file_column_detail_background_dark">@color/file_detail_background_dark</color>
 </resources>

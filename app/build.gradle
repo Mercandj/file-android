@@ -10,14 +10,9 @@ apply plugin: 'com.github.ben-manes.versions'
 // Fabric
 apply plugin: 'io.fabric'
 
-// Provide makeVersionCodeForDensity method to split by density
-apply from: '../config/split/split-density.gradle'
-
 // Signing production apk with rootProject.ext.releaseFileSpaceSigningConfig data
-if (file("../config/split/split-density.gradle").exists()) {
+if (file("../config/signing/filespace-signing.gradle").exists()) {
     apply from: '../config/signing/filespace-signing.gradle'
-} else {
-    apply from: '../config/split/split-density-template.gradle'
 }
 
 // Lint, pmd...
@@ -137,7 +132,7 @@ dependencies {
     // Third party - UI
     implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
     // https://github.com/Dimezis/BlurView
-    implementation 'com.eightbitlab:blurview:1.4.0'
+    implementation 'com.eightbitlab:blurview:1.5.0'
 
     // Testing-only dependencies
     testImplementation 'junit:junit:4.12'

@@ -25,7 +25,7 @@ class SettingsView @JvmOverloads constructor(
     private val versionSubtitle: TextView = view.findViewById(R.id.view_settings_version_subtitle)
     private val themeCheckBox: CheckBox = view.findViewById(R.id.view_settings_theme)
     private val versionCard: androidx.cardview.widget.CardView = view.findViewById(R.id.view_settings_version_section)
-    private val themeCard: androidx.cardview.widget.CardView = view.findViewById(R.id.view_settings_theme_section)
+    private val themeCard: CardView = view.findViewById(R.id.view_settings_theme_section)
     private val themeLabel: TextView = view.findViewById(R.id.view_settings_theme_label)
     private val themeSubLabel: TextView = view.findViewById(R.id.view_settings_theme_sublabel)
     private val userAction = createUserAction()

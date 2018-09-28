@@ -33,7 +33,7 @@ Do our future selves a favour and start writing better commit messages now :)
 
 ## Some developer gradle tools
 
-* ```gradlew dependencyUpdates -Drevision=release -DoutputFormatter=json``` : Check [dependencies](https://github.com/ben-manes/gradle-versions-plugin)
+* ```./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=json``` : Check [dependencies](https://github.com/ben-manes/gradle-versions-plugin)
 
 ## Developer
 

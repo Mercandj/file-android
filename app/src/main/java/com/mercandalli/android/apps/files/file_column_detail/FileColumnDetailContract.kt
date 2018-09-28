@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_column_detail
 
+import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
 
 interface FileColumnDetailContract {
@@ -70,5 +71,9 @@ interface FileColumnDetailContract {
         fun showOpenAsSelection()
 
         fun showToast(deleteFailedTextRes: Int)
+
+        fun setTextPrimaryColorRes(@ColorRes colorRes: Int)
+
+        fun setFileColumnDetailBackgroundColorRes(@ColorRes colorRes: Int)
     }
 }

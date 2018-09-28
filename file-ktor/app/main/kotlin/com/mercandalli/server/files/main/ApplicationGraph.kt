@@ -13,47 +13,27 @@ class ApplicationGraph(
         private val rootPath: String
 ) {
 
-    private lateinit var logManager: LogManager
-    private lateinit var shellManager: ShellManager
-    private lateinit var serverManager: ServerManager
-    private lateinit var fileGetHandler: FileGetHandler
-
-    private fun getLogManagerInternal(): LogManager {
-        if (!::logManager.isInitialized) {
-            logManager = LogManagerImpl()
-        }
-        return logManager
+    private val logManagerInternal: LogManager by lazy {
+        LogManagerImpl()
     }
 
-    private fun getShellManagerInternal(): ShellManager {
-        if (!::shellManager.isInitialized) {
-            val logManager = getLogManagerInternal()
-            shellManager = ShellModule(
-                    logManager
-            ).provideShellManager()
-        }
-        return shellManager
+    private val shellManagerInternal: ShellManager by lazy {
+        ShellModule(
+                logManagerInternal
+        ).provideShellManager()
     }
 
-    private fun getServerManagerInternal(): ServerManager {
-        if (!::serverManager.isInitialized) {
-            val fileGetHandler = getFileGetHandlerInternal()
-            serverManager = ServerModule(
-                    rootPath,
-                    fileGetHandler
-            ).provideServerManager()
-        }
-        return serverManager
+    private val serverManagerInternal: ServerManager by lazy {
+        ServerModule(
+                rootPath,
+                fileGetHandlerInternal
+        ).provideServerManager()
     }
 
-    private fun getFileGetHandlerInternal(): FileGetHandler {
-        if (!::fileGetHandler.isInitialized) {
-            val logManager = getLogManagerInternal()
-            fileGetHandler = FileGetHandlerImpl(
-                    logManager
-            )
-        }
-        return fileGetHandler
+    private val fileGetHandlerInternal: FileGetHandler by lazy {
+        FileGetHandlerImpl(
+                logManagerInternal
+        )
     }
 
     companion object {
@@ -67,19 +47,12 @@ class ApplicationGraph(
         }
 
         @JvmStatic
-        fun getLogManager(): LogManager {
-            return graph!!.getLogManagerInternal()
-        }
+        fun getLogManager() = graph!!.logManagerInternal
 
         @JvmStatic
-        fun getShellManager(): ShellManager {
-            return graph!!.getShellManagerInternal()
-        }
+        fun getShellManager() = graph!!.shellManagerInternal
 
         @JvmStatic
-        fun getServerManager(): ServerManager {
-            return graph!!.getServerManagerInternal()
-        }
+        fun getServerManager() = graph!!.serverManagerInternal
     }
-
 }

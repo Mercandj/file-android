@@ -3,6 +3,7 @@ package com.mercandalli.android.apps.files.file_column_detail
 import android.annotation.SuppressLint
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
+import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.*
 import java.util.*
 
@@ -15,21 +16,26 @@ class FileColumnDetailPresenter(
         private val fileCopyCutManager: FileCopyCutManager,
         private val fileRenameManager: FileRenameManager,
         private val fileShareManager: FileShareManager,
+        private val themeManager: ThemeManager,
         private val playDrawableRes: Int,
         private val pauseDrawableRes: Int,
         private val deleteFailedTextRes: Int
 ) : FileColumnDetailContract.UserAction {
 
     private val playListener = createPlayListener()
+    private val themeListener = createThemeListener()
     private var file: File? = null
 
     override fun onAttached() {
         audioManager.registerPlayListener(playListener)
         synchronizePlayButton()
+        themeManager.registerThemeListener(themeListener)
+        syncWithCurrentTheme()
     }
 
     override fun onDetached() {
         audioManager.unregisterPlayListener(playListener)
+        themeManager.unregisterThemeListener(themeListener)
     }
 
     override fun onFileChanged(file: File?) {
@@ -149,6 +155,18 @@ class FileColumnDetailPresenter(
     private fun createPlayListener() = object : AudioManager.PlayListener {
         override fun onPlayPauseChanged() {
             synchronizePlayButton()
+        }
+    }
+
+    private fun syncWithCurrentTheme() {
+        val theme = themeManager.getTheme()
+        screen.setTextPrimaryColorRes(theme.textPrimaryColorRes)
+        screen.setFileColumnDetailBackgroundColorRes(theme.fileColumnDetailBackgroundColorRes)
+    }
+
+    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
+        override fun onCurrentThemeChanged() {
+            syncWithCurrentTheme()
         }
     }
 
