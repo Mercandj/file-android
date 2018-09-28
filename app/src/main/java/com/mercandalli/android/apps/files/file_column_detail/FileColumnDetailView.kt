@@ -2,7 +2,7 @@ package com.mercandalli.android.apps.files.file_column_detail
 
 import android.app.AlertDialog
 import android.content.Context
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView

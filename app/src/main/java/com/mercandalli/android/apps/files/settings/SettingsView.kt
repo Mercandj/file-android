@@ -4,9 +4,9 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.CheckBox
@@ -24,8 +24,8 @@ class SettingsView @JvmOverloads constructor(
     private val versionTitle: TextView = view.findViewById(R.id.view_settings_version_title)
     private val versionSubtitle: TextView = view.findViewById(R.id.view_settings_version_subtitle)
     private val themeCheckBox: CheckBox = view.findViewById(R.id.view_settings_theme)
-    private val versionCard: CardView = view.findViewById(R.id.view_settings_version_section)
-    private val themeCard: CardView = view.findViewById(R.id.view_settings_theme_section)
+    private val versionCard: androidx.cardview.widget.CardView = view.findViewById(R.id.view_settings_version_section)
+    private val themeCard: androidx.cardview.widget.CardView = view.findViewById(R.id.view_settings_theme_section)
     private val themeLabel: TextView = view.findViewById(R.id.view_settings_theme_label)
     private val themeSubLabel: TextView = view.findViewById(R.id.view_settings_theme_sublabel)
     private val userAction = createUserAction()

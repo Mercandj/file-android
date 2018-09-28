@@ -1,6 +1,6 @@
 package com.mercandalli.android.apps.files.main
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 
 interface MainActivityFileUiStorage {
 

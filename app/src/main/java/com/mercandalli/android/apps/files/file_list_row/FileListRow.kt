@@ -3,9 +3,9 @@ package com.mercandalli.android.apps.files.file_list_row
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
-import android.support.v7.widget.PopupMenu
+import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
+import androidx.appcompat.widget.PopupMenu
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View

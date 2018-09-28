@@ -1,6 +1,6 @@
 package com.mercandalli.android.apps.files.settings
 
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorRes
 
 interface SettingsContract {
 

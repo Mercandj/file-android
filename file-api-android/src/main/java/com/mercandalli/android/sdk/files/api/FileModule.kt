@@ -8,8 +8,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION_CODES.N
 import android.os.Environment
-import android.support.annotation.RequiresApi
-import android.support.v4.content.FileProvider
+import androidx.annotation.RequiresApi
+import androidx.core.content.FileProvider
 import android.widget.Toast
 import com.mercandalli.sdk.files.api.*
 import java.io.File

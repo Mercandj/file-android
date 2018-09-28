@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     tools:parentTag="android.widget.FrameLayout">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/view_file_list_row_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:paddingEnd="0dp"
             android:paddingStart="12dp">
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/view_file_list_row_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -79,7 +79,7 @@
                 android:layout_gravity="end"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/view_file_list_row_overflow"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -93,7 +93,7 @@
                     android:src="@drawable/ic_more_vert_black_24dp"
                     android:tint="#888888" />
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/view_file_list_row_sound"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -111,6 +111,6 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </merge>

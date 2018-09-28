@@ -36,7 +36,7 @@
 
     </HorizontalScrollView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/view_file_column_horizontal_lists_fab"
         android:layout_width="56dp"
         android:layout_height="56dp"

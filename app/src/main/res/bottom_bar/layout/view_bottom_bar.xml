@@ -17,7 +17,7 @@
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/default_space_4">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_file_icon"
             android:layout_width="@dimen/bottom_bar_icon_dimen"
             android:layout_height="@dimen/bottom_bar_icon_dimen"
@@ -42,7 +42,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_note_icon"
             android:layout_width="@dimen/bottom_bar_icon_dimen"
             android:layout_height="@dimen/bottom_bar_icon_dimen"
@@ -69,7 +69,7 @@
         android:paddingEnd="@dimen/default_space_4"
         android:paddingStart="0dp">
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_settings_icon"
             android:layout_width="@dimen/bottom_bar_icon_dimen"
             android:layout_height="@dimen/bottom_bar_icon_dimen"

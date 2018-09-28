@@ -6,10 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.Window
 import com.mercandalli.android.apps.files.R
@@ -38,7 +38,7 @@ class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
         if (!grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             finish()
         } else {
-            showSnackbar("This app needs this permission to work", Snackbar.LENGTH_LONG)
+            showSnackbar("This app needs this permission to work", com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
         }
     }
 
@@ -56,11 +56,11 @@ class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
     }
 
     private fun showSnackbar(@StringRes text: Int, duration: Int) {
-        Snackbar.make(window.decorView, text, duration).show()
+        com.google.android.material.snackbar.Snackbar.make(window.decorView, text, duration).show()
     }
 
     private fun showSnackbar(text: String, duration: Int) {
-        Snackbar.make(window.decorView, text, duration).show()
+        com.google.android.material.snackbar.Snackbar.make(window.decorView, text, duration).show()
     }
 
     companion object {

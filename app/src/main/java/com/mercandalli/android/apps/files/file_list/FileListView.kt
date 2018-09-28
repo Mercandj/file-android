@@ -2,15 +2,14 @@ package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
 import android.os.Environment
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -33,7 +32,7 @@ class FileListView @JvmOverloads constructor(
     private var fileListViewSelectedFileListener: FileListViewSelectedFileListener? = null
 
     init {
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
         refresh.setOnRefreshListener {
             userAction.onRefresh()

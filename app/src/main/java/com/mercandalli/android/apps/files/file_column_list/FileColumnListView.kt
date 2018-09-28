@@ -2,10 +2,10 @@ package com.mercandalli.android.apps.files.file_column_list
 
 import android.content.Context
 import android.os.Environment
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -20,8 +20,8 @@ class FileColumnListView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnListContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_list, this)
-    private val refresh: SwipeRefreshLayout = view.findViewById(R.id.view_file_column_list_refresh)
-    private val recyclerView: RecyclerView = view.findViewById(R.id.view_file_column_list_recycler_view)
+    private val refresh: androidx.swiperefreshlayout.widget.SwipeRefreshLayout = view.findViewById(R.id.view_file_column_list_refresh)
+    private val recyclerView: androidx.recyclerview.widget.RecyclerView = view.findViewById(R.id.view_file_column_list_recycler_view)
     private val emptyTextView: TextView = view.findViewById(R.id.view_file_column_list_empty_view)
     private val errorTextView: TextView = view.findViewById(R.id.view_file_column_list_error)
     private val adapter = FileColumnAdapter(createFileClickListener())
@@ -31,7 +31,7 @@ class FileColumnListView @JvmOverloads constructor(
     private var fileColumnLongClickListener: FileColumnRow.FileLongClickListener? = null
 
     init {
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         recyclerView.adapter = adapter
         refresh.setOnRefreshListener {
             userAction.onRefresh()

@@ -1,6 +1,6 @@
 package com.mercandalli.android.apps.files.file_column_list
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
@@ -41,9 +41,9 @@ class FileColumnAdapter(
 
         override fun onCreateViewHolder(viewGroup: ViewGroup): VideoRowHolder {
             val videoRow = FileColumnRow(viewGroup.context)
-            videoRow.layoutParams = RecyclerView.LayoutParams(
-                    RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.WRAP_CONTENT)
+            videoRow.layoutParams = androidx.recyclerview.widget.RecyclerView.LayoutParams(
+                    androidx.recyclerview.widget.RecyclerView.LayoutParams.MATCH_PARENT,
+                    androidx.recyclerview.widget.RecyclerView.LayoutParams.WRAP_CONTENT)
             videoRow.setFileClickListener(fileColumnClickListener)
             return VideoRowHolder(videoRow)
         }
@@ -60,7 +60,7 @@ class FileColumnAdapter(
 
     private class VideoRowHolder(
             private val view: FileColumnRow) :
-            RecyclerView.ViewHolder(view) {
+            androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         fun bind(file: File, selectedPath: String?) {
             view.setFile(file, selectedPath)
         }

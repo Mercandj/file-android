@@ -1,7 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorRes
 
 interface MainActivityContract {
 

@@ -29,7 +29,7 @@
             android:paddingEnd="6dp"
             android:paddingStart="6dp">
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_file_paste"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -39,7 +39,7 @@
                 android:paddingStart="10dp"
                 android:src="@drawable/ic_content_paste_black_24dp" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_file_list"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -49,7 +49,7 @@
                 android:paddingStart="10dp"
                 android:src="@drawable/ic_view_list_black_24dp" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_file_column"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -59,7 +59,7 @@
                 android:paddingStart="10dp"
                 android:src="@drawable/ic_view_column_black_24dp" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_add"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -69,7 +69,7 @@
                 android:paddingStart="10dp"
                 android:src="@drawable/ic_add_black_24dp" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -79,7 +79,7 @@
                 android:paddingStart="10dp"
                 android:src="@drawable/ic_delete_black_24dp" />
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_share"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
