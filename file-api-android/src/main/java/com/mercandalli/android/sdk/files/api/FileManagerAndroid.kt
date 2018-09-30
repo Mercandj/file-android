@@ -3,8 +3,9 @@ package com.mercandalli.android.sdk.files.api
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
+import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
@@ -29,9 +30,9 @@ class FileManagerAndroid(
             return getFileChildren(path)
         }
         fileChildrenResultMap[path] = FileChildrenResult.createLoading(path)
-        launch(CommonPool) {
+        GlobalScope.launch(Dispatchers.Default) {
             val fileChildrenResult = loadFileChildrenSync(path)
-            launch(UI) {
+            GlobalScope.launch(Dispatchers.Main) {
                 fileChildrenResultMap[path] = fileChildrenResult
                 for (listener in fileChildrenResultListeners) {
                     listener.onFileChildrenResultChanged(path)
@@ -109,7 +110,5 @@ class FileManagerAndroid(
             val ioParentPath = ioFile.parent
             return if (ioParentPath == "") null else ioParentPath
         }
-
     }
-
 }
