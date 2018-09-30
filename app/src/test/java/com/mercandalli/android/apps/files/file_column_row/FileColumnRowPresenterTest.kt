@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.file_column_row
 
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.android.apps.files.theme.ThemeManager
@@ -26,9 +28,14 @@ class FileColumnRowPresenterTest {
     private var audioManager: AudioManager? = null
     @Mock
     private var themeManager: ThemeManager? = null
+    @DrawableRes
     private val drawableRightIconDirectoryDrawableRes: Int = 42
+    @DrawableRes
     private val drawableRightIconSoundDrawableRes: Int = 44
+    @ColorRes
     private val selectedTextColorRes: Int = 45
+    @ColorRes
+    private val selectedBackgroundColorRes: Int = 45
 
     @Before
     fun setup() {
@@ -73,7 +80,8 @@ class FileColumnRowPresenterTest {
                 themeManager!!,
                 drawableRightIconDirectoryDrawableRes,
                 drawableRightIconSoundDrawableRes,
-                selectedTextColorRes
+                selectedTextColorRes,
+                selectedBackgroundColorRes
         )
     }
 }

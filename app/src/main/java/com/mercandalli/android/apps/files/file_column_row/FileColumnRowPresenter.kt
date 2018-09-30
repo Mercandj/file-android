@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.file_column_row
 
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
@@ -14,9 +16,14 @@ class FileColumnRowPresenter(
         private val fileRenameManager: FileRenameManager,
         private val audioManager: AudioManager,
         private val themeManager: ThemeManager,
+        @DrawableRes
         private val drawableRightIconDirectoryDrawableRes: Int,
+        @DrawableRes
         private val drawableRightIconSoundDrawableRes: Int,
-        private val selectedTextColorRes: Int
+        @ColorRes
+        private val selectedTextColorRes: Int,
+        @ColorRes
+        private val selectedBackgroundColorRes: Int
 ) : FileColumnRowContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -44,6 +51,7 @@ class FileColumnRowPresenter(
         screen.setIcon(directory)
         selected = isSelected(file.path, selectedPath)
         screen.setRowSelected(selected)
+        syncWithCurrentTheme()
     }
 
     override fun onRowClicked() {
@@ -111,6 +119,7 @@ class FileColumnRowPresenter(
     private fun syncWithCurrentTheme() {
         val theme = themeManager.getTheme()
         screen.setTextColorRes(if (selected) selectedTextColorRes else theme.textPrimaryColorRes)
+        screen.setBackgroundColorRes(if (selected) selectedBackgroundColorRes else theme.cardBackgroundColorRes)
     }
 
     private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {

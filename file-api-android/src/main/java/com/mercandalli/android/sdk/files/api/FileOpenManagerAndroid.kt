@@ -1,14 +1,31 @@
 package com.mercandalli.android.sdk.files.api
 
 import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.FileZipManager
+import java.io.*
 
 class FileOpenManagerAndroid(
+        private val fileZipManager: FileZipManager,
         private val addOn: AddOn
 ) : FileOpenManager {
 
     override fun open(path: String, mime: String?) {
+        if (fileZipManager.isZip(path)) {
+            unzip(path)
+            return
+        }
         val mimeToUse = mime ?: extractMime(path)
         addOn.startActivity(path, mimeToUse)
+    }
+
+    private fun unzip(path: String) {
+        val file = File(path)
+        val parentPath = file.parentFile.absolutePath
+        val outputPath = createNewFolderPath(
+                parentPath,
+                file.name.toLowerCase().replace(".zip", "")
+        ).absolutePath
+        fileZipManager.unzip(path, outputPath)
     }
 
     companion object {
@@ -46,6 +63,22 @@ class FileOpenManagerAndroid(
                 }
             }
             return ""
+        }
+
+        private fun createNewFolderPath(
+                parentFolderPath: String,
+                folderName: String,
+                index: Int = 2
+        ): File {
+            val folderCandidate = java.io.File(parentFolderPath, "$folderName-$index")
+            if (folderCandidate.exists()) {
+                return createNewFolderPath(
+                        parentFolderPath,
+                        folderName,
+                        index + 1
+                )
+            }
+            return folderCandidate
         }
     }
 

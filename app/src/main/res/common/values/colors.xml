@@ -9,7 +9,7 @@
 
     <color name="toolbar_background_light">@color/color_primary</color>
     <color name="toolbar_title_light">@android:color/white</color>
-    <color name="window_background_light">@android:color/white</color>
+    <color name="window_background_light">#F0F0F0</color>
     <color name="text_primary_color_light">#353535</color>
     <color name="text_secondary_color_light">#7e7e7e</color>
     <color name="card_background_color_light">@android:color/white</color>

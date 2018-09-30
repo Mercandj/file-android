@@ -20,16 +20,16 @@ class FileModule(
 ) {
 
     private val mediaScanner: MediaScanner by lazy {
-        MediaScannerAndroid(object : MediaScannerAndroid.AddOn {
+        val addOn = object : MediaScannerAndroid.AddOn {
             override fun refreshSystemMediaScanDataBase(path: String) {
                 refreshSystemMediaScanDataBase(context, path)
             }
-        })
+        }
+        MediaScannerAndroid(addOn)
     }
 
-    private val permissionManager: PermissionManager by lazy {
-        PermissionManagerImpl(context, permissionRequestAddOn)
-    }
+    private val permissionManager: PermissionManager by lazy { PermissionManagerImpl(context, permissionRequestAddOn) }
+    private val fileZipManagerInternal: FileZipManager by lazy { FileZipManagerAndroid(mediaScanner) }
 
     fun createFileManager(): FileManager {
         val fileManagerAndroid = FileManagerAndroid(permissionManager)
@@ -64,7 +64,10 @@ class FileModule(
                 startActivity(context, intent)
             }
         }
-        return FileOpenManagerAndroid(addOn)
+        return FileOpenManagerAndroid(
+                fileZipManagerInternal,
+                addOn
+        )
     }
 
     fun createFileDeleteManager(): FileDeleteManager = FileDeleteManagerAndroid(

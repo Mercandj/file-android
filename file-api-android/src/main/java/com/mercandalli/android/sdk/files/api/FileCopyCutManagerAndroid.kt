@@ -1,8 +1,9 @@
 package com.mercandalli.android.sdk.files.api
 
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.GlobalScope
+import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 import java.io.File
 import java.io.FileInputStream
@@ -27,7 +28,7 @@ class FileCopyCutManagerAndroid(
     }
 
     override fun copy(pathInput: String, pathDirectoryOutput: String) {
-        launch(CommonPool) {
+        GlobalScope.launch(Dispatchers.Default) {
             copySync(pathInput, pathDirectoryOutput)
             val ioFileInput = java.io.File(pathInput)
             if (ioFileInput.isDirectory) {
@@ -36,7 +37,7 @@ class FileCopyCutManagerAndroid(
                 mediaScanner.refresh(ioFileInput.parentFile.absolutePath)
             }
             mediaScanner.refresh(pathDirectoryOutput)
-            launch(UI) {
+            GlobalScope.launch(Dispatchers.Main) {
                 cancelCopyCut()
                 for (listener in pasteListeners) {
                     listener.onPasteEnded(pathInput, pathDirectoryOutput)
@@ -54,7 +55,7 @@ class FileCopyCutManagerAndroid(
     }
 
     override fun cut(pathInput: String, pathDirectoryOutput: String) {
-        launch(CommonPool) {
+        GlobalScope.launch(Dispatchers.Default) {
             cutSync(pathInput, pathDirectoryOutput)
             val ioFileInput = java.io.File(pathInput)
             if (ioFileInput.isDirectory) {
@@ -63,7 +64,7 @@ class FileCopyCutManagerAndroid(
                 mediaScanner.refresh(ioFileInput.parentFile.absolutePath)
             }
             mediaScanner.refresh(pathDirectoryOutput)
-            launch(UI) {
+            GlobalScope.launch(Dispatchers.Main) {
                 cancelCopyCut()
                 for (listener in pasteListeners) {
                     listener.onPasteEnded(pathInput, pathDirectoryOutput)
@@ -158,20 +159,19 @@ class FileCopyCutManagerAndroid(
                         copySync(child.absolutePath, copy.absolutePath + File.separator)
                     }
                 } else {
-                    val `in` = FileInputStream(pathInput)
-                    val out = FileOutputStream(outputUrl)
+                    val inputStream = FileInputStream(pathInput)
+                    val outputStream = FileOutputStream(outputUrl)
 
                     val buffer = ByteArray(1024)
-                    var read: Int = `in`.read(buffer)
+                    var read: Int = inputStream.read(buffer)
                     while (read != -1) {
-                        out.write(buffer, 0, read)
-                        read = `in`.read(buffer)
+                        outputStream.write(buffer, 0, read)
+                        read = inputStream.read(buffer)
                     }
-                    `in`.close()
-                    out.flush()
-                    out.close()
+                    inputStream.close()
+                    outputStream.flush()
+                    outputStream.close()
                 }
-
             } catch (e: Exception) {
 
             }

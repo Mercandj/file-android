@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_column_row
 
+import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
 
 interface FileColumnRowContract {
@@ -51,6 +52,8 @@ interface FileColumnRowContract {
 
         fun showRenamePrompt(fileName: String)
 
-        fun setTextColorRes(textColorRes: Int)
+        fun setTextColorRes(@ColorRes colorRes: Int)
+
+        fun setBackgroundColorRes(@ColorRes colorRes: Int)
     }
 }

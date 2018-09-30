@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -74,9 +75,6 @@ class FileColumnRow @JvmOverloads constructor(
 
     override fun setRowSelected(selected: Boolean) {
         if (selected) {
-            val selectedBackgroundColor = ContextCompat.getColor(
-                    context, R.color.view_file_row_selected_background)
-            setBackgroundColor(selectedBackgroundColor)
             val selectedTitleColor = ContextCompat.getColor(
                     context, R.color.view_file_row_selected_title)
             title.setTextColor(selectedTitleColor)
@@ -84,9 +82,6 @@ class FileColumnRow @JvmOverloads constructor(
             arrayRight.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
             title.isSelected = true
         } else {
-            val backgroundColor = ContextCompat.getColor(
-                    context, R.color.view_file_row_background)
-            setBackgroundColor(backgroundColor)
             val titleColor = ContextCompat.getColor(context, R.color.view_file_row_title)
             title.setTextColor(titleColor)
             arrayRight.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN)
@@ -139,8 +134,14 @@ class FileColumnRow @JvmOverloads constructor(
         )
     }
 
-    override fun setTextColorRes(textColorRes: Int) {
-        title.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        title.setTextColor(color)
+    }
+
+    override fun setBackgroundColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        setBackgroundColor(color)
     }
 
     fun setFile(file: File, selectedPath: String?) {
@@ -180,7 +181,8 @@ class FileColumnRow @JvmOverloads constructor(
                 themeManager,
                 R.drawable.ic_play_arrow_black_24dp,
                 R.drawable.ic_volume_up_black_24dp,
-                R.color.view_file_row_selected_title
+                R.color.view_file_row_selected_title,
+                R.color.view_file_row_selected_background
         )
     }
 
