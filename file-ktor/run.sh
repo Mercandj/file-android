@@ -38,7 +38,7 @@ log_line
 log_jump
 log_jump
 
-BASEDIR=$(dirname "$0")
+BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 log_d "Script base directory: $BASEDIR"
 log_jump
 
@@ -46,8 +46,8 @@ pushd "$BASEDIR"
 
     log_jump
 
-    log_d "Remove folder $BASEDIR/build/file-ktor.jar"
-    rm "./build/file-ktor.jar"
+    log_d "Remove file $BASEDIR/build/file-ktor.jar"
+    rm -f "./build/file-ktor.jar"
     log_jump
 
     bash ./gradlew app:fatJar
