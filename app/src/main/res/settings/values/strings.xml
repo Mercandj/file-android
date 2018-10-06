@@ -17,4 +17,10 @@
     <string name="view_settings_developer_activation_password">Password</string>
     <string name="view_settings_developer_activation_ok">OK</string>
     <string name="view_settings_developer_activation_cancel">Cancel</string>
+
+    <string name="view_settings_developer_label">Developer</string>
+    <string name="view_settings_developer_activation_label">Developer Mode</string>
+    <string name="view_settings_developer_activation_sublabel">Developer mode enable</string>
+    <string name="view_settings_developer_online_label">Online</string>
+    <string name="view_settings_developer_online_sublabel">Current user is %1$s</string>
 </resources>

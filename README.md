@@ -15,10 +15,9 @@
     width="220"/>
 </a>
 
-
 ## Run the server
 
-
+* ```sudo ./file-ktor/run.sh```
 
 ## Commit rules
 

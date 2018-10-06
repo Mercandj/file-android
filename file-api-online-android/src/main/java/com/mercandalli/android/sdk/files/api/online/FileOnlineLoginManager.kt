@@ -4,6 +4,8 @@ interface FileOnlineLoginManager {
 
     fun set(login: String, password: String)
 
+    fun getLogin(): String?
+
     fun hasToken(): Boolean
 
     fun createToken(): String
