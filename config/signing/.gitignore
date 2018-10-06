@@ -2,3 +2,6 @@
 filespace.jks
 
 filespace-signing.gradle
+
+*.jks
+*.gradle

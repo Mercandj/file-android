@@ -13,6 +13,8 @@ apply plugin: 'io.fabric'
 // Signing production apk with rootProject.ext.releaseFileSpaceSigningConfig data
 if (file("../config/signing/filespace-signing.gradle").exists()) {
     apply from: '../config/signing/filespace-signing.gradle'
+} else {
+    apply from: '../config/signing/filespace-signing-template.gradle'
 }
 
 // Lint, pmd...
