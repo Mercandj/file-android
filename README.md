@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Mercandj/file-android.svg?branch=master)](https://travis-ci.org/Mercandj/file-android)
+
 # File manager on Android
 
 <p align="center">
