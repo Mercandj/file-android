@@ -1,9 +1,9 @@
 package com.mercandalli.android.apps.files.file_list
 
 import android.view.ViewGroup
-import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
-import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.sdk.files.api.File
 

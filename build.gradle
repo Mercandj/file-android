@@ -2,14 +2,14 @@
 
 buildscript {
     ext.kotlin_version = '1.2.71'
-    ext.kotlin_coroutines_version = '0.27.0'
+    ext.kotlin_coroutines_version = '0.30.0'
     repositories {
         google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha12'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // Check dependencies.
@@ -35,8 +35,8 @@ task clean(type: Delete) {
 }
 
 ext {
-    // Why 1_XXX_XX_XX? -> Previous support of density split
-    appVersionCode = 1_001_00_09
+    // Why 1_00_X_XX_XX? -> Previous support of density split
+    appVersionCode = 1_00_1_00_09
     appVersionName = "1.00.09"
 
     compileSdkVersion = 28

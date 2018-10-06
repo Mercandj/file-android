@@ -2,9 +2,9 @@ package com.mercandalli.android.apps.files.file_column_list
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
-import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.sdk.files.api.File
 

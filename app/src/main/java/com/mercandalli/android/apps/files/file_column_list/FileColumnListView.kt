@@ -4,12 +4,11 @@ import android.content.Context
 import android.os.Environment
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -21,7 +20,7 @@ class FileColumnListView @JvmOverloads constructor(
 
     private val view = View.inflate(context, R.layout.view_file_column_list, this)
     private val refresh: SwipeRefreshLayout = view.findViewById(R.id.view_file_column_list_refresh)
-    private val recyclerView: androidx.recyclerview.widget.RecyclerView = view.findViewById(R.id.view_file_column_list_recycler_view)
+    private val recyclerView: RecyclerView = view.findViewById(R.id.view_file_column_list_recycler_view)
     private val emptyTextView: TextView = view.findViewById(R.id.view_file_column_list_empty_view)
     private val errorTextView: TextView = view.findViewById(R.id.view_file_column_list_error)
     private val adapter = FileColumnAdapter(createFileClickListener())
