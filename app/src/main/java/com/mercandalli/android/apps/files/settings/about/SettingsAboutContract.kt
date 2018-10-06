@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.settings.about
 
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 
 interface SettingsAboutContract {
 
@@ -14,9 +15,7 @@ interface SettingsAboutContract {
 
         fun onTeamAppsClicked()
 
-        fun onThemeRowClicked(checked: Boolean)
-
-        fun onThemeCheckboxCheckedChange(checked: Boolean)
+        fun onVersionClicked()
     }
 
     interface Screen {
@@ -30,5 +29,7 @@ interface SettingsAboutContract {
         fun setTitlesTextColorRes(@ColorRes colorRes: Int)
 
         fun setSubtitlesTextColorRes(@ColorRes colorRes: Int)
+
+        fun showSnackbar(@StringRes messageStringRes: Int, duration: Int)
     }
 }

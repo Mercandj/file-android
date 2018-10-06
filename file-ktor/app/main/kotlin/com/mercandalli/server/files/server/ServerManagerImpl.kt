@@ -41,8 +41,8 @@ class ServerManagerImpl(
                 }
                 static {
                     staticRootFolder = File(rootServerPath)
-                    files("server-static")
-                    default("server-static/index.html")
+                    files("static")
+                    default("static/index.html")
                 }
             }
         }

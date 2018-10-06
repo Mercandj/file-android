@@ -2,28 +2,20 @@ package com.mercandalli.android.apps.files.main
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioModule
-import com.mercandalli.android.apps.files.audio.AudioQueueManager
-import com.mercandalli.android.apps.files.network.Network
+import com.mercandalli.android.apps.files.dialog.DialogModule
 import com.mercandalli.android.apps.files.network.NetworkModule
-import com.mercandalli.android.apps.files.note.NoteManager
 import com.mercandalli.android.apps.files.note.NoteModule
-import com.mercandalli.android.apps.files.notification.NotificationAudioManager
 import com.mercandalli.android.apps.files.notification.NotificationModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
-import com.mercandalli.android.apps.files.settings.SettingsManager
 import com.mercandalli.android.apps.files.settings.SettingsModule
-import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.theme.ThemeModule
-import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.android.apps.files.version.VersionModule
+import com.mercandalli.android.apps.files.hash.HashModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 import com.mercandalli.android.sdk.files.api.online.FileOnlineApiNetwork
 import com.mercandalli.android.sdk.files.api.online.FileOnlineGraph
-import com.mercandalli.sdk.files.api.*
-import okhttp3.OkHttpClient
 
 class ApplicationGraph(
         private val context: Context
@@ -35,6 +27,7 @@ class ApplicationGraph(
     private val audioManagerInternal by lazy { audioModuleInternal.createAudioManager() }
     private val audioQueueManagerInternal by lazy { audioModuleInternal.createAudioQueueManager(audioManagerInternal) }
     private val audioModuleInternal by lazy { AudioModule(fileSortManagerInternal) }
+    private val dialogManagerInternal by lazy { DialogModule(context).createDialogManager() }
     private val fileManagerInternal by lazy { fileModule.createFileManager() }
     private val fileOpenManagerInternal by lazy { fileModule.createFileOpenManager() }
     private val fileDeleteManagerInternal by lazy { fileModule.createFileDeleteManager() }
@@ -44,6 +37,7 @@ class ApplicationGraph(
     private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
     private val fileRenameManagerInternal by lazy { fileModule.createFileRenameManager() }
     private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
+    private val hashManagerInternal by lazy { HashModule(context).createHashManager() }
     private val network = networkModule.createNetwork()
     private val noteManagerInternal by lazy { noteModule.createNoteManager() }
     private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
@@ -61,104 +55,40 @@ class ApplicationGraph(
 
     companion object {
 
-        @JvmStatic
         @SuppressLint("StaticFieldLeak")
         private var graph: ApplicationGraph? = null
 
-        @JvmStatic
-        fun getAudioManager(): AudioManager {
-            return graph!!.audioManagerInternal
-        }
+        fun getAudioManager() = graph!!.audioManagerInternal
+        fun getAudioQueueManager() = graph!!.audioQueueManagerInternal
+        fun getDialogManager() = graph!!.dialogManagerInternal
+        fun getFileManager() = graph!!.fileManagerInternal
+        fun getFileOpenManager() = graph!!.fileOpenManagerInternal
+        fun getFileDeleteManager() = graph!!.fileDeleteManagerInternal
+        fun getFileCopyCutManager() = graph!!.fileCopyCutManagerInternal
+        fun getFileCreatorManager() = graph!!.fileCreatorManagerInternal
+        fun getFileShareManager() = graph!!.fileShareManagerInternal
+        fun getFileRenameManager() = graph!!.fileRenameManagerInternal
+        fun getFileSortManager() = graph!!.fileSortManagerInternal
+        fun getNetwork() = graph!!.network
+        fun getHashManager() = graph!!.hashManagerInternal
+        fun getNoteManager() = graph!!.noteManagerInternal
+        fun getNotificationAudioManager() = graph!!.notificationAudioManagerInternal
+        fun getOkHttpClientLazy() = graph!!.okHttpClientLazy
+        fun getSettingsManager() = graph!!.settingsManagerInternal
+        fun getThemeManager() = graph!!.themeManagerInternal
+        fun getVersionManager() = graph!!.versionManagerInternal
 
-        @JvmStatic
-        fun getAudioQueueManager(): AudioQueueManager {
-            return graph!!.audioQueueManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileManager(): FileManager {
-            return graph!!.fileManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileOpenManager(): FileOpenManager {
-            return graph!!.fileOpenManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileDeleteManager(): FileDeleteManager {
-            return graph!!.fileDeleteManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileCopyCutManager(): FileCopyCutManager {
-            return graph!!.fileCopyCutManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileCreatorManager(): FileCreatorManager {
-            return graph!!.fileCreatorManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileShareManager(): FileShareManager {
-            return graph!!.fileShareManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileRenameManager(): FileRenameManager {
-            return graph!!.fileRenameManagerInternal
-        }
-
-        @JvmStatic
-        fun getFileSortManager(): FileSortManager {
-            return graph!!.fileSortManagerInternal
-        }
-
-        @JvmStatic
-        fun getNetwork(): Network {
-            return graph!!.network
-        }
-
-        @JvmStatic
-        fun getNoteManager(): NoteManager {
-            return graph!!.noteManagerInternal
-        }
-
-        @JvmStatic
-        fun getNotificationAudioManager(): NotificationAudioManager {
-            return graph!!.notificationAudioManagerInternal
-        }
-
-        @JvmStatic
-        fun getOkHttpClientLazy(): Lazy<OkHttpClient> {
-            return graph!!.okHttpClientLazy
-        }
-
-        @JvmStatic
-        fun getSettingsManager(): SettingsManager {
-            return graph!!.settingsManagerInternal
-        }
-
-        @JvmStatic
-        fun getThemeManager(): ThemeManager {
-            return graph!!.themeManagerInternal
-        }
-
-        @JvmStatic
-        fun getVersionManager(): VersionManager {
-            return graph!!.versionManagerInternal
-        }
-
-        @JvmStatic
         fun init(context: Context) {
             if (graph == null) {
                 graph = ApplicationGraph(context.applicationContext)
-                val fileOnlineApiNetwork = object : FileOnlineApiNetwork {
-                    override fun requestSync(url: String, headers: Map<String, String>) = getNetwork().requestSync(url, headers)
-                }
+                val fileOnlineApiNetwork = createFileOnlineApiNetwork()
                 FileOnlineGraph.init(fileOnlineApiNetwork)
             }
+        }
+
+        private fun createFileOnlineApiNetwork() = object : FileOnlineApiNetwork {
+            override fun requestSync(url: String, headers: Map<String, String>) =
+                    getNetwork().requestSync(url, headers)
         }
     }
 }

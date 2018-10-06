@@ -1,18 +1,19 @@
 package com.mercandalli.android.apps.files.settings.about
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.view.View
-import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
@@ -32,6 +33,9 @@ class SettingsAboutView @JvmOverloads constructor(
         }
         findViewById<View>(R.id.view_settings_team_apps).setOnClickListener {
             userAction.onTeamAppsClicked()
+        }
+        versionTitle.setOnClickListener {
+            userAction.onVersionClicked()
         }
     }
 
@@ -74,22 +78,37 @@ class SettingsAboutView @JvmOverloads constructor(
         versionSubtitle.setTextColor(color)
     }
 
+    override fun showSnackbar(@StringRes messageStringRes: Int, duration: Int) {
+        val activity = context as Activity
+        val view = activity.window.decorView.findViewById<View>(android.R.id.content)
+        Snackbar.make(view, messageStringRes, duration).show()
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : SettingsAboutContract.UserAction {
             override fun onAttached() {}
             override fun onDetached() {}
             override fun onRateClicked() {}
             override fun onTeamAppsClicked() {}
-            override fun onThemeRowClicked(checked: Boolean) {}
-            override fun onThemeCheckboxCheckedChange(checked: Boolean) {}
+            override fun onVersionClicked() {}
         }
     } else {
         val versionManager = ApplicationGraph.getVersionManager()
         val themeManager = ApplicationGraph.getThemeManager()
+        val dialogManager = ApplicationGraph.getDialogManager()
+        val settingsManager = ApplicationGraph.getSettingsManager()
+        val hashManager = ApplicationGraph.getHashManager()
+        val addOn = object : SettingsAboutPresenter.AddOn {
+            override fun getCurrentTimeMillis() = System.currentTimeMillis()
+        }
         SettingsAboutPresenter(
                 this,
                 versionManager,
-                themeManager
+                themeManager,
+                dialogManager,
+                settingsManager,
+                hashManager,
+                addOn
         )
     }
 }

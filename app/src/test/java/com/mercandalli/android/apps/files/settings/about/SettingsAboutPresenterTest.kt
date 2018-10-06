@@ -1,7 +1,7 @@
 package com.mercandalli.android.apps.files.settings.about
 
-import com.mercandalli.android.apps.files.settings.about.SettingsAboutContract
-import com.mercandalli.android.apps.files.settings.about.SettingsAboutPresenter
+import com.mercandalli.android.apps.files.dialog.DialogManager
+import com.mercandalli.android.apps.files.settings.SettingsManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.version.VersionManager
 import org.junit.Before
@@ -18,6 +18,10 @@ class SettingsAboutPresenterTest {
     private val versionManager: VersionManager? = null
     @Mock
     private val themeManager: ThemeManager? = null
+    @Mock
+    private val dialogManager: DialogManager? = null
+    @Mock
+    private val settingsManager: SettingsManager? = null
 
     @Before
     fun setup() {
@@ -65,7 +69,9 @@ class SettingsAboutPresenterTest {
         return SettingsAboutPresenter(
                 screen!!,
                 versionManager!!,
-                themeManager!!
+                themeManager!!,
+                dialogManager!!,
+                settingsManager!!
         )
     }
 }

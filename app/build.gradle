@@ -68,6 +68,7 @@ android {
             res.srcDirs = [
                     'src/main/res/bottom_bar',
                     'src/main/res/common',
+                    'src/main/res/dialog',
                     'src/main/res/file_column_detail',
                     'src/main/res/file_column_horizontal_lists',
                     'src/main/res/file_column_list',

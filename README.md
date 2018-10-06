@@ -15,6 +15,11 @@
     width="220"/>
 </a>
 
+
+## Run the server
+
+
+
 ## Commit rules
 
 In order to have a clean commit list and to easily find feature of a commit (goal, fix bug...), the commit message should respect some rules.
@@ -28,7 +33,6 @@ Commit messages are important. They are the only way to give context to the chan
     * :art: `:art:` UI commit, readme, all that is visible.
     * :recycle: `:recycle:` Clean, reformat, refactor, ortho, typo...
     * :seedling: `:seedling:` New feature, first commit.
-    * :skeleton: `:skeleton:` Architecture/skeleton of a feature.
 * Optional: Write the `Why`, the `Reason` of your commit in the message description.
 
 Do our future selves a favour and start writing better commit messages now :)

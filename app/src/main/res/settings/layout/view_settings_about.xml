@@ -31,7 +31,10 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/default_space_3"
                 android:layout_marginEnd="@dimen/default_space_3"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center"
+                android:paddingStart="@dimen/default_space"
+                android:paddingEnd="@dimen/default_space"
                 android:textSize="@dimen/text_size_xxl"
                 android:textStyle="bold"
                 tools:text="Version 1.00.00" />

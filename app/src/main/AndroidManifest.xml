@@ -31,6 +31,11 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
 
+        <activity
+            android:name=".dialog.DialogActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+
         <receiver
             android:name=".notification.NotificationAudioReceiver"
             android:exported="false" />
