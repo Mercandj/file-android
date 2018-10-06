@@ -46,24 +46,25 @@ pushd "$BASEDIR"
 
     log_jump
 
-    log_d "Remove folder $BASEDIR/build"
-    rm -r "./build"
-    log_jump
-
-    log_d "Remove folder $BASEDIR/app/build"
-    rm -r "./app/build"
-    log_jump
-
-    log_d "Remove folder $BASEDIR/app/out"
-    rm -r "./app/out"
+    log_d "Remove folder $BASEDIR/build/file-ktor.jar"
+    rm "./build/file-ktor.jar"
     log_jump
 
     bash ./gradlew app:fatJar
 
-    pushd build
-        git clone https://github.com/Mercandj/mercandj.github.io.git
-        mv mercandj.github.io static
-    popd
+    if [ -d "$BASEDIR/build/static" ]; then
+        log_d "Pull portfolio GitHub project"
+        pushd "$BASEDIR/build/static"
+            git pull
+        popd
+    else
+        log_d "Clone portfolio GitHub project"
+        mkdir -p build
+        pushd build
+            git clone https://github.com/Mercandj/mercandj.github.io.git
+            mv mercandj.github.io static
+        popd
+    fi
 
     java -jar ./build/file-ktor.jar
 

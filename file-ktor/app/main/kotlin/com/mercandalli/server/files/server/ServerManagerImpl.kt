@@ -48,8 +48,9 @@ class ServerManagerImpl(
         }
         server = embeddedServer(
                 Netty,
-                port = 8080,
-                module = module
+                port = 80,
+                module = module,
+                host = "127.0.0.1"
         )
     }
 
