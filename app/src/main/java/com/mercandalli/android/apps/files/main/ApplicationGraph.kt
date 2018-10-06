@@ -5,6 +5,8 @@ import android.content.Context
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioModule
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
+import com.mercandalli.android.apps.files.network.Network
+import com.mercandalli.android.apps.files.network.NetworkModule
 import com.mercandalli.android.apps.files.note.NoteManager
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.notification.NotificationAudioManager
@@ -18,27 +20,35 @@ import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
+import com.mercandalli.android.sdk.files.api.online.FileOnlineApiNetwork
+import com.mercandalli.android.sdk.files.api.online.FileOnlineGraph
 import com.mercandalli.sdk.files.api.*
+import okhttp3.OkHttpClient
 
 class ApplicationGraph(
         private val context: Context
 ) {
+    private val fileModule by lazy { FileModule(context, createPermissionRequestAddOn()) }
+    private val networkModule by lazy { NetworkModule() }
+    private val noteModule by lazy { NoteModule(context) }
 
     private val audioManagerInternal by lazy { audioModuleInternal.createAudioManager() }
     private val audioQueueManagerInternal by lazy { audioModuleInternal.createAudioQueueManager(audioManagerInternal) }
     private val audioModuleInternal by lazy { AudioModule(fileSortManagerInternal) }
-    private val fileManagerInternal by lazy { fileModuleInternal.createFileManager() }
-    private val fileOpenManagerInternal by lazy { fileModuleInternal.createFileOpenManager() }
-    private val fileDeleteManagerInternal by lazy { fileModuleInternal.createFileDeleteManager() }
-    private val fileCopyCutManagerInternal by lazy { fileModuleInternal.createFileCopyCutManager() }
-    private val fileCreatorManagerInternal by lazy { fileModuleInternal.createFileCreatorManager() }
-    private val fileShareManagerInternal by lazy { fileModuleInternal.createFileShareManager() }
-    private val fileRenameManagerInternal by lazy { fileModuleInternal.createFileRenameManager() }
-    private val fileSortManagerInternal by lazy { fileModuleInternal.createFileSortManager() }
-    private val fileModuleInternal by lazy { FileModule(context, createPermissionRequestAddOn()) }
-    private val noteManagerInternal by lazy { NoteModule(context).createNoteManager() }
+    private val fileManagerInternal by lazy { fileModule.createFileManager() }
+    private val fileOpenManagerInternal by lazy { fileModule.createFileOpenManager() }
+    private val fileDeleteManagerInternal by lazy { fileModule.createFileDeleteManager() }
+    private val fileCopyCutManagerInternal by lazy { fileModule.createFileCopyCutManager() }
+    private val fileCreatorManagerInternal by lazy { fileModule.createFileCreatorManager() }
+    private val fileOnlineManagerInternal by lazy { FileOnlineGraph.getFileOnlineManager() }
+    private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
+    private val fileRenameManagerInternal by lazy { fileModule.createFileRenameManager() }
+    private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
+    private val network = networkModule.createNetwork()
+    private val noteManagerInternal by lazy { noteModule.createNoteManager() }
     private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
     private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
+    private val okHttpClientLazy = networkModule.createOkHttpClientLazy()
     private val settingsManagerInternal by lazy { SettingsModule().createSettingsManager() }
     private val themeManagerInternal by lazy { ThemeModule().createThemeManager(context) }
     private val versionManagerInternal by lazy { VersionModule(context).createVersionManager() }
@@ -106,6 +116,11 @@ class ApplicationGraph(
         }
 
         @JvmStatic
+        fun getNetwork(): Network {
+            return graph!!.network
+        }
+
+        @JvmStatic
         fun getNoteManager(): NoteManager {
             return graph!!.noteManagerInternal
         }
@@ -113,6 +128,11 @@ class ApplicationGraph(
         @JvmStatic
         fun getNotificationAudioManager(): NotificationAudioManager {
             return graph!!.notificationAudioManagerInternal
+        }
+
+        @JvmStatic
+        fun getOkHttpClientLazy(): Lazy<OkHttpClient> {
+            return graph!!.okHttpClientLazy
         }
 
         @JvmStatic
@@ -134,6 +154,10 @@ class ApplicationGraph(
         fun init(context: Context) {
             if (graph == null) {
                 graph = ApplicationGraph(context.applicationContext)
+                val fileOnlineApiNetwork = object : FileOnlineApiNetwork {
+                    override fun requestSync(url: String, headers: Map<String, String>) = getNetwork().requestSync(url, headers)
+                }
+                FileOnlineGraph.init(fileOnlineApiNetwork)
             }
         }
     }

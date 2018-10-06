@@ -122,6 +122,7 @@ kotlin {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':file-api-android')
+    implementation project(':file-api-online-android')
 
     // Language
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -136,6 +137,11 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
+
+    // Third party - Network
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.okhttp:okhttp-urlconnection:2.7.5"
 
     // Third party - UI
     implementation 'com.hannesdorfmann:adapterdelegates4:4.0.0'

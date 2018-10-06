@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.appVersionCode
+        versionName rootProject.ext.appVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        androidTest.java.srcDir file('src/androidTestUnit/java')
+        androidTest.assets.srcDir file('src/androidTestUnit/assets')
+        androidTest.res.srcDir file('src/androidTestUnit/res')
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':file-api')
+
+    // Language
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+
+    implementation "androidx.appcompat:appcompat:1.0.0"
+    implementation "androidx.annotation:annotation:1.0.0"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.json:json:20180813'
+
+    // Third party - Network
+    androidTestImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    androidTestImplementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    androidTestImplementation "com.squareup.okhttp:okhttp-urlconnection:2.7.5"
+
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta01'
+    androidTestImplementation 'androidx.test:rules:1.1.0-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta01'
+    androidTestImplementation "androidx.annotation:annotation:1.0.0"
+}
+
+repositories {
+    mavenCentral()
+}
