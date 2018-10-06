@@ -1,0 +1,52 @@
+# https://gist.github.com/harmittaa/7d3c51041ffd0e54cda9807e95593309
+# https://medium.com/@harmittaa/travis-ci-android-example-357f6e632fc4
+# https://docs.travis-ci.com/user/languages/android/
+# https://github.com/Countly/countly-sdk-android/blob/master/.travis.yml
+
+language: android
+sudo: required
+jdk: oraclejdk8
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
+
+env:
+  global:
+  - ANDROID_API_LEVEL=28
+  - ANDROID_BUILD_TOOLS=28.0.3
+
+before_install:
+- yes | sdkmanager "platforms;android-28"
+
+android:
+  components:
+  - tools
+  - platform-tools
+  - tools # again to get latest tools
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API_LEVEL
+  - extra-android-support
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-$ANDROID_API_LEVEL
+  - extra
+
+script:
+- echo "jm/debug [Gradle][app] clean"
+- "./gradlew app:clean"
+- echo "jm/debug [Gradle][app] assembleDebug"
+- "./gradlew app:assembleDebug"
+- echo "jm/debug [Gradle][app] Check"
+- "./gradlew app:check"
+
+after_failure:
+- echo "jm/debug ERROR - lint"
+- cat $TRAVIS_BUILD_DIR/app/build/reports/lint-results.xml
