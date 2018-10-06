@@ -1,14 +1,14 @@
-package com.mercandalli.android.apps.files.settings
+package com.mercandalli.android.apps.files.settings.about
 
 import com.mercandalli.android.apps.files.theme.DarkTheme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.version.VersionManager
 
-class SettingsPresenter(
-        private val screen: SettingsContract.Screen,
+class SettingsAboutPresenter(
+        private val screen: SettingsAboutContract.Screen,
         versionManager: VersionManager,
         private val themeManager: ThemeManager
-) : SettingsContract.UserAction {
+) : SettingsAboutContract.UserAction {
 
     private val themeListener = createThemeListener()
 
@@ -44,14 +44,13 @@ class SettingsPresenter(
 
     private fun syncWithCurrentTheme() {
         val theme = themeManager.getTheme()
-        screen.setThemeCheckboxChecked(theme is DarkTheme)
         screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)
         screen.setTitlesTextColorRes(theme.textPrimaryColorRes)
         screen.setSubtitlesTextColorRes(theme.textSecondaryColorRes)
     }
 
-    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
-        override fun onCurrentThemeChanged() {
+    private fun createThemeListener() = object : ThemeManager.ThemeListener {
+        override fun onThemeChanged() {
             syncWithCurrentTheme()
         }
     }

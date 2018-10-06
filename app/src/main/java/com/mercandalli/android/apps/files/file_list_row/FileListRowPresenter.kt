@@ -112,8 +112,8 @@ class FileListRowPresenter(
         screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)
     }
 
-    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
-        override fun onCurrentThemeChanged() {
+    private fun createThemeListener() = object : ThemeManager.ThemeListener {
+        override fun onThemeChanged() {
             syncWithCurrentTheme()
         }
     }

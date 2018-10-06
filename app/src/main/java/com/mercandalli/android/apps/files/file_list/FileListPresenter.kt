@@ -102,8 +102,8 @@ class FileListPresenter(
         screen.setErrorTextColorRes(theme.textSecondaryColorRes)
     }
 
-    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
-        override fun onCurrentThemeChanged() {
+    private fun createThemeListener() = object : ThemeManager.ThemeListener {
+        override fun onThemeChanged() {
             syncWithCurrentTheme()
         }
     }

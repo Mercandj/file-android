@@ -15,8 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:layout_marginEnd="@dimen/default_space_2"
             android:layout_marginStart="@dimen/default_space_2"
+            android:layout_marginEnd="@dimen/default_space_2"
             android:text="FileSpace"
             android:textColor="@color/toolbar_title_light"
             android:textSize="@dimen/text_size_xl" />
@@ -26,8 +26,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:orientation="horizontal"
-            android:paddingEnd="6dp"
-            android:paddingStart="6dp">
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_file_paste"
@@ -35,8 +35,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
-                android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_content_paste_black_24dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -45,8 +45,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
-                android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_view_list_black_24dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -55,8 +55,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
-                android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_view_column_black_24dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -65,8 +65,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
-                android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_add_black_24dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -75,8 +75,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
-                android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_delete_black_24dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -85,8 +85,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="?android:selectableItemBackground"
-                android:paddingEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:src="@drawable/ic_share_black_24dp" />
 
         </LinearLayout>
@@ -109,16 +109,16 @@
         android:id="@+id/activity_main_note"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_bar_height"
         android:layout_marginTop="@dimen/toolbar_height"
+        android:layout_marginBottom="@dimen/bottom_bar_height"
         android:visibility="gone" />
 
     <com.mercandalli.android.apps.files.settings.SettingsView
         android:id="@+id/activity_main_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_bar_height"
         android:layout_marginTop="@dimen/toolbar_height"
+        android:layout_marginBottom="@dimen/bottom_bar_height"
         android:visibility="gone" />
 
     <eightbitlab.com.blurview.BlurView

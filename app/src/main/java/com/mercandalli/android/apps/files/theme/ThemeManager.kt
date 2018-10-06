@@ -8,11 +8,11 @@ interface ThemeManager {
 
     fun isDarkEnable(): Boolean
 
-    fun registerThemeListener(listener: OnCurrentThemeChangeListener)
+    fun registerThemeListener(listener: ThemeListener)
 
-    fun unregisterThemeListener(listener: OnCurrentThemeChangeListener)
+    fun unregisterThemeListener(listener: ThemeListener)
 
-    interface OnCurrentThemeChangeListener {
-        fun onCurrentThemeChanged()
+    interface ThemeListener {
+        fun onThemeChanged()
     }
 }

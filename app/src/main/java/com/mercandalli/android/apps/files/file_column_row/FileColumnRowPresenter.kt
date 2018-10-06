@@ -122,8 +122,8 @@ class FileColumnRowPresenter(
         screen.setBackgroundColorRes(if (selected) selectedBackgroundColorRes else theme.cardBackgroundColorRes)
     }
 
-    private fun createThemeListener() = object : ThemeManager.OnCurrentThemeChangeListener {
-        override fun onCurrentThemeChanged() {
+    private fun createThemeListener() = object : ThemeManager.ThemeListener {
+        override fun onThemeChanged() {
             syncWithCurrentTheme()
         }
     }

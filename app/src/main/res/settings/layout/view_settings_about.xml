@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.ScrollView">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/view_settings_version_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/settings_horizontal_margins"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/settings_horizontal_margins"
+        android:layout_marginBottom="@dimen/default_space"
+        app:cardCornerRadius="@dimen/settings_card_radius">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="14dp"
+            android:paddingBottom="4dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/view_settings_version_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/default_space_3"
+                android:layout_marginEnd="@dimen/default_space_3"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_xxl"
+                android:textStyle="bold"
+                tools:text="Version 1.00.00" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/view_settings_version_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/default_space_3"
+                android:layout_marginTop="@dimen/default_space_2"
+                android:layout_marginEnd="@dimen/default_space_3"
+                android:gravity="center"
+                android:text="@string/view_settings_description"
+                android:textSize="@dimen/text_size_l" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/view_settings_rate"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="200dp"
+                android:layout_height="36dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="@dimen/default_space_3"
+                android:layout_marginTop="@dimen/default_space_2"
+                android:layout_marginEnd="@dimen/default_space_3"
+                android:layout_marginBottom="@dimen/default_space"
+                android:background="@drawable/bg_default_btn"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/view_settings_rate_text️"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_l_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/view_settings_team_apps"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="200dp"
+                android:layout_height="36dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="@dimen/default_space_3"
+                android:layout_marginEnd="@dimen/default_space_3"
+                android:layout_marginBottom="@dimen/default_space_1_5"
+                android:background="@drawable/bg_default_btn"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/view_settings_team_apps_text"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_l_5" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</merge>

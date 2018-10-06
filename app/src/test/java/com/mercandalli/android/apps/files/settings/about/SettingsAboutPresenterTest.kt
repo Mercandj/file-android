@@ -1,5 +1,7 @@
-package com.mercandalli.android.apps.files.settings
+package com.mercandalli.android.apps.files.settings.about
 
+import com.mercandalli.android.apps.files.settings.about.SettingsAboutContract
+import com.mercandalli.android.apps.files.settings.about.SettingsAboutPresenter
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.version.VersionManager
 import org.junit.Before
@@ -8,10 +10,10 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class SettingsPresenterTest {
+class SettingsAboutPresenterTest {
 
     @Mock
-    private val screen: SettingsContract.Screen? = null
+    private val screen: SettingsAboutContract.Screen? = null
     @Mock
     private val versionManager: VersionManager? = null
     @Mock
@@ -31,7 +33,7 @@ class SettingsPresenterTest {
         presenter.onRateClicked()
 
         // Then
-        Mockito.verify(screen)!!.openUrl(SettingsPresenter.PLAY_STORE_URL_FILESPACE)
+        Mockito.verify(screen)!!.openUrl(SettingsAboutPresenter.PLAY_STORE_URL_FILESPACE)
     }
 
     @Test
@@ -43,7 +45,7 @@ class SettingsPresenterTest {
         presenter.onTeamAppsClicked()
 
         // Then
-        Mockito.verify(screen)!!.openUrl(SettingsPresenter.PLAY_STORE_URL_TEAM_MERCAN)
+        Mockito.verify(screen)!!.openUrl(SettingsAboutPresenter.PLAY_STORE_URL_TEAM_MERCAN)
     }
 
     @Test
@@ -59,8 +61,8 @@ class SettingsPresenterTest {
         Mockito.verify(screen)!!.showVersionName(versionName)
     }
 
-    private fun createInstanceToTest(): SettingsPresenter {
-        return SettingsPresenter(
+    private fun createInstanceToTest(): SettingsAboutPresenter {
+        return SettingsAboutPresenter(
                 screen!!,
                 versionManager!!,
                 themeManager!!
