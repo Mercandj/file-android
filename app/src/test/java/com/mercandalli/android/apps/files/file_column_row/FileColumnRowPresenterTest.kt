@@ -4,6 +4,8 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.theme.DarkTheme
+import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -11,6 +13,7 @@ import com.mercandalli.sdk.files.api.FileRenameManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
@@ -28,6 +31,7 @@ class FileColumnRowPresenterTest {
     private var audioManager: AudioManager? = null
     @Mock
     private var themeManager: ThemeManager? = null
+    private var theme: Theme = DarkTheme()
     @DrawableRes
     private val drawableRightIconDirectoryDrawableRes: Int = 42
     @DrawableRes
@@ -71,6 +75,7 @@ class FileColumnRowPresenterTest {
     }
 
     private fun createInstanceToTest(): FileColumnRowPresenter {
+        Mockito.`when`(themeManager!!.getTheme()).thenReturn(theme)
         return FileColumnRowPresenter(
                 screen!!,
                 fileDeleteManager!!,
