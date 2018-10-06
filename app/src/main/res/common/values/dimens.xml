@@ -18,6 +18,7 @@
     <dimen name="default_space_5">48dp</dimen>
     <dimen name="default_radius">2dp</dimen>
     <dimen name="default_radius_2">4dp</dimen>
+    <dimen name="default_card_radius">12dp</dimen>
 
     <dimen name="text_size_s">11sp</dimen>
     <dimen name="text_size_m">12sp</dimen>

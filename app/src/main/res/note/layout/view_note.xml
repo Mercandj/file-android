@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:parentTag="android.widget.FrameLayout">
 
-    <EditText
-        android:id="@+id/view_note_input"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="top|start"
-        android:layout_margin="10dp"
-        android:background="#fff"
-        android:fontFamily="sans-serif-light"
-        android:gravity="top"
-        android:hint="Note"
-        android:imeOptions="flagNoExtractUi"
-        android:inputType="textFilter|textMultiLine|textNoSuggestions"
-        android:padding="10dp"
-        android:textSize="16sp"
-        android:translationZ="4dp"
-        tools:ignore="UnusedAttribute" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#ffffff"
+        app:cardCornerRadius="@dimen/note_card_radius">
+
+        <EditText
+            android:id="@+id/view_note_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|start"
+            android:fontFamily="sans-serif-light"
+            android:gravity="top"
+            android:hint="Note"
+            android:imeOptions="flagNoExtractUi"
+            android:inputType="textFilter|textMultiLine|textNoSuggestions"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+    </androidx.cardview.widget.CardView>
 
 </merge>

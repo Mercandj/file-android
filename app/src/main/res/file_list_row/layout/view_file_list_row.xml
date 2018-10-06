@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,26 +10,27 @@
         android:id="@+id/view_file_list_row_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_space_half"
-        android:layout_marginEnd="@dimen/default_space"
         android:layout_marginStart="@dimen/default_space"
         android:layout_marginTop="@dimen/default_space_half"
-        android:foreground="?android:selectableItemBackground">
+        android:layout_marginEnd="@dimen/default_space"
+        android:layout_marginBottom="@dimen/default_space_half"
+        android:foreground="?android:selectableItemBackground"
+        app:cardCornerRadius="@dimen/file_list_row_card_radius">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingEnd="0dp"
-            android:paddingStart="12dp">
+            android:paddingStart="12dp"
+            android:paddingEnd="0dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/view_file_list_row_icon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="start|center_vertical"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_folder_black_24dp"
                 android:tint="@color/color_primary" />
 
@@ -37,15 +39,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/default_space"
-                android:paddingTop="@dimen/default_space">
+                android:paddingTop="@dimen/default_space"
+                android:paddingBottom="@dimen/default_space">
 
                 <TextView
                     android:id="@+id/view_file_list_row_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="0dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginEnd="0dp"
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
@@ -59,9 +61,9 @@
                     android:id="@+id/view_file_list_row_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="0dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginEnd="0dp"
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
@@ -86,10 +88,10 @@
                     android:layout_marginEnd="0dp"
                     android:layout_weight="3"
                     android:background="?android:selectableItemBackground"
-                    android:paddingBottom="5dp"
-                    android:paddingEnd="4dp"
                     android:paddingStart="4dp"
                     android:paddingTop="7dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="5dp"
                     android:src="@drawable/ic_more_vert_black_24dp"
                     android:tint="#888888" />
 
@@ -100,10 +102,10 @@
                     android:layout_gravity="end|bottom"
                     android:layout_marginEnd="0dp"
                     android:layout_weight="2"
-                    android:paddingBottom="6dp"
-                    android:paddingEnd="6dp"
                     android:paddingStart="6dp"
                     android:paddingTop="0dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="6dp"
                     android:src="@drawable/ic_volume_up_black_24dp"
                     android:tint="#888888" />
 
