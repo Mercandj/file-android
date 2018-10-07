@@ -20,6 +20,7 @@ import io.ktor.pipeline.PipelineContext
 import io.ktor.request.path
 import io.ktor.request.uri
 import io.ktor.response.respond
+import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.post
@@ -79,7 +80,6 @@ class ServerManagerImpl(
                 filter { call -> call.request.path().startsWith("/section1") }
                 filter { call -> call.request.path().startsWith("/section2") }
                 // ...
-
             }
             routing {
                 authenticate("myauth1") {
@@ -88,15 +88,7 @@ class ServerManagerImpl(
                     }
                 }
                 get("/status") {
-                    call.application.environment.log.debug("test")
-                    val uri = call.request.uri
-                    val origin = call.request.origin
-                    val responseJson = JSONObject()
-                    responseJson.put("running", true)
-                    responseJson.put("uri", uri)
-                    responseJson.put("origin", origin)
-                    responseJson.put("root_server_path", rootServerPath)
-                    call.respondText(responseJson.toString(), ContentType.Text.Plain)
+                    respondStatus()
                 }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
@@ -106,18 +98,34 @@ class ServerManagerImpl(
                 post("/file-api/file") {
                     call.respondText("Not implemented")
                 }
+                get("/timothe") {
+                    call.respondRedirect("/timothe/index.html")
+                }
+                static("/timothe") {
+                    resource("/", "/timothe/")
+                    staticRootFolder = File("$rootServerPath/static")
+                    files("timothe")
+                    default("timothe/index.html")
+                }
                 static {
                     staticRootFolder = File(rootServerPath)
                     files("static")
                     default("static/index.html")
-                    static("timothe") {
-                        staticRootFolder = File("$rootServerPath/static")
-                        files("timothe")
-                        default("timothe/index.html")
-                    }
                 }
             }
         }
+    }
+
+    private suspend fun PipelineContext<Unit, ApplicationCall>.respondStatus() {
+        call.application.environment.log.debug("/status")
+        val uri = call.request.uri
+        val origin = call.request.origin
+        val responseJson = JSONObject()
+        responseJson.put("running", true)
+        responseJson.put("uri", uri)
+        responseJson.put("origin", origin)
+        responseJson.put("root_server_path", rootServerPath)
+        call.respondText(responseJson.toString(), ContentType.Text.Plain)
     }
 
     private suspend fun PipelineContext<Unit, ApplicationCall>.respondNotFound(httpStatusCode: HttpStatusCode) {
