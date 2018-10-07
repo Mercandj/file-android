@@ -1,13 +1,8 @@
-package com.mercandalli.android.sdk.files.api.online.utils;
-
-import android.util.Log;
+package com.mercandalli.sdk.files.api.online.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Static methods for dealing with hash.
@@ -15,7 +10,6 @@ import androidx.annotation.Nullable;
 @SuppressWarnings("unused")
 public final class HashUtils {
 
-    @NonNull
     private static final String TAG = "HashUtils";
 
     /**
@@ -31,8 +25,7 @@ public final class HashUtils {
      * @param text The input {@link String}.
      * @return The sha1 hash.
      */
-    @Nullable
-    public static String sha1(@Nullable final String text) {
+    public static String sha1(final String text) {
         if (text == null) {
             return null;
         }
@@ -41,7 +34,6 @@ public final class HashUtils {
             messageDigest.update(text.getBytes("iso-8859-1"), 0, text.length());
             return convertToHex(messageDigest.digest());
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            Log.e(TAG, "NoSuchAlgorithmException or UnsupportedEncodingException", e);
         }
         return null;
     }
@@ -53,8 +45,7 @@ public final class HashUtils {
      * @param time Do "time" hash consecutively.
      * @return The sha1 hash.
      */
-    @Nullable
-    public static String sha1(@Nullable final String text, final int time) {
+    public static String sha1(final String text, final int time) {
         if (text == null) {
             return null;
         }
@@ -63,7 +54,6 @@ public final class HashUtils {
         try {
             messageDigest = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "sha1 NoSuchAlgorithmException or UnsupportedEncodingException", e);
             return null;
         }
         for (int i = 0; i < time; i++) {
@@ -72,17 +62,15 @@ public final class HashUtils {
         return result;
     }
 
-    @Nullable
     public static String hash(
-            @NonNull final MessageDigest messageDigest,
-            @Nullable final String text) {
+            final MessageDigest messageDigest,
+            final String text) {
         if (text == null) {
             return null;
         }
         try {
             messageDigest.update(text.getBytes("iso-8859-1"), 0, text.length());
         } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "sha1 UnsupportedEncodingException", e);
             return null;
         }
         return convertToHex(messageDigest.digest());
@@ -94,8 +82,7 @@ public final class HashUtils {
      * @param text The input {@link String}.
      * @return The sha1 hash.
      */
-    @Nullable
-    public static String sha256(@Nullable final String text) {
+    public static String sha256(final String text) {
         if (text == null) {
             return null;
         }
@@ -104,13 +91,11 @@ public final class HashUtils {
             messageDigest.update(text.getBytes("iso-8859-1"), 0, text.length());
             return convertToHex(messageDigest.digest());
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            Log.e(TAG, "NoSuchAlgorithmException or UnsupportedEncodingException", e);
         }
         return null;
     }
 
-    @Nullable
-    public static String sha256(@Nullable final String text, final int time) {
+    public static String sha256(final String text, final int time) {
         if (text == null) {
             return null;
         }
@@ -119,7 +104,6 @@ public final class HashUtils {
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "sha1 NoSuchAlgorithmException or UnsupportedEncodingException", e);
             return null;
         }
         for (int i = 0; i < time; i++) {
@@ -128,8 +112,7 @@ public final class HashUtils {
         return result;
     }
 
-    @NonNull
-    private static String convertToHex(@NonNull final byte[] data) {
+    private static String convertToHex(final byte[] data) {
         final StringBuilder buf = new StringBuilder();
         for (final byte b : data) {
             int halfByte = (b >>> 4) & 0x0F;

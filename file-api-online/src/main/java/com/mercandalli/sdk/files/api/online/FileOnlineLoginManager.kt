@@ -1,4 +1,4 @@
-package com.mercandalli.android.sdk.files.api.online
+package com.mercandalli.sdk.files.api.online
 
 interface FileOnlineLoginManager {
 

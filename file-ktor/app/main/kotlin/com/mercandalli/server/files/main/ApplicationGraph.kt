@@ -1,58 +1,39 @@
 package com.mercandalli.server.files.main
 
-import com.mercandalli.server.files.file.FileGetHandler
-import com.mercandalli.server.files.file.FileGetHandlerImpl
-import com.mercandalli.server.files.log.LogManager
-import com.mercandalli.server.files.log.LogManagerImpl
-import com.mercandalli.server.files.server.ServerManager
+import com.mercandalli.sdk.files.api.online.FileOnlineModule
+import com.mercandalli.server.files.file.FileModule
+import com.mercandalli.server.files.log.LogModule
 import com.mercandalli.server.files.server.ServerModule
-import com.mercandalli.server.files.shell.ShellManager
 import com.mercandalli.server.files.shell.ShellModule
 
 class ApplicationGraph(
-        private val rootPath: String
+        rootPath: String
 ) {
 
-    private val logManagerInternal: LogManager by lazy {
-        LogManagerImpl()
-    }
+    private val fileModule = FileModule()
+    private val fileOnlineModule = FileOnlineModule()
+    private val logModule = LogModule()
+    private val serverModule = ServerModule(rootPath)
+    private val shellModule = ShellModule()
 
-    private val shellManagerInternal: ShellManager by lazy {
-        ShellModule(
-                logManagerInternal
-        ).provideShellManager()
-    }
-
-    private val serverManagerInternal: ServerManager by lazy {
-        ServerModule(
-                rootPath,
-                fileGetHandlerInternal
-        ).provideServerManager()
-    }
-
-    private val fileGetHandlerInternal: FileGetHandler by lazy {
-        FileGetHandlerImpl(
-                logManagerInternal
-        )
-    }
+    private val fileGetHandlerInternal by lazy { fileModule.createFileGetHandler() }
+    private val fileOnlineLoginManagerInternal by lazy { fileOnlineModule.createFileOnlineLoginManager() }
+    private val logManagerInternal by lazy { logModule.createLogManager() }
+    private val serverManagerInternal by lazy { serverModule.createServerManager() }
+    private val shellManagerInternal by lazy { shellModule.provideShellManager() }
 
     companion object {
 
-        @JvmStatic
         private var graph: ApplicationGraph? = null
 
-        @JvmStatic
+        fun getFileGetHandler() = graph!!.fileGetHandlerInternal
+        fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
+        fun getLogManager() = graph!!.logManagerInternal
+        fun getServerManager() = graph!!.serverManagerInternal
+        fun getShellManager() = graph!!.shellManagerInternal
+
         fun initialize(rootPath: String) {
             graph = ApplicationGraph(rootPath)
         }
-
-        @JvmStatic
-        fun getLogManager() = graph!!.logManagerInternal
-
-        @JvmStatic
-        fun getShellManager() = graph!!.shellManagerInternal
-
-        @JvmStatic
-        fun getServerManager() = graph!!.serverManagerInternal
     }
 }

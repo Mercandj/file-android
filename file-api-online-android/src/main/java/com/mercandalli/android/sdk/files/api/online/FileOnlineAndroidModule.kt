@@ -1,10 +1,14 @@
 package com.mercandalli.android.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
+import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
-class FileOnlineModule(
+class FileOnlineAndroidModule(
         private val fileOnlineApiNetwork: FileOnlineApiNetwork
-        ) {
+) {
+
+    private val fileOnlineModule by lazy { FileOnlineModule() }
 
     fun createFileOnlineManager(
             fileOnlineLoginManager: FileOnlineLoginManager
@@ -17,9 +21,7 @@ class FileOnlineModule(
         )
     }
 
-    fun createFileOnlineLoginManager(): FileOnlineLoginManager {
-        return FileOnlineLoginManagerImpl()
-    }
+    fun createFileOnlineLoginManager() = fileOnlineModule.createFileOnlineLoginManager()
 
     private fun createFileOnlineApi(
             fileOnlineLoginManager: FileOnlineLoginManager

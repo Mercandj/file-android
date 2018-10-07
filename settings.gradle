@@ -1,4 +1,5 @@
 include ':app',
         ':file-api',
         ':file-api-android',
+        ':file-api-online',
         ':file-api-online-android'

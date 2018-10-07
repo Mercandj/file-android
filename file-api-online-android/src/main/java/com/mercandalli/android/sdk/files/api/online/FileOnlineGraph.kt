@@ -1,7 +1,7 @@
 package com.mercandalli.android.sdk.files.api.online
 
 class FileOnlineGraph(
-        private val fileOnlineModule: FileOnlineModule
+        private val fileOnlineModule: FileOnlineAndroidModule
 ) {
 
     private val fileOnlineManager by lazy {
@@ -19,7 +19,7 @@ class FileOnlineGraph(
         fun init(
                 fileOnlineApiNetwork: FileOnlineApiNetwork
         ) {
-            val fileOnlineModule = FileOnlineModule(
+            val fileOnlineModule = FileOnlineAndroidModule(
                     fileOnlineApiNetwork
             )
             graph = FileOnlineGraph(

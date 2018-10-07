@@ -1,12 +1,11 @@
 package com.mercandalli.server.files.shell
 
-import com.mercandalli.server.files.log.LogManager
+import com.mercandalli.server.files.main.ApplicationGraph
 
-class ShellModule(
-        private val logManager: LogManager
-) {
+class ShellModule {
 
     fun provideShellManager(): ShellManager {
+        val logManager = ApplicationGraph.getLogManager()
         return ShellManagerImpl(logManager)
     }
 }

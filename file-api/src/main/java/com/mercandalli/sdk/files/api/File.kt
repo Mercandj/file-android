@@ -1,5 +1,6 @@
 package com.mercandalli.sdk.files.api
 
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -58,11 +59,11 @@ data class File(
         fun fromJson(jsonObject: JSONObject): File {
             val id = jsonObject.getString("id")
             val path = jsonObject.getString("path")
-            val parentPath = jsonObject.getString("parentPath")
+            val parentPath = jsonObject.getString("parent_path")
             val directory = jsonObject.getBoolean("directory")
             val name = jsonObject.getString("name")
             val length = jsonObject.getLong("length")
-            val lastModified = jsonObject.getLong("lastModified")
+            val lastModified = jsonObject.getLong("last_modified")
             return File(
                     id,
                     path,
@@ -79,12 +80,22 @@ data class File(
             val json = JSONObject()
             json.put("id", file.id)
             json.put("path", file.path)
-            json.put("parentPath", file.parentPath)
+            json.put("parent_path", file.parentPath)
             json.put("directory", file.directory)
             json.put("name", file.name)
             json.put("length", file.length)
-            json.put("lastModified", file.lastModified)
+            json.put("last_modified", file.lastModified)
             return json
+        }
+
+        @JvmStatic
+        fun toJson(files: List<File>): JSONArray {
+            val jsonArray = JSONArray()
+            for (file in files) {
+                val json = toJson(file)
+                jsonArray.put(json)
+            }
+            return jsonArray
         }
     }
 }

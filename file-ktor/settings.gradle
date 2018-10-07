@@ -1,5 +1,8 @@
-include 'app', 'file-api'
+include 'app',
+        'file-api',
+        'file-api-online'
 
 project(':file-api').projectDir = new File("../file-api")
+project(':file-api-online').projectDir = new File("../file-api-online")
 
 

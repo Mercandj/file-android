@@ -2,5 +2,5 @@ package com.mercandalli.server.files.log
 
 interface LogManager {
 
-    fun log(message: String)
+    fun d(tag: String, message: String)
 }

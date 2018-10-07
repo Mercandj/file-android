@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package com.mercandalli.android.sdk.files.api.online.utils;
+package com.mercandalli.sdk.files.api.online.utils;
 
 import java.io.UnsupportedEncodingException;
-
-import androidx.annotation.NonNull;
 
 /**
  * Utilities for encoding and decoding the Base64 representation of
@@ -757,13 +755,11 @@ public final class Base64Utils {
         }
     }
 
-    @NonNull
-    public static String encode(@NonNull final String clear) {
+    public static String encode(final String clear) {
         return encodeToString(clear.getBytes(), DEFAULT);
     }
 
-    @NonNull
-    public static String decode(@NonNull final String crypt) {
+    public static String decode(final String crypt) {
         return new String(decode(crypt, Base64Utils.DEFAULT));
     }
 

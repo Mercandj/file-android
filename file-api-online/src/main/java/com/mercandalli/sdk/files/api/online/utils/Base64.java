@@ -1,6 +1,4 @@
-package com.mercandalli.android.sdk.files.api.online.utils;
-
-import android.util.Log;
+package com.mercandalli.sdk.files.api.online.utils;
 
 /**
  * <p>Encodes and decodes to and from Base64 notation.</p>
@@ -206,7 +204,7 @@ public class Base64 {
     //endregion - Public Fields
 
 
-/* ********  P R I V A T E   F I E L D S  ******** */
+    /* ********  P R I V A T E   F I E L D S  ******** */
 
     private static final String TAG = "Base64";
 
@@ -238,7 +236,7 @@ public class Base64 {
     private final static byte EQUALS_SIGN_ENC = -1; // Indicates equals sign in encoding
 
 
-/* ********  S T A N D A R D   B A S E 6 4   A L P H A B E T  ******** */
+    /* ********  S T A N D A R D   B A S E 6 4   A L P H A B E T  ******** */
 
     /**
      * The 64 valid Base64 values.
@@ -297,7 +295,7 @@ public class Base64 {
     };
 
 
-/* ********  U R L   S A F E   B A S E 6 4   A L P H A B E T  ******** */
+    /* ********  U R L   S A F E   B A S E 6 4   A L P H A B E T  ******** */
 
     /**
      * Used in the URL- and Filename-safe dialect described in Section 4 of RFC3548:
@@ -360,7 +358,7 @@ public class Base64 {
 
 
 
-/* ********  O R D E R E D   B A S E 6 4   A L P H A B E T  ******** */
+    /* ********  O R D E R E D   B A S E 6 4   A L P H A B E T  ******** */
 
     /**
      * I don't get the point of this technique, but someone requested it,
@@ -424,7 +422,7 @@ public class Base64 {
     };
 
 
-/* ********  D E T E R M I N E   W H I C H   A L H A B E T  ******** */
+    /* ********  D E T E R M I N E   W H I C H   A L H A B E T  ******** */
 
 
     /**
@@ -472,7 +470,7 @@ public class Base64 {
 
 
 
-/* ********  E N C O D I N G   M E T H O D S  ******** */
+    /* ********  E N C O D I N G   M E T H O D S  ******** */
 
 
     /**
@@ -752,7 +750,6 @@ public class Base64 {
         try {
             encoded = encodeBytes(source, 0, source.length, NO_OPTIONS);
         } catch (java.io.IOException ex) {
-            Log.e(TAG, ex.getMessage(), ex);
         }   // end catch
         assert encoded != null;
         return encoded;
@@ -817,7 +814,6 @@ public class Base64 {
         try {
             encoded = encodeBytes(source, off, len, NO_OPTIONS);
         } catch (java.io.IOException ex) {
-            Log.e(TAG, ex.getMessage(), ex);
         }   // end catch
         assert encoded != null;
         return encoded;
@@ -884,8 +880,6 @@ public class Base64 {
         try {
             encoded = encodeBytesToBytes(source, 0, source.length, Base64.NO_OPTIONS);
         } catch (java.io.IOException ex) {
-            Log.e(TAG, "IOExceptions only come from GZipping, which is turned off: " +
-                    ex.getMessage(), ex);
         }
         return encoded;
     }
@@ -1028,7 +1022,7 @@ public class Base64 {
 
 
 
-/* ********  D E C O D I N G   M E T H O D S  ******** */
+    /* ********  D E C O D I N G   M E T H O D S  ******** */
 
 
     /**
@@ -1306,7 +1300,6 @@ public class Base64 {
 
                 }   // end try
                 catch (java.io.IOException e) {
-                    Log.e(TAG, "IOException", e);
                     // Just return originally-decoded bytes
                 }   // end catch
                 finally {

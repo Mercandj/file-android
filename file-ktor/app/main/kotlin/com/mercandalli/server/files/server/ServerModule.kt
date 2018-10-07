@@ -1,16 +1,18 @@
 package com.mercandalli.server.files.server
 
-import com.mercandalli.server.files.file.FileGetHandler
+import com.mercandalli.server.files.main.ApplicationGraph
 
 class ServerModule(
-        private val rootPath: String,
-        private val fileGetHandler: FileGetHandler
+        private val rootPath: String
 ) {
 
-    fun provideServerManager(): ServerManager {
+    fun createServerManager(): ServerManager {
+        val fileGetHandler = ApplicationGraph.getFileGetHandler()
+        val fileOnlineLoginManager=ApplicationGraph.getFileOnlineLoginManager()
         return ServerManagerImpl(
                 rootPath,
-                fileGetHandler
+                fileGetHandler,
+                fileOnlineLoginManager
         )
     }
 }

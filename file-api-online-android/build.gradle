@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':file-api')
+    api project(':file-api-online')
 
     // Language
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

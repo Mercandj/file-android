@@ -12,10 +12,10 @@ class ShellManagerImpl(
 ) : ShellManager {
 
     override fun execute(command: String, block: (result: String) -> Unit) {
-        logManager.log("[ShellManagerImpl] Input: $command")
+        logManager.d(TAG, "Input: $command")
         val process: Process = Runtime.getRuntime().exec(command)
         val streamGobbler = StreamGobbler(process.inputStream, Consumer {
-            logManager.log("[ShellManagerImpl] Output: $it")
+            logManager.d(TAG, "Output: $it")
             block(it)
         })
         Executors.newSingleThreadExecutor().submit(streamGobbler)
@@ -37,4 +37,7 @@ class ShellManagerImpl(
         }
     }
 
+    companion object {
+        private const val TAG = "ShellManager"
+    }
 }

@@ -1,5 +1,6 @@
 package com.mercandalli.server.files.server
 
+import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.server.files.file.FileGetHandler
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
@@ -33,7 +34,8 @@ import java.io.File
 
 class ServerManagerImpl(
         private val rootServerPath: String,
-        private val fileGetHandler: FileGetHandler
+        private val fileGetHandler: FileGetHandler,
+        private val fileOnlineLoginManager: FileOnlineLoginManager
 ) : ServerManager {
 
     private val server: NettyApplicationEngine
@@ -90,19 +92,23 @@ class ServerManagerImpl(
                 get("/status") {
                     respondStatus()
                 }
+                get("/file-api/file") {
+                    val response = fileGetHandler.get()
+                    call.respondText(response)
+                }
+                post("/file-api/file") {
+                    val response = fileGetHandler.post()
+                    call.respondText(response)
+                }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
                     val response = fileGetHandler.get(id!!)
                     call.respondText(response)
                 }
-                post("/file-api/file") {
-                    call.respondText("Not implemented")
-                }
                 get("/timothe") {
                     call.respondRedirect("/timothe/index.html")
                 }
                 static("/timothe") {
-                    resource("/", "/timothe/")
                     staticRootFolder = File("$rootServerPath/static")
                     files("timothe")
                     default("timothe/index.html")
@@ -111,7 +117,6 @@ class ServerManagerImpl(
                     call.respondRedirect("/1418/index.html")
                 }
                 static("/1418") {
-                    resource("/", "/timothe/")
                     staticRootFolder = File("$rootServerPath/static")
                     files("1418")
                     default("1418/index.html")

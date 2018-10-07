@@ -1,5 +1,7 @@
 package com.mercandalli.android.sdk.files.api.online
 
+import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
+import com.mercandalli.sdk.files.api.online.FileOnlineLoginManagerImpl
 import org.junit.Assert
 import org.junit.Test
 
