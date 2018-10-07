@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.settings.about
 
+import androidx.annotation.VisibleForTesting
 import com.google.android.material.snackbar.Snackbar
 import com.mercandalli.android.apps.files.dialog.DialogManager
 import com.mercandalli.android.apps.files.settings.SettingsManager
@@ -134,8 +135,10 @@ class SettingsAboutPresenter(
     }
 
     companion object {
-        private const val PLAY_STORE_URL_FILESPACE = "https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files"
-        private const val PLAY_STORE_URL_TEAM_MERCAN = "https://play.google.com/store/apps/dev?id=8371778130997780965"
+        @VisibleForTesting
+        const val PLAY_STORE_URL_FILESPACE = "https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files"
+        @VisibleForTesting
+        const val PLAY_STORE_URL_TEAM_MERCAN = "https://play.google.com/store/apps/dev?id=8371778130997780965"
 
         private const val DIALOG_ID_VERSION_NAME = "SettingsAboutPresenter.DIALOG_ID_VERSION_NAME"
         private const val DIALOG_ID_PROMPT_PASS = "SettingsAboutPresenter.DIALOG_ID_PROMPT_PASS"
