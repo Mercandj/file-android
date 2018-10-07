@@ -78,6 +78,16 @@ pushd "$BASEDIR"
             git clone https://github.com/Mercandj/timothe.git
         fi
 
+        if [ -d "$BASEDIR/build/static/1418" ]; then
+            log_d "Pull 1418 GitHub project"
+            pushd "$BASEDIR/build/static/1418"
+                git pull
+            popd
+        else
+            log_d "Clone 1418 GitHub project"
+            git clone https://github.com/Mercandb/1418.git
+        fi
+
     popd
 
     java -jar ./build/file-ktor.jar

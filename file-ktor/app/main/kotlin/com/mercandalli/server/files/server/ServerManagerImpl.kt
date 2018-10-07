@@ -107,6 +107,15 @@ class ServerManagerImpl(
                     files("timothe")
                     default("timothe/index.html")
                 }
+                get("/1418") {
+                    call.respondRedirect("/1418/index.html")
+                }
+                static("/1418") {
+                    resource("/", "/timothe/")
+                    staticRootFolder = File("$rootServerPath/static")
+                    files("1418")
+                    default("1418/index.html")
+                }
                 static {
                     staticRootFolder = File(rootServerPath)
                     files("static")
