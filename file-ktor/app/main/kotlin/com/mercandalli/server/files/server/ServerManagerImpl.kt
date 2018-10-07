@@ -2,14 +2,22 @@ package com.mercandalli.server.files.server
 
 import com.mercandalli.server.files.file.FileGetHandler
 import io.ktor.application.Application
+import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.auth.Authentication
+import io.ktor.auth.UserIdPrincipal
+import io.ktor.auth.authenticate
+import io.ktor.auth.basic
 import io.ktor.content.*
+import io.ktor.features.CallLogging
 import io.ktor.features.StatusPages
 import io.ktor.features.origin
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.withCharset
+import io.ktor.pipeline.PipelineContext
+import io.ktor.request.path
 import io.ktor.request.uri
 import io.ktor.response.respond
 import io.ktor.response.respondText
@@ -27,34 +35,60 @@ class ServerManagerImpl(
         private val fileGetHandler: FileGetHandler
 ) : ServerManager {
 
-    private var server: NettyApplicationEngine
+    private val server: NettyApplicationEngine
 
     init {
-        val module: Application.() -> Unit = {
+        val module: Application.() -> Unit = createModule()
+        // http://ktor.io/servers/configuration.html
+        server = embeddedServer(
+                Netty,
+                port = 80,
+                module = module,
+                host = "0.0.0.0"
+        )
+    }
+
+    override fun start() {
+        server.start(wait = true)
+    }
+
+    private fun createModule(): Application.() -> Unit {
+        return {
             install(StatusPages) {
                 exception<Throwable> {
                     call.respond(HttpStatusCode.InternalServerError)
                 }
                 status(HttpStatusCode.NotFound) {
-                    val statusCode = it.value
-                    val statusDescription = it.description
-                    val responseJson = JSONObject()
-                    val uri = call.request.uri
-                    responseJson.put("uri", uri)
-                    responseJson.put("status_code", statusCode)
-                    responseJson.put("status_description", statusDescription)
-                    val message = TextContent(
-                            responseJson.toString(),
-                            ContentType.Text.Plain.withCharset(Charsets.UTF_8),
-                            it
-                    )
-                    call.respond(
-                            message
-                    )
+                    respondNotFound(it)
                 }
             }
+            install(Authentication) {
+                basic(name = "myauth1") {
+                    realm = "Ktor Server"
+                    validate { credentials ->
+                        if (credentials.name == credentials.password) {
+                            UserIdPrincipal(credentials.name)
+                        } else {
+                            null
+                        }
+                    }
+                }
+            }
+            install(CallLogging) {
+                level = org.slf4j.event.Level.DEBUG
+                filter { call -> call.request.path().startsWith("/section1") }
+                filter { call -> call.request.path().startsWith("/section2") }
+                // ...
+
+            }
             routing {
+                authenticate("myauth1") {
+                    get("/admin") {
+                        // ...
+                    }
+                }
                 get("/status") {
+                    call.application.environment.log.debug("test")
                     val uri = call.request.uri
                     val origin = call.request.origin
                     val responseJson = JSONObject()
@@ -76,19 +110,31 @@ class ServerManagerImpl(
                     staticRootFolder = File(rootServerPath)
                     files("static")
                     default("static/index.html")
+                    static("timothe") {
+                        staticRootFolder = File("$rootServerPath/static")
+                        files("timothe")
+                        default("timothe/index.html")
+                    }
                 }
             }
         }
-        // http://ktor.io/servers/configuration.html
-        server = embeddedServer(
-                Netty,
-                port = 80,
-                module = module,
-                host = "0.0.0.0"
-        )
     }
 
-    override fun start() {
-        server.start(wait = true)
+    private suspend fun PipelineContext<Unit, ApplicationCall>.respondNotFound(httpStatusCode: HttpStatusCode) {
+        val statusCode = httpStatusCode.value
+        val statusDescription = httpStatusCode.description
+        val responseJson = JSONObject()
+        val uri = call.request.uri
+        responseJson.put("uri", uri)
+        responseJson.put("status_code", statusCode)
+        responseJson.put("status_description", statusDescription)
+        val message = TextContent(
+                responseJson.toString(),
+                ContentType.Text.Plain.withCharset(Charsets.UTF_8),
+                httpStatusCode
+        )
+        call.respond(
+                message
+        )
     }
 }
