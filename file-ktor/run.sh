@@ -59,12 +59,26 @@ pushd "$BASEDIR"
         popd
     else
         log_d "Clone portfolio GitHub project"
-        mkdir -p build
-        pushd build
+        mkdir -p "$BASEDIR/build"
+        pushd "$BASEDIR/build"
             git clone https://github.com/Mercandj/mercandj.github.io.git
             mv mercandj.github.io static
         popd
     fi
+
+    pushd "$BASEDIR/build/static"
+
+        if [ -d "$BASEDIR/build/static/timothe" ]; then
+            log_d "Pull Timothe portfolio GitHub project"
+            pushd "$BASEDIR/build/static/timothe"
+                git pull
+            popd
+        else
+            log_d "Clone Timothe portfolio GitHub project"
+            git clone https://github.com/Mercandj/timothe.git
+        fi
+
+    popd
 
     java -jar ./build/file-ktor.jar
 
