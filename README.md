@@ -17,7 +17,7 @@
 
 ## Run the server
 
-* ```sudo ./file-ktor/run.sh```
+* ```./run-server.sh```
 
 ## Commit rules
 

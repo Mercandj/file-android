@@ -18,7 +18,7 @@ CONFIG_COLOR_RESET=`tput sgr0`
 
 
 log_d() {
-    printf "${CONFIG_COLOR_CYAN}[FileAndroid][Ktor]${CONFIG_COLOR_RESET} $1\n"
+    printf "${CONFIG_COLOR_CYAN}[FileAndroid][Server]${CONFIG_COLOR_RESET} $1\n"
 }
 log_jump() {
     printf "\n"
@@ -32,7 +32,7 @@ log_jump
 log_jump
 
 log_line
-log_d "Server ktor!!!"
+log_d "Server!!!"
 log_line
 
 log_jump
@@ -46,11 +46,11 @@ pushd "$BASEDIR"
 
     log_jump
 
-    log_d "Remove file $BASEDIR/build/file-ktor.jar"
-    rm -f "./build/file-ktor.jar"
+    log_d "Remove file $BASEDIR/build/file-server.jar"
+    rm -f "./build/file-server.jar"
     log_jump
 
-    bash ./gradlew app:fatJar
+    bash ./gradlew server:fatJar
 
     if [ -d "$BASEDIR/build/static" ]; then
         log_d "Pull portfolio GitHub project"
@@ -90,7 +90,7 @@ pushd "$BASEDIR"
 
     popd
 
-    java -jar ./build/file-ktor.jar
+    java -jar ./build/file-server.jar
 
 popd
 

@@ -2,4 +2,5 @@ include ':app',
         ':file-api',
         ':file-api-android',
         ':file-api-online',
-        ':file-api-online-android'
+        ':file-api-online-android',
+        ':server'

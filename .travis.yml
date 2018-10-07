@@ -44,10 +44,10 @@ script:
 - "./gradlew app:clean"
 - echo "jm/debug [Gradle][app] assembleDebug"
 - "./gradlew app:assembleDebug"
-- echo "jm/debug [Gradle][app] Check"
+- echo "jm/debug [Gradle][app] check"
 - "./gradlew app:check"
-- pushd file-ktor
-- "./gradlew app:fatJar"
+- echo "jm/debug [Gradle][server] fatJar"
+- "./gradlew server:fatJar"
 - popd
 
 after_failure:
