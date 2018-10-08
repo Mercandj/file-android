@@ -1,9 +1,9 @@
-package com.mercandalli.android.apps.files.settings.about
+package com.mercandalli.android.apps.files.settings_about
 
 import androidx.annotation.VisibleForTesting
 import com.google.android.material.snackbar.Snackbar
 import com.mercandalli.android.apps.files.dialog.DialogManager
-import com.mercandalli.android.apps.files.settings.SettingsManager
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.android.apps.files.R
@@ -14,7 +14,7 @@ class SettingsAboutPresenter(
         versionManager: VersionManager,
         private val themeManager: ThemeManager,
         private val dialogManager: DialogManager,
-        private val settingsManager: SettingsManager,
+        private val developerManager: DeveloperManager,
         private val hashManager: HashManager,
         private val addOn: AddOn
 ) : SettingsAboutContract.UserAction {
@@ -51,7 +51,7 @@ class SettingsAboutPresenter(
         if (!isEnoughVersionClick(versionClickTimestampsMs, currentTimeMillis, 5, 1000)) {
             return
         }
-        val appDeveloperEnabled = settingsManager.isDeveloperMode()
+        val appDeveloperEnabled = developerManager.isDeveloperMode()
         if (appDeveloperEnabled) {
             setIsAppDeveloperEnabled(false)
             return
@@ -96,7 +96,7 @@ class SettingsAboutPresenter(
     }
 
     private fun setIsAppDeveloperEnabled(isAppDeveloperModeEnabled: Boolean) {
-        settingsManager.setDeveloperMode(isAppDeveloperModeEnabled)
+        developerManager.setDeveloperMode(isAppDeveloperModeEnabled)
         screen.showSnackbar(
                 if (isAppDeveloperModeEnabled) R.string.view_settings_developer_mode_enabled
                 else R.string.view_settings_developer_mode_disabled,

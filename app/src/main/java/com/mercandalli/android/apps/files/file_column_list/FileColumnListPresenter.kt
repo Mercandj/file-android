@@ -7,7 +7,7 @@ import com.mercandalli.sdk.files.api.FileSortManager
 
 class FileColumnListPresenter(
         private val screen: FileColumnListContract.Screen,
-        private val fileManager: FileManager,
+        private var fileManager: FileManager,
         private val fileSortManager: FileSortManager,
         private val themeManager: ThemeManager,
         private var currentPath: String
@@ -44,6 +44,12 @@ class FileColumnListPresenter(
 
     override fun onPathSelected(path: String?) {
         screen.selectPath(path)
+    }
+
+    override fun onSetFileManager(fileManager: FileManager) {
+        this.fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        this.fileManager = fileManager
+        fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 
     private fun syncFileChildren() {
@@ -96,15 +102,13 @@ class FileColumnListPresenter(
         }
     }
 
-    private fun createFileChildrenResultListener(): FileManager.FileChildrenResultListener {
-        return object : FileManager.FileChildrenResultListener {
-            override fun onFileChildrenResultChanged(path: String) {
-                if (currentPath != path) {
-                    return
-                }
-                val fileChildren = fileManager.getFileChildren(currentPath)
-                syncFileChildren(fileChildren)
+    private fun createFileChildrenResultListener() = object : FileManager.FileChildrenResultListener {
+        override fun onFileChildrenResultChanged(path: String) {
+            if (currentPath != path) {
+                return
             }
+            val fileChildren = fileManager.getFileChildren(currentPath)
+            syncFileChildren(fileChildren)
         }
     }
 }

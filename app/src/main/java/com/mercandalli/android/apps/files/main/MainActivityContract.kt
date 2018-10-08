@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.ColorRes
 
 interface MainActivityContract {
@@ -16,6 +17,8 @@ interface MainActivityContract {
         fun onSaveInstanceState(outState: Bundle?)
 
         fun onFileSectionClicked()
+
+        fun onOnlineSectionClicked()
 
         fun onNoteSectionClicked()
 
@@ -47,6 +50,10 @@ interface MainActivityContract {
         fun showFileColumnView()
 
         fun hideFileColumnView()
+
+        fun showOnlineView()
+
+        fun hideOnlineView()
 
         fun showNoteView()
 

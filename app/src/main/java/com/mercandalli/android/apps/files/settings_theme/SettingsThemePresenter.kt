@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.settings.theme
+package com.mercandalli.android.apps.files.settings_theme
 
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager

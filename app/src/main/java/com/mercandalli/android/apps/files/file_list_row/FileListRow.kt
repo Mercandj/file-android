@@ -122,16 +122,19 @@ class FileListRow @JvmOverloads constructor(
         )
     }
 
-    override fun setTitleTextColorRes(textColorRes: Int) {
-        title.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setTitleTextColorRes(colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        title.setTextColor(color)
     }
 
-    override fun setSubtitleTextColorRes(textColorRes: Int) {
-        subtitle.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setSubtitleTextColorRes(colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        subtitle.setTextColor(color)
     }
 
-    override fun setCardBackgroundColorRes(cardBackgroundColorRes: Int) {
-        card.setCardBackgroundColor(ContextCompat.getColor(context, cardBackgroundColorRes))
+    override fun setCardBackgroundColorRes(colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        card.setCardBackgroundColor(color)
     }
 
     fun setFile(file: File, selectedPath: String?) {

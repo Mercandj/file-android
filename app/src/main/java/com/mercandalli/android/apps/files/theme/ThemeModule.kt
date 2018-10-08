@@ -2,10 +2,11 @@ package com.mercandalli.android.apps.files.theme
 
 import android.content.Context
 
-class ThemeModule {
+class ThemeModule(
+        private val context: Context
+) {
 
     fun createThemeManager(
-            context: Context
     ): ThemeManager {
         val sharedPreferences = context.getSharedPreferences(
                 ThemeManagerImpl.PREFERENCE_NAME,

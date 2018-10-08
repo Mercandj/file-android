@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.settings.about
+package com.mercandalli.android.apps.files.settings_about
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -96,7 +96,7 @@ class SettingsAboutView @JvmOverloads constructor(
         val versionManager = ApplicationGraph.getVersionManager()
         val themeManager = ApplicationGraph.getThemeManager()
         val dialogManager = ApplicationGraph.getDialogManager()
-        val settingsManager = ApplicationGraph.getSettingsManager()
+        val developerManager = ApplicationGraph.getDeveloperManager()
         val hashManager = ApplicationGraph.getHashManager()
         val addOn = object : SettingsAboutPresenter.AddOn {
             override fun getCurrentTimeMillis() = System.currentTimeMillis()
@@ -106,7 +106,7 @@ class SettingsAboutView @JvmOverloads constructor(
                 versionManager,
                 themeManager,
                 dialogManager,
-                settingsManager,
+                developerManager,
                 hashManager,
                 addOn
         )

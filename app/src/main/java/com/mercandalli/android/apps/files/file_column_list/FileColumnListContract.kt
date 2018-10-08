@@ -1,6 +1,8 @@
 package com.mercandalli.android.apps.files.file_column_list
 
+import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileManager
 
 interface FileColumnListContract {
 
@@ -17,6 +19,8 @@ interface FileColumnListContract {
         fun onPathChanged(path: String)
 
         fun onPathSelected(path: String?)
+
+        fun onSetFileManager(fileManager: FileManager)
     }
 
     interface Screen {
@@ -39,8 +43,8 @@ interface FileColumnListContract {
 
         fun selectPath(path: String?)
 
-        fun setEmptyTextColorRes(textColorRes: Int)
+        fun setEmptyTextColorRes(@ColorRes colorRes: Int)
 
-        fun setErrorTextColorRes(textColorRes: Int)
+        fun setErrorTextColorRes(@ColorRes colorRes: Int)
     }
 }

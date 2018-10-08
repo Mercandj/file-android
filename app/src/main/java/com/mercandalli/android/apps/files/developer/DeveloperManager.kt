@@ -1,6 +1,6 @@
-package com.mercandalli.android.apps.files.settings
+package com.mercandalli.android.apps.files.developer
 
-interface SettingsManager {
+interface DeveloperManager {
 
     fun isDeveloperMode(): Boolean
 

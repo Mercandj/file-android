@@ -1,7 +1,6 @@
-package com.mercandalli.android.apps.files.settings.developer
+package com.mercandalli.android.apps.files.settings_developer
 
 import androidx.annotation.ColorRes
-import androidx.annotation.StringRes
 
 interface SettingsDeveloperContract {
 
@@ -19,7 +18,7 @@ interface SettingsDeveloperContract {
 
         fun setDeveloperActivationChecked(checked: Boolean)
 
-        fun setDeveloperRemoteCountrySubLabelText(text: String)
+        fun setOnlineSubLabelText(text: String)
     }
 
     interface UserAction {
@@ -28,7 +27,7 @@ interface SettingsDeveloperContract {
 
         fun onDetached()
 
-        fun onVideoStartedCountClicked()
+        fun onOnlineRowClicked()
 
         fun onActivationRowClicked()
 

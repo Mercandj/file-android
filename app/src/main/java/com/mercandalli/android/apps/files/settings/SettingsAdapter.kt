@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import com.mercandalli.android.apps.files.settings.about.SettingsAboutView
-import com.mercandalli.android.apps.files.settings.developer.SettingsDeveloperView
-import com.mercandalli.android.apps.files.settings.theme.SettingsThemeView
+import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
+import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
+import com.mercandalli.android.apps.files.settings_theme.SettingsThemeView
 
 class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 

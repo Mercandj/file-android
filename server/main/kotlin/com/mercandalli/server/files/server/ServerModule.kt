@@ -6,12 +6,15 @@ class ServerModule(
         private val rootPath: String
 ) {
 
+    private val fileHandlerGet by lazy { ApplicationGraph.getFileGetHandler() }
+    private val fileHandlerPost by lazy { ApplicationGraph.getFilePostHandler() }
+    private val fileOnlineLoginManager by lazy { ApplicationGraph.getFileOnlineLoginManager() }
+
     fun createServerManager(): ServerManager {
-        val fileGetHandler = ApplicationGraph.getFileGetHandler()
-        val fileOnlineLoginManager=ApplicationGraph.getFileOnlineLoginManager()
         return ServerManagerImpl(
                 rootPath,
-                fileGetHandler,
+                fileHandlerGet,
+                fileHandlerPost,
                 fileOnlineLoginManager
         )
     }

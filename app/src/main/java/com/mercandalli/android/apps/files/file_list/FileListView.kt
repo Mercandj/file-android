@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mercandalli.android.apps.files.R
@@ -98,12 +99,14 @@ class FileListView @JvmOverloads constructor(
         fab.hide()
     }
 
-    override fun setEmptyTextColorRes(textColorRes: Int) {
-        emptyTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setEmptyTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        emptyTextView.setTextColor(color)
     }
 
-    override fun setErrorTextColorRes(textColorRes: Int) {
-        errorTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setErrorTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        errorTextView.setTextColor(color)
     }
 
     override fun notifyListenerCurrentPathChanged(currentPath: String) {

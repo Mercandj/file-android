@@ -10,16 +10,22 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class BottomBar @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), BottomBarContract.Screen {
+) : LinearLayout(context, attrs, defStyleAttr),
+        BottomBarContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_bottom_bar, this)
     private val sectionFileIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_file_icon)
     private val sectionFileText: TextView = view.findViewById(R.id.view_bottom_bar_section_file_text)
+    private val sectionOnline: View = view.findViewById(R.id.view_bottom_bar_online_section)
+    private val sectionOnlineIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_online_icon)
+    private val sectionOnlineText: TextView = view.findViewById(R.id.view_bottom_bar_section_online_text)
     private val sectionNoteIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_note_icon)
     private val sectionNoteText: TextView = view.findViewById(R.id.view_bottom_bar_section_note_text)
     private val sectionSettingsIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_settings_icon)
@@ -31,6 +37,9 @@ class BottomBar @JvmOverloads constructor(
     init {
         findViewById<View>(R.id.view_bottom_bar_file_section).setOnClickListener {
             userAction.onFileClicked()
+        }
+        sectionOnline.setOnClickListener {
+            userAction.onOnlineClicked()
         }
         findViewById<View>(R.id.view_bottom_bar_note_section).setOnClickListener {
             userAction.onNoteClicked()
@@ -72,6 +81,10 @@ class BottomBar @JvmOverloads constructor(
         clickListener?.onFileSectionClicked()
     }
 
+    override fun notifyListenerOnlineClicked() {
+        clickListener?.onOnlineSectionClicked()
+    }
+
     override fun notifyListenerNoteClicked() {
         clickListener?.onNoteSectionClicked()
     }
@@ -80,28 +93,48 @@ class BottomBar @JvmOverloads constructor(
         clickListener?.onSettingsSectionClicked()
     }
 
-    override fun setFileIconColor(color: Int) {
+    override fun showOnlineSection() {
+        sectionOnline.visibility = VISIBLE
+    }
+
+    override fun hideOnlineSection() {
+        sectionOnline.visibility = GONE
+    }
+
+    override fun setFileIconColor(@ColorInt color: Int) {
         sectionFileIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun setNoteIconColor(color: Int) {
+    override fun setOnlineIconColor(@ColorInt color: Int) {
+        sectionOnlineIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+    }
+
+    override fun setNoteIconColor(@ColorInt color: Int) {
         sectionNoteIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun setSettingsIconColor(color: Int) {
+    override fun setSettingsIconColor(@ColorInt color: Int) {
         sectionSettingsIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun setSectionFileTextColorRes(textColorRes: Int) {
-        sectionFileText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setSectionFileTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        sectionFileText.setTextColor(color)
     }
 
-    override fun setSectionNoteTextColorRes(textColorRes: Int) {
-        sectionNoteText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setSectionOnlineTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        sectionOnlineText.setTextColor(color)
     }
 
-    override fun setSectionSettingsTextColorRes(textColorRes: Int) {
-        sectionSettingsText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setSectionNoteTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        sectionNoteText.setTextColor(color)
+    }
+
+    override fun setSectionSettingsTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        sectionSettingsText.setTextColor(color)
     }
 
     fun setOnBottomBarClickListener(listener: OnBottomBarClickListener?) {
@@ -115,16 +148,19 @@ class BottomBar @JvmOverloads constructor(
             override fun onSaveInstanceState(saveState: Bundle) {}
             override fun onRestoreInstanceState(state: Bundle) {}
             override fun onFileClicked() {}
+            override fun onOnlineClicked() {}
             override fun onNoteClicked() {}
             override fun onSettingsClicked() {}
         }
     } else {
         val themeManager = ApplicationGraph.getThemeManager()
+        val developerManager = ApplicationGraph.getDeveloperManager()
         val selectedColor = ContextCompat.getColor(context, R.color.bottom_bar_selected)
         val notSelectedColor = ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
         BottomBarPresenter(
                 this,
                 themeManager,
+                developerManager,
                 selectedColor,
                 notSelectedColor
         )
@@ -133,6 +169,8 @@ class BottomBar @JvmOverloads constructor(
     interface OnBottomBarClickListener {
 
         fun onFileSectionClicked()
+
+        fun onOnlineSectionClicked()
 
         fun onNoteSectionClicked()
 

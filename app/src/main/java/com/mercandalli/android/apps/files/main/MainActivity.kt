@@ -16,6 +16,7 @@ import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.file_column_horizontal_lists.FileColumnHorizontalLists
 import com.mercandalli.android.apps.files.file_list.FileListView
+import com.mercandalli.android.apps.files.file_online.FileOnlineView
 import com.mercandalli.android.apps.files.note.NoteView
 import com.mercandalli.android.apps.files.settings.SettingsView
 import eightbitlab.com.blurview.BlurView
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity(),
 
     private val fileList: FileListView by bind(R.id.activity_main_file_list)
     private val fileColumnHorizontalLists: FileColumnHorizontalLists by bind(R.id.activity_main_file_horizontal_lists)
+    private val online: FileOnlineView by bind(R.id.activity_main_file_online)
     private val note: NoteView by bind(R.id.activity_main_note)
     private val settings: SettingsView by bind(R.id.activity_main_settings)
     private val bottomBar: BottomBar by bind(R.id.activity_main_bottom_bar)
@@ -91,6 +93,14 @@ class MainActivity : AppCompatActivity(),
 
     override fun hideFileColumnView() {
         fileColumnHorizontalLists.visibility = View.GONE
+    }
+
+    override fun showOnlineView() {
+        online.visibility = View.VISIBLE
+    }
+
+    override fun hideOnlineView() {
+        online.visibility = View.GONE
     }
 
     override fun showNoteView() {
@@ -207,6 +217,10 @@ class MainActivity : AppCompatActivity(),
     private fun createOnBottomBarClickListener() = object : BottomBar.OnBottomBarClickListener {
         override fun onFileSectionClicked() {
             userAction.onFileSectionClicked()
+        }
+
+        override fun onOnlineSectionClicked() {
+            userAction.onOnlineSectionClicked()
         }
 
         override fun onNoteSectionClicked() {

@@ -1,15 +1,20 @@
-package com.mercandalli.android.apps.files.settings.developer
+package com.mercandalli.android.apps.files.settings_developer
 
 import android.widget.ScrollView
 import androidx.annotation.StringRes
-import com.mercandalli.android.apps.files.settings.SettingsManager
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.theme.Theme
+import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
+import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.dialog.DialogManager
 
 class SettingsDeveloperPresenter(
         private val screen: SettingsDeveloperContract.Screen,
         private val themeManager: ThemeManager,
-        private val settingsManager: SettingsManager,
+        private val developerManager: DeveloperManager,
+        private val fileOnlineLoginManager: FileOnlineLoginManager,
+        private val dialogManager: DialogManager,
         private val addOn: AddOn
 ) : SettingsDeveloperContract.UserAction {
 
@@ -18,7 +23,7 @@ class SettingsDeveloperPresenter(
 
     override fun onAttached() {
         themeManager.registerThemeListener(themeListener)
-        settingsManager.registerDeveloperModeListener(appDeveloperListener)
+        developerManager.registerDeveloperModeListener(appDeveloperListener)
         updateTheme()
         syncDeveloperSection()
     }
@@ -27,25 +32,34 @@ class SettingsDeveloperPresenter(
         themeManager.unregisterThemeListener(themeListener)
     }
 
-    override fun onVideoStartedCountClicked() {
+    override fun onOnlineRowClicked() {
 
     }
 
     override fun onActivationRowClicked() {
-        settingsManager.setDeveloperMode(false)
+        developerManager.setDeveloperMode(false)
         syncDeveloperSection()
     }
 
     override fun onDeveloperActivationCheckChanged(checked: Boolean) {
-        settingsManager.setDeveloperMode(checked)
+        developerManager.setDeveloperMode(checked)
         syncDeveloperSection()
     }
 
-    private fun syncDeveloperSection(isAppDeveloperModeEnabled: Boolean = settingsManager.isDeveloperMode()) {
+    private fun syncDeveloperSection(isAppDeveloperModeEnabled: Boolean = developerManager.isDeveloperMode()) {
         val visibility = if (isAppDeveloperModeEnabled) ScrollView.VISIBLE else ScrollView.GONE
         screen.setDeveloperSectionLabelVisibility(visibility)
         screen.setDeveloperSectionVisibility(visibility)
         screen.setDeveloperActivationChecked(isAppDeveloperModeEnabled)
+
+        val login = fileOnlineLoginManager.getLogin()
+        val onlineSubLabel = if (login == null) {
+            addOn.getString(R.string.view_settings_developer_online_sublabel_not_logged)
+        } else {
+            addOn.getString(R.string.view_settings_developer_online_sublabel, login)
+        }
+        screen.setOnlineSubLabelText(onlineSubLabel)
+
         if (!isAppDeveloperModeEnabled) {
             return
         }
@@ -68,7 +82,7 @@ class SettingsDeveloperPresenter(
         }
     }
 
-    private fun createAppDeveloperListener() = object : SettingsManager.DeveloperModeListener{
+    private fun createAppDeveloperListener() = object : DeveloperManager.DeveloperModeListener {
         override fun onDeveloperModeChanged() {
             syncDeveloperSection()
         }

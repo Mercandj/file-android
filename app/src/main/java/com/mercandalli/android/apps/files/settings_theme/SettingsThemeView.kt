@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.settings.theme
+package com.mercandalli.android.apps.files.settings_theme
 
 import android.content.Context
 import android.util.AttributeSet

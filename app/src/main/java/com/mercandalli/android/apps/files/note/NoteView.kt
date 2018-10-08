@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.annotation.ColorRes
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -54,16 +55,19 @@ class NoteView @JvmOverloads constructor(
         )
     }
 
-    override fun setTextColorRes(textColorRes: Int) {
-        editText.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        editText.setTextColor(color)
     }
 
-    override fun setTextHintColorRes(textColorRes: Int) {
-        editText.setHintTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setTextHintColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        editText.setHintTextColor(color)
     }
 
-    override fun setCardBackgroundColorRes(colorRes: Int) {
-        editText.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+    override fun setCardBackgroundColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        editText.setBackgroundColor(color)
     }
 
     fun onShareClicked() {

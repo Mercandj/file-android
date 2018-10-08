@@ -1,7 +1,8 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
-import com.mercandalli.server.files.file.FileGetHandler
+import com.mercandalli.server.files.file_handler.FileHandlerGet
+import com.mercandalli.server.files.file_handler.FileHandlerPost
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
@@ -19,6 +20,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.withCharset
 import io.ktor.pipeline.PipelineContext
 import io.ktor.request.path
+import io.ktor.request.receiveText
 import io.ktor.request.uri
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
@@ -34,7 +36,8 @@ import java.io.File
 
 class ServerManagerImpl(
         private val rootServerPath: String,
-        private val fileGetHandler: FileGetHandler,
+        private val fileHandlerGet: FileHandlerGet,
+        private val fileHandlerPost: FileHandlerPost,
         private val fileOnlineLoginManager: FileOnlineLoginManager
 ) : ServerManager {
 
@@ -93,16 +96,17 @@ class ServerManagerImpl(
                     respondStatus()
                 }
                 get("/file-api/file") {
-                    val response = fileGetHandler.get()
+                    val response = fileHandlerGet.get()
                     call.respondText(response)
                 }
                 post("/file-api/file") {
-                    val response = fileGetHandler.post()
+                    val body = call.receiveText()
+                    val response = fileHandlerPost.post(body)
                     call.respondText(response)
                 }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
-                    val response = fileGetHandler.get(id!!)
+                    val response = fileHandlerGet.get(id!!)
                     call.respondText(response)
                 }
                 get("/timothe") {

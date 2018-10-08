@@ -57,6 +57,10 @@ class MainActivityPresenter(
         selectFile()
     }
 
+    override fun onOnlineSectionClicked() {
+        selectOnline()
+    }
+
     override fun onNoteSectionClicked() {
         selectNote()
     }
@@ -115,6 +119,7 @@ class MainActivityPresenter(
         selectedSection = SECTION_FILE_LIST
         screen.showFileListView()
         screen.hideFileColumnView()
+        screen.hideOnlineView()
         screen.hideNoteView()
         screen.hideSettingsView()
         screen.hideToolbarDelete()
@@ -130,6 +135,7 @@ class MainActivityPresenter(
         selectedSection = SECTION_FILE_COLUMN
         screen.hideFileListView()
         screen.showFileColumnView()
+        screen.hideOnlineView()
         screen.hideNoteView()
         screen.hideSettingsView()
         screen.hideToolbarDelete()
@@ -140,10 +146,26 @@ class MainActivityPresenter(
         syncToolbarPasteIconVisibility()
     }
 
+    private fun selectOnline() {
+        selectedSection = SECTION_ONLINE
+        screen.hideFileListView()
+        screen.hideFileColumnView()
+        screen.showOnlineView()
+        screen.hideNoteView()
+        screen.hideSettingsView()
+        screen.hideToolbarDelete()
+        screen.hideToolbarShare()
+        screen.hideToolbarAdd()
+        screen.hideToolbarFileColumn()
+        screen.hideToolbarFileList()
+        syncToolbarPasteIconVisibility()
+    }
+
     private fun selectNote() {
         selectedSection = SECTION_NOTE
         screen.hideFileListView()
         screen.hideFileColumnView()
+        screen.hideOnlineView()
         screen.showNoteView()
         screen.hideSettingsView()
         screen.showToolbarDelete()
@@ -158,6 +180,7 @@ class MainActivityPresenter(
         selectedSection = SECTION_SETTINGS
         screen.hideFileListView()
         screen.hideFileColumnView()
+        screen.hideOnlineView()
         screen.hideNoteView()
         screen.showSettingsView()
         screen.hideToolbarDelete()
@@ -200,6 +223,7 @@ class MainActivityPresenter(
         private const val SECTION_FILE_LIST = SECTION_UNDEFINED + 1
         private const val SECTION_FILE_COLUMN = SECTION_FILE_LIST + 1
         private const val SECTION_NOTE = SECTION_FILE_COLUMN + 1
-        private const val SECTION_SETTINGS = SECTION_NOTE + 1
+        private const val SECTION_ONLINE = SECTION_NOTE + 1
+        private const val SECTION_SETTINGS = SECTION_ONLINE + 1
     }
 }

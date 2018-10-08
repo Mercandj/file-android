@@ -23,21 +23,23 @@ internal class DialogPresenter(
 
     override fun onPositiveClicked(input: String) {
         screen.quit()
+        val dialogAction = DialogManager.DialogAction(
+                dialogInput.dialogId,
+                input
+        )
         dialogManager.onDialogPositiveClicked(
-                DialogManager.DialogAction(
-                        dialogInput.dialogId,
-                        input
-                )
+                dialogAction
         )
     }
 
     override fun onNegativeClicked(input: String) {
         screen.quit()
+        val dialogAction = DialogManager.DialogAction(
+                dialogInput.dialogId,
+                input
+        )
         dialogManager.onDialogNegativeClicked(
-                DialogManager.DialogAction(
-                        dialogInput.dialogId,
-                        input
-                )
+                dialogAction
         )
     }
 }

@@ -114,7 +114,7 @@
                     android:paddingStart="@dimen/default_space_2"
                     android:paddingEnd="@dimen/default_space_2"
                     android:textColor="@color/text_secondary_color_light"
-                    tools:text="Your country is us" />
+                    tools:text="Your login is Jonathan" />
 
             </LinearLayout>
 

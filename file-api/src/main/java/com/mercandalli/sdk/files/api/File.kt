@@ -76,6 +76,17 @@ data class File(
         }
 
         @JvmStatic
+        fun fromJson(jsonArray: JSONArray): List<File> {
+            val files = ArrayList<File>()
+            for (i in 0 until jsonArray.length()) {
+                val fileJsonObject = jsonArray.getJSONObject(i)
+                val file = fromJson(fileJsonObject)
+                files.add(file)
+            }
+            return files
+        }
+
+        @JvmStatic
         fun toJson(file: File): JSONObject {
             val json = JSONObject()
             json.put("id", file.id)
@@ -96,6 +107,31 @@ data class File(
                 jsonArray.put(json)
             }
             return jsonArray
+        }
+
+        @JvmStatic
+        fun toJson(files: MutableCollection<File>): JSONArray {
+            val jsonArray = JSONArray()
+            for (file in files) {
+                val json = toJson(file)
+                jsonArray.put(json)
+            }
+            return jsonArray
+        }
+
+        fun createFake(id: String) = File(
+                id,
+                "path",
+                "parent_path",
+                true,
+                "RootDir",
+                0,
+                4242
+        )
+
+        fun createFakeJson(id: String): String {
+            val file = createFake(id)
+            return toJson(file).toString()
         }
     }
 }

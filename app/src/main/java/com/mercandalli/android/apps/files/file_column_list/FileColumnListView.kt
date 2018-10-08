@@ -8,11 +8,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileManager
 
 class FileColumnListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -84,12 +86,14 @@ class FileColumnListView @JvmOverloads constructor(
         refresh.isRefreshing = false
     }
 
-    override fun setEmptyTextColorRes(textColorRes: Int) {
-        emptyTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setEmptyTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        emptyTextView.setTextColor(color)
     }
 
-    override fun setErrorTextColorRes(textColorRes: Int) {
-        errorTextView.setTextColor(ContextCompat.getColor(context, textColorRes))
+    override fun setErrorTextColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        errorTextView.setTextColor(color)
     }
 
     fun onResume() {
@@ -112,6 +116,10 @@ class FileColumnListView @JvmOverloads constructor(
         userAction.onPathSelected(path)
     }
 
+    fun setFileManager(fileManager: FileManager) {
+        userAction.onSetFileManager(fileManager)
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : FileColumnListContract.UserAction {
             override fun onAttached() {}
@@ -120,6 +128,7 @@ class FileColumnListView @JvmOverloads constructor(
             override fun onRefresh() {}
             override fun onPathChanged(path: String) {}
             override fun onPathSelected(path: String?) {}
+            override fun onSetFileManager(fileManager: FileManager) {}
         }
     } else {
         val fileManager = ApplicationGraph.getFileManager()

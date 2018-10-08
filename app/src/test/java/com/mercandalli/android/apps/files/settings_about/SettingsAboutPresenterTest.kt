@@ -1,8 +1,8 @@
-package com.mercandalli.android.apps.files.settings.about
+package com.mercandalli.android.apps.files.settings_about
 
 import com.mercandalli.android.apps.files.dialog.DialogManager
 import com.mercandalli.android.apps.files.hash.HashManager
-import com.mercandalli.android.apps.files.settings.SettingsManager
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.version.VersionManager
 import org.junit.Before
@@ -22,7 +22,7 @@ class SettingsAboutPresenterTest {
     @Mock
     private val dialogManager: DialogManager? = null
     @Mock
-    private val settingsManager: SettingsManager? = null
+    private val developerManager: DeveloperManager? = null
     @Mock
     private val hashManager: HashManager? = null
     @Mock
@@ -76,7 +76,7 @@ class SettingsAboutPresenterTest {
                 versionManager!!,
                 themeManager!!,
                 dialogManager!!,
-                settingsManager!!,
+                developerManager!!,
                 hashManager!!,
                 addOn!!
         )

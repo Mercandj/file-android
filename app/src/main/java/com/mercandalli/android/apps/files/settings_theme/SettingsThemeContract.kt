@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.settings.theme
+package com.mercandalli.android.apps.files.settings_theme
 
 import androidx.annotation.ColorRes
 

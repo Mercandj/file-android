@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_list_row
 
+import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
 
 interface FileListRowContract {
@@ -51,10 +52,10 @@ interface FileListRowContract {
 
         fun showRenamePrompt(fileName: String)
 
-        fun setTitleTextColorRes(textColorRes: Int)
+        fun setTitleTextColorRes(@ColorRes colorRes: Int)
 
-        fun setSubtitleTextColorRes(textColorRes: Int)
+        fun setSubtitleTextColorRes(@ColorRes colorRes: Int)
 
-        fun setCardBackgroundColorRes(cardBackgroundColorRes: Int)
+        fun setCardBackgroundColorRes(@ColorRes colorRes: Int)
     }
 }

@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.settings.developer
+package com.mercandalli.android.apps.files.settings_developer
 
 import android.content.Context
 import android.util.AttributeSet
@@ -25,8 +25,8 @@ class SettingsDeveloperView @JvmOverloads constructor(
     private val developerActivation: CheckBox = view.findViewById(R.id.view_settings_developer_activation)
     private val developerActivationLabel: TextView = view.findViewById(R.id.view_settings_developer_activation_label)
     private val developerActivationSubLabel: TextView = view.findViewById(R.id.view_settings_developer_activation_sublabel)
-    private val developerRemoteCountryLabel: TextView = view.findViewById(R.id.view_settings_developer_online_label)
-    private val developerRemoteCountrySubLabel: TextView = view.findViewById(R.id.view_settings_developer_online_sublabel)
+    private val developerOnlineLabel: TextView = view.findViewById(R.id.view_settings_developer_online_label)
+    private val developerOnlineSubLabel: TextView = view.findViewById(R.id.view_settings_developer_online_sublabel)
 
     private val userAction = createUserAction()
 
@@ -34,7 +34,7 @@ class SettingsDeveloperView @JvmOverloads constructor(
         orientation = LinearLayout.VERTICAL
 
         findViewById<View>(R.id.view_settings_developer_online_row).setOnClickListener {
-            userAction.onVideoStartedCountClicked()
+            userAction.onOnlineRowClicked()
         }
         findViewById<View>(R.id.view_settings_developer_activation_row).setOnClickListener {
             userAction.onActivationRowClicked()
@@ -57,13 +57,13 @@ class SettingsDeveloperView @JvmOverloads constructor(
     override fun setTextPrimaryColorRes(@ColorRes colorRes: Int) {
         val color = ContextCompat.getColor(context, colorRes)
         developerActivationLabel.setTextColor(color)
-        developerRemoteCountryLabel.setTextColor(color)
+        developerOnlineLabel.setTextColor(color)
     }
 
     override fun setTextSecondaryColorRes(@ColorRes colorRes: Int) {
         val color = ContextCompat.getColor(context, colorRes)
         developerActivationSubLabel.setTextColor(color)
-        developerRemoteCountrySubLabel.setTextColor(color)
+        developerOnlineSubLabel.setTextColor(color)
     }
 
     override fun setSectionColor(@ColorRes colorRes: Int) {
@@ -83,21 +83,23 @@ class SettingsDeveloperView @JvmOverloads constructor(
         developerActivation.isChecked = checked
     }
 
-    override fun setDeveloperRemoteCountrySubLabelText(text: String) {
-        developerRemoteCountrySubLabel.text = text
+    override fun setOnlineSubLabelText(text: String) {
+        developerOnlineSubLabel.text = text
     }
 
     private fun createUserAction(): SettingsDeveloperContract.UserAction = if (isInEditMode) {
         object : SettingsDeveloperContract.UserAction {
             override fun onAttached() {}
             override fun onDetached() {}
-            override fun onVideoStartedCountClicked() {}
+            override fun onOnlineRowClicked() {}
             override fun onActivationRowClicked() {}
             override fun onDeveloperActivationCheckChanged(checked: Boolean) {}
         }
     } else {
         val themeManager = ApplicationGraph.getThemeManager()
-        val settingsManager = ApplicationGraph.getSettingsManager()
+        val developerManager = ApplicationGraph.getDeveloperManager()
+        val fileOnlineLoginManager = ApplicationGraph.getFileOnlineLoginManager()
+        val dialogManager = ApplicationGraph.getDialogManager()
         val addOn = object : SettingsDeveloperPresenter.AddOn {
             override fun getString(stringRes: Int) = resources.getString(stringRes)
             override fun getString(stringRes: Int, value: Int) = resources.getString(stringRes, value)
@@ -106,7 +108,9 @@ class SettingsDeveloperView @JvmOverloads constructor(
         SettingsDeveloperPresenter(
                 this,
                 themeManager,
-                settingsManager,
+                developerManager,
+                fileOnlineLoginManager,
+                dialogManager,
                 addOn
         )
     }

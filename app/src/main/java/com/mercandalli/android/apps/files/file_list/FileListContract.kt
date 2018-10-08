@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.file_list
 
+import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
 
 interface FileListContract {
@@ -41,9 +42,9 @@ interface FileListContract {
 
         fun hideFabUpArrow()
 
-        fun setEmptyTextColorRes(textColorRes: Int)
+        fun setEmptyTextColorRes(@ColorRes colorRes: Int)
 
-        fun setErrorTextColorRes(textColorRes: Int)
+        fun setErrorTextColorRes(@ColorRes colorRes: Int)
 
         fun notifyListenerCurrentPathChanged(currentPath: String)
     }

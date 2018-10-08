@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.settings.about
+package com.mercandalli.android.apps.files.settings_about
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes

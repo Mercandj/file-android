@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.note
 
+import androidx.annotation.ColorRes
+
 interface NoteContract {
 
     interface UserAction {
@@ -23,10 +25,10 @@ interface NoteContract {
 
         fun showDeleteConfirmation()
 
-        fun setTextColorRes(textColorRes: Int)
+        fun setTextColorRes(@ColorRes colorRes: Int)
 
-        fun setTextHintColorRes(textColorRes: Int)
+        fun setTextHintColorRes(@ColorRes colorRes: Int)
 
-        fun setCardBackgroundColorRes(colorRes: Int)
+        fun setCardBackgroundColorRes(@ColorRes colorRes: Int)
     }
 }

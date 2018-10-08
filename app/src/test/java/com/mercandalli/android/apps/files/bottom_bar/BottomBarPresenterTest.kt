@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import org.junit.Before
 import org.junit.Test
@@ -13,6 +14,8 @@ class BottomBarPresenterTest {
     private val screen: BottomBarContract.Screen? = null
     @Mock
     private val themeManager: ThemeManager? = null
+    @Mock
+    private val developerManager: DeveloperManager? = null
     private val selectedColor: Int = 42
     private val notSelectedColor: Int = 43
 
@@ -70,6 +73,7 @@ class BottomBarPresenterTest {
         return BottomBarPresenter(
                 screen!!,
                 themeManager!!,
+                developerManager!!,
                 selectedColor,
                 notSelectedColor
         )
