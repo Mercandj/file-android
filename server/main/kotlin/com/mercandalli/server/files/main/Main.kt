@@ -12,7 +12,12 @@ fun main(args: Array<String>) {
     val decodedPath = URLDecoder.decode(path, "UTF-8")
     val rootPath = File(decodedPath).parentFile.absolutePath
 
-    ApplicationGraph.initialize(rootPath)
+    val pullSubRepositoryShellFile = createPullSubRepositoryShellFile(rootPath)
+
+    ApplicationGraph.initialize(
+            rootPath,
+            pullSubRepositoryShellFile
+    )
 
     val logManager = ApplicationGraph.getLogManager()
     logManager.d(tag, "Welcome to file server")
@@ -23,7 +28,11 @@ fun main(args: Array<String>) {
     //val serverManager = ApplicationGraph.getServerManager()
     //serverManager.start()
 
-    val pullSubRepositoryShellFile = java.io.File(rootPath, "pull-sub-repository.sh")
+    MainFrame.start()
+}
+
+private fun createPullSubRepositoryShellFile(rootPath: String): File {
+    val pullSubRepositoryShellFile = File(rootPath, "pull-sub-repository.sh")
     if (pullSubRepositoryShellFile.exists()) {
         pullSubRepositoryShellFile.delete()
     }
@@ -35,8 +44,7 @@ fun main(args: Array<String>) {
                     "$rootPath/static/timothe"
             )
     ))
-
-    MainFrame.start(pullSubRepositoryShellFile)
+    return pullSubRepositoryShellFile
 }
 
 private fun createPullSubRepositoryShellContent(paths: List<String>): String {

@@ -9,13 +9,17 @@ class ServerModule(
     private val fileHandlerGet by lazy { ApplicationGraph.getFileGetHandler() }
     private val fileHandlerPost by lazy { ApplicationGraph.getFilePostHandler() }
     private val fileOnlineLoginManager by lazy { ApplicationGraph.getFileOnlineLoginManager() }
+    private val shellManager by lazy { ApplicationGraph.getShellManager() }
+    private val pullSubRepositoryShellFile by lazy { ApplicationGraph.getPullSubRepositoryShellFile() }
 
     fun createServerManager(): ServerManager {
         return ServerManagerImpl(
                 rootPath,
                 fileHandlerGet,
                 fileHandlerPost,
-                fileOnlineLoginManager
+                fileOnlineLoginManager,
+                shellManager,
+                pullSubRepositoryShellFile
         )
     }
 }

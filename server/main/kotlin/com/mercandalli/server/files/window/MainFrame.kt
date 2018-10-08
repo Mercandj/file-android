@@ -7,8 +7,7 @@ import javax.swing.JPanel
 import javax.swing.BoxLayout
 
 class MainFrame(
-        title: String,
-        private val pullSubRepositoryShellFile: java.io.File
+        title: String
 ) : JFrame(),
         MainContract.Screen {
 
@@ -58,6 +57,7 @@ class MainFrame(
         val serverManager = ApplicationGraph.getServerManager()
         val shellManager = ApplicationGraph.getShellManager()
         val rootPath = ApplicationGraph.getRootPath()
+        val pullSubRepositoryShellFile = ApplicationGraph.getPullSubRepositoryShellFile()
         return MainPresenter(
                 this,
                 serverManager,
@@ -68,17 +68,14 @@ class MainFrame(
     }
 
     companion object {
-        private var pullSubRepositoryShellFile: java.io.File? = null
 
-        fun start(pullSubRepositoryShellFile: java.io.File) {
-            this.pullSubRepositoryShellFile = pullSubRepositoryShellFile
+        fun start() {
             EventQueue.invokeLater(Companion::createAndShowGUI)
         }
 
         private fun createAndShowGUI() {
             val frame = MainFrame(
-                    "Server - mercandalli.com",
-                    pullSubRepositoryShellFile!!
+                    "Server - mercandalli.com"
             )
             frame.isVisible = true
         }

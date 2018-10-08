@@ -8,7 +8,8 @@ import com.mercandalli.server.files.server.ServerModule
 import com.mercandalli.server.files.shell.ShellModule
 
 class ApplicationGraph(
-        val rootPath: String
+        val rootPath: String,
+        val pullSubRepositoryShellFile: java.io.File
 ) {
 
     private val fileModule = FileHandlerModule()
@@ -35,12 +36,19 @@ class ApplicationGraph(
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileRepository() = graph!!.fileRepositoryInternal
         fun getLogManager() = graph!!.logManagerInternal
+        fun getPullSubRepositoryShellFile() = graph!!.pullSubRepositoryShellFile
         fun getRootPath() = graph!!.rootPath
         fun getServerManager() = graph!!.serverManagerInternal
         fun getShellManager() = graph!!.shellManagerInternal
 
-        fun initialize(rootPath: String) {
-            graph = ApplicationGraph(rootPath)
+        fun initialize(
+                rootPath: String,
+                pullSubRepositoryShellFile: java.io.File
+        ) {
+            graph = ApplicationGraph(
+                    rootPath,
+                    pullSubRepositoryShellFile
+            )
         }
     }
 }
