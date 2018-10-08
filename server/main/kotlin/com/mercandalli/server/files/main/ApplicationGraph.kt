@@ -8,7 +8,7 @@ import com.mercandalli.server.files.server.ServerModule
 import com.mercandalli.server.files.shell.ShellModule
 
 class ApplicationGraph(
-        rootPath: String
+        val rootPath: String
 ) {
 
     private val fileModule = FileHandlerModule()
@@ -35,6 +35,7 @@ class ApplicationGraph(
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileRepository() = graph!!.fileRepositoryInternal
         fun getLogManager() = graph!!.logManagerInternal
+        fun getRootPath() = graph!!.rootPath
         fun getServerManager() = graph!!.serverManagerInternal
         fun getShellManager() = graph!!.shellManagerInternal
 

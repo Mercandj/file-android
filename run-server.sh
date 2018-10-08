@@ -90,7 +90,7 @@ pushd "$BASEDIR"
 
     popd
 
-    java -jar ./build/file-server.jar
+    java -jar ./build/file-server.jar &
 
 popd
 

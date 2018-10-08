@@ -33,6 +33,7 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 import org.json.JSONObject
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 class ServerManagerImpl(
         private val rootServerPath: String,
@@ -56,6 +57,10 @@ class ServerManagerImpl(
 
     override fun start() {
         server.start(wait = true)
+    }
+
+    override fun stop() {
+        server.stop(1, 1, TimeUnit.SECONDS)
     }
 
     private fun createModule(): Application.() -> Unit {
