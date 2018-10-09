@@ -9,12 +9,13 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
-import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.*
 
 class FileListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -33,7 +34,7 @@ class FileListView @JvmOverloads constructor(
     private var fileListViewSelectedFileListener: FileListViewSelectedFileListener? = null
 
     init {
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
         refresh.setOnRefreshListener {
             userAction.onRefresh()
@@ -121,6 +122,24 @@ class FileListView @JvmOverloads constructor(
         fileListViewSelectedFileListener = listener
     }
 
+    fun setFileManagers(
+            fileManager: FileManager,
+            fileOpenManager: FileOpenManager,
+            fileDeleteManager: FileDeleteManager,
+            fileCopyCutManager: FileCopyCutManager,
+            fileRenameManager: FileRenameManager
+    ) {
+        userAction.onSetFileManagers(
+                fileManager,
+                fileOpenManager
+        )
+        adapter.setFileManagers(
+                fileDeleteManager,
+                fileCopyCutManager,
+                fileRenameManager
+        )
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : FileListContract.UserAction {
             override fun onAttached() {}
@@ -128,6 +147,11 @@ class FileListView @JvmOverloads constructor(
             override fun onRefresh() {}
             override fun onFileClicked(file: File) {}
             override fun onFabUpArrowClicked() {}
+            override fun onSetFileManagers(
+                    fileManager: FileManager,
+                    fileOpenManager: FileOpenManager
+            ) {
+            }
         }
     } else {
         val fileManager = ApplicationGraph.getFileManager()

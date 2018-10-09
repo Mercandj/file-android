@@ -3,7 +3,8 @@ package com.mercandalli.server.files.file_handler
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
-import com.mercandalli.server.files.response_json.ResponseJsonObject
+import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
+import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
 import org.json.JSONObject
 
 class FileHandlerPostImpl(
@@ -16,10 +17,8 @@ class FileHandlerPostImpl(
         val fileJsonObject = JSONObject(body)
         val file = File.fromJson(fileJsonObject)
         fileRepository.put(file)
-        val json = JSONObject()
-        json.put("file", fileJsonObject)
-        return ResponseJsonObject(
-                json,
+        return ServerResponseFile.create(
+                file,
                 "File inserted into the repository"
         ).toJsonString()
     }

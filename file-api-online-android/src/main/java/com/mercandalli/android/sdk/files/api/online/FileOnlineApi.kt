@@ -1,8 +1,8 @@
 package com.mercandalli.android.sdk.files.api.online
 
-import org.json.JSONArray
+import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFiles
 
 internal interface FileOnlineApi {
 
-    fun get(): JSONArray?
+    fun get(): ServerResponseFiles?
 }

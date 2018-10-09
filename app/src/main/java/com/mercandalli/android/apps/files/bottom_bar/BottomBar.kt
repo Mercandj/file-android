@@ -47,6 +47,8 @@ class BottomBar @JvmOverloads constructor(
         findViewById<View>(R.id.view_bottom_bar_settings_section).setOnClickListener {
             userAction.onSettingsClicked()
         }
+        val horizontalEdgePadding = resources.getDimensionPixelSize(R.dimen.default_space)
+        setPadding(horizontalEdgePadding, 0, horizontalEdgePadding, 0)
     }
 
     override fun onAttachedToWindow() {
@@ -155,12 +157,14 @@ class BottomBar @JvmOverloads constructor(
     } else {
         val themeManager = ApplicationGraph.getThemeManager()
         val developerManager = ApplicationGraph.getDeveloperManager()
+        val fileOnlineLoginManager = ApplicationGraph.getFileOnlineLoginManager()
         val selectedColor = ContextCompat.getColor(context, R.color.bottom_bar_selected)
         val notSelectedColor = ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
         BottomBarPresenter(
                 this,
                 themeManager,
                 developerManager,
+                fileOnlineLoginManager,
                 selectedColor,
                 notSelectedColor
         )

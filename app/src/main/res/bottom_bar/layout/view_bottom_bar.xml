@@ -13,9 +13,7 @@
         android:layout_weight="1"
         android:background="?android:selectableItemBackground"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/default_space_4"
-        android:paddingEnd="0dp">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_file_icon"
@@ -90,9 +88,7 @@
         android:layout_weight="1"
         android:background="?android:selectableItemBackground"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/default_space_4">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_bottom_bar_section_settings_icon"

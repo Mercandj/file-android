@@ -105,12 +105,14 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/toolbar_height" />
 
-    <com.mercandalli.android.apps.files.file_online.FileOnlineView
-        android:id="@+id/activity_main_file_online"
+    <ViewStub
+        android:id="@+id/activity_main_file_online_view_stub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/toolbar_height"
         android:layout_marginBottom="@dimen/bottom_bar_height"
+        android:inflatedId="@+id/activity_main_file_online"
+        android:layout="@layout/activity_main_online_container"
         android:visibility="gone" />
 
     <com.mercandalli.android.apps.files.note.NoteView

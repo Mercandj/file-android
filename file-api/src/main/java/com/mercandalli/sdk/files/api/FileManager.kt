@@ -13,5 +13,4 @@ interface FileManager {
     interface FileChildrenResultListener {
         fun onFileChildrenResultChanged(path: String)
     }
-
 }

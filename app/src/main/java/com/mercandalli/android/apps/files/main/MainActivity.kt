@@ -11,6 +11,7 @@ import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.common.DialogUtils
@@ -27,7 +28,11 @@ class MainActivity : AppCompatActivity(),
 
     private val fileList: FileListView by bind(R.id.activity_main_file_list)
     private val fileColumnHorizontalLists: FileColumnHorizontalLists by bind(R.id.activity_main_file_horizontal_lists)
-    private val online: FileOnlineView by bind(R.id.activity_main_file_online)
+    private val onlineLazy = lazy {
+        val view = findViewById<ViewStub>(R.id.activity_main_file_online_view_stub)
+        view.inflate() as FileOnlineView
+    }
+    private val online by onlineLazy
     private val note: NoteView by bind(R.id.activity_main_note)
     private val settings: SettingsView by bind(R.id.activity_main_settings)
     private val bottomBar: BottomBar by bind(R.id.activity_main_bottom_bar)
@@ -100,6 +105,9 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun hideOnlineView() {
+        if (!onlineLazy.isInitialized()) {
+            return
+        }
         online.visibility = View.GONE
     }
 

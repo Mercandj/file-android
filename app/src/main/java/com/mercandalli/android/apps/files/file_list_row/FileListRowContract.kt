@@ -1,7 +1,7 @@
 package com.mercandalli.android.apps.files.file_list_row
 
 import androidx.annotation.ColorRes
-import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.*
 
 interface FileListRowContract {
 
@@ -30,6 +30,12 @@ interface FileListRowContract {
         fun onRenameConfirmedClicked(fileName: String)
 
         fun onOverflowClicked()
+
+        fun onSetFileManagers(
+                fileDeleteManager: FileDeleteManager,
+                fileCopyCutManager: FileCopyCutManager,
+                fileRenameManager: FileRenameManager
+        )
     }
 
     interface Screen {

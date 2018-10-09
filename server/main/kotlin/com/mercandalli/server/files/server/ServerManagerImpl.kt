@@ -4,6 +4,8 @@ import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
 import com.mercandalli.server.files.log.LogManager
+import com.mercandalli.server.files.server.ServerNotFound.respondNotFound
+import com.mercandalli.server.files.server.ServerStatus.respondStatus
 import com.mercandalli.server.files.shell.ShellManager
 import io.ktor.application.*
 import io.ktor.auth.Authentication
@@ -145,37 +147,7 @@ class ServerManagerImpl(
         }
     }
 
-    private suspend fun PipelineContext<Unit, ApplicationCall>.respondStatus() {
-        call.application.environment.log.debug("/status")
-        val uri = call.request.uri
-        val origin = call.request.origin
-        val responseJson = JSONObject()
-        responseJson.put("running", true)
-        responseJson.put("uri", uri)
-        responseJson.put("origin", origin)
-        responseJson.put("root_server_path", rootServerPath)
-        call.respondText(responseJson.toString(), ContentType.Text.Plain)
-    }
-
-    private suspend fun PipelineContext<Unit, ApplicationCall>.respondNotFound(httpStatusCode: HttpStatusCode) {
-        val statusCode = httpStatusCode.value
-        val statusDescription = httpStatusCode.description
-        val responseJson = JSONObject()
-        val uri = call.request.uri
-        responseJson.put("uri", uri)
-        responseJson.put("status_code", statusCode)
-        responseJson.put("status_description", statusDescription)
-        val message = TextContent(
-                responseJson.toString(),
-                ContentType.Text.Plain.withCharset(Charsets.UTF_8),
-                httpStatusCode
-        )
-        call.respond(
-                message
-        )
-    }
-
     companion object {
-        val TAG = "ServerManager"
+        const val TAG = "ServerManager"
     }
 }

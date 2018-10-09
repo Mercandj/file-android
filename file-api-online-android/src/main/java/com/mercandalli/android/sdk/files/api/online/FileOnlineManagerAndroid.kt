@@ -1,6 +1,5 @@
 package com.mercandalli.android.sdk.files.api.online
 
-import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
 import kotlinx.coroutines.experimental.Dispatchers
@@ -66,8 +65,7 @@ internal class FileOnlineManagerAndroid(
     }
 
     private fun loadFileChildrenSync(path: String): FileChildrenResult {
-        val jsonArray = fileOnlineApi.get()
-        val files = File.fromJson(jsonArray!!)
-        return FileChildrenResult.createLoaded(path, files)
+        val serverResponseFiles = fileOnlineApi.get()
+        return FileChildrenResult.createLoaded(path, serverResponseFiles!!.files)
     }
 }

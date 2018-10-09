@@ -2,6 +2,8 @@ package com.mercandalli.android.apps.files.file_list
 
 import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileOpenManager
 
 interface FileListContract {
 
@@ -16,6 +18,11 @@ interface FileListContract {
         fun onFileClicked(file: File)
 
         fun onFabUpArrowClicked()
+
+        fun onSetFileManagers(
+                fileManager: FileManager,
+                fileOpenManager: FileOpenManager
+        )
     }
 
     interface Screen {

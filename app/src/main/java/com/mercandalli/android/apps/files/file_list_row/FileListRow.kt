@@ -15,7 +15,7 @@ import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
-import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.*
 
 class FileListRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -145,6 +145,18 @@ class FileListRow @JvmOverloads constructor(
         fileClickListener = listener
     }
 
+    fun setFileManagers(
+            fileDeleteManager: FileDeleteManager,
+            fileCopyCutManager: FileCopyCutManager,
+            fileRenameManager: FileRenameManager
+    ) {
+        userAction.onSetFileManagers(
+                fileDeleteManager,
+                fileCopyCutManager,
+                fileRenameManager
+        )
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : FileListRowContract.UserAction {
             override fun onAttached() {}
@@ -159,6 +171,11 @@ class FileListRow @JvmOverloads constructor(
             override fun onRenameClicked() {}
             override fun onRenameConfirmedClicked(fileName: String) {}
             override fun onOverflowClicked() {}
+            override fun onSetFileManagers(
+                    fileDeleteManager: FileDeleteManager,
+                    fileCopyCutManager: FileCopyCutManager,
+                    fileRenameManager: FileRenameManager
+            ) {}
         }
     } else {
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()

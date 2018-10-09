@@ -5,14 +5,14 @@ import com.mercandalli.sdk.files.api.*
 
 class FileListPresenter(
         private val screen: FileListContract.Screen,
-        private val fileManager: FileManager,
+        private var fileManager: FileManager,
         private val fileOpenManager: FileOpenManager,
         private val fileSortManager: FileSortManager,
         private val themeManager: ThemeManager,
-        private val currentPathParam: String
+        private val rootPath: String
 ) : FileListContract.UserAction {
 
-    private var currentPath = currentPathParam
+    private var currentPath = rootPath
     private val fileChildrenResultListener = createFileChildrenResultListener()
     private val themeListener = createThemeListener()
 
@@ -44,13 +44,23 @@ class FileListPresenter(
     }
 
     override fun onFabUpArrowClicked() {
-        if (currentPath == currentPathParam) {
+        if (currentPath == rootPath) {
             return
         }
         val ioFile = java.io.File(currentPath)
-        currentPath = ioFile.parent
+        val parent = ioFile.parent ?: return
+        currentPath = parent
         screen.notifyListenerCurrentPathChanged(currentPath)
         syncFileChildren()
+    }
+
+    override fun onSetFileManagers(
+            fileManager: FileManager,
+            fileOpenManager: FileOpenManager
+    ) {
+        this.fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        this.fileManager = fileManager
+        fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 
     private fun syncFileChildren() {
@@ -60,11 +70,17 @@ class FileListPresenter(
             fileChildrenResult = fileManager.loadFileChildren(currentPath)
         }
         syncFileChildren(fileChildrenResult)
-        if (currentPathParam == currentPath) {
+        if (rootPath == currentPath) {
             screen.hideFabUpArrow()
-        } else {
-            screen.showFabUpArrow()
+            return
         }
+        val ioFile = java.io.File(currentPath)
+        val parent = ioFile.parent
+        if (parent == null) {
+            screen.hideFabUpArrow()
+            return
+        }
+        screen.showFabUpArrow()
     }
 
     private fun syncFileChildren(fileChildrenResult: FileChildrenResult) {

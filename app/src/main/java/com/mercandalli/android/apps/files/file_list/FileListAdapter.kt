@@ -1,11 +1,12 @@
 package com.mercandalli.android.apps.files.file_list
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
-import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.*
 
 class FileListAdapter(
         fileListClickListener: FileListRow.FileClickListener?
@@ -27,29 +28,71 @@ class FileListAdapter(
         notifyDataSetChanged()
     }
 
+    fun setFileManagers(
+            fileDeleteManager: FileDeleteManager,
+            fileCopyCutManager: FileCopyCutManager,
+            fileRenameManager: FileRenameManager
+    ) {
+        fileAdapterDelegate.setFileManagers(
+                fileDeleteManager,
+                fileCopyCutManager,
+                fileRenameManager
+        )
+    }
+
     //region File
     private class FileAdapterDelegate(
             private val fileListClickListener: FileListRow.FileClickListener?
     ) : AbsListItemAdapterDelegate<Any, Any, VideoRowHolder>() {
 
+        private val fileListRows = ArrayList<FileListRow>()
         private var selectedPath: String? = null
+
+        private var fileDeleteManager: FileDeleteManager? = null
+        private var fileCopyCutManager: FileCopyCutManager? = null
+        private var fileRenameManager: FileRenameManager? = null
 
         override fun isForViewType(o: Any, list: List<Any>, i: Int): Boolean {
             return o is File
         }
 
         override fun onCreateViewHolder(viewGroup: ViewGroup): VideoRowHolder {
-            val videoRow = FileListRow(viewGroup.context)
-            videoRow.layoutParams = androidx.recyclerview.widget.RecyclerView.LayoutParams(
-                    androidx.recyclerview.widget.RecyclerView.LayoutParams.MATCH_PARENT,
-                    androidx.recyclerview.widget.RecyclerView.LayoutParams.WRAP_CONTENT)
-            videoRow.setFileClickListener(fileListClickListener)
-            return VideoRowHolder(videoRow)
+            val view = FileListRow(viewGroup.context)
+            view.layoutParams = RecyclerView.LayoutParams(
+                    RecyclerView.LayoutParams.MATCH_PARENT,
+                    RecyclerView.LayoutParams.WRAP_CONTENT)
+            view.setFileClickListener(fileListClickListener)
+            if (fileDeleteManager != null && fileCopyCutManager != null && fileRenameManager != null) {
+                view.setFileManagers(
+                        fileDeleteManager!!,
+                        fileCopyCutManager!!,
+                        fileRenameManager!!
+                )
+            }
+            fileListRows.add(view)
+            return VideoRowHolder(view)
         }
 
         override fun onBindViewHolder(
                 model: Any, playlistViewHolder: VideoRowHolder, list: List<Any>) {
             playlistViewHolder.bind(model as File, selectedPath)
+        }
+
+        fun setFileManagers(
+                fileDeleteManager: FileDeleteManager,
+                fileCopyCutManager: FileCopyCutManager,
+                fileRenameManager: FileRenameManager
+        ) {
+            this.fileDeleteManager = fileDeleteManager
+            this.fileCopyCutManager = fileCopyCutManager
+            this.fileRenameManager = fileRenameManager
+            for (fileListRow in fileListRows) {
+                fileListRow.setFileManagers(
+                        fileDeleteManager,
+                        fileCopyCutManager,
+                        fileRenameManager
+                )
+            }
         }
 
         fun selectPath(path: String?) {
@@ -58,8 +101,8 @@ class FileListAdapter(
     }
 
     private class VideoRowHolder(
-            private val view: FileListRow) :
-            androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+            private val view: FileListRow
+    ) : RecyclerView.ViewHolder(view) {
         fun bind(file: File, selectedPath: String?) {
             view.setFile(file, selectedPath)
         }

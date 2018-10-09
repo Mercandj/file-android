@@ -113,11 +113,11 @@ class SettingsDeveloperPresenter(
         override fun onDialogPositiveClicked(dialogAction: DialogManager.DialogAction): Boolean {
             return when (dialogAction.dialogId) {
                 DIALOG_ID_ONLINE_LOGIN -> {
-
+                    fileOnlineLoginManager.setLogin(dialogAction.userInput)
                     true
                 }
                 DIALOG_ID_ONLINE_PASSWORD -> {
-
+                    fileOnlineLoginManager.setPassword(dialogAction.userInput)
                     true
                 }
                 else -> false
