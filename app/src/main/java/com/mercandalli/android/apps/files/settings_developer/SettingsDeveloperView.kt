@@ -25,16 +25,21 @@ class SettingsDeveloperView @JvmOverloads constructor(
     private val developerActivation: CheckBox = view.findViewById(R.id.view_settings_developer_activation)
     private val developerActivationLabel: TextView = view.findViewById(R.id.view_settings_developer_activation_label)
     private val developerActivationSubLabel: TextView = view.findViewById(R.id.view_settings_developer_activation_sublabel)
-    private val developerOnlineLabel: TextView = view.findViewById(R.id.view_settings_developer_online_label)
-    private val developerOnlineSubLabel: TextView = view.findViewById(R.id.view_settings_developer_online_sublabel)
+    private val developerOnlineLoginLabel: TextView = view.findViewById(R.id.view_settings_developer_online_login_label)
+    private val developerOnlineLoginSubLabel: TextView = view.findViewById(R.id.view_settings_developer_online_login_sublabel)
+    private val developerOnlinePasswordLabel: TextView = view.findViewById(R.id.view_settings_developer_online_password_label)
+    private val developerOnlinePasswordSubLabel: TextView = view.findViewById(R.id.view_settings_developer_online_password_sublabel)
 
     private val userAction = createUserAction()
 
     init {
         orientation = LinearLayout.VERTICAL
 
-        findViewById<View>(R.id.view_settings_developer_online_row).setOnClickListener {
-            userAction.onOnlineRowClicked()
+        findViewById<View>(R.id.view_settings_developer_online_login_row).setOnClickListener {
+            userAction.onOnlineLoginRowClicked()
+        }
+        findViewById<View>(R.id.view_settings_developer_online_password_row).setOnClickListener {
+            userAction.onOnlinePasswordRowClicked()
         }
         findViewById<View>(R.id.view_settings_developer_activation_row).setOnClickListener {
             userAction.onActivationRowClicked()
@@ -57,13 +62,15 @@ class SettingsDeveloperView @JvmOverloads constructor(
     override fun setTextPrimaryColorRes(@ColorRes colorRes: Int) {
         val color = ContextCompat.getColor(context, colorRes)
         developerActivationLabel.setTextColor(color)
-        developerOnlineLabel.setTextColor(color)
+        developerOnlineLoginLabel.setTextColor(color)
+        developerOnlinePasswordLabel.setTextColor(color)
     }
 
     override fun setTextSecondaryColorRes(@ColorRes colorRes: Int) {
         val color = ContextCompat.getColor(context, colorRes)
         developerActivationSubLabel.setTextColor(color)
-        developerOnlineSubLabel.setTextColor(color)
+        developerOnlineLoginSubLabel.setTextColor(color)
+        developerOnlinePasswordSubLabel.setTextColor(color)
     }
 
     override fun setSectionColor(@ColorRes colorRes: Int) {
@@ -84,14 +91,15 @@ class SettingsDeveloperView @JvmOverloads constructor(
     }
 
     override fun setOnlineSubLabelText(text: String) {
-        developerOnlineSubLabel.text = text
+        developerOnlineLoginSubLabel.text = text
     }
 
     private fun createUserAction(): SettingsDeveloperContract.UserAction = if (isInEditMode) {
         object : SettingsDeveloperContract.UserAction {
             override fun onAttached() {}
             override fun onDetached() {}
-            override fun onOnlineRowClicked() {}
+            override fun onOnlineLoginRowClicked() {}
+            override fun onOnlinePasswordRowClicked() {}
             override fun onActivationRowClicked() {}
             override fun onDeveloperActivationCheckChanged(checked: Boolean) {}
         }

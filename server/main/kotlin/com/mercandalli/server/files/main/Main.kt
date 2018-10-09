@@ -23,10 +23,12 @@ fun main(args: Array<String>) {
     logManager.d(tag, "Welcome to file server")
     logManager.d(tag, "Root: $rootPath")
 
-    //val shellManager = ApplicationGraph.getShellManager()
-    //shellManager.execute("ls", {})
-    //val serverManager = ApplicationGraph.getServerManager()
-    //serverManager.start()
+    if (args.contains("-ui")) {
+        MainFrame.start()
+    } else {
+        val serverManager = ApplicationGraph.getServerManager()
+        serverManager.start()
+    }
 
     MainFrame.start()
 }

@@ -3,11 +3,9 @@ package com.mercandalli.server.files.server
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
+import com.mercandalli.server.files.log.LogManager
 import com.mercandalli.server.files.shell.ShellManager
-import io.ktor.application.Application
-import io.ktor.application.ApplicationCall
-import io.ktor.application.call
-import io.ktor.application.install
+import io.ktor.application.*
 import io.ktor.auth.Authentication
 import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authenticate
@@ -42,6 +40,7 @@ class ServerManagerImpl(
         private val fileHandlerPost: FileHandlerPost,
         private val fileOnlineLoginManager: FileOnlineLoginManager,
         private val shellManager: ShellManager,
+        private val logManager: LogManager,
         private val pullSubRepositoryShellFile: java.io.File
 ) : ServerManager {
 
@@ -88,11 +87,8 @@ class ServerManagerImpl(
                     }
                 }
             }
-            install(CallLogging) {
-                level = org.slf4j.event.Level.DEBUG
-                filter { call -> call.request.path().startsWith("/section1") }
-                filter { call -> call.request.path().startsWith("/section2") }
-                // ...
+            intercept(ApplicationCallPipeline.Call) {
+                logManager.logRequest(TAG, call.request)
             }
             routing {
                 authenticate("myauth1") {
@@ -177,5 +173,9 @@ class ServerManagerImpl(
         call.respond(
                 message
         )
+    }
+
+    companion object {
+        val TAG = "ServerManager"
     }
 }

@@ -19,10 +19,12 @@ class SettingsDeveloperPresenter(
 ) : SettingsDeveloperContract.UserAction {
 
     private val themeListener = createThemeListener()
+    private val dialogListener = createDialogListener()
     private val appDeveloperListener = createAppDeveloperListener()
 
     override fun onAttached() {
         themeManager.registerThemeListener(themeListener)
+        dialogManager.registerListener(dialogListener)
         developerManager.registerDeveloperModeListener(appDeveloperListener)
         updateTheme()
         syncDeveloperSection()
@@ -30,10 +32,28 @@ class SettingsDeveloperPresenter(
 
     override fun onDetached() {
         themeManager.unregisterThemeListener(themeListener)
+        dialogManager.unregisterListener(dialogListener)
+        developerManager.unregisterDeveloperModeListener(appDeveloperListener)
     }
 
-    override fun onOnlineRowClicked() {
+    override fun onOnlineLoginRowClicked() {
+        dialogManager.prompt(
+                DIALOG_ID_ONLINE_LOGIN,
+                R.string.view_settings_developer_online_login_label,
+                R.string.view_settings_developer_online_login_label,
+                R.string.ok,
+                R.string.cancel
+        )
+    }
 
+    override fun onOnlinePasswordRowClicked() {
+        dialogManager.prompt(
+                DIALOG_ID_ONLINE_PASSWORD,
+                R.string.view_settings_developer_online_password_label,
+                R.string.view_settings_developer_online_password_label,
+                R.string.ok,
+                R.string.cancel
+        )
     }
 
     override fun onActivationRowClicked() {
@@ -86,6 +106,32 @@ class SettingsDeveloperPresenter(
         override fun onDeveloperModeChanged() {
             syncDeveloperSection()
         }
+    }
+
+    private fun createDialogListener() = object : DialogManager.Listener {
+
+        override fun onDialogPositiveClicked(dialogAction: DialogManager.DialogAction): Boolean {
+            return when (dialogAction.dialogId) {
+                DIALOG_ID_ONLINE_LOGIN -> {
+
+                    true
+                }
+                DIALOG_ID_ONLINE_PASSWORD -> {
+
+                    true
+                }
+                else -> false
+            }
+        }
+
+        override fun onDialogNegativeClicked(dialogAction: DialogManager.DialogAction) {
+
+        }
+    }
+
+    companion object {
+        private const val DIALOG_ID_ONLINE_LOGIN = "DIALOG_ID_ONLINE_LOGIN"
+        private const val DIALOG_ID_ONLINE_PASSWORD = "DIALOG_ID_ONLINE_PASSWORD"
     }
 
     interface AddOn {

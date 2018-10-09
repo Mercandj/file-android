@@ -27,7 +27,9 @@ interface SettingsDeveloperContract {
 
         fun onDetached()
 
-        fun onOnlineRowClicked()
+        fun onOnlineLoginRowClicked()
+
+        fun onOnlinePasswordRowClicked()
 
         fun onActivationRowClicked()
 

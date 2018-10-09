@@ -10,6 +10,7 @@ class ServerModule(
     private val fileHandlerPost by lazy { ApplicationGraph.getFilePostHandler() }
     private val fileOnlineLoginManager by lazy { ApplicationGraph.getFileOnlineLoginManager() }
     private val shellManager by lazy { ApplicationGraph.getShellManager() }
+    private val logManager by lazy { ApplicationGraph.getLogManager() }
     private val pullSubRepositoryShellFile by lazy { ApplicationGraph.getPullSubRepositoryShellFile() }
 
     fun createServerManager(): ServerManager {
@@ -19,6 +20,7 @@ class ServerModule(
                 fileHandlerPost,
                 fileOnlineLoginManager,
                 shellManager,
+                logManager,
                 pullSubRepositoryShellFile
         )
     }

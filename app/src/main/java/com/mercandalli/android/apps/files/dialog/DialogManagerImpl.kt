@@ -20,14 +20,15 @@ internal class DialogManagerImpl(
         val message = addOn.getString(messageStringRes)
         val positive = addOn.getString(positiveStringRes)
         val negative = addOn.getString(negativeStringRes)
-        addOn.startDialogActivity(DialogActivity.DialogInput(
+        val dialogInput = DialogActivity.DialogInput(
                 dialogId,
                 title,
                 message,
                 positive,
                 negative,
                 DialogActivity.DialogInput.DIALOG_TYPE_ALERT
-        ))
+        )
+        addOn.startDialogActivity(dialogInput)
     }
 
     override fun prompt(
@@ -41,14 +42,15 @@ internal class DialogManagerImpl(
         val message = addOn.getString(messageStringRes)
         val positive = addOn.getString(positiveStringRes)
         val negative = addOn.getString(negativeStringRes)
-        addOn.startDialogActivity(DialogActivity.DialogInput(
+        val dialogInput = DialogActivity.DialogInput(
                 dialogId,
                 title,
                 message,
                 positive,
                 negative,
                 DialogActivity.DialogInput.DIALOG_TYPE_PROMPT
-        ))
+        )
+        addOn.startDialogActivity(dialogInput)
     }
 
     override fun consumeDialogActionPositiveClicked(): DialogManager.DialogAction? {

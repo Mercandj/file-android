@@ -89,7 +89,7 @@
                 android:background="#33000000" />
 
             <LinearLayout
-                android:id="@+id/view_settings_developer_online_row"
+                android:id="@+id/view_settings_developer_online_login_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -97,17 +97,55 @@
                 android:paddingBottom="@dimen/default_space_1_5">
 
                 <TextView
-                    android:id="@+id/view_settings_developer_online_label"
+                    android:id="@+id/view_settings_developer_online_login_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/default_space_2"
                     android:paddingEnd="@dimen/default_space_2"
-                    android:text="@string/view_settings_developer_online_label"
+                    android:text="@string/view_settings_developer_online_login_label"
                     android:textColor="@color/text_primary_color_light"
                     android:textSize="@dimen/text_size_xl" />
 
                 <TextView
-                    android:id="@+id/view_settings_developer_online_sublabel"
+                    android:id="@+id/view_settings_developer_online_login_sublabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:paddingStart="@dimen/default_space_2"
+                    android:paddingEnd="@dimen/default_space_2"
+                    android:textColor="@color/text_secondary_color_light"
+                    tools:text="Your login is Jonathan" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="@dimen/default_space_2"
+                android:layout_marginEnd="@dimen/default_space_2"
+                android:background="#33000000" />
+
+            <LinearLayout
+                android:id="@+id/view_settings_developer_online_password_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/default_space_1_5"
+                android:paddingBottom="@dimen/default_space_1_5">
+
+                <TextView
+                    android:id="@+id/view_settings_developer_online_password_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/default_space_2"
+                    android:paddingEnd="@dimen/default_space_2"
+                    android:text="@string/view_settings_developer_online_password_label"
+                    android:textColor="@color/text_primary_color_light"
+                    android:textSize="@dimen/text_size_xl" />
+
+                <TextView
+                    android:id="@+id/view_settings_developer_online_password_sublabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
