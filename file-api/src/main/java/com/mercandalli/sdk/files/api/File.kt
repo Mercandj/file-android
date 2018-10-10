@@ -122,10 +122,10 @@ data class File(
 
         fun createFake(id: String) = File(
                 id,
-                "path",
-                "parent_path",
+                "/Root",
+                "/",
                 true,
-                "RootDir",
+                "Root",
                 0,
                 4242
         )

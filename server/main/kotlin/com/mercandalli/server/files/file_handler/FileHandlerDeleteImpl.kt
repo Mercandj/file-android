@@ -16,11 +16,11 @@ class FileHandlerDeleteImpl(
         logManager.d(TAG, "delete(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
-        fileRepository.delete(path)
+        val deleteSucceeded = fileRepository.delete(path)
         return ServerResponse.create(
                 JSONObject(),
-                "File deleted in the repository",
-                true
+                "File deleted in the repository $deleteSucceeded",
+                deleteSucceeded
         ).toJsonString()
     }
 

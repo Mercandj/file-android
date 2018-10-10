@@ -32,9 +32,13 @@ class FileRepositoryImpl(
         return ArrayList<File>(values)
     }
 
-    override fun delete(path: String) {
+    override fun delete(path: String): Boolean {
+        if (!has(path)) {
+            return false
+        }
         fileRepositoryMetadata.files.remove(path)
         save()
+        return true
     }
 
     private fun load() {
