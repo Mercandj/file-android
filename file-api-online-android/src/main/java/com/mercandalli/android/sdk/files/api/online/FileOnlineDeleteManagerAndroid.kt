@@ -1,5 +1,6 @@
 package com.mercandalli.android.sdk.files.api.online
 
+import com.mercandalli.android.sdk.files.api.MediaScanner
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.GlobalScope
@@ -7,7 +8,8 @@ import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 
 internal class FileOnlineDeleteManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi
+        private val fileOnlineApi: FileOnlineApi,
+        private val mediaScanner: MediaScanner
 ) : FileDeleteManager {
 
     private val listeners = ArrayList<FileDeleteManager.FileDeleteCompletionListener>()
@@ -16,6 +18,15 @@ internal class FileOnlineDeleteManagerAndroid(
         GlobalScope.launch(Dispatchers.Default) {
             val succeeded = fileOnlineApi.delete(path)
             GlobalScope.launch(Dispatchers.Main) {
+                if (succeeded) {
+                    val ioFile = java.io.File(path)
+                    val parentFile = ioFile.parentFile
+                    if (parentFile != null) {
+                        val parentPath = parentFile.absolutePath
+                        mediaScanner.refresh(parentPath)
+                    }
+                    mediaScanner.refresh(path)
+                }
                 for (listener in listeners) {
                     listener.onFileDeletedCompleted(path, succeeded)
                 }

@@ -23,5 +23,4 @@ class MediaScannerAndroid(
          */
         fun refreshSystemMediaScanDataBase(path: String)
     }
-
 }

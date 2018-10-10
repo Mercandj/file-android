@@ -77,7 +77,8 @@ class FileOnlineView @JvmOverloads constructor(
                     override fun rename(path: String, fileName: String) {
 
                     }
-                }
+                },
+                "/"
         )
         addView(fileColumnListView)
     }

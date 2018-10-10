@@ -9,7 +9,7 @@ class FileListPresenter(
         private val fileOpenManager: FileOpenManager,
         private val fileSortManager: FileSortManager,
         private val themeManager: ThemeManager,
-        private val rootPath: String
+        private var rootPath: String
 ) : FileListContract.UserAction {
 
     private var currentPath = rootPath
@@ -56,10 +56,13 @@ class FileListPresenter(
 
     override fun onSetFileManagers(
             fileManager: FileManager,
-            fileOpenManager: FileOpenManager
+            fileOpenManager: FileOpenManager,
+            rootPath: String
     ) {
         this.fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
         this.fileManager = fileManager
+        this.rootPath = rootPath
+        this.currentPath = rootPath
         fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 

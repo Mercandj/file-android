@@ -32,22 +32,22 @@ class FileModule(
     private val fileZipManagerInternal: FileZipManager by lazy { FileZipManagerAndroid(mediaScanner) }
 
     fun createFileManager(): FileManager {
-        val fileManagerAndroid = FileManagerAndroid(permissionManager)
+        val fileManager = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
                 Environment.getExternalStorageDirectory().absolutePath
         ) {
             if (it != null && !it.endsWith("/null")) {
                 val path = File(it).parentFile.absolutePath
-                fileManagerAndroid.refresh(path)
+                fileManager.refresh(path)
             }
         }
         mediaScanner.setListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
-                fileManagerAndroid.refresh(path)
+                fileManager.refresh(path)
             }
         })
         fileObserver.startWatching()
-        return fileManagerAndroid
+        return fileManager
     }
 
     fun createFileOpenManager(): FileOpenManager {

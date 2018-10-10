@@ -21,7 +21,8 @@ interface FileListContract {
 
         fun onSetFileManagers(
                 fileManager: FileManager,
-                fileOpenManager: FileOpenManager
+                fileOpenManager: FileOpenManager,
+                rootPath: String
         )
     }
 
