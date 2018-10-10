@@ -7,13 +7,13 @@ import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
 import org.json.JSONObject
 
-class FileHandlerPostImpl(
+class FileHandlerDeleteImpl(
         private val fileRepository: FileRepository,
         private val logManager: LogManager
-) : FileHandlerPost {
+) : FileHandlerDelete {
 
-    override fun post(body: String): String {
-        logManager.d(TAG, "post(body: $body)")
+    override fun delete(body: String): String {
+        logManager.d(TAG, "delete(body: $body)")
         val fileJsonObject = JSONObject(body)
         val file = File.fromJson(fileJsonObject)
         fileRepository.put(file)

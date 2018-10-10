@@ -28,18 +28,7 @@ class NetworkModule {
                     .url(url)
                     .headers(Headers.of(headers))
                     .build()
-            var response: Response? = null
-            var body: ResponseBody? = null
-            try {
-                response = okHttpClient.value.newCall(request).execute()
-                body = response!!.body()
-                return body!!.string()
-            } catch (e: IOException) {
-                Log.e("jm/debug", "", e)
-            } finally {
-                closeSilently(body, response)
-            }
-            return null
+            return call(request)
         }
 
         override fun postSync(
@@ -53,18 +42,34 @@ class NetworkModule {
                     .headers(Headers.of(headers))
                     .post(body)
                     .build()
+            return call(request)
+        }
+
+        override fun deleteSync(
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject
+        ): String? {
+            val body = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
+            val request = Request.Builder()
+                    .url(url)
+                    .headers(Headers.of(headers))
+                    .delete(body)
+                    .build()
+            return call(request)
+        }
+
+        private fun call(request: Request): String? {
             var response: Response? = null
-            var responseBody: ResponseBody? = null
+            var body: ResponseBody? = null
             try {
-                response = okHttpClient.value.newCall(
-                        request
-                ).execute()
-                responseBody = response!!.body()
-                return responseBody!!.string()
+                response = okHttpClient.value.newCall(request).execute()
+                body = response!!.body()
+                return body!!.string()
             } catch (e: IOException) {
                 Log.e("jm/debug", "", e)
             } finally {
-                closeSilently(responseBody, response)
+                closeSilently(body, response)
             }
             return null
         }

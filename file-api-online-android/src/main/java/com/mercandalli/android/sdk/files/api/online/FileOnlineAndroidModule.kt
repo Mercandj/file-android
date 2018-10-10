@@ -1,8 +1,8 @@
 package com.mercandalli.android.sdk.files.api.online
 
 import android.content.Context
+import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileManager
-import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
@@ -13,13 +13,13 @@ class FileOnlineAndroidModule(
 
     private val fileOnlineModule by lazy { FileOnlineModule() }
     private val fileOnlineLoginRepository by lazy { createFileOnlineLoginRepository() }
+    private val fileOnlineLoginManager by lazy { createFileOnlineLoginManager() }
 
-    fun createFileOnlineManager(
-            fileOnlineLoginManager: FileOnlineLoginManager
-    ): FileManager {
-        val fileOnlineApi = createFileOnlineApi(
-                fileOnlineLoginManager
-        )
+    private val fileOnlineApi by lazy {
+        createFileOnlineApi()
+    }
+
+    fun createFileOnlineManager(): FileManager {
         return FileOnlineManagerAndroid(
                 fileOnlineApi
         )
@@ -29,13 +29,14 @@ class FileOnlineAndroidModule(
             fileOnlineLoginRepository
     )
 
-    fun createFileOnlineUploadManager(
-            fileOnlineLoginManager: FileOnlineLoginManager
-    ): FileOnlineUploadManager {
-        val fileOnlineApi = createFileOnlineApi(
-                fileOnlineLoginManager
-        )
+    fun createFileOnlineUploadManager(): FileOnlineUploadManager {
         return FileOnlineUploadManagerImpl(
+                fileOnlineApi
+        )
+    }
+
+    fun createFileOnlineDeleteManager(): FileDeleteManager {
+        return FileOnlineDeleteManagerAndroid(
                 fileOnlineApi
         )
     }
@@ -50,9 +51,7 @@ class FileOnlineAndroidModule(
         )
     }
 
-    private fun createFileOnlineApi(
-            fileOnlineLoginManager: FileOnlineLoginManager
-    ): FileOnlineApi {
+    private fun createFileOnlineApi(): FileOnlineApi {
         return FileOnlineApiImpl(
                 fileOnlineApiNetwork,
                 fileOnlineLoginManager

@@ -20,4 +20,11 @@ class FileHandlerModule {
                 logManager
         )
     }
+
+    fun createFileHandlerDelete(): FileHandlerDelete {
+        return FileHandlerDeleteImpl(
+                fileRepository,
+                logManager
+        )
+    }
 }

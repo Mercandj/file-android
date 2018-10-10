@@ -24,6 +24,7 @@ class FileColumnDetailPresenter(
 
     private val playListener = createPlayListener()
     private val themeListener = createThemeListener()
+    private val fileDeleteCompletionListener = createFileDeleteCompletionListener()
     private var file: File? = null
 
     override fun onAttached() {
@@ -31,11 +32,13 @@ class FileColumnDetailPresenter(
         synchronizePlayButton()
         themeManager.registerThemeListener(themeListener)
         syncWithCurrentTheme()
+        fileDeleteManager.registerFileDeleteCompletionListener(fileDeleteCompletionListener)
     }
 
     override fun onDetached() {
         audioManager.unregisterPlayListener(playListener)
         themeManager.unregisterThemeListener(themeListener)
+        fileDeleteManager.unregisterFileDeleteCompletionListener(fileDeleteCompletionListener)
     }
 
     override fun onFileChanged(file: File?) {
@@ -113,10 +116,7 @@ class FileColumnDetailPresenter(
     }
 
     override fun onDeleteConfirmedClicked() {
-        val deleteSucceeded = fileDeleteManager.delete(file!!.path)
-        if (!deleteSucceeded) {
-            screen.showToast(deleteFailedTextRes)
-        }
+        fileDeleteManager.delete(file!!.path)
     }
 
     override fun onRenameClicked() {
@@ -167,6 +167,12 @@ class FileColumnDetailPresenter(
     private fun createThemeListener() = object : ThemeManager.ThemeListener {
         override fun onThemeChanged() {
             syncWithCurrentTheme()
+        }
+    }
+
+    private fun createFileDeleteCompletionListener() = object : FileDeleteManager.FileDeleteCompletionListener {
+        override fun onFileDeletedCompleted(path: String, succeeded: Boolean) {
+            screen.showToast(deleteFailedTextRes)
         }
     }
 

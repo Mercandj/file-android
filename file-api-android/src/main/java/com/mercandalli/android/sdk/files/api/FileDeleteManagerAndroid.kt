@@ -6,7 +6,9 @@ class FileDeleteManagerAndroid(
         private val mediaScanner: MediaScanner
 ) : FileDeleteManager {
 
-    override fun delete(path: String): Boolean {
+    private val listeners = ArrayList<FileDeleteManager.FileDeleteCompletionListener>()
+
+    override fun delete(path: String) {
         val ioFile = java.io.File(path)
         val parentPath = ioFile.parentFile.absolutePath
         val deleteSucceeded = if (ioFile.isDirectory) {
@@ -16,7 +18,20 @@ class FileDeleteManagerAndroid(
         }
         mediaScanner.refresh(path)
         mediaScanner.refresh(parentPath)
-        return deleteSucceeded
+        for (listener in listeners) {
+            listener.onFileDeletedCompleted(path, deleteSucceeded)
+        }
+    }
+
+    override fun registerFileDeleteCompletionListener(listener: FileDeleteManager.FileDeleteCompletionListener) {
+        if (listeners.contains(listener)) {
+            return
+        }
+        listeners.add(listener)
+    }
+
+    override fun unregisterFileDeleteCompletionListener(listener: FileDeleteManager.FileDeleteCompletionListener) {
+        listeners.remove(listener)
     }
 
     companion object {

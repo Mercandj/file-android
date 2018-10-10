@@ -8,6 +8,7 @@ class ServerModule(
 
     private val fileHandlerGet by lazy { ApplicationGraph.getFileGetHandler() }
     private val fileHandlerPost by lazy { ApplicationGraph.getFilePostHandler() }
+    private val fileHandlerDelete by lazy { ApplicationGraph.getFileDeleteHandler() }
     private val fileOnlineLoginManager by lazy { ApplicationGraph.getFileOnlineLoginManager() }
     private val shellManager by lazy { ApplicationGraph.getShellManager() }
     private val logManager by lazy { ApplicationGraph.getLogManager() }
@@ -18,6 +19,7 @@ class ServerModule(
                 rootPath,
                 fileHandlerGet,
                 fileHandlerPost,
+                fileHandlerDelete,
                 fileOnlineLoginManager,
                 shellManager,
                 logManager,

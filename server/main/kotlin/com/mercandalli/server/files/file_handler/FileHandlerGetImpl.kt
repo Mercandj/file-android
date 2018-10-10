@@ -16,7 +16,8 @@ class FileHandlerGetImpl(
         val files = fileRepository.get()
         return ServerResponseFiles.create(
                 files,
-                "Get all the files"
+                "Get all the files",
+                true
         ).toJsonString()
     }
 
@@ -25,7 +26,8 @@ class FileHandlerGetImpl(
         val file = File.createFake(id)
         return ServerResponseFile.create(
                 file,
-                "Get one file"
+                "Get one file",
+                true
         ).toJsonString()
     }
 

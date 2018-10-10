@@ -2,6 +2,7 @@ package com.mercandalli.android.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
+import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFiles
 import org.json.JSONObject
 import kotlin.collections.HashMap
@@ -37,6 +38,23 @@ internal class FileOnlineApiImpl(
                 headers,
                 fileJsonObject
         )
+    }
+
+    override fun delete(path: String): Boolean {
+        val headers = HashMap<String, String>()
+        val token = fileOnlineLoginManager.createToken()
+        headers["User-Agent"] = USER_AGENT
+        headers["Content-Type"] = "application/json"
+        headers["Authorization"] = "Basic $token"
+        val fileJsonObject = JSONObject()
+        fileJsonObject.put(File.JSON_KEY_PATH, path)
+        val json = fileOnlineApiNetwork.deleteSync(
+                "$API_DOMAIN/file",
+                headers,
+                fileJsonObject
+        )
+        val serverResponse = ServerResponse.fromJson(JSONObject(json))
+        return serverResponse.succeeded
     }
 
     companion object {

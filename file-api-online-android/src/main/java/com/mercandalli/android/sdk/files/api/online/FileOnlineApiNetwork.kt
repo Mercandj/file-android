@@ -14,4 +14,10 @@ interface FileOnlineApiNetwork {
             headers: Map<String, String>,
             jsonObject: JSONObject
     ): String?
+
+    fun deleteSync(
+            url: String,
+            headers: Map<String, String>,
+            jsonObject: JSONObject
+    ): String?
 }

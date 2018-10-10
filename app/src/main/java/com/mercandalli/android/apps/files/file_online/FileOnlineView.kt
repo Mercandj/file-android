@@ -16,6 +16,7 @@ class FileOnlineView @JvmOverloads constructor(
 
     private val fileColumnListView = FileListView(context)
     private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
+    private val fileOnlineDeleteManager = ApplicationGraph.getFileOnlineDeleteManager()
 
     init {
         fileColumnListView.setFileManagers(
@@ -25,11 +26,7 @@ class FileOnlineView @JvmOverloads constructor(
 
                     }
                 },
-                object : FileDeleteManager {
-                    override fun delete(path: String): Boolean {
-                        return false
-                    }
-                },
+                fileOnlineDeleteManager,
                 object : FileCopyCutManager {
                     override fun copy(path: String) {
 

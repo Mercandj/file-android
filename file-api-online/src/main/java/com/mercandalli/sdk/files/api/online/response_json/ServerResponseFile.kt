@@ -15,13 +15,15 @@ data class ServerResponseFile private constructor(
         @JvmStatic
         fun create(
                 file: File,
-                debugMessage: String
+                debugMessage: String,
+                succeeded:Boolean
         ): ServerResponseFile {
             val content = JSONObject()
             content.put("file", File.toJson(file))
             val serverResponse = ServerResponse.create(
                     content,
-                    debugMessage
+                    debugMessage,
+                    succeeded
             )
             return ServerResponseFile(
                     file,

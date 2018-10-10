@@ -6,9 +6,11 @@ interface FileRepository {
 
     fun put(file: File)
 
-    fun get(id: String): File
+    fun get(path: String): File
 
-    fun has(id: String): Boolean
+    fun has(path: String): Boolean
 
     fun get(): List<File>
+
+    fun delete(path: String)
 }

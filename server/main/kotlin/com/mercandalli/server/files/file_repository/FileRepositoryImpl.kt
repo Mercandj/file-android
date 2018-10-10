@@ -21,15 +21,20 @@ class FileRepositoryImpl(
         save()
     }
 
-    override fun has(id: String) = fileRepositoryMetadata.files.containsKey(id)
+    override fun has(path: String) = fileRepositoryMetadata.files.containsKey(path)
 
-    override fun get(id: String): File {
-        return fileRepositoryMetadata.files[id]!!
+    override fun get(path: String): File {
+        return fileRepositoryMetadata.files[path]!!
     }
 
     override fun get(): List<File> {
         val values = fileRepositoryMetadata.files.values
         return ArrayList<File>(values)
+    }
+
+    override fun delete(path: String) {
+        fileRepositoryMetadata.files.remove(path)
+        save()
     }
 
     private fun load() {

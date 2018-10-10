@@ -37,6 +37,7 @@ class ApplicationGraph(
     private val fileCopyCutManagerInternal by lazy { fileModule.createFileCopyCutManager() }
     private val fileCreatorManagerInternal by lazy { fileModule.createFileCreatorManager() }
     private val fileOnlineManagerInternal by lazy { FileOnlineGraph.getFileOnlineManager() }
+    private val fileOnlineDeleteManagerInternal by lazy { FileOnlineGraph.getFileOnlineDeleteManager() }
     private val fileOnlineLoginManagerInternal by lazy { FileOnlineGraph.getFileOnlineLoginManager() }
     private val fileOnlineUploadManagerInternal by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
@@ -72,6 +73,7 @@ class ApplicationGraph(
         fun getFileCopyCutManager() = graph!!.fileCopyCutManagerInternal
         fun getFileCreatorManager() = graph!!.fileCreatorManagerInternal
         fun getFileOnlineManager() = graph!!.fileOnlineManagerInternal
+        fun getFileOnlineDeleteManager() = graph!!.fileOnlineDeleteManagerInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManagerInternal
         fun getFileShareManager() = graph!!.fileShareManagerInternal
@@ -113,6 +115,16 @@ class ApplicationGraph(
                     headers: Map<String, String>,
                     jsonObject: JSONObject
             ) = getNetwork().postSync(
+                    url,
+                    headers,
+                    jsonObject
+            )
+
+            override fun deleteSync(
+                    url: String,
+                    headers: Map<String, String>,
+                    jsonObject: JSONObject
+            ) = getNetwork().deleteSync(
                     url,
                     headers,
                     jsonObject

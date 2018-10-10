@@ -54,11 +54,12 @@ data class File(
 ) {
 
     companion object {
+        const val JSON_KEY_PATH = "path"
 
         @JvmStatic
         fun fromJson(jsonObject: JSONObject): File {
             val id = jsonObject.getString("id")
-            val path = jsonObject.getString("path")
+            val path = jsonObject.getString(JSON_KEY_PATH)
             val parentPath = jsonObject.getString("parent_path")
             val directory = jsonObject.getBoolean("directory")
             val name = jsonObject.getString("name")
@@ -90,7 +91,7 @@ data class File(
         fun toJson(file: File): JSONObject {
             val json = JSONObject()
             json.put("id", file.id)
-            json.put("path", file.path)
+            json.put(JSON_KEY_PATH, file.path)
             json.put("parent_path", file.parentPath)
             json.put("directory", file.directory)
             json.put("name", file.name)

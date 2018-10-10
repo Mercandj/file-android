@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
+import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
 import com.mercandalli.server.files.log.LogManager
@@ -21,6 +22,7 @@ import io.ktor.request.receiveText
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
+import io.ktor.routing.delete
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.routing
@@ -34,6 +36,7 @@ class ServerManagerImpl(
         private val rootServerPath: String,
         private val fileHandlerGet: FileHandlerGet,
         private val fileHandlerPost: FileHandlerPost,
+        private val fileHandlerDelete: FileHandlerDelete,
         private val fileOnlineLoginManager: FileOnlineLoginManager,
         private val shellManager: ShellManager,
         private val logManager: LogManager,
@@ -111,6 +114,11 @@ class ServerManagerImpl(
                     val response = fileHandlerPost.post(body)
                     call.respondText(response)
                 }
+                delete("/file-api/file") {
+                    val body = call.receiveText()
+                    val response = fileHandlerDelete.delete(body)
+                    call.respondText(response)
+                }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
                     val response = fileHandlerGet.get(id!!)
@@ -130,9 +138,9 @@ class ServerManagerImpl(
                 post("/1418/contact-us") {
                     val post = call.receive<Parameters>()
                     val firstName = post["first_name"]
-                    val lastName  = post["last_name"]
-                    val email  = post["email"]
-                    val text  = post["text"]
+                    val lastName = post["last_name"]
+                    val email = post["email"]
+                    val text = post["text"]
                     logManager.log1418ContactUs(
                             firstName,
                             lastName,

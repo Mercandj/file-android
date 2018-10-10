@@ -21,6 +21,7 @@ class ApplicationGraph(
 
     private val fileHandlerGetInternal by lazy { fileModule.createFileHandlerGet() }
     private val fileHandlerPostInternal by lazy { fileModule.createFileHandlerPost() }
+    private val fileHandlerDeleteInternal by lazy { fileModule.createFileHandlerDelete() }
     private val fileOnlineLoginManagerInternal by lazy { fileOnlineModule.createFileOnlineLoginManager() }
     private val fileRepositoryInternal by lazy { fileRepositoryModule.createFileRepository() }
     private val logManagerInternal by lazy { logModule.createLogManager() }
@@ -33,6 +34,7 @@ class ApplicationGraph(
 
         fun getFileGetHandler() = graph!!.fileHandlerGetInternal
         fun getFilePostHandler() = graph!!.fileHandlerPostInternal
+        fun getFileDeleteHandler() = graph!!.fileHandlerDeleteInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileRepository() = graph!!.fileRepositoryInternal
         fun getLogManager() = graph!!.logManagerInternal

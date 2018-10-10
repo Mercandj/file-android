@@ -6,15 +6,17 @@ class FileOnlineGraph(
         private val fileOnlineModule: FileOnlineAndroidModule
 ) {
 
-    private val fileOnlineManager by lazy { fileOnlineModule.createFileOnlineManager(fileOnlineLoginManager) }
+    private val fileOnlineManager by lazy { fileOnlineModule.createFileOnlineManager() }
+    private val fileOnlineDeleteManager by lazy { fileOnlineModule.createFileOnlineDeleteManager() }
     private val fileOnlineLoginManager by lazy { fileOnlineModule.createFileOnlineLoginManager() }
-    private val fileOnlineUploadManager by lazy { fileOnlineModule.createFileOnlineUploadManager(fileOnlineLoginManager) }
+    private val fileOnlineUploadManager by lazy { fileOnlineModule.createFileOnlineUploadManager() }
 
     companion object {
 
         private lateinit var graph: FileOnlineGraph
 
         fun getFileOnlineManager() = graph.fileOnlineManager
+        fun getFileOnlineDeleteManager() = graph.fileOnlineDeleteManager
         fun getFileOnlineLoginManager() = graph.fileOnlineLoginManager
         fun getFileOnlineUploadManager() = graph.fileOnlineUploadManager
 
