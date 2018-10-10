@@ -16,7 +16,7 @@ class FileOnlineApiNetworkAndroidTest {
         }
 
         private fun createFileOnlineApiNetwork(okHttpClient: OkHttpClient) = object : FileOnlineApiNetwork {
-            override fun requestSync(url: String, headers: Map<String, String>): String? {
+            override fun getSync(url: String, headers: Map<String, String>): String? {
                 val request = Request.Builder()
                         .url(url)
                         .headers(Headers.of(headers))

@@ -7,17 +7,18 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.ColorRes
-import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewStub
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.activity.ActivityExtension.bind
 import com.mercandalli.android.apps.files.bottom_bar.BottomBar
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.file_column_horizontal_lists.FileColumnHorizontalLists
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.file_online.FileOnlineView
+import com.mercandalli.android.apps.files.file_online_upload.FileOnlineUploadActivity
 import com.mercandalli.android.apps.files.note.NoteView
 import com.mercandalli.android.apps.files.settings.SettingsView
 import eightbitlab.com.blurview.BlurView
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity(),
     private val toolbarDelete: View by bind(R.id.activity_main_toolbar_delete)
     private val toolbarShare: View by bind(R.id.activity_main_toolbar_share)
     private val toolbarAdd: View by bind(R.id.activity_main_toolbar_add)
+    private val toolbarUpload: View by bind(R.id.activity_main_toolbar_upload)
     private val toolbarFilePaste: View by bind(R.id.activity_main_toolbar_file_paste)
     private val toolbarFileList: View by bind(R.id.activity_main_toolbar_file_list)
     private val toolbarFileColumn: View by bind(R.id.activity_main_toolbar_file_column)
@@ -54,6 +56,7 @@ class MainActivity : AppCompatActivity(),
         toolbarDelete.setOnClickListener { userAction.onToolbarDeleteClicked() }
         toolbarShare.setOnClickListener { userAction.onToolbarShareClicked() }
         toolbarAdd.setOnClickListener { userAction.onToolbarAddClicked() }
+        toolbarUpload.setOnClickListener { userAction.onToolbarUploadClicked() }
         toolbarFileColumn.setOnClickListener { userAction.onToolbarFileColumnClicked() }
         toolbarFileList.setOnClickListener { userAction.onToolbarFileListClicked() }
         toolbarFilePaste.setOnClickListener { userAction.onToolbarFilePasteClicked() }
@@ -151,6 +154,14 @@ class MainActivity : AppCompatActivity(),
         toolbarAdd.visibility = View.GONE
     }
 
+    override fun showToolbarUpload() {
+        toolbarUpload.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarUpload() {
+        toolbarUpload.visibility = View.GONE
+    }
+
     override fun showToolbarFileColumn() {
         toolbarFileColumn.visibility = View.VISIBLE
     }
@@ -206,6 +217,10 @@ class MainActivity : AppCompatActivity(),
             }
         }
         menuAlert.create().show()
+    }
+
+    override fun showFileUploadSelection() {
+        FileOnlineUploadActivity.start(this)
     }
 
     override fun setWindowBackgroundColorRes(@ColorRes colorRes: Int) {
@@ -268,10 +283,5 @@ class MainActivity : AppCompatActivity(),
                 themeManager,
                 mainActivityFileUiStorage
         )
-    }
-
-    private fun <T : View> bind(@IdRes res: Int): Lazy<T> {
-        @Suppress("UNCHECKED_CAST")
-        return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
     }
 }

@@ -75,6 +75,8 @@ android {
                     'src/main/res/file_column_row',
                     'src/main/res/file_list',
                     'src/main/res/file_list_row',
+                    'src/main/res/file_online',
+                    'src/main/res/file_online_upload',
                     'src/main/res/icon',
                     'src/main/res/main',
                     'src/main/res/note',

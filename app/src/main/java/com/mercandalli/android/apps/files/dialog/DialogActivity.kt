@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.keyboard.KeyboardUtils
 import org.json.JSONObject
 import android.text.method.ScrollingMovementMethod
 import androidx.annotation.StringDef
+import com.mercandalli.android.apps.files.activity.ActivityExtension.bind
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class DialogActivity : AppCompatActivity(),
@@ -74,11 +74,6 @@ class DialogActivity : AppCompatActivity(),
 
     override fun quit() {
         finish()
-    }
-
-    private fun <T : View> bind(@IdRes res: Int): Lazy<T> {
-        @Suppress("UNCHECKED_CAST")
-        return lazy(LazyThreadSafetyMode.NONE) { findViewById<T>(res) }
     }
 
     private fun createUserAction(): DialogContract.UserAction {

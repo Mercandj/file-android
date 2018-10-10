@@ -8,6 +8,7 @@ class FileOnlineGraph(
 
     private val fileOnlineManager by lazy { fileOnlineModule.createFileOnlineManager(fileOnlineLoginManager) }
     private val fileOnlineLoginManager by lazy { fileOnlineModule.createFileOnlineLoginManager() }
+    private val fileOnlineUploadManager by lazy { fileOnlineModule.createFileOnlineUploadManager(fileOnlineLoginManager) }
 
     companion object {
 
@@ -15,6 +16,7 @@ class FileOnlineGraph(
 
         fun getFileOnlineManager() = graph.fileOnlineManager
         fun getFileOnlineLoginManager() = graph.fileOnlineLoginManager
+        fun getFileOnlineUploadManager() = graph.fileOnlineUploadManager
 
         fun init(
                 context: Context,

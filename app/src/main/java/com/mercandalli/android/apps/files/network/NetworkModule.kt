@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.network
 
 import android.util.Log
 import okhttp3.*
+import org.json.JSONObject
 import java.io.Closeable
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -22,7 +23,7 @@ class NetworkModule {
     fun createOkHttpClientLazy(): Lazy<OkHttpClient> = okHttpClient
 
     fun createNetwork() = object : Network {
-        override fun requestSync(url: String, headers: Map<String, String>): String? {
+        override fun getSync(url: String, headers: Map<String, String>): String? {
             val request = Request.Builder()
                     .url(url)
                     .headers(Headers.of(headers))
@@ -40,6 +41,33 @@ class NetworkModule {
             }
             return null
         }
+
+        override fun postSync(
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject
+        ): String? {
+            val body = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
+            val request = Request.Builder()
+                    .url(url)
+                    .headers(Headers.of(headers))
+                    .post(body)
+                    .build()
+            var response: Response? = null
+            var responseBody: ResponseBody? = null
+            try {
+                response = okHttpClient.value.newCall(
+                        request
+                ).execute()
+                responseBody = response!!.body()
+                return responseBody!!.string()
+            } catch (e: IOException) {
+                Log.e("jm/debug", "", e)
+            } finally {
+                closeSilently(responseBody, response)
+            }
+            return null
+        }
     }
 
     private fun closeSilently(vararg xs: Closeable?) {
@@ -49,5 +77,9 @@ class NetworkModule {
             } catch (ignored: Throwable) {
             }
         }
+    }
+
+    companion object {
+        private val MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8")
     }
 }

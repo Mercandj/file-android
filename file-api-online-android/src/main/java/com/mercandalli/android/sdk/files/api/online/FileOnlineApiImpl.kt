@@ -1,5 +1,6 @@
 package com.mercandalli.android.sdk.files.api.online
 
+import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFiles
 import org.json.JSONObject
@@ -16,12 +17,26 @@ internal class FileOnlineApiImpl(
         headers["User-Agent"] = USER_AGENT
         headers["Content-Type"] = "application/json"
         headers["Authorization"] = "Basic $token"
-        val body = fileOnlineApiNetwork.requestSync(
+        val body = fileOnlineApiNetwork.getSync(
                 "$API_DOMAIN/file",
                 headers
         ) ?: return null
         val jsonObject = JSONObject(body)
         return ServerResponseFiles.fromJson(jsonObject)
+    }
+
+    override fun post(file: File) {
+        val headers = HashMap<String, String>()
+        val token = fileOnlineLoginManager.createToken()
+        headers["User-Agent"] = USER_AGENT
+        headers["Content-Type"] = "application/json"
+        headers["Authorization"] = "Basic $token"
+        val fileJsonObject = File.toJson(file)
+        fileOnlineApiNetwork.postSync(
+                "$API_DOMAIN/file",
+                headers,
+                fileJsonObject
+        )
     }
 
     companion object {

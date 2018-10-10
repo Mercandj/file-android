@@ -29,6 +29,17 @@ class FileOnlineAndroidModule(
             fileOnlineLoginRepository
     )
 
+    fun createFileOnlineUploadManager(
+            fileOnlineLoginManager: FileOnlineLoginManager
+    ): FileOnlineUploadManager {
+        val fileOnlineApi = createFileOnlineApi(
+                fileOnlineLoginManager
+        )
+        return FileOnlineUploadManagerImpl(
+                fileOnlineApi
+        )
+    }
+
     private fun createFileOnlineLoginRepository(): FileOnlineLoginRepository {
         val sharedPreferences = context.getSharedPreferences(
                 FileOnlineLoginRepositoryImpl.PREFERENCE_NAME,

@@ -16,6 +16,7 @@ import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 import com.mercandalli.android.sdk.files.api.online.FileOnlineApiNetwork
 import com.mercandalli.android.sdk.files.api.online.FileOnlineGraph
+import org.json.JSONObject
 
 class ApplicationGraph(
         private val context: Context
@@ -37,6 +38,7 @@ class ApplicationGraph(
     private val fileCreatorManagerInternal by lazy { fileModule.createFileCreatorManager() }
     private val fileOnlineManagerInternal by lazy { FileOnlineGraph.getFileOnlineManager() }
     private val fileOnlineLoginManagerInternal by lazy { FileOnlineGraph.getFileOnlineLoginManager() }
+    private val fileOnlineUploadManagerInternal by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
     private val fileRenameManagerInternal by lazy { fileModule.createFileRenameManager() }
     private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
@@ -71,6 +73,7 @@ class ApplicationGraph(
         fun getFileCreatorManager() = graph!!.fileCreatorManagerInternal
         fun getFileOnlineManager() = graph!!.fileOnlineManagerInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
+        fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManagerInternal
         fun getFileShareManager() = graph!!.fileShareManagerInternal
         fun getFileRenameManager() = graph!!.fileRenameManagerInternal
         fun getFileSortManager() = graph!!.fileSortManagerInternal
@@ -97,8 +100,23 @@ class ApplicationGraph(
         }
 
         private fun createFileOnlineApiNetwork() = object : FileOnlineApiNetwork {
-            override fun requestSync(url: String, headers: Map<String, String>) =
-                    getNetwork().requestSync(url, headers)
+            override fun getSync(
+                    url: String,
+                    headers: Map<String, String>
+            ) = getNetwork().getSync(
+                    url,
+                    headers
+            )
+
+            override fun postSync(
+                    url: String,
+                    headers: Map<String, String>,
+                    jsonObject: JSONObject
+            ) = getNetwork().postSync(
+                    url,
+                    headers,
+                    jsonObject
+            )
         }
     }
 }

@@ -30,6 +30,8 @@ interface MainActivityContract {
 
         fun onToolbarAddClicked()
 
+        fun onToolbarUploadClicked()
+
         fun onToolbarFileColumnClicked()
 
         fun onToolbarFileListClicked()
@@ -75,6 +77,10 @@ interface MainActivityContract {
 
         fun hideToolbarAdd()
 
+        fun showToolbarUpload()
+
+        fun hideToolbarUpload()
+
         fun showToolbarFileColumn()
 
         fun hideToolbarFileColumn()
@@ -92,6 +98,8 @@ interface MainActivityContract {
         fun shareNote()
 
         fun showFileCreationSelection()
+
+        fun showFileUploadSelection()
 
         fun setWindowBackgroundColorRes(@ColorRes colorRes: Int)
 

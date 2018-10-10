@@ -81,6 +81,10 @@ class MainActivityPresenter(
         screen.showFileCreationSelection()
     }
 
+    override fun onToolbarUploadClicked() {
+        screen.showFileUploadSelection()
+    }
+
     override fun onToolbarFileColumnClicked() {
         selectFileColumn()
     }
@@ -125,6 +129,7 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.showToolbarAdd()
+        screen.hideToolbarUpload()
         screen.showToolbarFileColumn()
         screen.hideToolbarFileList()
         syncToolbarPasteIconVisibility()
@@ -141,6 +146,7 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.showToolbarAdd()
+        screen.hideToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.showToolbarFileList()
         syncToolbarPasteIconVisibility()
@@ -156,6 +162,7 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
+        screen.showToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
         syncToolbarPasteIconVisibility()
@@ -171,6 +178,7 @@ class MainActivityPresenter(
         screen.showToolbarDelete()
         screen.showToolbarShare()
         screen.hideToolbarAdd()
+        screen.hideToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
         syncToolbarPasteIconVisibility()
@@ -186,6 +194,7 @@ class MainActivityPresenter(
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
+        screen.hideToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
         syncToolbarPasteIconVisibility()
