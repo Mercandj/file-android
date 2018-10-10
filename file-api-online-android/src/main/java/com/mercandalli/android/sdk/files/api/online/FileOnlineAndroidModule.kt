@@ -1,9 +1,7 @@
 package com.mercandalli.android.sdk.files.api.online
 
 import android.content.Context
-import com.mercandalli.android.sdk.files.api.FileModule
-import com.mercandalli.android.sdk.files.api.MediaScanner
-import com.mercandalli.android.sdk.files.api.MediaScannerAndroid
+import com.mercandalli.sdk.files.api.MediaScanner
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
@@ -15,11 +13,7 @@ class FileOnlineAndroidModule(
 ) {
 
     private val mediaScanner: MediaScanner by lazy {
-        val addOn = object : MediaScannerAndroid.AddOn {
-            override fun refreshSystemMediaScanDataBase(path: String) {
-            }
-        }
-        MediaScannerAndroid(addOn)
+        MediaScannerOnlineAndroid()
     }
 
     private val fileOnlineModule by lazy { FileOnlineModule() }

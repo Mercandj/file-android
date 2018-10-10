@@ -1,6 +1,7 @@
 package com.mercandalli.android.sdk.files.api
 
 import com.mercandalli.sdk.files.api.FileCreatorManager
+import com.mercandalli.sdk.files.api.MediaScanner
 import java.io.IOException
 
 class FileCreatorManagerAndroid(

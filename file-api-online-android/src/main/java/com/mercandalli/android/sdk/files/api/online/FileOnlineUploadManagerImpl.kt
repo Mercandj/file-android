@@ -1,6 +1,6 @@
 package com.mercandalli.android.sdk.files.api.online
 
-import com.mercandalli.android.sdk.files.api.MediaScanner
+import com.mercandalli.sdk.files.api.MediaScanner
 import com.mercandalli.sdk.files.api.File
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.GlobalScope

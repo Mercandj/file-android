@@ -1,6 +1,8 @@
 package com.mercandalli.android.sdk.files.api
 
-class MediaScannerAndroid(
+import com.mercandalli.sdk.files.api.MediaScanner
+
+internal class MediaScannerAndroid(
         private val addOn: AddOn
 ) : MediaScanner {
 

@@ -1,6 +1,7 @@
 package com.mercandalli.android.sdk.files.api
 
 import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.MediaScanner
 
 class FileDeleteManagerAndroid(
         private val mediaScanner: MediaScanner
