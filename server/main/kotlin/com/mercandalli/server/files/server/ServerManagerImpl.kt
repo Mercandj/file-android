@@ -13,16 +13,11 @@ import io.ktor.auth.UserIdPrincipal
 import io.ktor.auth.authenticate
 import io.ktor.auth.basic
 import io.ktor.content.*
-import io.ktor.features.CallLogging
 import io.ktor.features.StatusPages
-import io.ktor.features.origin
-import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.withCharset
-import io.ktor.pipeline.PipelineContext
-import io.ktor.request.path
+import io.ktor.http.Parameters
+import io.ktor.request.receive
 import io.ktor.request.receiveText
-import io.ktor.request.uri
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
@@ -32,7 +27,6 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
-import org.json.JSONObject
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -132,6 +126,20 @@ class ServerManagerImpl(
                 }
                 get("/1418") {
                     call.respondRedirect("/1418/index.html")
+                }
+                post("/1418/contact-us") {
+                    val post = call.receive<Parameters>()
+                    val firstName = post["first_name"]
+                    val lastName  = post["last_name"]
+                    val email  = post["email"]
+                    val text  = post["text"]
+                    logManager.log1418ContactUs(
+                            firstName,
+                            lastName,
+                            email,
+                            text
+                    )
+                    call.respondText("Message envoyé")
                 }
                 static("/1418") {
                     staticRootFolder = File("$rootServerPath/static")
