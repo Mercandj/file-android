@@ -17,18 +17,18 @@ class FileRepositoryImpl(
     }
 
     override fun put(file: File) {
-        fileRepositoryMetadata.files[file.id] = file
+        fileRepositoryMetadata = FileRepositoryMetadata.put(fileRepositoryMetadata,file)
         save()
     }
 
-    override fun has(path: String) = fileRepositoryMetadata.files.containsKey(path)
+    override fun has(path: String) = fileRepositoryMetadata.getFiles().containsKey(path)
 
     override fun get(path: String): File {
-        return fileRepositoryMetadata.files[path]!!
+        return fileRepositoryMetadata.getFiles()[path]!!
     }
 
     override fun get(): List<File> {
-        val values = fileRepositoryMetadata.files.values
+        val values = fileRepositoryMetadata.getFiles().values
         return ArrayList<File>(values)
     }
 
@@ -36,7 +36,7 @@ class FileRepositoryImpl(
         if (!has(path)) {
             return false
         }
-        fileRepositoryMetadata.files.remove(path)
+        fileRepositoryMetadata = FileRepositoryMetadata.delete(fileRepositoryMetadata,path)
         save()
         return true
     }

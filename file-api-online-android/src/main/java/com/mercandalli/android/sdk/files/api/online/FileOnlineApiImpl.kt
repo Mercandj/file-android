@@ -13,11 +13,7 @@ internal class FileOnlineApiImpl(
 ) : FileOnlineApi {
 
     override fun get(): ServerResponseFiles? {
-        val headers = HashMap<String, String>()
-        val token = fileOnlineLoginManager.createToken()
-        headers["User-Agent"] = USER_AGENT
-        headers["Content-Type"] = "application/json"
-        headers["Authorization"] = "Basic $token"
+        val headers = createHeaders()
         val body = fileOnlineApiNetwork.getSync(
                 "$API_DOMAIN/file",
                 headers
@@ -27,11 +23,7 @@ internal class FileOnlineApiImpl(
     }
 
     override fun post(file: File) {
-        val headers = HashMap<String, String>()
-        val token = fileOnlineLoginManager.createToken()
-        headers["User-Agent"] = USER_AGENT
-        headers["Content-Type"] = "application/json"
-        headers["Authorization"] = "Basic $token"
+        val headers = createHeaders()
         val fileJsonObject = File.toJson(file)
         fileOnlineApiNetwork.postSync(
                 "$API_DOMAIN/file",
@@ -41,11 +33,7 @@ internal class FileOnlineApiImpl(
     }
 
     override fun delete(path: String): Boolean {
-        val headers = HashMap<String, String>()
-        val token = fileOnlineLoginManager.createToken()
-        headers["User-Agent"] = USER_AGENT
-        headers["Content-Type"] = "application/json"
-        headers["Authorization"] = "Basic $token"
+        val headers = createHeaders()
         val fileJsonObject = JSONObject()
         fileJsonObject.put(File.JSON_KEY_PATH, path)
         val json = fileOnlineApiNetwork.deleteSync(
@@ -55,6 +43,15 @@ internal class FileOnlineApiImpl(
         )
         val serverResponse = ServerResponse.fromJson(JSONObject(json))
         return serverResponse.succeeded
+    }
+
+    private fun createHeaders(): Map<String, String> {
+        val headers = HashMap<String, String>()
+        val token = fileOnlineLoginManager.createToken()
+        headers["User-Agent"] = USER_AGENT
+        headers["Content-Type"] = "application/json"
+        headers["Authorization"] = "Basic $token"
+        return headers
     }
 
     companion object {

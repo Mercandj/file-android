@@ -5,8 +5,12 @@ import org.json.JSONObject
 
 data class FileRepositoryMetadata(
 
-        val files: HashMap<String, File>
+        private val files: HashMap<String, File>
 ) {
+
+    fun getFiles(): HashMap<String, File> {
+        return HashMap(files)
+    }
 
     companion object {
 
@@ -34,6 +38,18 @@ data class FileRepositoryMetadata(
             val files = HashMap<String, File>()
             val fileRepositoryMetadata = FileRepositoryMetadata(files)
             return toJson(fileRepositoryMetadata).toString()
+        }
+
+        fun put(fileRepositoryMetadata: FileRepositoryMetadata, file: File): FileRepositoryMetadata {
+            val files = fileRepositoryMetadata.getFiles()
+            files[file.path] = file
+            return FileRepositoryMetadata(files)
+        }
+
+        fun delete(fileRepositoryMetadata: FileRepositoryMetadata, path: String): FileRepositoryMetadata {
+            val files = fileRepositoryMetadata.getFiles()
+            files.remove(path)
+            return FileRepositoryMetadata(files)
         }
     }
 }
