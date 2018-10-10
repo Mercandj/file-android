@@ -15,11 +15,11 @@ class FileHandlerDeleteImpl(
     override fun delete(body: String): String {
         logManager.d(TAG, "delete(body: $body)")
         val fileJsonObject = JSONObject(body)
-        val file = File.fromJson(fileJsonObject)
-        fileRepository.put(file)
-        return ServerResponseFile.create(
-                file,
-                "File inserted into the repository",
+        val path = fileJsonObject.getString(File.JSON_KEY_PATH)
+        fileRepository.delete(path)
+        return ServerResponse.create(
+                JSONObject(),
+                "File deleted in the repository",
                 true
         ).toJsonString()
     }
