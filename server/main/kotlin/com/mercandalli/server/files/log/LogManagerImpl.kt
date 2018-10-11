@@ -1,24 +1,21 @@
 package com.mercandalli.server.files.log
 
+import com.mercandalli.server.files.time.TimeManager
 import io.ktor.request.ApplicationRequest
 import io.ktor.request.uri
-import io.ktor.response.ApplicationResponse
 import org.json.JSONArray
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 internal class LogManagerImpl(
-        rootPath: String
+        rootPath: String,
+        private val timeManager: TimeManager
 ) : LogManager {
 
-    private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
     private val log1418File = java.io.File(rootPath, "static/1418/contact-us.json")
     private val contactUs1418List = ArrayList<ContactUs>()
 
     init {
-        simpleDateFormat.timeZone = TimeZone.getTimeZone("gmt")
         if (log1418File.exists()) {
             val json = log1418File.readText()
             val jsonArray = JSONArray(json)
@@ -31,8 +28,8 @@ internal class LogManagerImpl(
     }
 
     override fun d(tag: String, message: String) {
-        val date = createDate()
-        println("$date [$tag] $message")
+        val time = timeManager.getTimeString()
+        println("$time [$tag] $message")
     }
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
@@ -51,7 +48,9 @@ internal class LogManagerImpl(
             email: String?,
             text: String?
     ) {
+        val time = timeManager.getTimeString()
         val contactUs = ContactUs(
+                time,
                 firstName,
                 lastName,
                 email,
@@ -61,14 +60,13 @@ internal class LogManagerImpl(
         saveContactUs1418()
     }
 
-    private fun createDate() = simpleDateFormat.format(Date())
-
     private fun saveContactUs1418() {
         val jsonArray = ContactUs.toJson(contactUs1418List)
         log1418File.writeText(jsonArray.toString())
     }
 
     data class ContactUs(
+            val time: String,
             val firstName: String?,
             val lastName: String?,
             val email: String?,
@@ -77,11 +75,13 @@ internal class LogManagerImpl(
         companion object {
 
             fun fromJson(jsonObject: JSONObject): ContactUs {
+                val time = jsonObject.getString("time")
                 val firstName = jsonObject.getString("first_name")
                 val lastName = jsonObject.getString("last_name")
                 val email = jsonObject.getString("email")
                 val text = jsonObject.getString("text")
                 return ContactUs(
+                        time,
                         firstName,
                         lastName,
                         email,
@@ -101,6 +101,7 @@ internal class LogManagerImpl(
 
             fun toJson(contactUs: ContactUs): JSONObject {
                 val jsonObject = JSONObject()
+                jsonObject.put("time", contactUs.time)
                 jsonObject.put("first_name", contactUs.firstName)
                 jsonObject.put("last_name", contactUs.lastName)
                 jsonObject.put("email", contactUs.email)

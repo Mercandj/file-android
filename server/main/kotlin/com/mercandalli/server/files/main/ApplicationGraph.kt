@@ -6,6 +6,7 @@ import com.mercandalli.server.files.file_repository.FileRepositoryModule
 import com.mercandalli.server.files.log.LogModule
 import com.mercandalli.server.files.server.ServerModule
 import com.mercandalli.server.files.shell.ShellModule
+import com.mercandalli.server.files.time.TimeModule
 
 class ApplicationGraph(
         val rootPath: String,
@@ -18,6 +19,7 @@ class ApplicationGraph(
     private val logModule = LogModule()
     private val serverModule = ServerModule(rootPath)
     private val shellModule = ShellModule()
+    private val timeModule = TimeModule()
 
     private val fileHandlerGetInternal by lazy { fileModule.createFileHandlerGet() }
     private val fileHandlerPostInternal by lazy { fileModule.createFileHandlerPost() }
@@ -26,7 +28,8 @@ class ApplicationGraph(
     private val fileRepositoryInternal by lazy { fileRepositoryModule.createFileRepository() }
     private val logManagerInternal by lazy { logModule.createLogManager() }
     private val serverManagerInternal by lazy { serverModule.createServerManager() }
-    private val shellManagerInternal by lazy { shellModule.provideShellManager() }
+    private val shellManagerInternal by lazy { shellModule.createShellManager() }
+    private val timeManagerInternal by lazy { timeModule.createTimeManager() }
 
     companion object {
 
@@ -42,6 +45,7 @@ class ApplicationGraph(
         fun getRootPath() = graph!!.rootPath
         fun getServerManager() = graph!!.serverManagerInternal
         fun getShellManager() = graph!!.shellManagerInternal
+        fun getTimeManager() = graph!!.timeManagerInternal
 
         fun initialize(
                 rootPath: String,

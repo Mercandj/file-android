@@ -6,7 +6,9 @@ class ShellModule {
 
     private val logManager by lazy { ApplicationGraph.getLogManager() }
 
-    fun provideShellManager(): ShellManager {
-        return ShellManagerImpl(logManager)
+    fun createShellManager(): ShellManager {
+        return ShellManagerImpl(
+                logManager
+        )
     }
 }
