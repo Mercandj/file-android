@@ -1,10 +1,7 @@
 package com.mercandalli.android.sdk.files.api.online
 
 import android.content.Context
-import com.mercandalli.sdk.files.api.MediaScanner
-import com.mercandalli.sdk.files.api.FileDeleteManager
-import com.mercandalli.sdk.files.api.FileManager
-import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.*
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
@@ -37,11 +34,15 @@ class FileOnlineAndroidModule(
         return fileManager
     }
 
-    fun getFileOnlineLoginManager() = fileOnlineLoginManagerInternal
 
-    private fun createFileOnlineLoginManager() = fileOnlineModule.createFileOnlineLoginManager(
-            fileOnlineLoginRepository
-    )
+    fun createFileOnlineCreatorManager(): FileCreatorManager {
+        return FileOnlineCreatorManagerAndroid(
+                fileOnlineApi,
+                mediaScanner
+        )
+    }
+
+    fun getFileOnlineLoginManager() = fileOnlineLoginManagerInternal
 
     fun createFileOnlineRenameManager(): FileRenameManager {
         return FileOnlineRenameManagerAndroid(
@@ -63,6 +64,9 @@ class FileOnlineAndroidModule(
                 mediaScanner
         )
     }
+    private fun createFileOnlineLoginManager() = fileOnlineModule.createFileOnlineLoginManager(
+            fileOnlineLoginRepository
+    )
 
     private fun createFileOnlineLoginRepository(): FileOnlineLoginRepository {
         val sharedPreferences = context.getSharedPreferences(

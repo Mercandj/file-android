@@ -95,7 +95,7 @@ class FileManagerAndroid(
             val parentPath = parentPath(ioFile)
             val length = ioFile.length()
             val lastModified = ioFile.lastModified()
-            return File(
+            return File.create(
                     id,
                     path,
                     parentPath,

@@ -7,6 +7,7 @@ class FileOnlineGraph(
 ) {
 
     private val fileOnlineManager by lazy { fileOnlineModule.createFileOnlineManager() }
+    private val fileOnlineCreatorManager by lazy { fileOnlineModule.createFileOnlineCreatorManager() }
     private val fileOnlineDeleteManager by lazy { fileOnlineModule.createFileOnlineDeleteManager() }
     private val fileOnlineLoginManager by lazy { fileOnlineModule.getFileOnlineLoginManager() }
     private val fileOnlineRenameManager by lazy { fileOnlineModule.createFileOnlineRenameManager() }
@@ -17,6 +18,7 @@ class FileOnlineGraph(
         private lateinit var graph: FileOnlineGraph
 
         fun getFileOnlineManager() = graph.fileOnlineManager
+        fun getFileOnlineCreatorManager() = graph.fileOnlineCreatorManager
         fun getFileOnlineDeleteManager() = graph.fileOnlineDeleteManager
         fun getFileOnlineLoginManager() = graph.fileOnlineLoginManager
         fun getFileOnlineRenameManager() = graph.fileOnlineRenameManager

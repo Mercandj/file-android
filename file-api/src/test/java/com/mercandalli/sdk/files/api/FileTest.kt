@@ -8,7 +8,7 @@ class FileTest {
     @Test
     fun parseSerializeFileToJson() {
         // Given
-        val file = File(
+        val file = File.create(
                 "id",
                 "path",
                 "parentPath",
@@ -30,7 +30,7 @@ class FileTest {
         // Given
         val newName = "new-folder-name"
         val parentPath = ""
-        val file = File(
+        val file = File.create(
                 "id",
                 "$parentPath/root",
                 "$parentPath/",
@@ -51,7 +51,7 @@ class FileTest {
         // Given
         val newName = "new-folder-name"
         val parentPath = ""
-        val file = File(
+        val file = File.create(
                 "id",
                 "$parentPath/root",
                 "$parentPath/",

@@ -2,6 +2,7 @@ package com.mercandalli.sdk.files.api
 
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 
 /**
  * Memo: goal is to keep file class as light as possible.
@@ -13,7 +14,7 @@ import org.json.JSONObject
  * So fields of this class should stay the minimum definition of a file. (for me, path and folder).
  * Only defined data required to navigate across files.
  */
-data class File(
+data class File private constructor(
 
         /**
          * Unique uuid
@@ -54,8 +55,46 @@ data class File(
 ) {
 
     companion object {
+
         const val JSON_KEY_PATH = "path"
         const val JSON_KEY_NAME = "name"
+
+        fun create(
+                id: String,
+                path: String,
+                parentPath: String?,
+                directory: Boolean,
+                name: String,
+                length: Long,
+                lastModified: Long
+        ): File {
+            val cleanedPath = cleanPath(path)
+            return File(
+                    id,
+                    cleanedPath,
+                    parentPath,
+                    directory,
+                    name,
+                    length,
+                    lastModified
+            )
+        }
+
+        fun create(
+                parentPath: String,
+                name: String
+        ): File {
+            val directory = !name.contains(".")
+            return create(
+                    UUID.randomUUID().toString(),
+                    "$parentPath/$name",
+                    "$parentPath/",
+                    directory,
+                    name,
+                    0,
+                    0
+            )
+        }
 
         @JvmStatic
         fun fromJson(jsonObject: JSONObject): File {
@@ -66,7 +105,7 @@ data class File(
             val name = jsonObject.getString(JSON_KEY_NAME)
             val length = jsonObject.getLong("length")
             val lastModified = jsonObject.getLong("last_modified")
-            return File(
+            return create(
                     id,
                     path,
                     parentPath,
@@ -158,6 +197,10 @@ data class File(
         fun createFakeJson(id: String): String {
             val file = createFake(id)
             return toJson(file).toString()
+        }
+
+        fun cleanPath(path: String): String {
+            return java.io.File(path).absolutePath
         }
     }
 }

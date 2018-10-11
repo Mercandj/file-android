@@ -9,14 +9,14 @@ class FileCreatorManagerAndroid(
         private val mediaScanner: MediaScanner
 ) : FileCreatorManager {
 
-    override fun create(path: String, name: String): Boolean {
+    override fun create(parentPath: String, name: String) {
         if (permissionManager.shouldRequestStoragePermission()) {
-            return false
+            return
         }
-        var pathToUse = path
-        val len = path.length
+        var pathToUse = parentPath
+        val len = parentPath.length
         if (len < 1 || name.isEmpty()) {
-            return false
+            return
         }
         if (pathToUse[len - 1] != '/') {
             pathToUse += "/"
@@ -26,7 +26,7 @@ class FileCreatorManagerAndroid(
             if (ioFile.mkdir()) {
                 mediaScanner.refresh(ioFile.absolutePath)
                 mediaScanner.refresh(ioFile.parentFile.absolutePath)
-                return true
+                return
             }
         } else {
             try {
@@ -34,13 +34,11 @@ class FileCreatorManagerAndroid(
                 if (ioFile.createNewFile()) {
                     mediaScanner.refresh(ioFile.absolutePath)
                     mediaScanner.refresh(ioFile.parentFile.absolutePath)
-                    return true
+                    return
                 }
             } catch (e: IOException) {
-                return false
+                return
             }
-
         }
-        return false
     }
 }

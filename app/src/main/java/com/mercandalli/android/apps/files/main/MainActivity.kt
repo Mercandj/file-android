@@ -269,6 +269,7 @@ class MainActivity : AppCompatActivity(),
 
     private fun createUserAction(): MainActivityContract.UserAction {
         val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
+        val fileOnlineCreatorManager = ApplicationGraph.getFileOnlineCreatorManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val themeManager = ApplicationGraph.getThemeManager()
         val sharedPreferences = getSharedPreferences(
@@ -279,6 +280,7 @@ class MainActivity : AppCompatActivity(),
         return MainActivityPresenter(
                 this,
                 fileCreatorManager,
+                fileOnlineCreatorManager,
                 fileCopyCutManager,
                 themeManager,
                 mainActivityFileUiStorage

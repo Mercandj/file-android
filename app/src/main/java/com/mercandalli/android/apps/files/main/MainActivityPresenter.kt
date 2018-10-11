@@ -9,6 +9,7 @@ import com.mercandalli.sdk.files.api.FileCreatorManager
 class MainActivityPresenter(
         private val screen: MainActivityContract.Screen,
         private val fileCreatorManager: FileCreatorManager,
+        private val fileOnlineCreatorManager: FileCreatorManager,
         private val fileCopyCutManager: FileCopyCutManager,
         private val themeManager: ThemeManager,
         private val mainActivityFileUiStorage: MainActivityFileUiStorage
@@ -100,9 +101,20 @@ class MainActivityPresenter(
     }
 
     override fun onFileCreationConfirmed(fileName: String) {
-        val path = if (currentPath == null) Environment.getExternalStorageDirectory().absolutePath
-        else currentPath
-        fileCreatorManager.create(path!!, fileName)
+        val parentPath = if (currentPath == null) {
+            if (selectedSection == SECTION_ONLINE) {
+                "/"
+            } else {
+                Environment.getExternalStorageDirectory().absolutePath
+            }
+        } else {
+            currentPath
+        }
+        if (selectedSection == SECTION_ONLINE) {
+            fileOnlineCreatorManager.create(parentPath!!, fileName)
+        } else {
+            fileCreatorManager.create(parentPath!!, fileName)
+        }
     }
 
     override fun onSelectedFilePathChanged(path: String?) {
@@ -161,7 +173,7 @@ class MainActivityPresenter(
         screen.hideSettingsView()
         screen.hideToolbarDelete()
         screen.hideToolbarShare()
-        screen.hideToolbarAdd()
+        screen.showToolbarAdd()
         screen.showToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
@@ -231,8 +243,8 @@ class MainActivityPresenter(
         private const val SECTION_UNDEFINED = 0
         private const val SECTION_FILE_LIST = SECTION_UNDEFINED + 1
         private const val SECTION_FILE_COLUMN = SECTION_FILE_LIST + 1
-        private const val SECTION_NOTE = SECTION_FILE_COLUMN + 1
-        private const val SECTION_ONLINE = SECTION_NOTE + 1
-        private const val SECTION_SETTINGS = SECTION_ONLINE + 1
+        private const val SECTION_ONLINE = SECTION_FILE_COLUMN + 1
+        private const val SECTION_NOTE = SECTION_ONLINE + 1
+        private const val SECTION_SETTINGS = SECTION_NOTE + 1
     }
 }

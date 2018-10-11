@@ -6,9 +6,7 @@ import android.widget.FrameLayout
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileOpenManager
-import com.mercandalli.sdk.files.api.FileRenameManager
 
 class FileOnlineView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -17,7 +15,7 @@ class FileOnlineView @JvmOverloads constructor(
     private val fileColumnListView = FileListView(context)
     private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
     private val fileOnlineDeleteManager = ApplicationGraph.getFileOnlineDeleteManager()
-    private val fileOnlineRenameanager = ApplicationGraph.getFileOnlineRenameManager()
+    private val fileOnlineRenameManager = ApplicationGraph.getFileOnlineRenameManager()
 
     init {
         fileColumnListView.setFileManagers(
@@ -74,7 +72,7 @@ class FileOnlineView @JvmOverloads constructor(
                     }
 
                 },
-                fileOnlineRenameanager,
+                fileOnlineRenameManager,
                 "/"
         )
         addView(fileColumnListView)

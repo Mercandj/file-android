@@ -18,6 +18,8 @@ class MainPresenterTest {
     @Mock
     private var fileCreatorManager: FileCreatorManager? = null
     @Mock
+    private var fileOnlineCreatorManager: FileCreatorManager? = null
+    @Mock
     private var fileCopyCutManager: FileCopyCutManager? = null
     @Mock
     private var themeManager: ThemeManager? = null
@@ -75,6 +77,7 @@ class MainPresenterTest {
         return MainActivityPresenter(
                 screen!!,
                 fileCreatorManager!!,
+                fileOnlineCreatorManager!!,
                 fileCopyCutManager!!,
                 themeManager!!,
                 mainActivityFileUiStorage!!
