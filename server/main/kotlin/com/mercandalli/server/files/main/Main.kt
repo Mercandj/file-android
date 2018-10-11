@@ -10,11 +10,12 @@ fun main(args: Array<String>) {
     val tag = "Main"
 
     val fileOnlineAuthentications = if (args.size == 2) {
+        val fileOnlineAuthentication = FileOnlineAuthentication(
+                args[0],
+                args[1]
+        )
         listOf(
-                FileOnlineAuthentication(
-                        args[0],
-                        args[1]
-                )
+                fileOnlineAuthentication
         )
     } else {
         listOf()

@@ -60,9 +60,11 @@ class FileHandlerPostImpl(
 
         val authorization = headers["Authorization"]
         val logged = if (authorization == null) {
+            logManager.d(TAG, "uploadPost() no authorization")
             false
         } else {
             val token = authorization.replace("Basic ", "")
+            logManager.d(TAG, "uploadPost() request token $token")
             FileOnlineAuthentication.isLogged(token, fileOnlineAuthentications)
         }
         if (!logged) {
