@@ -18,8 +18,8 @@ class FileOnlineUploadPresenter(
         val javaFile = java.io.File(path)
         val file = File.create(
                 UUID.randomUUID().toString(),
-                javaFile.name,
                 "/${javaFile.name}",
+                "/",
                 false,
                 javaFile.name,
                 javaFile.length(),
