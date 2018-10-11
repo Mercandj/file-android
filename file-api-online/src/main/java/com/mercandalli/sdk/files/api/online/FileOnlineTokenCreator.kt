@@ -16,9 +16,9 @@ object FileOnlineTokenCreator {
         val tokens = ArrayList<String>()
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
         for (i in -minutesRange / 2..minutesRange / 2) {
-            calendar.set(Calendar.HOUR_OF_DAY, hour + i)
+            calendar.set(Calendar.MINUTE, minute + i)
             val token = createToken(login, passwordSha1, calendar.time)
             tokens.add(token)
         }
@@ -30,7 +30,7 @@ object FileOnlineTokenCreator {
     }
 
     private fun createToken(login: String, passwordSha1: String, date: Long): String {
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH", Locale.US)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("gmt")
         val currentDate = simpleDateFormat.format(date)
         val passwordHash = HashUtils.sha1(passwordSha1)

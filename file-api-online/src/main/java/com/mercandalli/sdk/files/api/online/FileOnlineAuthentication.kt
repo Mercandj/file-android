@@ -7,13 +7,13 @@ data class FileOnlineAuthentication(
 
     fun createToken() = FileOnlineTokenCreator.createToken(login, passwordSha1)
 
-    fun createTokens() = FileOnlineTokenCreator.createTokens(login, passwordSha1, 2)
+    fun createTokens() = FileOnlineTokenCreator.createTokens(login, passwordSha1, 8)
 
     companion object {
 
         fun isLogged(token: String, fileOnlineAuthentications: List<FileOnlineAuthentication>): Boolean {
             for (fileOnlineAuthentication in fileOnlineAuthentications) {
-                val logged = isLoggedWithToken(token, fileOnlineAuthentication)
+                val logged = isLoggedWithTokens(token, fileOnlineAuthentication)
                 if (logged) {
                     return true
                 }
@@ -21,6 +21,7 @@ data class FileOnlineAuthentication(
             return false
         }
 
+        @Suppress("unused")
         private fun isLoggedWithToken(token: String, fileOnlineAuthentication: FileOnlineAuthentication) =
                 fileOnlineAuthentication.createToken() == token
 
