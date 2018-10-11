@@ -90,12 +90,10 @@ pushd "$BASEDIR"
 
     popd
 
-    if [ "$#" -ne 2 ]; then
-        if [ "$1" == "-ui" ]; then
-            java -jar ./build/file-server.jar -ui &
-        else
-            java -jar ./build/file-server.jar
-        fi
+    if [ "$1" == "-ui" ]; then
+        java -jar ./build/file-server.jar -ui &
+    else
+        java -jar ./build/file-server.jar "$@"
     fi
 
 popd
