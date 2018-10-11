@@ -8,7 +8,7 @@ class FileTest {
 
         @JvmStatic
         fun createFakeFile(): File {
-            return File(
+            return File.create(
                     "id",
                     "path",
                     "parentPath",
