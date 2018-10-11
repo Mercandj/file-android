@@ -35,6 +35,18 @@ data class ServerResponse private constructor(
 
         @JvmStatic
         fun create(
+                debugMessage: String,
+                succeeded: Boolean
+        ): ServerResponse {
+            return ServerResponse(
+                    JSONObject(),
+                    debugMessage,
+                    succeeded
+            )
+        }
+
+        @JvmStatic
+        fun create(
                 content: JSONObject,
                 debugMessage: String,
                 succeeded: Boolean

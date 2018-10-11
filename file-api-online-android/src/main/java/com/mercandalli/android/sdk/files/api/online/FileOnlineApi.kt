@@ -11,4 +11,6 @@ internal interface FileOnlineApi {
     fun post(file: File)
 
     fun delete(path: String): Boolean
+
+    fun rename(path: String, fileName: String): Boolean
 }

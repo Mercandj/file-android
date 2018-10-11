@@ -51,5 +51,14 @@ data class FileRepositoryMetadata(
             files.remove(path)
             return FileRepositoryMetadata(files)
         }
+
+        fun rename(fileRepositoryMetadata: FileRepositoryMetadata, path: String, name: String): FileRepositoryMetadata {
+            val files = fileRepositoryMetadata.getFiles()
+            val file = files[path]!!
+            val renamedFile = File.rename(file, name)
+            files.remove(path)
+            files[renamedFile.path] = renamedFile
+            return FileRepositoryMetadata(files)
+        }
     }
 }

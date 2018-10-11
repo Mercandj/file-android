@@ -55,6 +55,7 @@ data class File(
 
     companion object {
         const val JSON_KEY_PATH = "path"
+        const val JSON_KEY_NAME = "name"
 
         @JvmStatic
         fun fromJson(jsonObject: JSONObject): File {
@@ -62,7 +63,7 @@ data class File(
             val path = jsonObject.getString(JSON_KEY_PATH)
             val parentPath = jsonObject.getString("parent_path")
             val directory = jsonObject.getBoolean("directory")
-            val name = jsonObject.getString("name")
+            val name = jsonObject.getString(JSON_KEY_NAME)
             val length = jsonObject.getLong("length")
             val lastModified = jsonObject.getLong("last_modified")
             return File(
@@ -94,7 +95,7 @@ data class File(
             json.put(JSON_KEY_PATH, file.path)
             json.put("parent_path", file.parentPath)
             json.put("directory", file.directory)
-            json.put("name", file.name)
+            json.put(JSON_KEY_NAME, file.name)
             json.put("length", file.length)
             json.put("last_modified", file.lastModified)
             return json
@@ -118,6 +119,24 @@ data class File(
                 jsonArray.put(json)
             }
             return jsonArray
+        }
+
+        fun rename(file: File, name: String): File {
+            val parentFile = java.io.File(file.path).parentFile
+            val newPath = if (parentFile == null) {
+                file.path.replace(file.name, name)
+            } else {
+                java.io.File(parentFile.absolutePath, name).absolutePath
+            }
+            return File(
+                    file.id,
+                    newPath,
+                    file.parentPath,
+                    file.directory,
+                    name,
+                    file.length,
+                    file.lastModified
+            )
         }
 
         fun createFake(id: String) = File(

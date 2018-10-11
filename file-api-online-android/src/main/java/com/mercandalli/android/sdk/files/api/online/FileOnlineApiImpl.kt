@@ -45,6 +45,20 @@ internal class FileOnlineApiImpl(
         return serverResponse.succeeded
     }
 
+    override fun rename(path: String, name: String): Boolean {
+        val headers = createHeaders()
+        val fileJsonObject = JSONObject()
+        fileJsonObject.put(File.JSON_KEY_PATH, path)
+        fileJsonObject.put(File.JSON_KEY_NAME, name)
+        val json = fileOnlineApiNetwork.postSync(
+                "$API_DOMAIN/file/rename",
+                headers,
+                fileJsonObject
+        )
+        val serverResponse = ServerResponse.fromJson(JSONObject(json))
+        return serverResponse.succeeded
+    }
+
     private fun createHeaders(): Map<String, String> {
         val headers = HashMap<String, String>()
         val token = fileOnlineLoginManager.createToken()

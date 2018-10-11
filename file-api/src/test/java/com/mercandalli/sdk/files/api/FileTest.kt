@@ -25,6 +25,48 @@ class FileTest {
         areEquals(file, fileFromJson)
     }
 
+    @Test
+    fun renameFileModifyTheName() {
+        // Given
+        val newName = "new-folder-name"
+        val parentPath = ""
+        val file = File(
+                "id",
+                "$parentPath/root",
+                "$parentPath/",
+                true,
+                "root",
+                42,
+                4242)
+
+        // When
+        val renamedFile = File.rename(file, newName)
+
+        // Then
+        Assert.assertEquals(newName, renamedFile.name)
+    }
+
+    @Test
+    fun renameFileModifyThePath() {
+        // Given
+        val newName = "new-folder-name"
+        val parentPath = ""
+        val file = File(
+                "id",
+                "$parentPath/root",
+                "$parentPath/",
+                true,
+                "root",
+                42,
+                4242)
+
+        // When
+        val renamedFile = File.rename(file, newName)
+
+        // Then
+        Assert.assertEquals("$parentPath/$newName", renamedFile.path)
+    }
+
     companion object {
 
         @JvmStatic

@@ -17,7 +17,7 @@ class FileRepositoryImpl(
     }
 
     override fun put(file: File) {
-        fileRepositoryMetadata = FileRepositoryMetadata.put(fileRepositoryMetadata,file)
+        fileRepositoryMetadata = FileRepositoryMetadata.put(fileRepositoryMetadata, file)
         save()
     }
 
@@ -36,9 +36,18 @@ class FileRepositoryImpl(
         if (!has(path)) {
             return false
         }
-        fileRepositoryMetadata = FileRepositoryMetadata.delete(fileRepositoryMetadata,path)
+        fileRepositoryMetadata = FileRepositoryMetadata.delete(fileRepositoryMetadata, path)
         save()
         return true
+    }
+
+    override fun rename(path: String, name: String): File? {
+        if (!has(path)) {
+            return null
+        }
+        fileRepositoryMetadata = FileRepositoryMetadata.rename(fileRepositoryMetadata, path, name)
+        save()
+        return null
     }
 
     private fun load() {
