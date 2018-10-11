@@ -30,7 +30,7 @@ object FileOnlineTokenCreator {
     }
 
     private fun createToken(login: String, passwordSha1: String, date: Long): String {
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH", Locale.US)
         simpleDateFormat.timeZone = TimeZone.getTimeZone("gmt")
         val currentDate = simpleDateFormat.format(date)
         val passwordHash = HashUtils.sha1(passwordSha1)
