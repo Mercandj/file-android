@@ -6,7 +6,7 @@ import com.mercandalli.sdk.files.api.*
 class FileListPresenter(
         private val screen: FileListContract.Screen,
         private var fileManager: FileManager,
-        private val fileOpenManager: FileOpenManager,
+        private var fileOpenManager: FileOpenManager,
         private val fileSortManager: FileSortManager,
         private val themeManager: ThemeManager,
         private var rootPath: String
@@ -61,6 +61,7 @@ class FileListPresenter(
     ) {
         this.fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
         this.fileManager = fileManager
+        this.fileOpenManager = fileOpenManager
         this.rootPath = rootPath
         this.currentPath = rootPath
         fileManager.registerFileChildrenResultListener(fileChildrenResultListener)

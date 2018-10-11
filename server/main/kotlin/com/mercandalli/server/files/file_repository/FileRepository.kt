@@ -4,6 +4,8 @@ import com.mercandalli.sdk.files.api.File
 
 interface FileRepository {
 
+    fun getFolderContainerPath(): String
+
     fun put(file: File)
 
     fun get(path: String): File
@@ -14,5 +16,5 @@ interface FileRepository {
 
     fun delete(path: String): Boolean
 
-    fun rename(path: String, name:String): File?
+    fun rename(path: String, name: String): File?
 }

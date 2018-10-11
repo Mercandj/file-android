@@ -17,7 +17,9 @@ import io.ktor.content.*
 import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
+import io.ktor.network.util.ioCoroutineDispatcher
 import io.ktor.request.receive
+import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveText
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
@@ -29,7 +31,12 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
+import kotlinx.coroutines.experimental.CoroutineDispatcher
+import kotlinx.coroutines.experimental.withContext
+import kotlinx.coroutines.experimental.yield
 import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.concurrent.TimeUnit
 
 class ServerManagerImpl(
@@ -114,13 +121,23 @@ class ServerManagerImpl(
                 }
                 post("/file-api/file") {
                     val body = call.receiveText()
-                    val response = fileHandlerPost.post(body)
+                    val response = fileHandlerPost.createPost(body)
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 delete("/file-api/file") {
                     val body = call.receiveText()
                     val response = fileHandlerDelete.delete(body)
+                    logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
+                }
+                post("/file-api/file/upload") {
+                    val body = call.receiveText()
+                    val multipart = call.receiveMultipart()
+                    val response = fileHandlerPost.uploadPost(
+                            body,
+                            multipart
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }

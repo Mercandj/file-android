@@ -32,6 +32,16 @@ internal class FileOnlineApiImpl(
         )
     }
 
+    override fun post(file: File, javaFile: java.io.File) {
+        val headers = createHeaders()
+        val fileJsonObject = File.toJson(file)
+        fileOnlineApiNetwork.postSync(
+                "$API_DOMAIN/file",
+                headers,
+                fileJsonObject
+        )
+    }
+
     override fun delete(path: String): Boolean {
         val headers = createHeaders()
         val fileJsonObject = JSONObject()

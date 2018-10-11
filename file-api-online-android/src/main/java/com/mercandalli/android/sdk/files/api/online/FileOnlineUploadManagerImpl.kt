@@ -12,9 +12,9 @@ internal class FileOnlineUploadManagerImpl(
         private val mediaScanner: MediaScanner
 ) : FileOnlineUploadManager {
 
-    override fun upload(file: File) {
+    override fun upload(file: File, javaFile: java.io.File) {
         GlobalScope.launch(Dispatchers.Default) {
-            fileOnlineApi.post(file)
+            fileOnlineApi.post(file, javaFile)
             GlobalScope.launch(Dispatchers.Main) {
                 mediaScanner.refresh(file.path)
                 file.parentPath?.let {

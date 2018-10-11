@@ -77,9 +77,9 @@ class FileManagerAndroid(
             if (!ioFile.isDirectory) {
                 return FileChildrenResult.createErrorNotFolder(path)
             }
-            val iosFiles = ioFile.listFiles()
+            val ioFiles = ioFile.listFiles()
             val files = ArrayList<File>()
-            for (ioFileLoop in iosFiles) {
+            for (ioFileLoop in ioFiles) {
                 val file = convertToFile(ioFileLoop)
                 files.add(file)
             }

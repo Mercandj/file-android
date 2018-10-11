@@ -17,6 +17,7 @@ import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 import com.mercandalli.android.sdk.files.api.online.FileOnlineApiNetwork
 import com.mercandalli.android.sdk.files.api.online.FileOnlineGraph
 import org.json.JSONObject
+import java.io.File
 
 class ApplicationGraph(
         private val context: Context
@@ -106,6 +107,7 @@ class ApplicationGraph(
         }
 
         private fun createFileOnlineApiNetwork() = object : FileOnlineApiNetwork {
+
             override fun getSync(
                     url: String,
                     headers: Map<String, String>
@@ -122,6 +124,18 @@ class ApplicationGraph(
                     url,
                     headers,
                     jsonObject
+            )
+
+            override fun postSync(
+                    url: String,
+                    headers: Map<String, String>,
+                    jsonObject: JSONObject,
+                    javaFile: File
+            )= getNetwork().postSync(
+                    url,
+                    headers,
+                    jsonObject,
+                    javaFile
             )
 
             override fun deleteSync(

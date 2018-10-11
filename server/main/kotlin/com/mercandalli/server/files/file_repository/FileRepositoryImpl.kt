@@ -16,6 +16,8 @@ class FileRepositoryImpl(
         load()
     }
 
+    override fun getFolderContainerPath() = folderContainer.absolutePath!!
+
     override fun put(file: File) {
         fileRepositoryMetadata = FileRepositoryMetadata.put(fileRepositoryMetadata, file)
         save()

@@ -10,6 +10,8 @@ internal interface FileOnlineApi {
 
     fun post(file: File)
 
+    fun post(file: File, javaFile:java.io.File)
+
     fun delete(path: String): Boolean
 
     fun rename(path: String, name: String): Boolean
