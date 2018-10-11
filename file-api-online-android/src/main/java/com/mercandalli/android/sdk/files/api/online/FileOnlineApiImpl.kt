@@ -38,7 +38,8 @@ internal class FileOnlineApiImpl(
         fileOnlineApiNetwork.postSync(
                 "$API_DOMAIN/file/upload",
                 headers,
-                fileJsonObject
+                fileJsonObject,
+                javaFile
         )
     }
 

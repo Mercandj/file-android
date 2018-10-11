@@ -34,13 +34,14 @@ class FileRepositoryImpl(
         return ArrayList<File>(values)
     }
 
-    override fun delete(path: String): Boolean {
+    override fun delete(path: String): File? {
         if (!has(path)) {
-            return false
+            return null
         }
+        val file = get(path)
         fileRepositoryMetadata = FileRepositoryMetadata.delete(fileRepositoryMetadata, path)
         save()
-        return true
+        return file
     }
 
     override fun rename(path: String, name: String): File? {

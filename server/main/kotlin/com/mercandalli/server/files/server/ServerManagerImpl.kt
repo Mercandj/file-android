@@ -132,12 +132,8 @@ class ServerManagerImpl(
                     call.respondText(response)
                 }
                 post("/file-api/file/upload") {
-                    logManager.d(TAG, "upload 1")
                     val multipart = call.receiveMultipart()
-                    logManager.d(TAG, "upload 2")
-                    val response = fileHandlerPost.uploadPost(
-                            multipart
-                    )
+                    val response = fileHandlerPost.uploadPost(multipart)
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }

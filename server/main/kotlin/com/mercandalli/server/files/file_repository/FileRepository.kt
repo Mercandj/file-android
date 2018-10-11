@@ -14,7 +14,7 @@ interface FileRepository {
 
     fun get(): List<File>
 
-    fun delete(path: String): Boolean
+    fun delete(path: String): File?
 
     fun rename(path: String, name: String): File?
 }

@@ -16,7 +16,13 @@ class FileHandlerDeleteImpl(
         logManager.d(TAG, "delete(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
-        val deleteSucceeded = fileRepository.delete(path)
+        val deletedFile = fileRepository.delete(path)
+        val deleteSucceeded = deletedFile != null
+        if (deleteSucceeded) {
+            val folderContainerPath = fileRepository.getFolderContainerPath()
+            val javaFile = java.io.File(folderContainerPath, deletedFile!!.name)
+            javaFile.delete()
+        }
         return ServerResponse.create(
                 JSONObject(),
                 "File deleted in the repository $deleteSucceeded",
