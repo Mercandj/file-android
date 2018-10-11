@@ -6,6 +6,7 @@ class FileHandlerModule {
 
     private val logManager by lazy { ApplicationGraph.getLogManager() }
     private val fileRepository by lazy { ApplicationGraph.getFileRepository() }
+    private val fileOnlineAuthentications by lazy { ApplicationGraph.getFileOnlineAuthentications() }
 
     fun createFileHandlerGet(): FileHandlerGet {
         return FileHandlerGetImpl(
@@ -17,7 +18,8 @@ class FileHandlerModule {
     fun createFileHandlerPost(): FileHandlerPost {
         return FileHandlerPostImpl(
                 fileRepository,
-                logManager
+                logManager,
+                fileOnlineAuthentications
         )
     }
 

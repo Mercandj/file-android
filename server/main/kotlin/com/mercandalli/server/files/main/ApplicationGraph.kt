@@ -1,5 +1,6 @@
 package com.mercandalli.server.files.main
 
+import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
 import com.mercandalli.server.files.file_handler.FileHandlerModule
 import com.mercandalli.server.files.file_repository.FileRepositoryModule
@@ -10,7 +11,8 @@ import com.mercandalli.server.files.time.TimeModule
 
 class ApplicationGraph(
         val rootPath: String,
-        val pullSubRepositoryShellFile: java.io.File
+        val pullSubRepositoryShellFile: java.io.File,
+        val fileOnlineAuthentications: List<FileOnlineAuthentication>
 ) {
 
     private val fileModule = FileHandlerModule()
@@ -38,6 +40,7 @@ class ApplicationGraph(
         fun getFileGetHandler() = graph!!.fileHandlerGetInternal
         fun getFilePostHandler() = graph!!.fileHandlerPostInternal
         fun getFileDeleteHandler() = graph!!.fileHandlerDeleteInternal
+        fun getFileOnlineAuthentications() = graph!!.fileOnlineAuthentications
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileRepository() = graph!!.fileRepositoryInternal
         fun getLogManager() = graph!!.logManagerInternal
@@ -49,11 +52,13 @@ class ApplicationGraph(
 
         fun initialize(
                 rootPath: String,
-                pullSubRepositoryShellFile: java.io.File
+                pullSubRepositoryShellFile: java.io.File,
+                fileOnlineAuthentications: List<FileOnlineAuthentication>
         ) {
             graph = ApplicationGraph(
                     rootPath,
-                    pullSubRepositoryShellFile
+                    pullSubRepositoryShellFile,
+                    fileOnlineAuthentications
             )
         }
     }

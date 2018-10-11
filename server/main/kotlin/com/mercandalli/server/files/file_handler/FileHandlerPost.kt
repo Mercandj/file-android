@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.file_handler
 
 import io.ktor.content.MultiPartData
+import io.ktor.http.Headers
 
 interface FileHandlerPost {
 
@@ -8,5 +9,8 @@ interface FileHandlerPost {
 
     fun renamePost(body: String): String
 
-    suspend fun uploadPost(multipart: MultiPartData): String
+    suspend fun uploadPost(
+            headers: Headers,
+            multipart: MultiPartData
+    ): String
 }

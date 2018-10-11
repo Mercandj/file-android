@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
 import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
@@ -8,6 +9,7 @@ import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
 import io.ktor.content.MultiPartData
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
+import io.ktor.http.Headers
 import io.ktor.network.util.ioCoroutineDispatcher
 import kotlinx.coroutines.experimental.CoroutineDispatcher
 import kotlinx.coroutines.experimental.withContext
@@ -18,7 +20,8 @@ import java.io.OutputStream
 
 class FileHandlerPostImpl(
         private val fileRepository: FileRepository,
-        private val logManager: LogManager
+        private val logManager: LogManager,
+        private val fileOnlineAuthentications: List<FileOnlineAuthentication>
 ) : FileHandlerPost {
 
     override fun createPost(body: String): String {
@@ -49,8 +52,26 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
-    override suspend fun uploadPost(multipart: MultiPartData): String {
+    override suspend fun uploadPost(
+            headers: Headers,
+            multipart: MultiPartData
+    ): String {
         logManager.d(TAG, "uploadPost()")
+
+        val authorization = headers["Authorization"]
+        val logged = if (authorization == null) {
+            false
+        } else {
+            val token = authorization.replace("Basic ", "")
+            FileOnlineAuthentication.isLogged(token, fileOnlineAuthentications)
+        }
+        if (!logged) {
+            logManager.d(TAG, "uploadPost() not logged")
+            return ServerResponse.create(
+                    "Oops, not logged",
+                    false
+            ).toJsonString()
+        }
 
         // Processes each part of the multipart input content of the user
         var name: String? = null

@@ -1,5 +1,6 @@
 package com.mercandalli.server.files.main
 
+import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
 import com.mercandalli.server.files.window.MainFrame
 import java.io.File
 import java.lang.StringBuilder
@@ -7,6 +8,17 @@ import java.net.URLDecoder
 
 fun main(args: Array<String>) {
     val tag = "Main"
+
+    val fileOnlineAuthentications = if (args.size == 2) {
+        listOf(
+                FileOnlineAuthentication(
+                        args[0],
+                        args[1]
+                )
+        )
+    } else {
+        listOf()
+    }
 
     val path = ApplicationGraph::class.java.protectionDomain.codeSource.location.path
     val decodedPath = URLDecoder.decode(path, "UTF-8")
@@ -16,7 +28,8 @@ fun main(args: Array<String>) {
 
     ApplicationGraph.initialize(
             rootPath,
-            pullSubRepositoryShellFile
+            pullSubRepositoryShellFile,
+            fileOnlineAuthentications
     )
 
     val logManager = ApplicationGraph.getLogManager()
