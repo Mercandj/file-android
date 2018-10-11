@@ -103,34 +103,37 @@ class ServerManagerImpl(
                     shellManager.execute("bash $absolutePath") {
 
                     }
-                    call.respondText("Pull sub repository")
+                    val response = "Pull sub repository"
+                    logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
                 }
                 get("/file-api/file") {
                     val response = fileHandlerGet.get()
-                    call.respondText(response)
                     logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
                 }
                 post("/file-api/file") {
                     val body = call.receiveText()
                     val response = fileHandlerPost.post(body)
-                    call.respondText(response)
                     logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
                 }
                 delete("/file-api/file") {
                     val body = call.receiveText()
                     val response = fileHandlerDelete.delete(body)
-                    call.respondText(response)
                     logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
                 }
                 post("/file-api/file/rename") {
                     val body = call.receiveText()
                     val response = fileHandlerPost.renamePost(body)
-                    call.respondText(response)
                     logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
                 }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
                     val response = fileHandlerGet.get(id!!)
+                    logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 get("/timothe") {
