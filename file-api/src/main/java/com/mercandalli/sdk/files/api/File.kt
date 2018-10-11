@@ -122,12 +122,8 @@ data class File(
         }
 
         fun rename(file: File, name: String): File {
-            val parentFile = java.io.File(file.path).parentFile
-            val newPath = if (parentFile == null) {
-                file.path.replace(file.name, name)
-            } else {
-                java.io.File(parentFile.absolutePath, name).absolutePath
-            }
+            val path = file.path
+            val newPath = renamePath(path, name)
             return File(
                     file.id,
                     newPath,
@@ -137,6 +133,16 @@ data class File(
                     file.length,
                     file.lastModified
             )
+        }
+
+        fun renamePath(path: String, name: String): String {
+            val file = java.io.File(path)
+            val parentFile = file.parentFile
+            return if (parentFile == null) {
+                path.replace(file.name, name)
+            } else {
+                java.io.File(parentFile.absolutePath, name).absolutePath
+            }
         }
 
         fun createFake(id: String) = File(

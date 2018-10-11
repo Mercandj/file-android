@@ -47,7 +47,7 @@ class FileRepositoryImpl(
         }
         fileRepositoryMetadata = FileRepositoryMetadata.rename(fileRepositoryMetadata, path, name)
         save()
-        return get(path)
+        return get(File.renamePath(path, name))
     }
 
     private fun load() {
