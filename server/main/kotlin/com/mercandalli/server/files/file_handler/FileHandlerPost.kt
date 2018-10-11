@@ -8,8 +8,5 @@ interface FileHandlerPost {
 
     fun renamePost(body: String): String
 
-    suspend fun uploadPost(
-            body: String,
-            multipart: MultiPartData
-    ): String
+    suspend fun uploadPost(multipart: MultiPartData): String
 }

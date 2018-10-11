@@ -36,7 +36,7 @@ internal class FileOnlineApiImpl(
         val headers = createHeaders()
         val fileJsonObject = File.toJson(file)
         fileOnlineApiNetwork.postSync(
-                "$API_DOMAIN/file",
+                "$API_DOMAIN/file/upload",
                 headers,
                 fileJsonObject
         )

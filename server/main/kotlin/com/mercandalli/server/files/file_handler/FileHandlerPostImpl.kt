@@ -49,10 +49,7 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
-    override suspend fun uploadPost(
-            body: String,
-            multipart: MultiPartData
-    ): String {
+    override suspend fun uploadPost(multipart: MultiPartData): String {
         logManager.d(TAG, "uploadPost()")
 
         // Processes each part of the multipart input content of the user
