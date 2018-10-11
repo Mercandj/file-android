@@ -2,6 +2,7 @@ package com.mercandalli.server.files.log
 
 import io.ktor.request.ApplicationRequest
 import io.ktor.request.uri
+import io.ktor.response.ApplicationResponse
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -36,7 +37,12 @@ internal class LogManagerImpl(
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
         val uri = request.uri
-        d(tag, "Request: $uri")
+        d("$tag][Request", "Uri: $uri")
+    }
+
+    override fun logResponse(tag: String, request: ApplicationRequest, response: String) {
+        val uri = request.uri
+        d("$tag][Response", "Uri: $uri\nResponse: $response")
     }
 
     override fun log1418ContactUs(

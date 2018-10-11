@@ -8,6 +8,8 @@ interface LogManager {
 
     fun logRequest(tag: String, request: ApplicationRequest)
 
+    fun logResponse(tag: String, request: ApplicationRequest, response: String)
+
     fun log1418ContactUs(
             firstName: String?,
             lastName: String?,
