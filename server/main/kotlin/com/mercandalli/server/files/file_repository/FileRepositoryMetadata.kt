@@ -19,7 +19,7 @@ data class FileRepositoryMetadata(
             val filesList = File.fromJson(filesJsonArray)
             val files = HashMap<String, File>()
             for (file in filesList) {
-                files[file.id] = file
+                files[file.path] = file
             }
             return FileRepositoryMetadata(
                     files
