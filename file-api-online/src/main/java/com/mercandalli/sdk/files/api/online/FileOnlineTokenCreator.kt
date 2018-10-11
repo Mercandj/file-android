@@ -35,7 +35,7 @@ object FileOnlineTokenCreator {
         val currentDate = simpleDateFormat.format(date)
         val passwordHash = HashUtils.sha1(passwordSha1)
         val passwordHashWithDate = HashUtils.sha1(passwordHash + currentDate)
-        val authenticationClear = String.format("%s:%s", login, passwordHashWithDate)
+        val authenticationClear = String.format("%s:%s", login.toLowerCase(), passwordHashWithDate)
         return com.mercandalli.sdk.files.api.online.utils.Base64.encodeBytes(authenticationClear.toByteArray())
     }
 }

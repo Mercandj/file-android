@@ -13,7 +13,7 @@ data class FileOnlineAuthentication(
 
         fun isLogged(token: String, fileOnlineAuthentications: List<FileOnlineAuthentication>): Boolean {
             for (fileOnlineAuthentication in fileOnlineAuthentications) {
-                val logged = isLogged(token, fileOnlineAuthentication)
+                val logged = isLoggedWithToken(token, fileOnlineAuthentication)
                 if (logged) {
                     return true
                 }
@@ -21,7 +21,10 @@ data class FileOnlineAuthentication(
             return false
         }
 
-        private fun isLogged(token: String, fileOnlineAuthentication: FileOnlineAuthentication)=
-            fileOnlineAuthentication.createTokens().contains(token)
+        private fun isLoggedWithToken(token: String, fileOnlineAuthentication: FileOnlineAuthentication) =
+                fileOnlineAuthentication.createToken() == token
+
+        private fun isLoggedWithTokens(token: String, fileOnlineAuthentication: FileOnlineAuthentication) =
+                fileOnlineAuthentication.createTokens().contains(token)
     }
 }
