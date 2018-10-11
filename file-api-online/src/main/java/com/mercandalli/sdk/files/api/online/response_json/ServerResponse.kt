@@ -38,7 +38,7 @@ data class ServerResponse private constructor(
                 debugMessage: String,
                 succeeded: Boolean
         ): ServerResponse {
-            return ServerResponse(
+            return create(
                     JSONObject(),
                     debugMessage,
                     succeeded

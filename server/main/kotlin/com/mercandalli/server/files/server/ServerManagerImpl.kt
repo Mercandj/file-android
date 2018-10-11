@@ -119,6 +119,11 @@ class ServerManagerImpl(
                     val response = fileHandlerDelete.delete(body)
                     call.respondText(response)
                 }
+                post("/file-api/file/rename") {
+                    val body = call.receiveText()
+                    val response = fileHandlerPost.renamePost(body)
+                    call.respondText(response)
+                }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
                     val response = fileHandlerGet.get(id!!)

@@ -17,6 +17,7 @@ class FileOnlineView @JvmOverloads constructor(
     private val fileColumnListView = FileListView(context)
     private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
     private val fileOnlineDeleteManager = ApplicationGraph.getFileOnlineDeleteManager()
+    private val fileOnlineRenameanager = ApplicationGraph.getFileOnlineRenameManager()
 
     init {
         fileColumnListView.setFileManagers(
@@ -73,11 +74,7 @@ class FileOnlineView @JvmOverloads constructor(
                     }
 
                 },
-                object : FileRenameManager {
-                    override fun rename(path: String, fileName: String) {
-
-                    }
-                },
+                fileOnlineRenameanager,
                 "/"
         )
         addView(fileColumnListView)

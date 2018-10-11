@@ -4,6 +4,7 @@ import android.content.Context
 import com.mercandalli.sdk.files.api.MediaScanner
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
@@ -18,7 +19,7 @@ class FileOnlineAndroidModule(
 
     private val fileOnlineModule by lazy { FileOnlineModule() }
     private val fileOnlineLoginRepository by lazy { createFileOnlineLoginRepository() }
-    private val fileOnlineLoginManager by lazy { createFileOnlineLoginManager() }
+    private val fileOnlineLoginManagerInternal by lazy { createFileOnlineLoginManager() }
 
     private val fileOnlineApi by lazy {
         createFileOnlineApi()
@@ -36,9 +37,18 @@ class FileOnlineAndroidModule(
         return fileManager
     }
 
-    fun createFileOnlineLoginManager() = fileOnlineModule.createFileOnlineLoginManager(
+    fun getFileOnlineLoginManager() = fileOnlineLoginManagerInternal
+
+    private fun createFileOnlineLoginManager() = fileOnlineModule.createFileOnlineLoginManager(
             fileOnlineLoginRepository
     )
+
+    fun createFileOnlineRenameManager(): FileRenameManager {
+        return FileOnlineRenameManagerAndroid(
+                fileOnlineApi,
+                mediaScanner
+        )
+    }
 
     fun createFileOnlineUploadManager(): FileOnlineUploadManager {
         return FileOnlineUploadManagerImpl(
@@ -67,7 +77,7 @@ class FileOnlineAndroidModule(
     private fun createFileOnlineApi(): FileOnlineApi {
         return FileOnlineApiImpl(
                 fileOnlineApiNetwork,
-                fileOnlineLoginManager
+                fileOnlineLoginManagerInternal
         )
     }
 }
