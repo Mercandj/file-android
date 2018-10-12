@@ -67,6 +67,18 @@ class FileTest {
         Assert.assertEquals("$parentPath/$newName", renamedFile.path)
     }
 
+    @Test
+    fun path() {
+        // Given
+        val path = "//"
+
+        // When
+        val cleanPath = File.cleanPath(path)
+
+        // Then
+        Assert.assertEquals("/", cleanPath)
+    }
+
     companion object {
 
         @JvmStatic

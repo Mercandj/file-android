@@ -100,7 +100,9 @@ data class File private constructor(
         fun fromJson(jsonObject: JSONObject): File {
             val id = jsonObject.getString("id")
             val path = jsonObject.getString(JSON_KEY_PATH)
-            val parentPath = jsonObject.getString("parent_path")
+            val parentPath = jsonObject.getString("parent_path")?.let {
+                cleanPath(it)
+            }
             val directory = jsonObject.getBoolean("directory")
             val name = jsonObject.getString(JSON_KEY_NAME)
             val length = jsonObject.getLong("length")
@@ -132,7 +134,12 @@ data class File private constructor(
             val json = JSONObject()
             json.put("id", file.id)
             json.put(JSON_KEY_PATH, file.path)
-            json.put("parent_path", file.parentPath)
+            val parentPath = if (file.parentPath == null) {
+                null
+            } else {
+                cleanPath(file.parentPath)
+            }
+            json.put("parent_path", parentPath)
             json.put("directory", file.directory)
             json.put(JSON_KEY_NAME, file.name)
             json.put("length", file.length)
