@@ -27,6 +27,8 @@ class MainPresenterTest {
     private var theme: Theme? = null
     @Mock
     private var mainActivityFileUiStorage: MainActivityFileUiStorage? = null
+    private val rootPathLocal = "/0/"
+    private val rootPathOnline = "/"
 
     @Before
     fun setup() {
@@ -80,7 +82,9 @@ class MainPresenterTest {
                 fileOnlineCreatorManager!!,
                 fileCopyCutManager!!,
                 themeManager!!,
-                mainActivityFileUiStorage!!
+                mainActivityFileUiStorage!!,
+                rootPathLocal,
+                rootPathOnline
         )
     }
 }
