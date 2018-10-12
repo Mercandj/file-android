@@ -67,6 +67,8 @@ class FileListPresenter(
         fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 
+    override fun getCurrentPath() = currentPath
+
     private fun syncFileChildren() {
         var fileChildrenResult = fileManager.getFileChildren(currentPath)
         if (fileChildrenResult.status == FileChildrenResult.Status.UNLOADED ||

@@ -12,7 +12,9 @@ class MainActivityPresenter(
         private val fileOnlineCreatorManager: FileCreatorManager,
         private val fileCopyCutManager: FileCopyCutManager,
         private val themeManager: ThemeManager,
-        private val mainActivityFileUiStorage: MainActivityFileUiStorage
+        private val mainActivityFileUiStorage: MainActivityFileUiStorage,
+        private val rootPathLocal: String,
+        private val rootPathOnline: String
 ) : MainActivityContract.UserAction {
 
     private var currentPath: String? = null
@@ -95,18 +97,17 @@ class MainActivityPresenter(
     }
 
     override fun onToolbarFilePasteClicked() {
-        val path = if (currentPath == null) Environment.getExternalStorageDirectory().absolutePath
-        else currentPath
+        val path = if (currentPath == null) {
+            getRootPath()
+        } else {
+            currentPath
+        }
         fileCopyCutManager.paste(path!!)
     }
 
     override fun onFileCreationConfirmed(fileName: String) {
         val parentPath = if (currentPath == null) {
-            if (selectedSection == SECTION_ONLINE) {
-                "/"
-            } else {
-                Environment.getExternalStorageDirectory().absolutePath
-            }
+            getRootPath()
         } else {
             currentPath
         }
@@ -133,6 +134,7 @@ class MainActivityPresenter(
     private fun selectFileList() {
         mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_LIST)
         selectedSection = SECTION_FILE_LIST
+        currentPath = screen.getFileListCurrentPath()
         screen.showFileListView()
         screen.hideFileColumnView()
         screen.hideOnlineView()
@@ -150,6 +152,7 @@ class MainActivityPresenter(
     private fun selectFileColumn() {
         mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_COLUMN)
         selectedSection = SECTION_FILE_COLUMN
+        currentPath = screen.getFileListCurrentPath()
         screen.hideFileListView()
         screen.showFileColumnView()
         screen.hideOnlineView()
@@ -166,6 +169,7 @@ class MainActivityPresenter(
 
     private fun selectOnline() {
         selectedSection = SECTION_ONLINE
+        currentPath = screen.getFileOnlineCurrentPath()
         screen.hideFileListView()
         screen.hideFileColumnView()
         screen.showOnlineView()
@@ -225,6 +229,13 @@ class MainActivityPresenter(
         }
         val fileToPastePath = fileCopyCutManager.getFileToPastePath()
         screen.setPasteIconVisibility(fileToPastePath != null)
+    }
+
+    private fun getRootPath(): String {
+        if (selectedSection == SECTION_ONLINE) {
+            return rootPathOnline
+        }
+        return rootPathLocal
     }
 
     private fun createThemeListener() = object : ThemeManager.ThemeListener {

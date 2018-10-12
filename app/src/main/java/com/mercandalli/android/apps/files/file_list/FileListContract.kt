@@ -24,6 +24,8 @@ interface FileListContract {
                 fileOpenManager: FileOpenManager,
                 rootPath: String
         )
+
+        fun getCurrentPath(): String
     }
 
     interface Screen {

@@ -106,5 +106,9 @@ interface MainActivityContract {
         fun setBottomBarBlurOverlayColorRes(@ColorRes colorRes: Int)
 
         fun setPasteIconVisibility(visible: Boolean)
+
+        fun getFileListCurrentPath(): String
+
+        fun getFileOnlineCurrentPath(): String
     }
 }

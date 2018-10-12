@@ -77,4 +77,6 @@ class FileOnlineView @JvmOverloads constructor(
         )
         addView(fileColumnListView)
     }
+
+    fun getCurrentPath() = fileColumnListView.getCurrentPath()
 }

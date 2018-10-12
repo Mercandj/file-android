@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import android.view.View
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(),
                     .setBlurRadius(2f)
                     .setHasFixedTransformationMatrix(true)
         }
+        fileList.getCurrentPath()
     }
 
     override fun onDestroy() {
@@ -237,6 +239,10 @@ class MainActivity : AppCompatActivity(),
         toolbarFilePaste.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
+    override fun getFileListCurrentPath() = fileList.getCurrentPath()
+
+    override fun getFileOnlineCurrentPath() = online.getCurrentPath()
+
     private fun createOnBottomBarClickListener() = object : BottomBar.OnBottomBarClickListener {
         override fun onFileSectionClicked() {
             userAction.onFileSectionClicked()
@@ -283,7 +289,9 @@ class MainActivity : AppCompatActivity(),
                 fileOnlineCreatorManager,
                 fileCopyCutManager,
                 themeManager,
-                mainActivityFileUiStorage
+                mainActivityFileUiStorage,
+                Environment.getExternalStorageDirectory().absolutePath,
+                "/"
         )
     }
 }

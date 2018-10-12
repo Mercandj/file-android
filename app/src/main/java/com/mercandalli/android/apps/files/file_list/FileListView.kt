@@ -122,6 +122,8 @@ class FileListView @JvmOverloads constructor(
         fileListViewSelectedFileListener = listener
     }
 
+    fun getCurrentPath() = userAction.getCurrentPath()
+
     fun setFileManagers(
             fileManager: FileManager,
             fileOpenManager: FileOpenManager,
@@ -155,6 +157,8 @@ class FileListView @JvmOverloads constructor(
                     rootPath: String
             ) {
             }
+
+            override fun getCurrentPath() = "/"
         }
     } else {
         val fileManager = ApplicationGraph.getFileManager()
