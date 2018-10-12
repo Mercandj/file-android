@@ -17,6 +17,7 @@ import kotlinx.coroutines.experimental.yield
 import org.json.JSONObject
 import java.io.InputStream
 import java.io.OutputStream
+import java.lang.StringBuilder
 
 class FileHandlerPostImpl(
         private val fileRepository: FileRepository,
@@ -25,13 +26,22 @@ class FileHandlerPostImpl(
 ) : FileHandlerPost {
 
     override fun createPost(body: String): String {
+        val debugMessage = StringBuilder()
         logManager.d(TAG, "createPost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val file = File.fromJson(fileJsonObject)
         fileRepository.put(file)
+        debugMessage.append("File inserted into the repository\n")
+        val folderContainerPath = fileRepository.getFolderContainerPath()
+        val javaFile = java.io.File(folderContainerPath, file.path)
+        if (javaFile.exists()) {
+            debugMessage.append("Java file replaced\n")
+            javaFile.delete()
+        }
+        javaFile.createNewFile()
         return ServerResponseFile.create(
                 file,
-                "File inserted into the repository",
+                debugMessage.toString(),
                 true
         ).toJsonString()
     }
