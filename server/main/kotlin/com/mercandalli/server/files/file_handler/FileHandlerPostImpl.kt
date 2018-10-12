@@ -38,7 +38,11 @@ class FileHandlerPostImpl(
             debugMessage.append("Java file replaced\n")
             javaFile.delete()
         }
-        javaFile.createNewFile()
+        if (file.directory) {
+            javaFile.mkdirs()
+        } else {
+            javaFile.createNewFile()
+        }
         return ServerResponseFile.create(
                 file,
                 debugMessage.toString(),
