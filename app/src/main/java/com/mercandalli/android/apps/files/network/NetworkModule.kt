@@ -8,6 +8,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 import okhttp3.MultipartBody
 import android.webkit.MimeTypeMap
+import java.net.SocketTimeoutException
 
 
 class NetworkModule {
@@ -112,7 +113,9 @@ class NetworkModule {
                 body = response!!.body()
                 return body!!.string()
             } catch (e: IOException) {
-                Log.e("jm/debug", "", e)
+                Log.e("jm/debug", "IOException", e)
+            } catch (e: SocketTimeoutException) {
+                Log.e("jm/debug", "SocketTimeoutException", e)
             } finally {
                 closeSilently(body, response)
             }

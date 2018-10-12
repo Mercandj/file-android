@@ -66,6 +66,7 @@ internal class FileOnlineManagerAndroid(
 
     private fun loadFileChildrenSync(path: String): FileChildrenResult {
         val serverResponseFiles = fileOnlineApi.getFromParent(path)
-        return FileChildrenResult.createLoaded(path, serverResponseFiles!!.files)
+                ?: return FileChildrenResult.createErrorNetwork(path)
+        return FileChildrenResult.createLoaded(path, serverResponseFiles.files)
     }
 }

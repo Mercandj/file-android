@@ -61,7 +61,7 @@ internal class FileOnlineApiImpl(
                 "$API_DOMAIN/file",
                 headers,
                 fileJsonObject
-        )
+        ) ?: return false
         val serverResponse = ServerResponse.fromJson(JSONObject(json))
         return serverResponse.succeeded
     }

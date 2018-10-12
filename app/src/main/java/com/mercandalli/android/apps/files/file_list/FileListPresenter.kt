@@ -91,7 +91,9 @@ class FileListPresenter(
 
     private fun syncFileChildren(fileChildrenResult: FileChildrenResult) {
         when (fileChildrenResult.status) {
-            FileChildrenResult.Status.UNLOADED, FileChildrenResult.Status.ERROR_NOT_FOLDER -> {
+            FileChildrenResult.Status.UNLOADED,
+            FileChildrenResult.Status.ERROR_NOT_FOLDER,
+            FileChildrenResult.Status.ERROR_NETWORK -> {
                 screen.hideEmptyView()
                 screen.showErrorMessage()
                 screen.hideFiles()

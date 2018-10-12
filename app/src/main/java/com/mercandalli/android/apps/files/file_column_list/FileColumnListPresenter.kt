@@ -55,7 +55,8 @@ class FileColumnListPresenter(
     private fun syncFileChildren() {
         var fileChildrenResult = fileManager.getFileChildren(currentPath)
         if (fileChildrenResult.status == FileChildrenResult.Status.UNLOADED ||
-                fileChildrenResult.status == FileChildrenResult.Status.ERROR_NOT_FOLDER) {
+                fileChildrenResult.status == FileChildrenResult.Status.ERROR_NOT_FOLDER ||
+                fileChildrenResult.status == FileChildrenResult.Status.ERROR_NETWORK) {
             fileChildrenResult = fileManager.loadFileChildren(currentPath)
         }
         syncFileChildren(fileChildrenResult)
@@ -63,7 +64,9 @@ class FileColumnListPresenter(
 
     private fun syncFileChildren(fileChildrenResult: FileChildrenResult) {
         when (fileChildrenResult.status) {
-            FileChildrenResult.Status.UNLOADED, FileChildrenResult.Status.ERROR_NOT_FOLDER -> {
+            FileChildrenResult.Status.UNLOADED,
+            FileChildrenResult.Status.ERROR_NOT_FOLDER,
+            FileChildrenResult.Status.ERROR_NETWORK -> {
                 screen.hideEmptyView()
                 screen.showErrorMessage()
                 screen.hideFiles()

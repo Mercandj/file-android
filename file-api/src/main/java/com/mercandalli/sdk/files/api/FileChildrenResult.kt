@@ -13,6 +13,7 @@ data class FileChildrenResult(
 
     enum class Status {
         ERROR_NOT_FOLDER,
+        ERROR_NETWORK,
         UNLOADED,
         LOADING,
         LOADED_SUCCEEDED
@@ -45,6 +46,13 @@ data class FileChildrenResult(
         fun createErrorNotFolder(path: String) = FileChildrenResult(
                 path,
                 Status.ERROR_NOT_FOLDER,
+                ArrayList()
+        )
+
+        @JvmStatic
+        fun createErrorNetwork(path: String) = FileChildrenResult(
+                path,
+                Status.ERROR_NETWORK,
                 ArrayList()
         )
     }
