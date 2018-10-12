@@ -1,11 +1,20 @@
 package com.mercandalli.server.files.file_repository
 
+import com.mercandalli.server.files.main.ApplicationGraph
+
 class FileRepositoryModule(
         private val rootPath: String
 ) {
 
     fun createFileRepository(): FileRepository {
-        val repositoryFolderFile = java.io.File(rootPath, "file-repository")
+        val fileOnlineAuthentications = ApplicationGraph.getFileOnlineAuthentications()
+        val login = if (fileOnlineAuthentications.size == 1) {
+            fileOnlineAuthentications[0].login
+        } else {
+            "default"
+        }
+        val folderName = login.toLowerCase()
+        val repositoryFolderFile = java.io.File(rootPath, "file-repository/$folderName")
         if (!repositoryFolderFile.exists()) {
             repositoryFolderFile.mkdirs()
         }
