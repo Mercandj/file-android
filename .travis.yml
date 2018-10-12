@@ -48,6 +48,8 @@ script:
 - "./gradlew app:check"
 - echo "jm/debug [Gradle][server] fatJar"
 - "./gradlew server:fatJar"
+- echo "jm/debug [Gradle][server] check"
+- "./gradlew server:check"
 
 after_failure:
 - echo "jm/debug ERROR - lint"
