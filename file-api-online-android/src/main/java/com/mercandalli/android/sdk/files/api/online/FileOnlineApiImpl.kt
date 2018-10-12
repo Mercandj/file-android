@@ -22,6 +22,16 @@ internal class FileOnlineApiImpl(
         return ServerResponseFiles.fromJson(jsonObject)
     }
 
+    override fun getFromParent(parentPath: String): ServerResponseFiles? {
+        val headers = createHeaders()
+        val body = fileOnlineApiNetwork.getSync(
+                "$API_DOMAIN/file?parent_path=$parentPath",
+                headers
+        ) ?: return null
+        val jsonObject = JSONObject(body)
+        return ServerResponseFiles.fromJson(jsonObject)
+    }
+
     override fun post(file: File) {
         val headers = createHeaders()
         val fileJsonObject = File.toJson(file)

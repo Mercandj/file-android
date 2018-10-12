@@ -6,13 +6,15 @@ interface FileRepository {
 
     fun getFolderContainerPath(): String
 
-    fun put(file: File)
-
-    fun get(path: String): File
-
     fun has(path: String): Boolean
 
     fun get(): List<File>
+
+    fun get(path: String): File
+
+    fun getFromParent(parentPath: String): List<File>
+
+    fun put(file: File)
 
     fun delete(path: String): File?
 

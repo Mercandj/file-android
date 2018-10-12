@@ -5,4 +5,6 @@ interface FileHandlerGet {
     fun get(): String
 
     fun get(id: String): String
+
+    fun getFromParent(parentPath: String): String
 }

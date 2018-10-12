@@ -18,20 +18,27 @@ class FileRepositoryImpl(
 
     override fun getFolderContainerPath() = folderContainer.absolutePath!!
 
-    override fun put(file: File) {
-        fileRepositoryMetadata = FileRepositoryMetadata.put(fileRepositoryMetadata, file)
-        save()
-    }
-
     override fun has(path: String) = fileRepositoryMetadata.getFiles().containsKey(path)
+
+    override fun get(): List<File> {
+        val files = fileRepositoryMetadata.getFiles().values
+        return ArrayList<File>(files)
+    }
 
     override fun get(path: String): File {
         return fileRepositoryMetadata.getFiles()[path]!!
     }
 
-    override fun get(): List<File> {
-        val values = fileRepositoryMetadata.getFiles().values
-        return ArrayList<File>(values)
+    override fun getFromParent(parentPath: String): List<File> {
+        val files = fileRepositoryMetadata.getFiles().values
+        return files.filter {
+            it.parentPath == parentPath
+        }
+    }
+
+    override fun put(file: File) {
+        fileRepositoryMetadata = FileRepositoryMetadata.put(fileRepositoryMetadata, file)
+        save()
     }
 
     override fun delete(path: String): File? {

@@ -115,7 +115,13 @@ class ServerManagerImpl(
                     call.respondText(response)
                 }
                 get("/file-api/file") {
-                    val response = fileHandlerGet.get()
+                    val queryParameters = call.request.queryParameters
+                    val parentPath = queryParameters["parent_path"]
+                    val response = if (parentPath == null) {
+                        fileHandlerGet.get()
+                    } else {
+                        fileHandlerGet.getFromParent(parentPath)
+                    }
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }

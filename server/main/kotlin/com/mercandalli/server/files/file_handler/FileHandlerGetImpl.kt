@@ -31,6 +31,16 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
+    override fun getFromParent(parentPath: String): String {
+        logManager.d(TAG, "getFromParent(id: $parentPath)")
+        val files = fileRepository.getFromParent(parentPath)
+        return ServerResponseFiles.create(
+                files,
+                "Get one file",
+                true
+        ).toJsonString()
+    }
+
     companion object {
         private const val TAG = "FileHandlerGet"
     }

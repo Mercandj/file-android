@@ -8,9 +8,11 @@ internal interface FileOnlineApi {
 
     fun get(): ServerResponseFiles?
 
+    fun getFromParent(parentPath: String): ServerResponseFiles?
+
     fun post(file: File)
 
-    fun post(file: File, javaFile:java.io.File)
+    fun post(file: File, javaFile: java.io.File)
 
     fun delete(path: String): Boolean
 
