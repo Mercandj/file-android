@@ -8,23 +8,8 @@ import java.net.URLDecoder
 
 fun main(args: Array<String>) {
     val tag = "Main"
-
-    val fileOnlineAuthentications = if (args.size == 2) {
-        val fileOnlineAuthentication = FileOnlineAuthentication(
-                args[0],
-                args[1]
-        )
-        listOf(
-                fileOnlineAuthentication
-        )
-    } else {
-        listOf()
-    }
-
-    val path = ApplicationGraph::class.java.protectionDomain.codeSource.location.path
-    val decodedPath = URLDecoder.decode(path, "UTF-8")
-    val rootPath = File(decodedPath).parentFile.absolutePath
-
+    val fileOnlineAuthentications = extractFileOnlineAuthentications(args)
+    val rootPath = extractRootPath()
     val pullSubRepositoryShellFile = createPullSubRepositoryShellFile(rootPath)
 
     ApplicationGraph.initialize(
@@ -43,8 +28,25 @@ fun main(args: Array<String>) {
         val serverManager = ApplicationGraph.getServerManager()
         serverManager.start()
     }
+}
 
-    MainFrame.start()
+private fun extractFileOnlineAuthentications(args: Array<String>): List<FileOnlineAuthentication> {
+    if (args.size != 2) {
+        return listOf()
+    }
+    val fileOnlineAuthentication = FileOnlineAuthentication(
+            args[0],
+            args[1]
+    )
+    return listOf(
+            fileOnlineAuthentication
+    )
+}
+
+private fun extractRootPath(): String {
+    val path = ApplicationGraph::class.java.protectionDomain.codeSource.location.path
+    val decodedPath = URLDecoder.decode(path, "UTF-8")
+    return File(decodedPath).parentFile.absolutePath
 }
 
 private fun createPullSubRepositoryShellFile(rootPath: String): File {
