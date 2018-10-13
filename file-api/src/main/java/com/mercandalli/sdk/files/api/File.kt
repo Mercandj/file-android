@@ -191,13 +191,13 @@ data class File private constructor(
             }
         }
 
-        fun renamePath(file: File, pathOutput: String): File {
-            val cleanedPath = cleanPath(pathOutput)
-            val name = java.io.File(pathOutput).name
+        fun setParent(file: File, pathDirectoryOutput: String): File {
+            val pathDirectoryOutputCleaned = cleanPath(pathDirectoryOutput)
+            val name = java.io.File(pathDirectoryOutput).name
             return File(
                     file.id,
-                    cleanedPath,
-                    file.parentPath,
+                    "$pathDirectoryOutputCleaned/$name",
+                    pathDirectoryOutputCleaned,
                     file.directory,
                     name,
                     file.length,
