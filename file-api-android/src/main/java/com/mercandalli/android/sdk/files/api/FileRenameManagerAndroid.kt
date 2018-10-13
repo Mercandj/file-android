@@ -9,6 +9,9 @@ class FileRenameManagerAndroid(
 ) : FileRenameManager {
 
     override fun rename(path: String, fileName: String) {
+        if (fileName.contains("/")) {
+            return
+        }
         val ioFile = java.io.File(path)
         val parentPath = ioFile.parentFile.absolutePath
         val ioFileOutput = java.io.File(parentPath, fileName)

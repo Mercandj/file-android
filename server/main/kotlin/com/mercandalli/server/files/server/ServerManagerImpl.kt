@@ -1,6 +1,5 @@
 package com.mercandalli.server.files.server
 
-import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
@@ -17,7 +16,6 @@ import io.ktor.content.*
 import io.ktor.features.StatusPages
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
-import io.ktor.network.util.ioCoroutineDispatcher
 import io.ktor.request.receive
 import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveText
@@ -44,7 +42,6 @@ class ServerManagerImpl(
         private val fileHandlerGet: FileHandlerGet,
         private val fileHandlerPost: FileHandlerPost,
         private val fileHandlerDelete: FileHandlerDelete,
-        private val fileOnlineLoginManager: FileOnlineLoginManager,
         private val shellManager: ShellManager,
         private val logManager: LogManager,
         private val pullSubRepositoryShellFile: java.io.File

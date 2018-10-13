@@ -4,6 +4,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -16,6 +17,7 @@ class FileColumnRowPresenter(
         private val fileRenameManager: FileRenameManager,
         private val audioManager: AudioManager,
         private val themeManager: ThemeManager,
+        private val toastManager: ToastManager,
         @DrawableRes
         private val drawableRightIconDirectoryDrawableRes: Int,
         @DrawableRes
@@ -84,6 +86,9 @@ class FileColumnRowPresenter(
     }
 
     override fun onRenameConfirmedClicked(fileName: String) {
+        if (fileName.contains("/")) {
+            toastManager.toast("File name should not contain /")
+        }
         fileRenameManager.rename(file!!.path, fileName)
     }
 

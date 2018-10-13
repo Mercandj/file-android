@@ -7,6 +7,7 @@ import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.android.apps.files.theme.DarkTheme
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileRenameManager
@@ -31,6 +32,8 @@ class FileColumnRowPresenterTest {
     private var audioManager: AudioManager? = null
     @Mock
     private var themeManager: ThemeManager? = null
+    @Mock
+    private var toastManager: ToastManager? = null
     private var theme: Theme = DarkTheme()
     @DrawableRes
     private val drawableRightIconDirectoryDrawableRes: Int = 42
@@ -83,6 +86,7 @@ class FileColumnRowPresenterTest {
                 fileRenameManager!!,
                 audioManager!!,
                 themeManager!!,
+                toastManager!!,
                 drawableRightIconDirectoryDrawableRes,
                 drawableRightIconSoundDrawableRes,
                 selectedTextColorRes,

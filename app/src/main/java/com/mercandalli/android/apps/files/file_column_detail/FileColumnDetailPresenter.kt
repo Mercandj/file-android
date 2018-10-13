@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.sdk.files.api.*
 import java.util.*
 
@@ -17,6 +18,7 @@ class FileColumnDetailPresenter(
         private val fileRenameManager: FileRenameManager,
         private val fileShareManager: FileShareManager,
         private val themeManager: ThemeManager,
+        private val toastManager: ToastManager,
         private val playDrawableRes: Int,
         private val pauseDrawableRes: Int,
         private val deleteFailedTextRes: Int
@@ -124,6 +126,10 @@ class FileColumnDetailPresenter(
     }
 
     override fun onRenameConfirmedClicked(fileName: String) {
+        if (fileName.contains("/")) {
+            toastManager.toast("File name should not contain /")
+            return
+        }
         fileRenameManager.rename(file!!.path, fileName)
     }
 

@@ -224,6 +224,7 @@ class FileColumnDetailView @JvmOverloads constructor(
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val fileShareManager = ApplicationGraph.getFileShareManager()
         val themeManager = ApplicationGraph.getThemeManager()
+        val toastManager = ApplicationGraph.getToastManager()
         FileColumnDetailPresenter(
                 this,
                 audioManager,
@@ -234,6 +235,7 @@ class FileColumnDetailView @JvmOverloads constructor(
                 fileRenameManager,
                 fileShareManager,
                 themeManager,
+                toastManager,
                 R.drawable.ic_play_arrow_black_24dp,
                 R.drawable.ic_pause_black_24dp,
                 R.string.view_file_detail_delete_failed

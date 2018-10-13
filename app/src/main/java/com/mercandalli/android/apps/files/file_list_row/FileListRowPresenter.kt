@@ -2,6 +2,7 @@ package com.mercandalli.android.apps.files.file_list_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.sdk.files.api.*
 
 class FileListRowPresenter(
@@ -11,7 +12,8 @@ class FileListRowPresenter(
         private var fileRenameManager: FileRenameManager,
         private var fileSizeManager: FileSizeManager,
         private val audioManager: AudioManager,
-        private val themeManager: ThemeManager
+        private val themeManager: ThemeManager,
+        private val toastManager: ToastManager
 ) : FileListRowContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -74,6 +76,10 @@ class FileListRowPresenter(
     }
 
     override fun onRenameConfirmedClicked(fileName: String) {
+        if (fileName.contains("/")) {
+            toastManager.toast("File name should not contain /")
+            return
+        }
         fileRenameManager.rename(file!!.path, fileName)
     }
 

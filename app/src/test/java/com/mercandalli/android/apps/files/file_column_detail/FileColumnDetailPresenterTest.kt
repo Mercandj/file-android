@@ -4,6 +4,7 @@ import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.sdk.files.api.*
 import org.junit.Before
 import org.junit.Test
@@ -31,6 +32,8 @@ class FileColumnDetailPresenterTest {
     private lateinit var fileCopyCutManager: FileCopyCutManager
     @Mock
     private lateinit var themeManager: ThemeManager
+    @Mock
+    private lateinit var toastManager: ToastManager
     private val playStringRes: Int = 42
     private val pauseStringRes: Int = 43
     private val deleteFailedTextRes: Int = 44
@@ -64,6 +67,7 @@ class FileColumnDetailPresenterTest {
                 fileRenameManager,
                 fileShareManager,
                 themeManager,
+                toastManager,
                 playStringRes,
                 pauseStringRes,
                 deleteFailedTextRes

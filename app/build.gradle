@@ -129,6 +129,8 @@ dependencies {
 
     // Language
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     // Android - Support
     implementation "androidx.appcompat:appcompat:1.0.0"

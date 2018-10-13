@@ -12,6 +12,7 @@ import com.mercandalli.android.apps.files.developer.DeveloperModule
 import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
+import com.mercandalli.android.apps.files.toast.ToastModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 import com.mercandalli.android.sdk.files.api.online.FileOnlineApiNetwork
@@ -56,6 +57,7 @@ class ApplicationGraph(
     private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
     private val okHttpClientLazy = networkModule.createOkHttpClientLazy()
     private val themeManagerInternal by lazy { ThemeModule(context).createThemeManager() }
+    private val toastManagerInternal by lazy { ToastModule(context).createToastManager() }
     private val versionManagerInternal by lazy { VersionModule(context).createVersionManager() }
 
     private fun createPermissionRequestAddOn() = object : PermissionRequestAddOn {
@@ -96,6 +98,7 @@ class ApplicationGraph(
         fun getNotificationAudioManager() = graph!!.notificationAudioManagerInternal
         fun getOkHttpClientLazy() = graph!!.okHttpClientLazy
         fun getThemeManager() = graph!!.themeManagerInternal
+        fun getToastManager() = graph!!.toastManagerInternal
         fun getVersionManager() = graph!!.versionManagerInternal
 
         fun init(context: Context) {

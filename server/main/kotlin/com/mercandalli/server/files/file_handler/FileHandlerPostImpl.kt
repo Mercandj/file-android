@@ -65,6 +65,13 @@ class FileHandlerPostImpl(
                     false
             ).toJsonString()
         }
+        if (name.contains("/")) {
+            loge("renamePost: Name should not contains /. name == $name")
+            return ServerResponse.create(
+                    "Name should not contains /. name == $name",
+                    false
+            ).toJsonString()
+        }
         logd("renamePost: repository rename succeeded")
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFile = java.io.File(folderContainerPath, path)

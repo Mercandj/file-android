@@ -172,6 +172,7 @@ class FileColumnRow @JvmOverloads constructor(
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
         val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
+        val toastManager = ApplicationGraph.getToastManager()
         FileColumnRowPresenter(
                 this,
                 fileDeleteManager,
@@ -179,6 +180,7 @@ class FileColumnRow @JvmOverloads constructor(
                 fileRenameManager,
                 audioManager,
                 themeManager,
+                toastManager,
                 R.drawable.ic_play_arrow_black_24dp,
                 R.drawable.ic_volume_up_black_24dp,
                 R.color.view_file_row_selected_title,
