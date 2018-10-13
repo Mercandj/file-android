@@ -1,7 +1,6 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
-import android.os.Environment
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
@@ -11,6 +10,7 @@ class MainActivityPresenter(
         private val fileCreatorManager: FileCreatorManager,
         private val fileOnlineCreatorManager: FileCreatorManager,
         private val fileCopyCutManager: FileCopyCutManager,
+        private val fileOnlineCopyCutManager: FileCopyCutManager,
         private val themeManager: ThemeManager,
         private val mainActivityFileUiStorage: MainActivityFileUiStorage,
         private val rootPathLocal: String,
@@ -25,6 +25,7 @@ class MainActivityPresenter(
     override fun onCreate() {
         themeManager.registerThemeListener(themeListener)
         fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
+        fileOnlineCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncWithCurrentTheme()
         syncToolbarPasteIconVisibility()
     }
@@ -32,6 +33,7 @@ class MainActivityPresenter(
     override fun onDestroy() {
         themeManager.unregisterThemeListener(themeListener)
         fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
+        fileOnlineCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -102,7 +104,11 @@ class MainActivityPresenter(
         } else {
             currentPath
         }
-        fileCopyCutManager.paste(path!!)
+        if (selectedSection == SECTION_ONLINE) {
+            fileOnlineCopyCutManager.paste(path!!)
+        } else {
+            fileCopyCutManager.paste(path!!)
+        }
     }
 
     override fun onFileCreationConfirmed(fileName: String) {
@@ -132,6 +138,8 @@ class MainActivityPresenter(
     }
 
     private fun selectFileList() {
+        fileCopyCutManager.cancelCopyCut()
+        fileOnlineCopyCutManager.cancelCopyCut()
         mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_LIST)
         selectedSection = SECTION_FILE_LIST
         currentPath = screen.getFileListCurrentPath()
@@ -150,6 +158,8 @@ class MainActivityPresenter(
     }
 
     private fun selectFileColumn() {
+        fileCopyCutManager.cancelCopyCut()
+        fileOnlineCopyCutManager.cancelCopyCut()
         mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_COLUMN)
         selectedSection = SECTION_FILE_COLUMN
         currentPath = screen.getFileListCurrentPath()
@@ -168,6 +178,8 @@ class MainActivityPresenter(
     }
 
     private fun selectOnline() {
+        fileCopyCutManager.cancelCopyCut()
+        fileOnlineCopyCutManager.cancelCopyCut()
         selectedSection = SECTION_ONLINE
         currentPath = screen.getFileOnlineCurrentPath()
         screen.hideFileListView()
@@ -223,11 +235,17 @@ class MainActivityPresenter(
     }
 
     private fun syncToolbarPasteIconVisibility() {
-        if (selectedSection != SECTION_FILE_LIST && selectedSection != SECTION_FILE_COLUMN) {
+        if (selectedSection != SECTION_FILE_LIST &&
+                selectedSection != SECTION_FILE_COLUMN &&
+                selectedSection != SECTION_ONLINE) {
             screen.setPasteIconVisibility(false)
             return
         }
-        val fileToPastePath = fileCopyCutManager.getFileToPastePath()
+        val fileToPastePath = if (selectedSection != SECTION_ONLINE) {
+            fileCopyCutManager.getFileToPastePath()
+        } else {
+            fileOnlineCopyCutManager.getFileToPastePath()
+        }
         screen.setPasteIconVisibility(fileToPastePath != null)
     }
 

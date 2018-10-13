@@ -277,6 +277,7 @@ class MainActivity : AppCompatActivity(),
         val fileCreatorManager = ApplicationGraph.getFileCreatorManager()
         val fileOnlineCreatorManager = ApplicationGraph.getFileOnlineCreatorManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
+        val fileOnlineCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
         val themeManager = ApplicationGraph.getThemeManager()
         val sharedPreferences = getSharedPreferences(
                 MainActivityFileUiStorageSharedPreference.PREFERENCE_NAME,
@@ -288,6 +289,7 @@ class MainActivity : AppCompatActivity(),
                 fileCreatorManager,
                 fileOnlineCreatorManager,
                 fileCopyCutManager,
+                fileOnlineCopyCutManager,
                 themeManager,
                 mainActivityFileUiStorage,
                 Environment.getExternalStorageDirectory().absolutePath,

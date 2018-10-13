@@ -90,7 +90,13 @@ class FileHandlerPostImpl(
                 "File not copy. Maybe not found in the server",
                 false
         ).toJsonString()
-        val succeeded = FileCopyCutUtils.copyJavaFileSync(path, pathOutput)
+        val folderContainerPath = fileRepository.getFolderContainerPath()
+        val javaFileInput = java.io.File(folderContainerPath, path)
+        val javaFileOutput = java.io.File(folderContainerPath, pathOutput)
+        val succeeded = FileCopyCutUtils.copyJavaFileSync(
+                javaFileInput.absolutePath,
+                javaFileOutput.absolutePath
+        )
         if (!succeeded) {
             log("copyPost: File not copy")
             return ServerResponse.create(
@@ -115,7 +121,13 @@ class FileHandlerPostImpl(
                 "File not cut. Maybe not found in the server",
                 false
         ).toJsonString()
-        val succeeded = FileCopyCutUtils.cutJavaFileSync(path, pathOutput)
+        val folderContainerPath = fileRepository.getFolderContainerPath()
+        val javaFileInput = java.io.File(folderContainerPath, path)
+        val javaFileOutput = java.io.File(folderContainerPath, pathOutput)
+        val succeeded = FileCopyCutUtils.cutJavaFileSync(
+                javaFileInput.absolutePath,
+                javaFileOutput.absolutePath
+        )
         if (!succeeded) {
             log("cutPost: File not cut")
             return ServerResponse.create(

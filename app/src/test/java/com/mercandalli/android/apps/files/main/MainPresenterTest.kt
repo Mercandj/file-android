@@ -22,6 +22,8 @@ class MainPresenterTest {
     @Mock
     private var fileCopyCutManager: FileCopyCutManager? = null
     @Mock
+    private var fileOnlineCopyCutManager: FileCopyCutManager? = null
+    @Mock
     private var themeManager: ThemeManager? = null
     @Mock
     private var theme: Theme? = null
@@ -81,6 +83,7 @@ class MainPresenterTest {
                 fileCreatorManager!!,
                 fileOnlineCreatorManager!!,
                 fileCopyCutManager!!,
+                fileOnlineCopyCutManager!!,
                 themeManager!!,
                 mainActivityFileUiStorage!!,
                 rootPathLocal,
