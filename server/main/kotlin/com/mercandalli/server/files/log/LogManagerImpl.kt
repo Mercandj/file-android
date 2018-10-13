@@ -34,7 +34,7 @@ internal class LogManagerImpl(
 
     override fun e(tag: String, message: String) {
         val time = timeManager.getTimeString()
-        println("$ANSI_RED$time [$tag] $message$ANSI_RESET")
+        println("$ANSI_RED_BOLD$time [$tag] $message$ANSI_RESET")
     }
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
@@ -81,6 +81,7 @@ internal class LogManagerImpl(
         private const val ANSI_PURPLE = "\u001B[35m"
         private const val ANSI_CYAN = "\u001B[36m"
         private const val ANSI_WHITE = "\u001B[37m"
+        private const val ANSI_RED_BOLD = "\u001B[1;31m"
 
     }
 

@@ -64,7 +64,8 @@ data class FileRepositoryMetadata(
             if (file.directory) {
                 for (currentPath in files.keys) {
                     if (currentPath.startsWith(path)) {
-                        val currentNewParentPath = currentPath.replaceFirst(path, newPath)
+                        val currentNewPath = currentPath.replaceFirst(path, newPath)
+                        val currentNewParentPath = java.io.File(currentNewPath).parentFile.absolutePath
                         val currentFile = files[currentPath]!!
                         val currentRenamedFile = File.setParent(currentFile, currentNewParentPath)
                         pathsToRemove.add(currentPath)
