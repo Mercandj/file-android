@@ -19,4 +19,8 @@ internal interface FileOnlineApi {
     fun delete(path: String): Boolean
 
     fun rename(path: String, name: String): Boolean
+
+    fun copy(pathInput: String, pathDirectoryOutput: String): Boolean
+
+    fun cut(pathInput: String, pathDirectoryOutput: String): Boolean
 }

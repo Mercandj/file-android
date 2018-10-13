@@ -160,6 +160,18 @@ class ServerManagerImpl(
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
+                post("/file-api/file/copy") {
+                    val body = call.receiveText()
+                    val response = fileHandlerPost.copyPost(body)
+                    logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
+                }
+                post("/file-api/file/cut") {
+                    val body = call.receiveText()
+                    val response = fileHandlerPost.cutPost(body)
+                    logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
+                }
                 get("/file-api/file/{id}") {
                     val id = call.parameters["id"]
                     val response = fileHandlerGet.get(id!!)

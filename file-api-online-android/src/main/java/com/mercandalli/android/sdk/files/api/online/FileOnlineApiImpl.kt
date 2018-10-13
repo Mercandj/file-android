@@ -90,6 +90,34 @@ internal class FileOnlineApiImpl(
         return serverResponse.succeeded
     }
 
+    override fun copy(pathInput: String, pathDirectoryOutput: String): Boolean {
+        val headers = createHeaders()
+        val fileJsonObject = JSONObject()
+        fileJsonObject.put(File.JSON_KEY_PATH, pathInput)
+        fileJsonObject.put("path_output", pathDirectoryOutput)
+        val json = fileOnlineApiNetwork.postSync(
+                "$API_DOMAIN/file/copy",
+                headers,
+                fileJsonObject
+        )
+        val serverResponse = ServerResponse.fromJson(JSONObject(json))
+        return serverResponse.succeeded
+    }
+
+    override fun cut(pathInput: String, pathDirectoryOutput: String): Boolean {
+        val headers = createHeaders()
+        val fileJsonObject = JSONObject()
+        fileJsonObject.put(File.JSON_KEY_PATH, pathInput)
+        fileJsonObject.put("path_output", pathDirectoryOutput)
+        val json = fileOnlineApiNetwork.postSync(
+                "$API_DOMAIN/file/cut",
+                headers,
+                fileJsonObject
+        )
+        val serverResponse = ServerResponse.fromJson(JSONObject(json))
+        return serverResponse.succeeded
+    }
+
     private fun createHeaders(): Map<String, String> {
         val headers = HashMap<String, String>()
         val token = fileOnlineLoginManager.createToken()

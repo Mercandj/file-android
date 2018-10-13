@@ -66,6 +66,30 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
+    override fun copyPost(body: String): String {
+        logManager.d(TAG, "copyPost(body: $body)")
+        val fileJsonObject = JSONObject(body)
+        val path = fileJsonObject.getString(File.JSON_KEY_PATH)
+        val pathOutput = fileJsonObject.getString("path_output")
+        // TODO
+        return ServerResponse.create(
+                "File not copy",
+                false
+        ).toJsonString()
+    }
+
+    override fun cutPost(body: String): String {
+        logManager.d(TAG, "cutPost(body: $body)")
+        val fileJsonObject = JSONObject(body)
+        val path = fileJsonObject.getString(File.JSON_KEY_PATH)
+        val pathOutput = fileJsonObject.getString("path_output")
+        // TODO
+        return ServerResponse.create(
+                "File not cut",
+                false
+        ).toJsonString()
+    }
+
     override suspend fun uploadPost(
             headers: Headers,
             multipart: MultiPartData

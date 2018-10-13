@@ -9,6 +9,10 @@ interface FileHandlerPost {
 
     fun renamePost(body: String): String
 
+    fun copyPost(body: String): String
+
+    fun cutPost(body: String): String
+
     suspend fun uploadPost(
             headers: Headers,
             multipart: MultiPartData

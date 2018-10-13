@@ -34,6 +34,13 @@ class FileOnlineAndroidModule(
         return fileManager
     }
 
+    fun createFileOnlineCopyCutManager(): FileCopyCutManager {
+        return FileOnlineCopyCutManagerAndroid(
+                fileOnlineApi,
+                mediaScanner
+        )
+    }
+
     fun createFileOnlineCreatorManager(): FileCreatorManager {
         return FileOnlineCreatorManagerAndroid(
                 fileOnlineApi,

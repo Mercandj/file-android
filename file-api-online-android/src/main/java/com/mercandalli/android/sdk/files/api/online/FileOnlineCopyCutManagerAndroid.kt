@@ -1,18 +1,15 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileCopyCutUtils
 import com.mercandalli.sdk.files.api.MediaScanner
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
-class FileCopyCutManagerAndroid(
+internal class FileOnlineCopyCutManagerAndroid(
+        private val fileOnlineApi: FileOnlineApi,
         private val mediaScanner: MediaScanner
 ) : FileCopyCutManager {
 
@@ -130,14 +127,11 @@ class FileCopyCutManagerAndroid(
         pasteListeners.remove(listener)
     }
 
-    companion object {
+    private fun copySync(pathInput: String, pathDirectoryOutput: String) {
+        fileOnlineApi.copy(pathInput, pathDirectoryOutput)
+    }
 
-        private fun copySync(pathInput: String, pathDirectoryOutput: String) {
-            FileCopyCutUtils.copyJavaFileSync(pathInput, pathDirectoryOutput)
-        }
-
-        private fun cutSync(pathInput: String, pathDirectoryOutput: String) {
-            FileCopyCutUtils.cutJavaFileSync(pathInput, pathDirectoryOutput)
-        }
+    private fun cutSync(pathInput: String, pathDirectoryOutput: String) {
+        fileOnlineApi.cut(pathInput, pathDirectoryOutput)
     }
 }

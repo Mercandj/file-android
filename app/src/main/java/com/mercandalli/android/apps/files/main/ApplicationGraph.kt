@@ -38,6 +38,7 @@ class ApplicationGraph(
     private val fileCopyCutManagerInternal by lazy { fileModule.createFileCopyCutManager() }
     private val fileCreatorManagerInternal by lazy { fileModule.createFileCreatorManager() }
     private val fileOnlineManagerInternal by lazy { FileOnlineGraph.getFileOnlineManager() }
+    private val fileOnlineCopyCutManagerInternal by lazy { FileOnlineGraph.getFileOnlineCopyCutManager() }
     private val fileOnlineCreatorManagerInternal by lazy { FileOnlineGraph.getFileOnlineCreatorManager() }
     private val fileOnlineDeleteManagerInternal by lazy { FileOnlineGraph.getFileOnlineDeleteManager() }
     private val fileOnlineLoginManagerInternal by lazy { FileOnlineGraph.getFileOnlineLoginManager() }
@@ -78,6 +79,7 @@ class ApplicationGraph(
         fun getFileCopyCutManager() = graph!!.fileCopyCutManagerInternal
         fun getFileCreatorManager() = graph!!.fileCreatorManagerInternal
         fun getFileOnlineManager() = graph!!.fileOnlineManagerInternal
+        fun getFileOnlineCopyCutManager() = graph!!.fileOnlineCopyCutManagerInternal
         fun getFileOnlineCreatorManager() = graph!!.fileOnlineCreatorManagerInternal
         fun getFileOnlineDeleteManager() = graph!!.fileOnlineDeleteManagerInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
