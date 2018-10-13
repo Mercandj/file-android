@@ -60,7 +60,9 @@ class FileHandlerPostImpl(
                 "File not renamed. Maybe not found in the server",
                 false
         ).toJsonString()
-        val renameSucceeded = FileRenameUtils.renameSync(path, name)
+        val folderContainerPath = fileRepository.getFolderContainerPath()
+        val javaFile = java.io.File(folderContainerPath, path)
+        val renameSucceeded = FileRenameUtils.renameSync(javaFile, name)
         if (!renameSucceeded) {
             // Revert rename in the repo
             fileRepository.rename(renamedFile.path, java.io.File(path).name)
