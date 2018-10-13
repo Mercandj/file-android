@@ -9,7 +9,7 @@ import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
-class FileManagerAndroid(
+internal class FileManagerAndroid(
         private val permissionManager: PermissionManager
 ) : FileManager {
 

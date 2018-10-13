@@ -104,6 +104,12 @@ class FileModule(
         return FileShareManagerAndroid(addOn)
     }
 
+    fun createFileSizeManager(): FileSizeManager {
+        return FileSizeManagerAndroid(
+                permissionManager
+        )
+    }
+
     fun createFileSortManager(): FileSortManager = FileSortManagerImpl()
 
     companion object {

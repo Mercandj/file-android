@@ -2,7 +2,7 @@ package com.mercandalli.sdk.files.api
 
 interface FileSizeManager {
 
-    fun computeSize(path: String)
+    fun loadSize(path: String, forceRefresh: Boolean = false): FileSizeResult
 
     fun getSize(path: String): FileSizeResult
 

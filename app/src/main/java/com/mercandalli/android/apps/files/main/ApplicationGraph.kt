@@ -45,6 +45,7 @@ class ApplicationGraph(
     private val fileOnlineUploadManagerInternal by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
     private val fileRenameManagerInternal by lazy { fileModule.createFileRenameManager() }
+    private val fileSizeManagerInternal by lazy { fileModule.createFileSizeManager() }
     private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
     private val hashManagerInternal by lazy { HashModule(context).createHashManager() }
     private val network = networkModule.createNetwork()
@@ -83,6 +84,7 @@ class ApplicationGraph(
         fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManagerInternal
         fun getFileShareManager() = graph!!.fileShareManagerInternal
         fun getFileRenameManager() = graph!!.fileRenameManagerInternal
+        fun getFileSizeManager() = graph!!.fileSizeManagerInternal
         fun getFileSortManager() = graph!!.fileSortManagerInternal
         fun getNetwork() = graph!!.network
         fun getHashManager() = graph!!.hashManagerInternal
@@ -131,7 +133,7 @@ class ApplicationGraph(
                     headers: Map<String, String>,
                     jsonObject: JSONObject,
                     javaFile: File
-            )= getNetwork().postSync(
+            ) = getNetwork().postSync(
                     url,
                     headers,
                     jsonObject,
