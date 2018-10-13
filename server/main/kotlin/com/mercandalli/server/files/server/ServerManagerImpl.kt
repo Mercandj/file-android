@@ -137,6 +137,13 @@ class ServerManagerImpl(
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
+                get("/file-api/file/size") {
+                    val queryParameters = call.request.queryParameters
+                    val path = queryParameters["path"]
+                    val response = fileHandlerGet.getSize(path)
+                    logManager.logResponse(TAG, call.request, response)
+                    call.respondText(response)
+                }
                 post("/file-api/file/upload") {
                     val headers = call.request.headers
                     val multipart = call.receiveMultipart()

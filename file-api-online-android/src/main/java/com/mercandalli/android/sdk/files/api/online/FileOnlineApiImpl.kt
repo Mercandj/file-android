@@ -32,6 +32,16 @@ internal class FileOnlineApiImpl(
         return ServerResponseFiles.fromJson(jsonObject)
     }
 
+    override fun getSize(path: String): ServerResponse? {
+        val headers = createHeaders()
+        val body = fileOnlineApiNetwork.getSync(
+                "$API_DOMAIN/file/size?path=$path",
+                headers
+        ) ?: return null
+        val jsonObject = JSONObject(body)
+        return ServerResponse.fromJson(jsonObject)
+    }
+
     override fun post(file: File) {
         val headers = createHeaders()
         val fileJsonObject = File.toJson(file)

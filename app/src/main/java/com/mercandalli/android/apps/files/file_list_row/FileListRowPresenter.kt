@@ -6,15 +6,17 @@ import com.mercandalli.sdk.files.api.*
 
 class FileListRowPresenter(
         private val screen: FileListRowContract.Screen,
-        private var fileDeleteManager: FileDeleteManager,
         private var fileCopyCutManager: FileCopyCutManager,
+        private var fileDeleteManager: FileDeleteManager,
         private var fileRenameManager: FileRenameManager,
+        private var fileSizeManager: FileSizeManager,
         private val audioManager: AudioManager,
         private val themeManager: ThemeManager
 ) : FileListRowContract.UserAction {
 
     private val playListener = createPlayListener()
     private val themeListener = createThemeListener()
+    private val fileSizeResultListener = createFileSizeResultListener()
     private var file: File? = null
 
     override fun onAttached() {
@@ -22,20 +24,24 @@ class FileListRowPresenter(
         synchronizeRightIcon()
         themeManager.registerThemeListener(themeListener)
         syncWithCurrentTheme()
+        fileSizeManager.registerFileSizeResultListener(fileSizeResultListener)
+        syncSubtitle()
     }
 
     override fun onDetached() {
         audioManager.unregisterPlayListener(playListener)
         themeManager.unregisterThemeListener(themeListener)
+        fileSizeManager.unregisterFileSizeResultListener(fileSizeResultListener)
     }
 
     override fun onFileChanged(file: File, selectedPath: String?) {
         this.file = file
         screen.setTitle(file.name)
         val directory = file.directory
-        screen.setSubtitle(if (file.directory) "Directory" else "File")
         screen.setSoundIconVisibility(directory)
         screen.setIcon(directory)
+        val fileSizeResult = fileSizeManager.loadSize(file.path)
+        syncSubtitle(file, fileSizeResult)
     }
 
     override fun onRowClicked() {
@@ -76,13 +82,15 @@ class FileListRowPresenter(
     }
 
     override fun onSetFileManagers(
-            fileDeleteManager: FileDeleteManager,
             fileCopyCutManager: FileCopyCutManager,
-            fileRenameManager: FileRenameManager
+            fileDeleteManager: FileDeleteManager,
+            fileRenameManager: FileRenameManager,
+            fileSizeManager: FileSizeManager
     ) {
         this.fileDeleteManager = fileDeleteManager
         this.fileCopyCutManager = fileCopyCutManager
         this.fileRenameManager = fileRenameManager
+        this.fileSizeManager = fileSizeManager
     }
 
     private fun synchronizeRightIcon() {
@@ -106,9 +114,32 @@ class FileListRowPresenter(
         }
     }
 
-    private fun createPlayListener() = object : AudioManager.PlayListener {
-        override fun onPlayPauseChanged() {
-            synchronizeRightIcon()
+    private fun syncSubtitle() {
+        val subtitle = file?.let {
+            val sizeResult = fileSizeManager.getSize(it.path)
+            syncSubtitle(it, sizeResult)
+            return
+        } ?: "No file"
+        screen.setSubtitle(subtitle)
+    }
+
+    private fun syncSubtitle(file: File, fileSizeResult: FileSizeResult) {
+        val subtitle = createSubtitle(file, fileSizeResult)
+        screen.setSubtitle(subtitle)
+    }
+
+    private fun createSubtitle(file: File, fileSizeResult: FileSizeResult): String {
+        val fileTypeString = if (file.directory) {
+            "Directory"
+        } else {
+            "File"
+        }
+        return if (fileSizeResult.status != FileSizeResult.Status.LOADED_SUCCEEDED) {
+            fileTypeString
+        } else {
+            val sizeLong = fileSizeResult.size
+            val sizeString = FileSizeUtils.humanReadableByteCount(sizeLong)
+            "$fileTypeString - $sizeString"
         }
     }
 
@@ -119,9 +150,21 @@ class FileListRowPresenter(
         screen.setCardBackgroundColorRes(theme.cardBackgroundColorRes)
     }
 
+    private fun createPlayListener() = object : AudioManager.PlayListener {
+        override fun onPlayPauseChanged() {
+            synchronizeRightIcon()
+        }
+    }
+
     private fun createThemeListener() = object : ThemeManager.ThemeListener {
         override fun onThemeChanged() {
             syncWithCurrentTheme()
+        }
+    }
+
+    private fun createFileSizeResultListener() = object : FileSizeManager.FileSizeResultListener {
+        override fun onFileSizeResultChanged(path: String) {
+            syncSubtitle()
         }
     }
 

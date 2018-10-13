@@ -146,50 +146,16 @@ class FileListRow @JvmOverloads constructor(
     }
 
     fun setFileManagers(
-            fileDeleteManager: FileDeleteManager,
             fileCopyCutManager: FileCopyCutManager,
-            fileRenameManager: FileRenameManager
+            fileDeleteManager: FileDeleteManager,
+            fileRenameManager: FileRenameManager,
+            fileSizeManager: FileSizeManager
     ) {
         userAction.onSetFileManagers(
-                fileDeleteManager,
                 fileCopyCutManager,
-                fileRenameManager
-        )
-    }
-
-    private fun createUserAction() = if (isInEditMode) {
-        object : FileListRowContract.UserAction {
-            override fun onAttached() {}
-            override fun onDetached() {}
-            override fun onFileChanged(file: File, selectedPath: String?) {}
-            override fun onRowClicked() {}
-            override fun onRowLongClicked() {}
-            override fun onCopyClicked() {}
-            override fun onCutClicked() {}
-            override fun onDeleteClicked() {}
-            override fun onDeleteConfirmedClicked() {}
-            override fun onRenameClicked() {}
-            override fun onRenameConfirmedClicked(fileName: String) {}
-            override fun onOverflowClicked() {}
-            override fun onSetFileManagers(
-                    fileDeleteManager: FileDeleteManager,
-                    fileCopyCutManager: FileCopyCutManager,
-                    fileRenameManager: FileRenameManager
-            ) {}
-        }
-    } else {
-        val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
-        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
-        val fileRenameManager = ApplicationGraph.getFileRenameManager()
-        val audioManager = ApplicationGraph.getAudioManager()
-        val themeManager = ApplicationGraph.getThemeManager()
-        FileListRowPresenter(
-                this,
                 fileDeleteManager,
-                fileCopyCutManager,
                 fileRenameManager,
-                audioManager,
-                themeManager
+                fileSizeManager
         )
     }
 
@@ -211,6 +177,46 @@ class FileListRow @JvmOverloads constructor(
             false
         }
         popupMenu.show()
+    }
+
+    private fun createUserAction() = if (isInEditMode) {
+        object : FileListRowContract.UserAction {
+            override fun onAttached() {}
+            override fun onDetached() {}
+            override fun onFileChanged(file: File, selectedPath: String?) {}
+            override fun onRowClicked() {}
+            override fun onRowLongClicked() {}
+            override fun onCopyClicked() {}
+            override fun onCutClicked() {}
+            override fun onDeleteClicked() {}
+            override fun onDeleteConfirmedClicked() {}
+            override fun onRenameClicked() {}
+            override fun onRenameConfirmedClicked(fileName: String) {}
+            override fun onOverflowClicked() {}
+            override fun onSetFileManagers(
+                    fileCopyCutManager: FileCopyCutManager,
+                    fileDeleteManager: FileDeleteManager,
+                    fileRenameManager: FileRenameManager,
+                    fileSizeManager: FileSizeManager
+            ) {
+            }
+        }
+    } else {
+        val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
+        val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
+        val fileRenameManager = ApplicationGraph.getFileRenameManager()
+        val fileSizeManager = ApplicationGraph.getFileSizeManager()
+        val audioManager = ApplicationGraph.getAudioManager()
+        val themeManager = ApplicationGraph.getThemeManager()
+        FileListRowPresenter(
+                this,
+                fileCopyCutManager,
+                fileDeleteManager,
+                fileRenameManager,
+                fileSizeManager,
+                audioManager,
+                themeManager
+        )
     }
 
     interface FileClickListener {

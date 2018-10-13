@@ -1,16 +1,14 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileSizeResult
-import com.mercandalli.sdk.files.api.FileSizeUtils
 import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 
-@Suppress("EXPERIMENTAL_FEATURE_WARNING")
-internal class FileSizeManagerAndroid(
-        private val permissionManager: PermissionManager
+internal class FileOnlineSizeManagerAndroid(
+        private val fileOnlineApi: FileOnlineApi
 ) : FileSizeManager {
 
     private val fileSizeResultMap = HashMap<String, FileSizeResult>()
@@ -25,9 +23,6 @@ internal class FileSizeManagerAndroid(
             if (status == FileSizeResult.Status.LOADED_SUCCEEDED && !forceRefresh) {
                 return getSize(path)
             }
-        }
-        if (permissionManager.shouldRequestStoragePermission()) {
-            return getSize(path)
         }
         fileSizeResultMap[path] = FileSizeResult.createLoading(path)
         GlobalScope.launch(Dispatchers.Default) {
@@ -51,6 +46,7 @@ internal class FileSizeManagerAndroid(
         return fileSizeResultUnloaded
     }
 
+
     override fun registerFileSizeResultListener(listener: FileSizeManager.FileSizeResultListener) {
         if (fileSizeResultListeners.contains(listener)) {
             return
@@ -62,10 +58,11 @@ internal class FileSizeManagerAndroid(
         fileSizeResultListeners.remove(listener)
     }
 
-    companion object {
-
-        private fun computeSizeSync(path: String): FileSizeResult {
-            return FileSizeUtils.computeSizeFromJavaFileSync(path)
-        }
+    private fun computeSizeSync(path: String): FileSizeResult {
+        val sizeServerResponse = fileOnlineApi.getSize(path)
+                ?: return FileSizeResult.createErrorNetwork(path)
+        val content = sizeServerResponse.content
+        val size = content.getLong("size")
+        return FileSizeResult.createLoaded(path, size)
     }
 }

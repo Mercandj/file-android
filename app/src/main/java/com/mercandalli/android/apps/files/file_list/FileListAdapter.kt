@@ -29,14 +29,16 @@ class FileListAdapter(
     }
 
     fun setFileManagers(
-            fileDeleteManager: FileDeleteManager,
             fileCopyCutManager: FileCopyCutManager,
-            fileRenameManager: FileRenameManager
+            fileDeleteManager: FileDeleteManager,
+            fileRenameManager: FileRenameManager,
+            fileSizeManager: FileSizeManager
     ) {
         fileAdapterDelegate.setFileManagers(
-                fileDeleteManager,
                 fileCopyCutManager,
-                fileRenameManager
+                fileDeleteManager,
+                fileRenameManager,
+                fileSizeManager
         )
     }
 
@@ -48,9 +50,10 @@ class FileListAdapter(
         private val fileListRows = ArrayList<FileListRow>()
         private var selectedPath: String? = null
 
-        private var fileDeleteManager: FileDeleteManager? = null
         private var fileCopyCutManager: FileCopyCutManager? = null
+        private var fileDeleteManager: FileDeleteManager? = null
         private var fileRenameManager: FileRenameManager? = null
+        private var fileSizeManager: FileSizeManager? = null
 
         override fun isForViewType(o: Any, list: List<Any>, i: Int): Boolean {
             return o is File
@@ -64,9 +67,10 @@ class FileListAdapter(
             view.setFileClickListener(fileListClickListener)
             if (fileDeleteManager != null && fileCopyCutManager != null && fileRenameManager != null) {
                 view.setFileManagers(
-                        fileDeleteManager!!,
                         fileCopyCutManager!!,
-                        fileRenameManager!!
+                        fileDeleteManager!!,
+                        fileRenameManager!!,
+                        fileSizeManager!!
                 )
             }
             fileListRows.add(view)
@@ -79,18 +83,21 @@ class FileListAdapter(
         }
 
         fun setFileManagers(
-                fileDeleteManager: FileDeleteManager,
                 fileCopyCutManager: FileCopyCutManager,
-                fileRenameManager: FileRenameManager
+                fileDeleteManager: FileDeleteManager,
+                fileRenameManager: FileRenameManager,
+                fileSizeManager: FileSizeManager
         ) {
-            this.fileDeleteManager = fileDeleteManager
             this.fileCopyCutManager = fileCopyCutManager
+            this.fileDeleteManager = fileDeleteManager
             this.fileRenameManager = fileRenameManager
+            this.fileSizeManager = fileSizeManager
             for (fileListRow in fileListRows) {
                 fileListRow.setFileManagers(
-                        fileDeleteManager,
                         fileCopyCutManager,
-                        fileRenameManager
+                        fileDeleteManager,
+                        fileRenameManager,
+                        fileSizeManager
                 )
             }
         }

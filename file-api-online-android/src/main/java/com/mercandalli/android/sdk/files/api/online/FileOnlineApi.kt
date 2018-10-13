@@ -10,6 +10,8 @@ internal interface FileOnlineApi {
 
     fun getFromParent(parentPath: String): ServerResponseFiles?
 
+    fun getSize(path: String): ServerResponse?
+
     fun post(file: File)
 
     fun post(file: File, javaFile: java.io.File)

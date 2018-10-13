@@ -17,65 +17,69 @@ class FileSelectionView @JvmOverloads constructor(
     private val fileManager = ApplicationGraph.getFileManager()
     private val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
     private val fileRenameManager = ApplicationGraph.getFileRenameManager()
+    private val fileSizeManager = ApplicationGraph.getFileSizeManager()
 
     private var fileOpenManager: FileOpenManager? = null
 
     init {
+        val fileOpenManager = object : FileOpenManager {
+            override fun open(path: String, mime: String?) {
+                fileOpenManager?.open(path, mime)
+            }
+        }
+        val fileCopyCutManager = object : FileCopyCutManager {
+            override fun copy(path: String) {
+
+            }
+
+            override fun copy(pathInput: String, pathDirectoryOutput: String) {
+
+            }
+
+            override fun cut(path: String) {
+
+            }
+
+            override fun cut(pathInput: String, pathDirectoryOutput: String) {
+
+            }
+
+            override fun getFileToPastePath(): String? {
+                return null
+            }
+
+            override fun paste(pathDirectoryOutput: String) {
+
+            }
+
+            override fun cancelCopyCut() {
+
+            }
+
+            override fun registerFileToPasteChangedListener(listener: FileCopyCutManager.FileToPasteChangedListener) {
+
+            }
+
+            override fun unregisterFileToPasteChangedListener(listener: FileCopyCutManager.FileToPasteChangedListener) {
+
+            }
+
+            override fun registerPasteListener(listener: FileCopyCutManager.PasteListener) {
+
+            }
+
+            override fun unregisterPasteListener(listener: FileCopyCutManager.PasteListener) {
+
+            }
+
+        }
         fileColumnListView.setFileManagers(
                 fileManager,
-                object : FileOpenManager {
-                    override fun open(path: String, mime: String?) {
-                        fileOpenManager?.open(path, mime)
-                    }
-                },
                 fileDeleteManager,
-                object : FileCopyCutManager {
-                    override fun copy(path: String) {
-
-                    }
-
-                    override fun copy(pathInput: String, pathDirectoryOutput: String) {
-
-                    }
-
-                    override fun cut(path: String) {
-
-                    }
-
-                    override fun cut(pathInput: String, pathDirectoryOutput: String) {
-
-                    }
-
-                    override fun getFileToPastePath(): String? {
-                        return null
-                    }
-
-                    override fun paste(pathDirectoryOutput: String) {
-
-                    }
-
-                    override fun cancelCopyCut() {
-
-                    }
-
-                    override fun registerFileToPasteChangedListener(listener: FileCopyCutManager.FileToPasteChangedListener) {
-
-                    }
-
-                    override fun unregisterFileToPasteChangedListener(listener: FileCopyCutManager.FileToPasteChangedListener) {
-
-                    }
-
-                    override fun registerPasteListener(listener: FileCopyCutManager.PasteListener) {
-
-                    }
-
-                    override fun unregisterPasteListener(listener: FileCopyCutManager.PasteListener) {
-
-                    }
-
-                },
+                fileCopyCutManager,
+                fileOpenManager,
                 fileRenameManager,
+                fileSizeManager,
                 Environment.getExternalStorageDirectory().absolutePath
         )
         addView(fileColumnListView)

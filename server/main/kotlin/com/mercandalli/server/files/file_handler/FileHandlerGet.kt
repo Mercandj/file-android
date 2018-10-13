@@ -7,4 +7,6 @@ interface FileHandlerGet {
     fun get(id: String): String
 
     fun getFromParent(parentPath: String): String
+
+    fun getSize(path: String?): String
 }

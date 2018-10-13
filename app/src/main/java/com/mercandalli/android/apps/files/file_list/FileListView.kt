@@ -126,10 +126,11 @@ class FileListView @JvmOverloads constructor(
 
     fun setFileManagers(
             fileManager: FileManager,
-            fileOpenManager: FileOpenManager,
             fileDeleteManager: FileDeleteManager,
             fileCopyCutManager: FileCopyCutManager,
+            fileOpenManager: FileOpenManager,
             fileRenameManager: FileRenameManager,
+            fileSizeManager: FileSizeManager,
             rootPath: String
     ) {
         userAction.onSetFileManagers(
@@ -138,9 +139,10 @@ class FileListView @JvmOverloads constructor(
                 rootPath
         )
         adapter.setFileManagers(
-                fileDeleteManager,
                 fileCopyCutManager,
-                fileRenameManager
+                fileDeleteManager,
+                fileRenameManager,
+                fileSizeManager
         )
     }
 

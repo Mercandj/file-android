@@ -32,9 +32,10 @@ interface FileListRowContract {
         fun onOverflowClicked()
 
         fun onSetFileManagers(
-                fileDeleteManager: FileDeleteManager,
                 fileCopyCutManager: FileCopyCutManager,
-                fileRenameManager: FileRenameManager
+                fileDeleteManager: FileDeleteManager,
+                fileRenameManager: FileRenameManager,
+                fileSizeManager: FileSizeManager
         )
     }
 

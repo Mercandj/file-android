@@ -34,9 +34,15 @@ class FileOnlineAndroidModule(
         return fileManager
     }
 
-
     fun createFileOnlineCreatorManager(): FileCreatorManager {
         return FileOnlineCreatorManagerAndroid(
+                fileOnlineApi,
+                mediaScanner
+        )
+    }
+
+    fun createFileOnlineDeleteManager(): FileDeleteManager {
+        return FileOnlineDeleteManagerAndroid(
                 fileOnlineApi,
                 mediaScanner
         )
@@ -51,6 +57,12 @@ class FileOnlineAndroidModule(
         )
     }
 
+    fun createFileOnlineSizeManager(): FileSizeManager {
+        return FileOnlineSizeManagerAndroid(
+                fileOnlineApi
+        )
+    }
+
     fun createFileOnlineUploadManager(): FileOnlineUploadManager {
         return FileOnlineUploadManagerImpl(
                 fileOnlineApi,
@@ -58,12 +70,6 @@ class FileOnlineAndroidModule(
         )
     }
 
-    fun createFileOnlineDeleteManager(): FileDeleteManager {
-        return FileOnlineDeleteManagerAndroid(
-                fileOnlineApi,
-                mediaScanner
-        )
-    }
     private fun createFileOnlineLoginManager() = fileOnlineModule.createFileOnlineLoginManager(
             fileOnlineLoginRepository
     )
