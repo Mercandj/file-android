@@ -6,14 +6,13 @@ import java.io.FileOutputStream
 
 object FileCopyCutUtils {
 
-    fun copyJavaFileSync(pathInput: String, pathDirectoryOutput: String) {
+    fun copyJavaFileSync(pathInput: String, pathDirectoryOutput: String): Boolean {
         try {
             val dir = File(pathDirectoryOutput)
             if (!dir.exists()) {
                 dir.mkdirs()
             }
             val inputFile = java.io.File(pathInput)
-
             var outputUrl = if (pathDirectoryOutput.endsWith("/")) {
                 pathDirectoryOutput + inputFile.name
             } else {
@@ -32,13 +31,19 @@ object FileCopyCutUtils {
                 copy.mkdirs()
                 val children = inputFile.listFiles()
                 for (child in children) {
-                    copyJavaFileSync(child.absolutePath, copy.absolutePath + File.separator)
+                    val succeeded = copyJavaFileSync(
+                            child.absolutePath,
+                            copy.absolutePath + File.separator
+                    )
+                    if (!succeeded) {
+                        return false
+                    }
                 }
             } else {
                 val inputStream = FileInputStream(pathInput)
                 val outputStream = FileOutputStream(outputUrl)
 
-                val buffer = ByteArray(1024)
+                val buffer = ByteArray(1_024)
                 var read: Int = inputStream.read(buffer)
                 while (read != -1) {
                     outputStream.write(buffer, 0, read)
@@ -49,15 +54,16 @@ object FileCopyCutUtils {
                 outputStream.close()
             }
         } catch (e: Exception) {
-
+            return false
         }
+        return true
     }
 
-    fun cutJavaFileSync(pathInput: String, pathDirectoryOutput: String) {
+    fun cutJavaFileSync(pathInput: String, pathDirectoryOutput: String): Boolean {
         val ioFileInput = java.io.File(pathInput)
         val ioFileOutputDirectory = java.io.File(pathDirectoryOutput)
         val outputPath = ioFileOutputDirectory.absolutePath + File.separator + ioFileInput.name
         val ioFileOutput = java.io.File(outputPath)
-        ioFileInput.renameTo(ioFileOutput)
+        return ioFileInput.renameTo(ioFileOutput)
     }
 }

@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileCopyCutUtils
 import com.mercandalli.sdk.files.api.FileRenameUtils
 import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
 import com.mercandalli.server.files.file_repository.FileRepository
@@ -27,8 +28,8 @@ class FileHandlerPostImpl(
 ) : FileHandlerPost {
 
     override fun createPost(body: String): String {
+        log("createPost(body: $body)")
         val debugMessage = StringBuilder()
-        logManager.d(TAG, "createPost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val file = File.fromJson(fileJsonObject)
         fileRepository.put(file)
@@ -52,7 +53,7 @@ class FileHandlerPostImpl(
     }
 
     override fun renamePost(body: String): String {
-        logManager.d(TAG, "renamePost(body: $body)")
+        log("renamePost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val name = fileJsonObject.getString(File.JSON_KEY_NAME)
@@ -64,6 +65,7 @@ class FileHandlerPostImpl(
         val javaFile = java.io.File(folderContainerPath, path)
         val renameSucceeded = FileRenameUtils.renameSync(javaFile, name)
         if (!renameSucceeded) {
+            log("renamePost: File not renamed")
             // Revert rename in the repo
             fileRepository.rename(renamedFile.path, java.io.File(path).name)
             return ServerResponse.create(
@@ -71,34 +73,61 @@ class FileHandlerPostImpl(
                     false
             ).toJsonString()
         }
+        log("renamePost: File renamed")
         return ServerResponseFile.create(
                 renamedFile,
-                "File renamed in the repository",
+                "File renamed",
                 true
         ).toJsonString()
     }
 
     override fun copyPost(body: String): String {
-        logManager.d(TAG, "copyPost(body: $body)")
+        log("copyPost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val pathOutput = fileJsonObject.getString("path_output")
-        // TODO
-        return ServerResponse.create(
-                "File not copy",
+        val copiedFile = fileRepository.copy(path, pathOutput) ?: return ServerResponse.create(
+                "File not copy. Maybe not found in the server",
                 false
+        ).toJsonString()
+        val succeeded = FileCopyCutUtils.copyJavaFileSync(path, pathOutput)
+        if (!succeeded) {
+            log("copyPost: File not copy")
+            return ServerResponse.create(
+                    "File not copied",
+                    false
+            ).toJsonString()
+        }
+        log("copyPost: File copied")
+        return ServerResponseFile.create(
+                copiedFile,
+                "File copied",
+                true
         ).toJsonString()
     }
 
     override fun cutPost(body: String): String {
-        logManager.d(TAG, "cutPost(body: $body)")
+        log("cutPost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val pathOutput = fileJsonObject.getString("path_output")
-        // TODO
-        return ServerResponse.create(
-                "File not cut",
+        val cutFile = fileRepository.cut(path, pathOutput) ?: return ServerResponse.create(
+                "File not cut. Maybe not found in the server",
                 false
+        ).toJsonString()
+        val succeeded = FileCopyCutUtils.cutJavaFileSync(path, pathOutput)
+        if (!succeeded) {
+            log("cutPost: File not cut")
+            return ServerResponse.create(
+                    "File not cut",
+                    false
+            ).toJsonString()
+        }
+        log("cutPost: File cut")
+        return ServerResponseFile.create(
+                cutFile,
+                "File cut",
+                true
         ).toJsonString()
     }
 
@@ -106,8 +135,7 @@ class FileHandlerPostImpl(
             headers: Headers,
             multipart: MultiPartData
     ): String {
-        logManager.d(TAG, "uploadPost()")
-
+        log("uploadPost()")
         val authorization = headers["Authorization"]
         val logged = if (authorization == null) {
             false
@@ -115,7 +143,7 @@ class FileHandlerPostImpl(
             val token = authorization.replace("Basic ", "")
             FileOnlineAuthentication.isLogged(token, fileOnlineAuthentications)
         }
-        logManager.d(TAG, "uploadPost() logged: $logged")
+        log("uploadPost() logged: $logged")
         if (!logged) {
             return ServerResponse.create(
                     "Oops, not logged",
@@ -130,7 +158,7 @@ class FileHandlerPostImpl(
             if (part is PartData.FormItem) {
                 if (part.name == "json") {
                     val json = part.value
-                    logManager.d(TAG, "uploadPost(json: $json)")
+                    log("uploadPost(json: $json)")
                     val fileJsonObject = JSONObject(json)
                     file = File.fromJson(fileJsonObject)
                     name = file!!.name
@@ -138,7 +166,7 @@ class FileHandlerPostImpl(
                 }
             } else if (part is PartData.FileItem) {
                 if (name == null) {
-                    logManager.d(TAG, "uploadPost() name == null")
+                    log("uploadPost() name == null")
                     name = part.originalFileName
                 }
                 val javaFile = java.io.File(
@@ -150,7 +178,7 @@ class FileHandlerPostImpl(
                         inputStream.copyToSuspend(bufferedOutputStream)
                     }
                 }
-                logManager.d(TAG, "uploadPost() upload ${javaFile.absolutePath}")
+                log("uploadPost() upload ${javaFile.absolutePath}")
             }
 
             part.dispose()
@@ -179,7 +207,7 @@ class FileHandlerPostImpl(
     private suspend fun InputStream.copyToSuspend(
             out: OutputStream,
             bufferSize: Int = DEFAULT_BUFFER_SIZE,
-            yieldSize: Int = 4 * 1024 * 1024,
+            yieldSize: Int = 4 * 1_024 * 1_024,
             dispatcher: CoroutineDispatcher = ioCoroutineDispatcher
     ): Long {
         return withContext(dispatcher) {
@@ -198,6 +226,10 @@ class FileHandlerPostImpl(
             }
             return@withContext bytesCopied
         }
+    }
+
+    private fun log(message: String) {
+        logManager.d(TAG, message)
     }
 
     companion object {

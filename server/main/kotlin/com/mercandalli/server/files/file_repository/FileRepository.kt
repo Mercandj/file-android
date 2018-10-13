@@ -19,4 +19,8 @@ interface FileRepository {
     fun delete(path: String): File?
 
     fun rename(path: String, name: String): File?
+
+    fun copy(path: String, pathOutput: String): File?
+
+    fun cut(path: String, pathOutput: String): File?
 }

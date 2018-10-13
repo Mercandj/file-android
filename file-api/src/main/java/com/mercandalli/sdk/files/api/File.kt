@@ -169,7 +169,7 @@ data class File private constructor(
 
         fun rename(file: File, name: String): File {
             val path = file.path
-            val newPath = renamePath(path, name)
+            val newPath = renamePathFromName(path, name)
             return File(
                     file.id,
                     newPath,
@@ -181,7 +181,7 @@ data class File private constructor(
             )
         }
 
-        fun renamePath(path: String, name: String): String {
+        fun renamePathFromName(path: String, name: String): String {
             val file = java.io.File(path)
             val parentFile = file.parentFile
             return if (parentFile == null) {
@@ -189,6 +189,20 @@ data class File private constructor(
             } else {
                 java.io.File(parentFile.absolutePath, name).absolutePath
             }
+        }
+
+        fun renamePath(file: File, pathOutput: String): File {
+            val cleanedPath = cleanPath(pathOutput)
+            val name = java.io.File(pathOutput).name
+            return File(
+                    file.id,
+                    cleanedPath,
+                    file.parentPath,
+                    file.directory,
+                    name,
+                    file.length,
+                    file.lastModified
+            )
         }
 
         fun createFake(id: String) = File(
