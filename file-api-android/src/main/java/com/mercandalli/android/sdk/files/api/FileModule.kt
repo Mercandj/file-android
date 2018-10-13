@@ -41,7 +41,7 @@ class FileModule(
                 fileManager.refresh(path)
             }
         }
-        mediaScanner.setListener(object : MediaScanner.RefreshListener {
+        mediaScanner.addListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileManager.refresh(path)
             }
@@ -105,9 +105,15 @@ class FileModule(
     }
 
     fun createFileSizeManager(): FileSizeManager {
-        return FileSizeManagerAndroid(
+        val fileSizeManager = FileSizeManagerAndroid(
                 permissionManager
         )
+        mediaScanner.addListener(object : MediaScanner.RefreshListener {
+            override fun onContentChanged(path: String) {
+                fileSizeManager.loadSize(path, true)
+            }
+        })
+        return fileSizeManager
     }
 
     fun createFileSortManager(): FileSortManager = FileSortManagerImpl()

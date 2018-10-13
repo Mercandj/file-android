@@ -4,7 +4,7 @@ interface MediaScanner {
 
     fun refresh(path: String)
 
-    fun setListener(listener: RefreshListener)
+    fun addListener(listener: RefreshListener)
 
     interface RefreshListener {
 

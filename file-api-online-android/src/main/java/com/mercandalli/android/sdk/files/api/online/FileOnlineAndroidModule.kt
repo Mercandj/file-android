@@ -26,7 +26,7 @@ class FileOnlineAndroidModule(
         val fileManager = FileOnlineManagerAndroid(
                 fileOnlineApi
         )
-        mediaScanner.setListener(object : MediaScanner.RefreshListener {
+        mediaScanner.addListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileManager.refresh(path)
             }
@@ -65,9 +65,15 @@ class FileOnlineAndroidModule(
     }
 
     fun createFileOnlineSizeManager(): FileSizeManager {
-        return FileOnlineSizeManagerAndroid(
+        val fileSizeManager = FileOnlineSizeManagerAndroid(
                 fileOnlineApi
         )
+        mediaScanner.addListener(object : MediaScanner.RefreshListener {
+            override fun onContentChanged(path: String) {
+                fileSizeManager.loadSize(path, true)
+            }
+        })
+        return fileSizeManager
     }
 
     fun createFileOnlineUploadManager(): FileOnlineUploadManager {

@@ -5,14 +5,19 @@ import com.mercandalli.sdk.files.api.MediaScanner
 
 internal class MediaScannerOnlineAndroid : MediaScanner {
 
-    private var refreshListener: MediaScanner.RefreshListener? = null
+    private var refreshListeners = ArrayList<MediaScanner.RefreshListener>()
 
     override fun refresh(path: String) {
         val cleanedPath = File.cleanPath(path)
-        refreshListener?.onContentChanged(cleanedPath)
+        for (listener in refreshListeners) {
+            listener.onContentChanged(cleanedPath)
+        }
     }
 
-    override fun setListener(listener: MediaScanner.RefreshListener) {
-        refreshListener = listener
+    override fun addListener(listener: MediaScanner.RefreshListener) {
+        if (refreshListeners.contains(listener)) {
+            return
+        }
+        refreshListeners.add(listener)
     }
 }
