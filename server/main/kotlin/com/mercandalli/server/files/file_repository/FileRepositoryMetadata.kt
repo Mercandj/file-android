@@ -61,18 +61,18 @@ data class FileRepositoryMetadata(
             return FileRepositoryMetadata(files)
         }
 
-        fun copy(fileRepositoryMetadata: FileRepositoryMetadata, path: String, pathOutput: String): FileRepositoryMetadata {
+        fun copy(fileRepositoryMetadata: FileRepositoryMetadata, path: String, pathDirectoryOutput: String): FileRepositoryMetadata {
             val files = fileRepositoryMetadata.getFiles()
             val file = files[path]!!
-            val renamedFile = File.renamePath(file, pathOutput)
+            val renamedFile = File.renamePath(file, "$pathDirectoryOutput/${file.name}")
             files[renamedFile.path] = renamedFile
             return FileRepositoryMetadata(files)
         }
 
-        fun cut(fileRepositoryMetadata: FileRepositoryMetadata, path: String, pathOutput: String): FileRepositoryMetadata {
+        fun cut(fileRepositoryMetadata: FileRepositoryMetadata, path: String, pathDirectoryOutput: String): FileRepositoryMetadata {
             val files = fileRepositoryMetadata.getFiles()
             val file = files[path]!!
-            val renamedFile = File.renamePath(file, pathOutput)
+            val renamedFile = File.renamePath(file, "$pathDirectoryOutput/${file.name}")
             files.remove(path)
             files[renamedFile.path] = renamedFile
             return FileRepositoryMetadata(files)

@@ -60,22 +60,22 @@ class FileRepositoryImpl(
         return get(File.renamePathFromName(path, name))
     }
 
-    override fun copy(path: String, pathOutput: String): File? {
+    override fun copy(path: String, pathDirectoryOutput: String): File? {
         if (!has(path)) {
             return null
         }
-        fileRepositoryMetadata = FileRepositoryMetadata.copy(fileRepositoryMetadata, path, pathOutput)
+        fileRepositoryMetadata = FileRepositoryMetadata.copy(fileRepositoryMetadata, path, pathDirectoryOutput)
         save()
-        return get(pathOutput)
+        return get(pathDirectoryOutput)
     }
 
-    override fun cut(path: String, pathOutput: String): File? {
+    override fun cut(path: String, pathDirectoryOutput: String): File? {
         if (!has(path)) {
             return null
         }
-        fileRepositoryMetadata = FileRepositoryMetadata.cut(fileRepositoryMetadata, path, pathOutput)
+        fileRepositoryMetadata = FileRepositoryMetadata.cut(fileRepositoryMetadata, path, pathDirectoryOutput)
         save()
-        return get(pathOutput)
+        return get(pathDirectoryOutput)
     }
 
     private fun load() {

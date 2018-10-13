@@ -20,7 +20,7 @@ interface FileRepository {
 
     fun rename(path: String, name: String): File?
 
-    fun copy(path: String, pathOutput: String): File?
+    fun copy(path: String, pathDirectoryOutput: String): File?
 
-    fun cut(path: String, pathOutput: String): File?
+    fun cut(path: String, pathDirectoryOutput: String): File?
 }

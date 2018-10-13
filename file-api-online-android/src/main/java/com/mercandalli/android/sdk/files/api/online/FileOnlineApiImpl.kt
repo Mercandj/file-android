@@ -94,7 +94,7 @@ internal class FileOnlineApiImpl(
         val headers = createHeaders()
         val fileJsonObject = JSONObject()
         fileJsonObject.put(File.JSON_KEY_PATH, pathInput)
-        fileJsonObject.put("path_output", pathDirectoryOutput)
+        fileJsonObject.put("path_directory_output", pathDirectoryOutput)
         val json = fileOnlineApiNetwork.postSync(
                 "$API_DOMAIN/file/copy",
                 headers,
@@ -108,7 +108,7 @@ internal class FileOnlineApiImpl(
         val headers = createHeaders()
         val fileJsonObject = JSONObject()
         fileJsonObject.put(File.JSON_KEY_PATH, pathInput)
-        fileJsonObject.put("path_output", pathDirectoryOutput)
+        fileJsonObject.put("path_directory_output", pathDirectoryOutput)
         val json = fileOnlineApiNetwork.postSync(
                 "$API_DOMAIN/file/cut",
                 headers,

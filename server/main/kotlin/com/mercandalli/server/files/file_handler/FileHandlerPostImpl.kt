@@ -85,17 +85,18 @@ class FileHandlerPostImpl(
         log("copyPost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
-        val pathOutput = fileJsonObject.getString("path_output")
-        val copiedFile = fileRepository.copy(path, pathOutput) ?: return ServerResponse.create(
-                "File not copy. Maybe not found in the server",
-                false
-        ).toJsonString()
+        val pathDirectoryOutput = fileJsonObject.getString("path_directory_output")
+        val copiedFile = fileRepository.copy(path, pathDirectoryOutput)
+                ?: return ServerResponse.create(
+                        "File not copy. Maybe not found in the server",
+                        false
+                ).toJsonString()
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFileInput = java.io.File(folderContainerPath, path)
-        val javaFileOutput = java.io.File(folderContainerPath, pathOutput)
+        val javaFileDirectoryOutput = java.io.File(folderContainerPath, pathDirectoryOutput)
         val succeeded = FileCopyCutUtils.copyJavaFileSync(
                 javaFileInput.absolutePath,
-                javaFileOutput.absolutePath
+                javaFileDirectoryOutput.absolutePath
         )
         if (!succeeded) {
             log("copyPost: File not copy")
@@ -116,17 +117,17 @@ class FileHandlerPostImpl(
         log("cutPost(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
-        val pathOutput = fileJsonObject.getString("path_output")
-        val cutFile = fileRepository.cut(path, pathOutput) ?: return ServerResponse.create(
+        val pathDirectoryOutput = fileJsonObject.getString("path_directory_output")
+        val cutFile = fileRepository.cut(path, pathDirectoryOutput) ?: return ServerResponse.create(
                 "File not cut. Maybe not found in the server",
                 false
         ).toJsonString()
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFileInput = java.io.File(folderContainerPath, path)
-        val javaFileOutput = java.io.File(folderContainerPath, pathOutput)
+        val javaFileDirectoryOutput = java.io.File(folderContainerPath, pathDirectoryOutput)
         val succeeded = FileCopyCutUtils.cutJavaFileSync(
                 javaFileInput.absolutePath,
-                javaFileOutput.absolutePath
+                javaFileDirectoryOutput.absolutePath
         )
         if (!succeeded) {
             log("cutPost: File not cut")
