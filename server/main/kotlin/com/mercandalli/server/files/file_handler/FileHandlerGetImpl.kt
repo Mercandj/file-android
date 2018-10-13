@@ -63,10 +63,11 @@ class FileHandlerGetImpl(
             ).toJsonString()
         }
         val jsonObject = JSONObject()
-        jsonObject.put("size", fileSizeResult.path)
+        jsonObject.put("path", fileSizeResult.path)
+        jsonObject.put("size", fileSizeResult.size)
         return ServerResponse.create(
                 jsonObject,
-                "Get one file",
+                "Get size file",
                 true
         ).toJsonString()
     }
