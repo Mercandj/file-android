@@ -146,6 +146,12 @@ class FileListView @JvmOverloads constructor(
         )
     }
 
+    private fun createFileClickListener() = object : FileListRow.FileClickListener {
+        override fun onFileClicked(file: File) {
+            userAction.onFileClicked(file)
+        }
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : FileListContract.UserAction {
             override fun onAttached() {}
@@ -177,13 +183,8 @@ class FileListView @JvmOverloads constructor(
         )
     }
 
-    private fun createFileClickListener() = object : FileListRow.FileClickListener {
-        override fun onFileClicked(file: File) {
-            userAction.onFileClicked(file)
-        }
-    }
-
     interface FileListViewSelectedFileListener {
+
         fun onSelectedFilePathChanged(path: String?)
     }
 }

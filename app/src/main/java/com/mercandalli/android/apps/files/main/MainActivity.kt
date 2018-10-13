@@ -28,11 +28,14 @@ import eightbitlab.com.blurview.RenderScriptBlur
 class MainActivity : AppCompatActivity(),
         MainActivityContract.Screen {
 
+    private val fileListViewSelectedFileListener = createFileListViewSelectedFileListener()
     private val fileList: FileListView by bind(R.id.activity_main_file_list)
     private val fileColumnHorizontalLists: FileColumnHorizontalLists by bind(R.id.activity_main_file_horizontal_lists)
     private val onlineLazy = lazy {
         val view = findViewById<ViewStub>(R.id.activity_main_file_online_view_stub)
-        view.inflate() as FileOnlineView
+        val fileOnlineView = view.inflate() as FileOnlineView
+        fileOnlineView.setFileListViewSelectedFileListener(fileListViewSelectedFileListener)
+        fileOnlineView
     }
     private val online by onlineLazy
     private val note: NoteView by bind(R.id.activity_main_note)
@@ -61,7 +64,7 @@ class MainActivity : AppCompatActivity(),
         toolbarFileColumn.setOnClickListener { userAction.onToolbarFileColumnClicked() }
         toolbarFileList.setOnClickListener { userAction.onToolbarFileListClicked() }
         toolbarFilePaste.setOnClickListener { userAction.onToolbarFilePasteClicked() }
-        fileList.setFileListViewSelectedFileListener(createFileListViewSelectedFileListener())
+        fileList.setFileListViewSelectedFileListener(fileListViewSelectedFileListener)
         fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(createFileHorizontalListsSelectedFileListener())
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val decorView = window.decorView
@@ -236,7 +239,11 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun setPasteIconVisibility(visible: Boolean) {
-        toolbarFilePaste.visibility = if (visible) View.VISIBLE else View.GONE
+        toolbarFilePaste.visibility = if (visible) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 
     override fun getFileListCurrentPath() = fileList.getCurrentPath()
@@ -281,9 +288,11 @@ class MainActivity : AppCompatActivity(),
         val themeManager = ApplicationGraph.getThemeManager()
         val sharedPreferences = getSharedPreferences(
                 MainActivityFileUiStorageSharedPreference.PREFERENCE_NAME,
-                Context.MODE_PRIVATE)
+                Context.MODE_PRIVATE
+        )
         val mainActivityFileUiStorage = MainActivityFileUiStorageSharedPreference(
-                sharedPreferences)
+                sharedPreferences
+        )
         return MainActivityPresenter(
                 this,
                 fileCreatorManager,

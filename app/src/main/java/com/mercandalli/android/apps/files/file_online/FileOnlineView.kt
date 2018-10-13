@@ -5,14 +5,13 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.main.ApplicationGraph
-import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileOnlineView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val fileColumnListView = FileListView(context)
+    private val fileListView = FileListView(context)
     private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
     private val fileCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
     private val fileDeleteManager = ApplicationGraph.getFileOnlineDeleteManager()
@@ -21,7 +20,7 @@ class FileOnlineView @JvmOverloads constructor(
 
     init {
         val fileOpenManager = createFileOpenManager()
-        fileColumnListView.setFileManagers(
+        fileListView.setFileManagers(
                 fileOnlineManager,
                 fileDeleteManager,
                 fileCopyCutManager,
@@ -30,14 +29,18 @@ class FileOnlineView @JvmOverloads constructor(
                 fileSizeManager,
                 "/"
         )
-        addView(fileColumnListView)
+        addView(fileListView)
     }
 
-    fun getCurrentPath() = fileColumnListView.getCurrentPath()
+    fun getCurrentPath() = fileListView.getCurrentPath()
+
+    fun setFileListViewSelectedFileListener(listener: FileListView.FileListViewSelectedFileListener?) {
+        fileListView.setFileListViewSelectedFileListener(listener)
+    }
 
     private fun createFileOpenManager() = object : FileOpenManager {
         override fun open(path: String, mime: String?) {
-
+            // TODO
         }
     }
 }
