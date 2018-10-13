@@ -11,6 +11,7 @@ interface FileManager {
     fun unregisterFileChildrenResultListener(listener: FileChildrenResultListener)
 
     interface FileChildrenResultListener {
+
         fun onFileChildrenResultChanged(path: String)
     }
 }
