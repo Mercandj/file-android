@@ -193,7 +193,7 @@ data class File private constructor(
 
         fun setParent(file: File, pathDirectoryOutput: String): File {
             val pathDirectoryOutputCleaned = cleanPath(pathDirectoryOutput)
-            val name = java.io.File(pathDirectoryOutput).name
+            val name = file.name
             return File(
                     file.id,
                     "$pathDirectoryOutputCleaned/$name",
