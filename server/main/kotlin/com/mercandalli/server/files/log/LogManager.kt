@@ -6,6 +6,8 @@ interface LogManager {
 
     fun d(tag: String, message: String)
 
+    fun e(tag: String, message: String)
+
     fun logRequest(tag: String, request: ApplicationRequest)
 
     fun logResponse(tag: String, request: ApplicationRequest, response: String)

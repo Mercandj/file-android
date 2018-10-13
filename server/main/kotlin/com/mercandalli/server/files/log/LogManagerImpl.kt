@@ -29,7 +29,12 @@ internal class LogManagerImpl(
 
     override fun d(tag: String, message: String) {
         val time = timeManager.getTimeString()
-        println("$time [$tag] $message")
+        println("$ANSI_CYAN$time$ANSI_RESET [$tag] $message")
+    }
+
+    override fun e(tag: String, message: String) {
+        val time = timeManager.getTimeString()
+        println("$ANSI_RED$time [$tag] $message$ANSI_RESET")
     }
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
@@ -63,6 +68,20 @@ internal class LogManagerImpl(
     private fun saveContactUs1418() {
         val jsonArray = ContactUs.toJson(contactUs1418List)
         log1418File.writeText(jsonArray.toString())
+    }
+
+    companion object {
+
+        private const val ANSI_RESET = "\u001B[0m"
+        private const val ANSI_BLACK = "\u001B[30m"
+        private const val ANSI_RED = "\u001B[31m"
+        private const val ANSI_GREEN = "\u001B[32m"
+        private const val ANSI_YELLOW = "\u001B[33m"
+        private const val ANSI_BLUE = "\u001B[34m"
+        private const val ANSI_PURPLE = "\u001B[35m"
+        private const val ANSI_CYAN = "\u001B[36m"
+        private const val ANSI_WHITE = "\u001B[37m"
+
     }
 
     data class ContactUs(

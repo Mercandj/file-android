@@ -13,15 +13,18 @@ class FileHandlerDeleteImpl(
 ) : FileHandlerDelete {
 
     override fun delete(body: String): String {
-        logManager.d(TAG, "delete(body: $body)")
+        logd("delete(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val deletedFile = fileRepository.delete(path)
         val deleteSucceeded = deletedFile != null
         if (deleteSucceeded) {
+            logd("delete: succeeded")
             val folderContainerPath = fileRepository.getFolderContainerPath()
             val javaFile = java.io.File(folderContainerPath, deletedFile!!.name)
             javaFile.delete()
+        } else {
+            loge("delete: Failed to delete: path == $path")
         }
         return ServerResponse.create(
                 JSONObject(),
@@ -30,7 +33,16 @@ class FileHandlerDeleteImpl(
         ).toJsonString()
     }
 
+    private fun logd(message: String) {
+        logManager.d(TAG, message)
+    }
+
+    private fun loge(message: String) {
+        logManager.e(TAG, message)
+    }
+
     companion object {
+
         private const val TAG = "FileHandlerPost"
     }
 }

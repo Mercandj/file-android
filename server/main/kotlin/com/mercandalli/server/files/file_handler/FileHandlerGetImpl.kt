@@ -16,7 +16,7 @@ class FileHandlerGetImpl(
 ) : FileHandlerGet {
 
     override fun get(): String {
-        logManager.d(TAG, "get()")
+        logd("get()")
         val files = fileRepository.get()
         return ServerResponseFiles.create(
                 files,
@@ -26,7 +26,7 @@ class FileHandlerGetImpl(
     }
 
     override fun get(id: String): String {
-        logManager.d(TAG, "get(id: $id)")
+        logd("get(id: $id)")
         val file = File.createFake(id)
         return ServerResponseFile.create(
                 file,
@@ -36,7 +36,7 @@ class FileHandlerGetImpl(
     }
 
     override fun getFromParent(parentPath: String): String {
-        logManager.d(TAG, "getFromParent(id: $parentPath)")
+        logd("getFromParent(id: $parentPath)")
         val files = fileRepository.getFromParent(parentPath)
         return ServerResponseFiles.create(
                 files,
@@ -46,8 +46,9 @@ class FileHandlerGetImpl(
     }
 
     override fun getSize(path: String?): String {
-        logManager.d(TAG, "getSize(id: $path)")
+        logd("getSize(id: $path)")
         if (path == null) {
+            loge("getSize: path is null")
             return ServerResponse.create(
                     "Path is null",
                     false
@@ -57,6 +58,7 @@ class FileHandlerGetImpl(
         val javaFile = java.io.File(folderContainerPath, path)
         val fileSizeResult = FileSizeUtils.computeSizeFromJavaFileSync(javaFile.absolutePath)
         if (fileSizeResult.status != FileSizeResult.Status.LOADED_SUCCEEDED) {
+            loge("getSize: Error load error. ${fileSizeResult.status}")
             return ServerResponse.create(
                     "Error load error. ${fileSizeResult.status}",
                     false
@@ -72,7 +74,16 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
+    private fun logd(message: String) {
+        logManager.d(TAG, message)
+    }
+
+    private fun loge(message: String) {
+        logManager.e(TAG, message)
+    }
+
     companion object {
+
         private const val TAG = "FileHandlerGet"
     }
 }
