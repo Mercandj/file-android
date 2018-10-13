@@ -36,7 +36,7 @@ class FileHandlerGetImpl(
     }
 
     override fun getFromParent(parentPath: String): String {
-        logd("getFromParent(id: $parentPath)")
+        logd("getFromParent(parentPath: $parentPath)")
         val files = fileRepository.getFromParent(parentPath)
         return ServerResponseFiles.create(
                 files,
@@ -46,7 +46,7 @@ class FileHandlerGetImpl(
     }
 
     override fun getSize(path: String?): String {
-        logd("getSize(id: $path)")
+        logd("getSize(path: $path)")
         if (path == null) {
             loge("getSize: path is null")
             return ServerResponse.create(
@@ -58,7 +58,7 @@ class FileHandlerGetImpl(
         val javaFile = java.io.File(folderContainerPath, path)
         val fileSizeResult = FileSizeUtils.computeSizeFromJavaFileSync(javaFile.absolutePath)
         if (fileSizeResult.status != FileSizeResult.Status.LOADED_SUCCEEDED) {
-            loge("getSize: Error load error. ${fileSizeResult.status}")
+            loge("getSize: Error load error. path == $path. error == ${fileSizeResult.status}")
             return ServerResponse.create(
                     "Error load error. ${fileSizeResult.status}",
                     false

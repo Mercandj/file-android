@@ -57,13 +57,17 @@ data class FileRepositoryMetadata(
             val file = files[path]!!
             val renamedFile = File.rename(file, name)
             val newPath = renamedFile.path
-            files.remove(path)
-            files[newPath] = renamedFile
+            //files.remove(path)
+            //files[newPath] = renamedFile
             val filesToAdd = ArrayList<File>()
             val pathsToRemove = ArrayList<String>()
             if (file.directory) {
                 for (currentPath in files.keys) {
-                    if (currentPath.startsWith(path)) {
+                    if (currentPath == path) {
+                        pathsToRemove.add(currentPath)
+                        filesToAdd.add(renamedFile)
+                    }
+                    else if (currentPath.startsWith(path)) {
                         val currentNewPath = currentPath.replaceFirst(path, newPath)
                         val currentNewParentPath = java.io.File(currentNewPath).parentFile.absolutePath
                         val currentFile = files[currentPath]!!
@@ -74,7 +78,7 @@ data class FileRepositoryMetadata(
                 }
             }
             for (fileToAdd in filesToAdd) {
-                files[file.path] = fileToAdd
+                files[fileToAdd.path] = fileToAdd
             }
             for (pathToRemove in pathsToRemove) {
                 files.remove(pathToRemove)

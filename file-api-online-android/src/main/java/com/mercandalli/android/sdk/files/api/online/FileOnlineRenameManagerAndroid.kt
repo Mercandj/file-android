@@ -23,7 +23,6 @@ internal class FileOnlineRenameManagerAndroid(
                 if (!renameSucceeded) {
                     return@launch
                 }
-                mediaScanner.refresh(path)
                 mediaScanner.refresh(outputPath)
                 mediaScanner.refresh(parentPath)
             }
