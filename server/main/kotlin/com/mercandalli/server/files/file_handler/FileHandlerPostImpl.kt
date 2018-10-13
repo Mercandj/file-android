@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileRenameUtils
 import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
 import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
@@ -59,6 +60,15 @@ class FileHandlerPostImpl(
                 "File not renamed. Maybe not found in the server",
                 false
         ).toJsonString()
+        val renameSucceeded = FileRenameUtils.renameSync(path, name)
+        if (!renameSucceeded) {
+            // Revert rename in the repo
+            fileRepository.rename(renamedFile.path, java.io.File(path).name)
+            return ServerResponse.create(
+                    "File not renamed. Java file rename failed",
+                    false
+            ).toJsonString()
+        }
         return ServerResponseFile.create(
                 renamedFile,
                 "File renamed in the repository",
