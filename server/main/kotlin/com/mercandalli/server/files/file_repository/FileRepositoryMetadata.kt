@@ -57,8 +57,6 @@ data class FileRepositoryMetadata(
             val file = files[path]!!
             val renamedFile = File.rename(file, name)
             val newPath = renamedFile.path
-            //files.remove(path)
-            //files[newPath] = renamedFile
             val filesToAdd = ArrayList<File>()
             val pathsToRemove = ArrayList<String>()
             if (file.directory) {
@@ -76,6 +74,9 @@ data class FileRepositoryMetadata(
                         filesToAdd.add(currentRenamedFile)
                     }
                 }
+            } else {
+                pathsToRemove.add(path)
+                filesToAdd.add(renamedFile)
             }
             for (fileToAdd in filesToAdd) {
                 files[fileToAdd.path] = fileToAdd
