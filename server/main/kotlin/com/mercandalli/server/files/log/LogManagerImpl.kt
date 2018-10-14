@@ -42,13 +42,11 @@ internal class LogManagerImpl(
         val local = request.local
         val remoteHost = local.remoteHost
         val method = local.method.value
-        val userAgent = request.userAgent()
-        val host = request.host()
+        val userAgent = request.userAgent()?.substring(0, 40)
         d("$tag][Request", "$ANSI_PURPLE Uri$ANSI_RESET: $uri -" +
                 "$ANSI_PURPLE Method$ANSI_RESET: $method -" +
                 "$ANSI_PURPLE RemoteHost$ANSI_RESET: $remoteHost -" +
-                "$ANSI_PURPLE UserAgent$ANSI_RESET: $userAgent -" +
-                "$ANSI_PURPLE Host$ANSI_RESET: $host"
+                "$ANSI_PURPLE UserAgent$ANSI_RESET: $userAgent"
         )
     }
 
