@@ -35,7 +35,7 @@ class FileListView @JvmOverloads constructor(
 
     init {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
+        recyclerView.adapter = adapter
         refresh.setOnRefreshListener {
             userAction.onRefresh()
         }
@@ -73,7 +73,6 @@ class FileListView @JvmOverloads constructor(
     override fun showFiles(files: List<File>) {
         recyclerView.visibility = VISIBLE
         adapter.populate(files)
-        recyclerView.adapter = ScaleAnimationAdapter(recyclerView, adapter)
     }
 
     override fun hideFiles() {
