@@ -39,18 +39,22 @@ internal class LogManagerImpl(
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
         val uri = request.uri
-        val location = request.location()
+        val local = request.local
+        val remoteHost = local.remoteHost
+        val method = local.method.value
         val userAgent = request.userAgent()
         val host = request.host()
-        d("$tag][Request", "$ANSI_PURPLE Uri$ANSI_RESET: $uri - " +
-                "$ANSI_PURPLE Location$ANSI_RESET: $location - " +
-                "$ANSI_PURPLE UserAgent$ANSI_RESET: $userAgent - " +
-                "$ANSI_PURPLE Host$ANSI_RESET: $host")
+        d("$tag][Request", "$ANSI_PURPLE Uri$ANSI_RESET: $uri -" +
+                "$ANSI_PURPLE Method$ANSI_RESET: $method -" +
+                "$ANSI_PURPLE RemoteHost$ANSI_RESET: $remoteHost -" +
+                "$ANSI_PURPLE UserAgent$ANSI_RESET: $userAgent -" +
+                "$ANSI_PURPLE Host$ANSI_RESET: $host"
+        )
     }
 
     override fun logResponse(tag: String, request: ApplicationRequest, response: String) {
         val uri = request.uri
-        d("$tag][Response", "$ANSI_PURPLE Uri$ANSI_RESET: $uri - " +
+        d("$tag][Response", "$ANSI_PURPLE Uri$ANSI_RESET: $uri -" +
                 "$ANSI_PURPLE Response$ANSI_RESET: $response")
     }
 
