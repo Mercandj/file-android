@@ -4,14 +4,15 @@ import com.mercandalli.server.files.main.ApplicationGraph
 
 class FileHandlerModule {
 
+    private val authorizationManager by lazy { ApplicationGraph.getAuthorizationManager() }
     private val logManager by lazy { ApplicationGraph.getLogManager() }
     private val fileRepository by lazy { ApplicationGraph.getFileRepository() }
-    private val fileOnlineAuthentications by lazy { ApplicationGraph.getFileOnlineAuthentications() }
 
     fun createFileHandlerGet(): FileHandlerGet {
         return FileHandlerGetImpl(
                 fileRepository,
-                logManager
+                logManager,
+                authorizationManager
         )
     }
 
@@ -19,14 +20,15 @@ class FileHandlerModule {
         return FileHandlerPostImpl(
                 fileRepository,
                 logManager,
-                fileOnlineAuthentications
+                authorizationManager
         )
     }
 
     fun createFileHandlerDelete(): FileHandlerDelete {
         return FileHandlerDeleteImpl(
                 fileRepository,
-                logManager
+                logManager,
+                authorizationManager
         )
     }
 }

@@ -2,6 +2,7 @@ package com.mercandalli.server.files.main
 
 import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
+import com.mercandalli.server.files.authorization.AuthorizationModule
 import com.mercandalli.server.files.file_handler.FileHandlerModule
 import com.mercandalli.server.files.file_repository.FileRepositoryModule
 import com.mercandalli.server.files.log.LogModule
@@ -15,6 +16,7 @@ class ApplicationGraph(
         val fileOnlineAuthentications: List<FileOnlineAuthentication>
 ) {
 
+    private val authorizationModule = AuthorizationModule()
     private val fileModule = FileHandlerModule()
     private val fileOnlineModule = FileOnlineModule()
     private val fileRepositoryModule = FileRepositoryModule(rootPath)
@@ -23,6 +25,7 @@ class ApplicationGraph(
     private val shellModule = ShellModule()
     private val timeModule = TimeModule()
 
+    private val authorizationManagerInternal by lazy { authorizationModule.createAuthorizationManager() }
     private val fileHandlerGetInternal by lazy { fileModule.createFileHandlerGet() }
     private val fileHandlerPostInternal by lazy { fileModule.createFileHandlerPost() }
     private val fileHandlerDeleteInternal by lazy { fileModule.createFileHandlerDelete() }
@@ -37,6 +40,7 @@ class ApplicationGraph(
 
         private var graph: ApplicationGraph? = null
 
+        fun getAuthorizationManager() = graph!!.authorizationManagerInternal
         fun getFileGetHandler() = graph!!.fileHandlerGetInternal
         fun getFilePostHandler() = graph!!.fileHandlerPostInternal
         fun getFileDeleteHandler() = graph!!.fileHandlerDeleteInternal

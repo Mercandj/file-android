@@ -4,10 +4,12 @@ import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutUtils
 import com.mercandalli.sdk.files.api.FileRenameUtils
 import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
+import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication.Companion.isLogged
 import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
+import com.mercandalli.server.files.authorization.AuthorizationManager
 import io.ktor.content.MultiPartData
 import io.ktor.content.PartData
 import io.ktor.content.forEachPart
@@ -24,11 +26,14 @@ import java.lang.StringBuilder
 class FileHandlerPostImpl(
         private val fileRepository: FileRepository,
         private val logManager: LogManager,
-        private val fileOnlineAuthentications: List<FileOnlineAuthentication>
+        private val authorizationManager: AuthorizationManager
 ) : FileHandlerPost {
 
-    override fun createPost(body: String): String {
-        logd("createPost(body: $body)")
+    override fun create(
+            headers: Headers,
+            body: String
+    ): String {
+        logd("create(body: $body)")
         val debugMessage = StringBuilder()
         val fileJsonObject = JSONObject(body)
         val file = File.fromJson(fileJsonObject)
@@ -52,32 +57,35 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
-    override fun renamePost(body: String): String {
-        logd("renamePost(body: $body)")
+    override fun rename(
+            headers: Headers,
+            body: String
+    ): String {
+        logd("rename(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val name = fileJsonObject.getString(File.JSON_KEY_NAME)
         val renamedFile = fileRepository.rename(path, name)
         if (renamedFile == null) {
-            loge("renamePost: Repository rename failed")
+            loge("rename: Repository rename failed")
             return ServerResponse.create(
                     "File not renamed. Maybe not found in the server",
                     false
             ).toJsonString()
         }
         if (name.contains("/")) {
-            loge("renamePost: Name should not contains /. name == $name")
+            loge("rename: Name should not contains /. name == $name")
             return ServerResponse.create(
                     "Name should not contains /. name == $name",
                     false
             ).toJsonString()
         }
-        logd("renamePost: repository rename succeeded")
+        logd("rename: repository rename succeeded")
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFile = java.io.File(folderContainerPath, path)
         val renameSucceeded = FileRenameUtils.renameSync(javaFile, name)
         if (!renameSucceeded) {
-            loge("renamePost: File not renamed")
+            loge("rename: File not renamed")
             // Revert rename in the repo
             fileRepository.rename(renamedFile.path, java.io.File(path).name)
             return ServerResponse.create(
@@ -85,7 +93,7 @@ class FileHandlerPostImpl(
                     false
             ).toJsonString()
         }
-        logd("renamePost: File renamed")
+        logd("rename: File renamed")
         return ServerResponseFile.create(
                 renamedFile,
                 "File renamed",
@@ -93,14 +101,17 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
-    override fun copyPost(body: String): String {
-        logd("copyPost(body: $body)")
+    override fun copy(
+            headers: Headers,
+            body: String
+    ): String {
+        logd("copy(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val pathDirectoryOutput = fileJsonObject.getString("path_directory_output")
         val copiedFile = fileRepository.copy(path, pathDirectoryOutput)
         if (copiedFile == null) {
-            loge("copyPost: Repository copy failed")
+            loge("copy: Repository copy failed")
             return ServerResponse.create(
                     "File not copy. Maybe not found in the server",
                     false
@@ -109,20 +120,20 @@ class FileHandlerPostImpl(
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFileInput = java.io.File(folderContainerPath, path)
         val javaFileDirectoryOutput = java.io.File(folderContainerPath, pathDirectoryOutput)
-        logd("copyPost: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
-        logd("copyPost: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
+        logd("copy: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
+        logd("copy: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
         val succeeded = FileCopyCutUtils.copyJavaFileSync(
                 javaFileInput.absolutePath,
                 javaFileDirectoryOutput.absolutePath
         )
         if (!succeeded) {
-            loge("copyPost: File not copy")
+            loge("copy: File not copy")
             return ServerResponse.create(
                     "File not copied",
                     false
             ).toJsonString()
         }
-        logd("copyPost: File copied")
+        logd("copy: File copied")
         return ServerResponseFile.create(
                 copiedFile,
                 "File copied",
@@ -130,14 +141,17 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
-    override fun cutPost(body: String): String {
-        logd("cutPost(body: $body)")
+    override fun cut(
+            headers: Headers,
+            body: String
+    ): String {
+        logd("cut(body: $body)")
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val pathDirectoryOutput = fileJsonObject.getString("path_directory_output")
         val cutFile = fileRepository.cut(path, pathDirectoryOutput)
         if (cutFile == null) {
-            loge("cutPost: Repository cut failed")
+            loge("cut: Repository cut failed")
             return ServerResponse.create(
                     "File not cut. Maybe not found in the server",
                     false
@@ -146,20 +160,20 @@ class FileHandlerPostImpl(
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFileInput = java.io.File(folderContainerPath, path)
         val javaFileDirectoryOutput = java.io.File(folderContainerPath, pathDirectoryOutput)
-        logd("cutPost: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
-        logd("cutPost: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
+        logd("cut: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
+        logd("cut: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
         val succeeded = FileCopyCutUtils.cutJavaFileSync(
                 javaFileInput.absolutePath,
                 javaFileDirectoryOutput.absolutePath
         )
         if (!succeeded) {
-            loge("cutPost: File not cut")
+            loge("cut: File not cut")
             return ServerResponse.create(
                     "File not cut",
                     false
             ).toJsonString()
         }
-        logd("cutPost: File cut")
+        logd("cut: File cut")
         return ServerResponseFile.create(
                 cutFile,
                 "File cut",
@@ -167,26 +181,19 @@ class FileHandlerPostImpl(
         ).toJsonString()
     }
 
-    override suspend fun uploadPost(
+    override suspend fun upload(
             headers: Headers,
             multipart: MultiPartData
     ): String {
-        logd("uploadPost()")
-        val authorization = headers["Authorization"]
-        val logged = if (authorization == null) {
-            false
-        } else {
-            val token = authorization.replace("Basic ", "")
-            FileOnlineAuthentication.isLogged(token, fileOnlineAuthentications)
-        }
-        if (!logged) {
-            loge("uploadPost: Not logged")
+        logd("upload()")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("upload: Not logged")
             return ServerResponse.create(
                     "Oops, not logged",
                     false
             ).toJsonString()
         }
-        logd("uploadPost(): Logged")
+        logd("upload: Logged")
 
         // Processes each part of the multipart input content of the user
         var name: String? = null
@@ -195,7 +202,7 @@ class FileHandlerPostImpl(
             if (part is PartData.FormItem) {
                 if (part.name == "json") {
                     val json = part.value
-                    logd("uploadPost(json: $json)")
+                    logd("upload(json: $json)")
                     val fileJsonObject = JSONObject(json)
                     file = File.fromJson(fileJsonObject)
                     name = file!!.name
@@ -203,7 +210,7 @@ class FileHandlerPostImpl(
                 }
             } else if (part is PartData.FileItem) {
                 if (name == null) {
-                    loge("uploadPost: name == null")
+                    loge("upload: name == null")
                     name = part.originalFileName
                 }
                 val javaFile = java.io.File(
@@ -215,13 +222,13 @@ class FileHandlerPostImpl(
                         inputStream.copyToSuspend(bufferedOutputStream)
                     }
                 }
-                logd("uploadPost: Upload ${javaFile.absolutePath}")
+                logd("upload: Upload ${javaFile.absolutePath}")
             }
 
             part.dispose()
         }
         if (file == null) {
-            loge("uploadPost: File not uploaded into the repository: file == null")
+            loge("upload: File not uploaded into the repository: file == null")
             return ServerResponse.create(
                     "File not uploaded into the repository",
                     false
@@ -232,6 +239,18 @@ class FileHandlerPostImpl(
                 "File uploaded into the repository",
                 true
         ).toJsonString()
+    }
+
+    override suspend fun download(headers: Headers, body: String): java.io.File? {
+        logd("download()")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("download: Not logged")
+            return null
+        }
+        val fileJsonObject = JSONObject(body)
+        val path = fileJsonObject.getString(File.JSON_KEY_PATH)
+        val folderContainerPath = fileRepository.getFolderContainerPath()
+        return java.io.File(folderContainerPath, path)
     }
 
     /**

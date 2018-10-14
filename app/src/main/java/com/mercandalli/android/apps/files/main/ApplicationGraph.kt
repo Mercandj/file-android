@@ -135,12 +135,12 @@ class ApplicationGraph(
                     jsonObject
             )
 
-            override fun postSync(
+            override fun postUploadSync(
                     url: String,
                     headers: Map<String, String>,
                     jsonObject: JSONObject,
                     javaFile: File
-            ) = getNetwork().postSync(
+            ) = getNetwork().postUploadSync(
                     url,
                     headers,
                     jsonObject,

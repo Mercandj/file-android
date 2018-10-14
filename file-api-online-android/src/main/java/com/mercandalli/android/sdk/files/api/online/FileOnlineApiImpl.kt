@@ -52,10 +52,10 @@ internal class FileOnlineApiImpl(
         )
     }
 
-    override fun post(file: File, javaFile: java.io.File) {
+    override fun postUpload(file: File, javaFile: java.io.File) {
         val headers = createHeaders()
         val fileJsonObject = File.toJson(file)
-        fileOnlineApiNetwork.postSync(
+        fileOnlineApiNetwork.postUploadSync(
                 "$API_DOMAIN/file/upload",
                 headers,
                 fileJsonObject,

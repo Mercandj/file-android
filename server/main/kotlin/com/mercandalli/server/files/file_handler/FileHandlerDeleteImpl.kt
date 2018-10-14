@@ -5,15 +5,28 @@ import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
+import com.mercandalli.server.files.authorization.AuthorizationManager
+import io.ktor.http.Headers
 import org.json.JSONObject
 
 class FileHandlerDeleteImpl(
         private val fileRepository: FileRepository,
-        private val logManager: LogManager
+        private val logManager: LogManager,
+        private val authorizationManager: AuthorizationManager
 ) : FileHandlerDelete {
 
-    override fun delete(body: String): String {
+    override fun deleteFile(
+            headers: Headers,
+            body: String
+    ): String {
         logd("delete(body: $body)")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("delete: Not logged")
+            return ServerResponse.create(
+                    "Oops, not logged",
+                    false
+            ).toJsonString()
+        }
         val fileJsonObject = JSONObject(body)
         val path = fileJsonObject.getString(File.JSON_KEY_PATH)
         val deletedFile = fileRepository.delete(path)

@@ -1,5 +1,6 @@
 package com.mercandalli.server.files.server
 
+import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
@@ -20,6 +21,7 @@ import io.ktor.request.receive
 import io.ktor.request.receiveMultipart
 import io.ktor.request.receiveText
 import io.ktor.response.respond
+import io.ktor.response.respondFile
 import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
 import io.ktor.routing.delete
@@ -29,12 +31,7 @@ import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
-import kotlinx.coroutines.experimental.CoroutineDispatcher
-import kotlinx.coroutines.experimental.withContext
-import kotlinx.coroutines.experimental.yield
 import java.io.File
-import java.io.InputStream
-import java.io.OutputStream
 import java.util.concurrent.TimeUnit
 
 class ServerManagerImpl(
@@ -112,39 +109,73 @@ class ServerManagerImpl(
                     call.respondText(response)
                 }
                 get("/file-api/file") {
+                    val headers = call.request.headers
                     val queryParameters = call.request.queryParameters
                     val parentPath = queryParameters["parent_path"]
                     val response = if (parentPath == null) {
-                        fileHandlerGet.get()
+                        fileHandlerGet.get(
+                                headers
+                        )
                     } else {
-                        fileHandlerGet.getFromParent(parentPath)
+                        fileHandlerGet.getFromParent(
+                                headers,
+                                parentPath
+                        )
                     }
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 post("/file-api/file") {
+                    val headers = call.request.headers
                     val body = call.receiveText()
-                    val response = fileHandlerPost.createPost(body)
+                    val response = fileHandlerPost.create(
+                            headers,
+                            body
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 delete("/file-api/file") {
+                    val headers = call.request.headers
                     val body = call.receiveText()
-                    val response = fileHandlerDelete.delete(body)
+                    val response = fileHandlerDelete.deleteFile(
+                            headers,
+                            body
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 get("/file-api/file/size") {
+                    val headers = call.request.headers
                     val queryParameters = call.request.queryParameters
                     val path = queryParameters["path"]
-                    val response = fileHandlerGet.getSize(path)
+                    val response = fileHandlerGet.getSize(
+                            headers,
+                            path
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
+                }
+                post("/file-api/file/download") {
+                    val headers = call.request.headers
+                    val body = call.receiveText()
+                    val response = fileHandlerPost.download(
+                            headers,
+                            body
+                    )
+                    if (response == null) {
+                        call.respondText(ServerResponse.create(
+                                "Error",
+                                false
+                        ).toJsonString())
+                        return@post
+                    }
+                    call.respondFile(response)
                 }
                 post("/file-api/file/upload") {
                     val headers = call.request.headers
                     val multipart = call.receiveMultipart()
-                    val response = fileHandlerPost.uploadPost(
+                    val response = fileHandlerPost.upload(
                             headers,
                             multipart
                     )
@@ -152,26 +183,42 @@ class ServerManagerImpl(
                     call.respondText(response)
                 }
                 post("/file-api/file/rename") {
+                    val headers = call.request.headers
                     val body = call.receiveText()
-                    val response = fileHandlerPost.renamePost(body)
+                    val response = fileHandlerPost.rename(
+                            headers,
+                            body
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 post("/file-api/file/copy") {
+                    val headers = call.request.headers
                     val body = call.receiveText()
-                    val response = fileHandlerPost.copyPost(body)
+                    val response = fileHandlerPost.copy(
+                            headers,
+                            body
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 post("/file-api/file/cut") {
+                    val headers = call.request.headers
                     val body = call.receiveText()
-                    val response = fileHandlerPost.cutPost(body)
+                    val response = fileHandlerPost.cut(
+                            headers,
+                            body
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }
                 get("/file-api/file/{id}") {
+                    val headers = call.request.headers
                     val id = call.parameters["id"]
-                    val response = fileHandlerGet.get(id!!)
+                    val response = fileHandlerGet.get(
+                            headers,
+                            id!!
+                    )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
                 }

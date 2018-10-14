@@ -15,7 +15,7 @@ interface Network {
             jsonObject: JSONObject
     ): String?
 
-    fun postSync(
+    fun postUploadSync(
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,

@@ -14,7 +14,10 @@ internal class FileOnlineUploadManagerImpl(
 
     override fun upload(file: File, javaFile: java.io.File) {
         GlobalScope.launch(Dispatchers.Default) {
-            fileOnlineApi.post(file, javaFile)
+            fileOnlineApi.postUpload(
+                    file,
+                    javaFile
+            )
             GlobalScope.launch(Dispatchers.Main) {
                 mediaScanner.refresh(file.path)
                 file.parentPath?.let {

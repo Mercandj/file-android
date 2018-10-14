@@ -14,7 +14,7 @@ internal interface FileOnlineApi {
 
     fun post(file: File)
 
-    fun post(file: File, javaFile: java.io.File)
+    fun postUpload(file: File, javaFile: java.io.File)
 
     fun delete(path: String): Boolean
 

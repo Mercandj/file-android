@@ -49,7 +49,7 @@ class NetworkModule {
             return call(request)
         }
 
-        override fun postSync(
+        override fun postUploadSync(
                 url: String,
                 headers: Map<String, String>,
                 jsonObject: JSONObject,

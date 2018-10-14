@@ -8,15 +8,28 @@ import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFiles
+import com.mercandalli.server.files.authorization.AuthorizationManager
+import io.ktor.http.Headers
 import org.json.JSONObject
 
 class FileHandlerGetImpl(
         private val fileRepository: FileRepository,
-        private val logManager: LogManager
+        private val logManager: LogManager,
+        private val authorizationManager: AuthorizationManager
 ) : FileHandlerGet {
 
-    override fun get(): String {
+    override fun get(
+            headers: Headers
+    ): String {
         logd("get()")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("get: Not logged")
+            return ServerResponseFiles.create(
+                    ArrayList(),
+                    "Oops, not logged",
+                    false
+            ).toJsonString()
+        }
         val files = fileRepository.get()
         return ServerResponseFiles.create(
                 files,
@@ -25,8 +38,18 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
-    override fun get(id: String): String {
+    override fun get(
+            headers: Headers,
+            id: String
+    ): String {
         logd("get(id: $id)")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("get: Not logged")
+            return ServerResponse.create(
+                    "Oops, not logged",
+                    false
+            ).toJsonString()
+        }
         val file = File.createFake(id)
         return ServerResponseFile.create(
                 file,
@@ -35,8 +58,18 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
-    override fun getFromParent(parentPath: String): String {
+    override fun getFromParent(
+            headers: Headers,
+            parentPath: String
+    ): String {
         logd("getFromParent(parentPath: $parentPath)")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("getFromParent: Not logged")
+            return ServerResponse.create(
+                    "Oops, not logged",
+                    false
+            ).toJsonString()
+        }
         val files = fileRepository.getFromParent(parentPath)
         return ServerResponseFiles.create(
                 files,
@@ -45,8 +78,18 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
-    override fun getSize(path: String?): String {
+    override fun getSize(
+            headers: Headers,
+            path: String?
+    ): String {
         logd("getSize(path: $path)")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("getSize: Not logged")
+            return ServerResponse.create(
+                    "Oops, not logged",
+                    false
+            ).toJsonString()
+        }
         if (path == null) {
             loge("getSize: path is null")
             return ServerResponse.create(

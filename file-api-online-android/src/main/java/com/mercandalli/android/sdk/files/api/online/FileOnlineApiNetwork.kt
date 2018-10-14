@@ -15,11 +15,11 @@ interface FileOnlineApiNetwork {
             jsonObject: JSONObject
     ): String?
 
-    fun postSync(
+    fun postUploadSync(
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,
-            javaFile:java.io.File
+            javaFile: java.io.File
     ): String?
 
     fun deleteSync(

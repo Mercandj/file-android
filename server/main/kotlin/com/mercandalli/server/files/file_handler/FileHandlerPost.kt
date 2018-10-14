@@ -5,16 +5,33 @@ import io.ktor.http.Headers
 
 interface FileHandlerPost {
 
-    fun createPost(body: String): String
+    fun create(
+            headers: Headers,
+            body: String
+    ): String
 
-    fun renamePost(body: String): String
+    fun rename(
+            headers: Headers,
+            body: String
+    ): String
 
-    fun copyPost(body: String): String
+    fun copy(
+            headers: Headers,
+            body: String
+    ): String
 
-    fun cutPost(body: String): String
+    fun cut(
+            headers: Headers,
+            body: String
+    ): String
 
-    suspend fun uploadPost(
+    suspend fun upload(
             headers: Headers,
             multipart: MultiPartData
     ): String
+
+    suspend fun download(
+            headers: Headers,
+            body: String
+    ): java.io.File?
 }

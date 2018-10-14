@@ -1,6 +1,11 @@
 package com.mercandalli.server.files.file_handler
 
+import io.ktor.http.Headers
+
 interface FileHandlerDelete {
 
-    fun delete(body: String): String
+    fun deleteFile(
+            headers: Headers,
+            body: String
+    ): String
 }
