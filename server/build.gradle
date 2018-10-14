@@ -27,6 +27,7 @@ kotlin { experimental { coroutines "enable" } }
 sourceSets {
     main.kotlin.srcDirs += 'main/kotlin'
     test.kotlin.srcDirs += 'test/kotlin'
+    test.resources.srcDirs = [ 'test/resources' ]
 }
 
 repositories {
