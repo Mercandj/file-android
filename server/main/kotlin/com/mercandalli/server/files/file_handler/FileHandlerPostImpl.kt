@@ -109,6 +109,8 @@ class FileHandlerPostImpl(
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFileInput = java.io.File(folderContainerPath, path)
         val javaFileDirectoryOutput = java.io.File(folderContainerPath, pathDirectoryOutput)
+        logd("copyPost: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
+        logd("copyPost: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
         val succeeded = FileCopyCutUtils.copyJavaFileSync(
                 javaFileInput.absolutePath,
                 javaFileDirectoryOutput.absolutePath
@@ -144,6 +146,8 @@ class FileHandlerPostImpl(
         val folderContainerPath = fileRepository.getFolderContainerPath()
         val javaFileInput = java.io.File(folderContainerPath, path)
         val javaFileDirectoryOutput = java.io.File(folderContainerPath, pathDirectoryOutput)
+        logd("cutPost: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
+        logd("cutPost: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
         val succeeded = FileCopyCutUtils.cutJavaFileSync(
                 javaFileInput.absolutePath,
                 javaFileDirectoryOutput.absolutePath

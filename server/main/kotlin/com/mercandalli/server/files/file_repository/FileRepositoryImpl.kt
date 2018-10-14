@@ -66,7 +66,9 @@ class FileRepositoryImpl(
         }
         fileRepositoryMetadata = FileRepositoryMetadata.copy(fileRepositoryMetadata, path, pathDirectoryOutput)
         save()
-        return get(pathDirectoryOutput)
+        val name = java.io.File(path).name
+        val copiedPath = java.io.File(pathDirectoryOutput, name).absolutePath
+        return get(copiedPath)
     }
 
     override fun cut(path: String, pathDirectoryOutput: String): File? {
@@ -75,7 +77,9 @@ class FileRepositoryImpl(
         }
         fileRepositoryMetadata = FileRepositoryMetadata.cut(fileRepositoryMetadata, path, pathDirectoryOutput)
         save()
-        return get(pathDirectoryOutput)
+        val name = java.io.File(path).name
+        val cutPath = java.io.File(pathDirectoryOutput, name).absolutePath
+        return get(cutPath)
     }
 
     private fun load() {

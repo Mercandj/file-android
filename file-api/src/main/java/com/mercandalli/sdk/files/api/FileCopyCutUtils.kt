@@ -62,8 +62,7 @@ object FileCopyCutUtils {
     fun cutJavaFileSync(pathInput: String, pathDirectoryOutput: String): Boolean {
         val ioFileInput = java.io.File(pathInput)
         val ioFileOutputDirectory = java.io.File(pathDirectoryOutput)
-        val outputPath = ioFileOutputDirectory.absolutePath + File.separator + ioFileInput.name
-        val ioFileOutput = java.io.File(outputPath)
+        val ioFileOutput = java.io.File(ioFileOutputDirectory.absolutePath, ioFileInput.name)
         return ioFileInput.renameTo(ioFileOutput)
     }
 }
