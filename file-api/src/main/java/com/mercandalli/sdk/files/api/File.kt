@@ -170,7 +170,7 @@ data class File private constructor(
         fun rename(file: File, name: String): File {
             val path = file.path
             val newPath = renamePathFromName(path, name)
-            return File(
+            return File.create(
                     file.id,
                     newPath,
                     file.parentPath,
@@ -194,7 +194,7 @@ data class File private constructor(
         fun setParent(file: File, pathDirectoryOutput: String): File {
             val pathDirectoryOutputCleaned = cleanPath(pathDirectoryOutput)
             val name = file.name
-            return File(
+            return File.create(
                     file.id,
                     "$pathDirectoryOutputCleaned/$name",
                     pathDirectoryOutputCleaned,
