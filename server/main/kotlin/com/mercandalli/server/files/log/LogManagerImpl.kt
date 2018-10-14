@@ -1,8 +1,8 @@
 package com.mercandalli.server.files.log
 
 import com.mercandalli.server.files.time.TimeManager
-import io.ktor.request.ApplicationRequest
-import io.ktor.request.uri
+import io.ktor.features.origin
+import io.ktor.request.*
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.collections.ArrayList
@@ -39,12 +39,19 @@ internal class LogManagerImpl(
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
         val uri = request.uri
-        d("$tag][Request", "Uri: $uri")
+        val location = request.location()
+        val userAgent = request.userAgent()
+        val host = request.host()
+        d("$tag][Request", "$ANSI_PURPLE Uri$ANSI_RESET: $uri - " +
+                "$ANSI_PURPLE Location$ANSI_RESET: $location - " +
+                "$ANSI_PURPLE UserAgent$ANSI_RESET: $userAgent - " +
+                "$ANSI_PURPLE Host$ANSI_RESET: $host")
     }
 
     override fun logResponse(tag: String, request: ApplicationRequest, response: String) {
         val uri = request.uri
-        d("$tag][Response", "Uri: $uri\nResponse: $response")
+        d("$tag][Response", "$ANSI_PURPLE Uri$ANSI_RESET: $uri - " +
+                "$ANSI_PURPLE Response$ANSI_RESET: $response")
     }
 
     override fun log1418ContactUs(
