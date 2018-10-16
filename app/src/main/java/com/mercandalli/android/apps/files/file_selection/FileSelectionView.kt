@@ -29,19 +29,15 @@ class FileSelectionView @JvmOverloads constructor(
         }
         val fileCopyCutManager = object : FileCopyCutManager {
             override fun copy(path: String) {
-
             }
 
             override fun copy(pathInput: String, pathDirectoryOutput: String) {
-
             }
 
             override fun cut(path: String) {
-
             }
 
             override fun cut(pathInput: String, pathDirectoryOutput: String) {
-
             }
 
             override fun getFileToPastePath(): String? {
@@ -49,29 +45,22 @@ class FileSelectionView @JvmOverloads constructor(
             }
 
             override fun paste(pathDirectoryOutput: String) {
-
             }
 
             override fun cancelCopyCut() {
-
             }
 
             override fun registerFileToPasteChangedListener(listener: FileCopyCutManager.FileToPasteChangedListener) {
-
             }
 
             override fun unregisterFileToPasteChangedListener(listener: FileCopyCutManager.FileToPasteChangedListener) {
-
             }
 
             override fun registerPasteListener(listener: FileCopyCutManager.PasteListener) {
-
             }
 
             override fun unregisterPasteListener(listener: FileCopyCutManager.PasteListener) {
-
             }
-
         }
         fileColumnListView.setFileManagers(
                 fileManager,

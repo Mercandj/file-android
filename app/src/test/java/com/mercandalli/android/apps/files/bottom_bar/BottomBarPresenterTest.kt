@@ -6,7 +6,8 @@ import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.never
 import org.mockito.MockitoAnnotations
 
 class BottomBarPresenterTest {

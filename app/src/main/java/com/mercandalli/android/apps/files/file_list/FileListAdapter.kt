@@ -6,7 +6,11 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
-import com.mercandalli.sdk.files.api.*
+import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileCopyCutManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListAdapter(
         fileListClickListener: FileListRow.FileClickListener?

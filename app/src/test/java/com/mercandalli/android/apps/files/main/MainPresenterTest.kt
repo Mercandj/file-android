@@ -7,8 +7,9 @@ import com.mercandalli.sdk.files.api.FileCreatorManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.reset
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 class MainPresenterTest {

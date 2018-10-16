@@ -5,8 +5,13 @@ import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.toast.ToastManager
-import com.mercandalli.sdk.files.api.*
-import java.util.*
+import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
+import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileShareManager
+import java.util.Date
 
 class FileColumnDetailPresenter(
         private val screen: FileColumnDetailContract.Screen,

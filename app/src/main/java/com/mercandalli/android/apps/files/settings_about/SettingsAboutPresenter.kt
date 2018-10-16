@@ -130,7 +130,6 @@ class SettingsAboutPresenter(
         }
 
         override fun onDialogNegativeClicked(dialogAction: DialogManager.DialogAction) {
-
         }
     }
 

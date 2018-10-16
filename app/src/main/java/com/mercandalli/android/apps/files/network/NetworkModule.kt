@@ -1,15 +1,18 @@
 package com.mercandalli.android.apps.files.network
 
 import android.util.Log
-import okhttp3.*
+import okhttp3.OkHttpClient
+import okhttp3.Headers
+import okhttp3.Response
+import okhttp3.ResponseBody
+import okhttp3.RequestBody
+import okhttp3.Request
+import okhttp3.MediaType
 import org.json.JSONObject
 import java.io.Closeable
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-import okhttp3.MultipartBody
-import android.webkit.MimeTypeMap
 import java.net.SocketTimeoutException
-
 
 class NetworkModule {
 

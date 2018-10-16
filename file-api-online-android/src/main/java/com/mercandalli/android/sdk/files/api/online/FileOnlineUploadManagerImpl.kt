@@ -7,6 +7,7 @@ import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 
+@Suppress("EXPERIMENTAL_FEATURE_WARNING")
 internal class FileOnlineUploadManagerImpl(
         private val fileOnlineApi: FileOnlineApi,
         private val mediaScanner: MediaScanner

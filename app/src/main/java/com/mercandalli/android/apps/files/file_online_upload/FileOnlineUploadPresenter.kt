@@ -2,7 +2,7 @@ package com.mercandalli.android.apps.files.file_online_upload
 
 import com.mercandalli.android.sdk.files.api.online.FileOnlineUploadManager
 import com.mercandalli.sdk.files.api.File
-import java.util.*
+import java.util.UUID
 
 class FileOnlineUploadPresenter(
         private val screen: FileOnlineUploadContract.Screen,

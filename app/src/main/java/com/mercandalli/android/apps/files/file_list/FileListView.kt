@@ -15,7 +15,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
-import com.mercandalli.sdk.files.api.*
+import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
+import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

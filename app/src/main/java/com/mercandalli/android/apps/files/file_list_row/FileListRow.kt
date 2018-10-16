@@ -15,7 +15,11 @@ import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
-import com.mercandalli.sdk.files.api.*
+import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
+import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

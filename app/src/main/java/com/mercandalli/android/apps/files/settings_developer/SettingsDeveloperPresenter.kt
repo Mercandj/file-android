@@ -87,7 +87,6 @@ class SettingsDeveloperPresenter(
     }
 
     private fun syncDeveloperRemoteCountry() {
-
     }
 
     private fun updateTheme(theme: Theme = themeManager.getTheme()) {
@@ -125,7 +124,6 @@ class SettingsDeveloperPresenter(
         }
 
         override fun onDialogNegativeClicked(dialogAction: DialogManager.DialogAction) {
-
         }
     }
 

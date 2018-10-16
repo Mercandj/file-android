@@ -90,9 +90,7 @@ object DialogUtils {
         val builder = AlertDialog.Builder(context)
         builder.setTitle(title)
         if (listener == null) {
-            builder.setItems(items.toTypedArray()
-            ) { _, _ ->
-
+            builder.setItems(items.toTypedArray()) { _, _ ->
             }
         } else {
             builder.setItems(items.toTypedArray(), listener)

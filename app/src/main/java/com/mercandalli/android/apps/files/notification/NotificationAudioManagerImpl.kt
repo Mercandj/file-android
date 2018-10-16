@@ -1,7 +1,6 @@
 package com.mercandalli.android.apps.files.notification
 
 import com.mercandalli.android.apps.files.audio.AudioManager
-import com.mercandalli.android.apps.files.audio.AudioQueueManager
 
 class NotificationAudioManagerImpl(
         private val audioManager: AudioManager,

@@ -40,16 +40,8 @@ android:
   - extra
 
 script:
-- echo "jm/debug [Gradle][app] clean"
-- "./gradlew app:clean"
-- echo "jm/debug [Gradle][app] assembleDebug"
-- "./gradlew app:assembleDebug"
-- echo "jm/debug [Gradle][app] check"
-- "./gradlew app:check"
-- echo "jm/debug [Gradle][server] fatJar"
-- "./gradlew server:fatJar"
-- echo "jm/debug [Gradle][server] check"
-- "./gradlew server:check"
+- echo "Run the script ./config/ci/ci.sh"
+- "./config/ci/ci.sh"
 
 after_failure:
 - echo "jm/debug ERROR - lint"

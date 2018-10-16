@@ -5,7 +5,11 @@ import com.mercandalli.android.apps.files.audio.AudioQueueManager
 import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.toast.ToastManager
-import com.mercandalli.sdk.files.api.*
+import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileShareManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

@@ -2,11 +2,7 @@ package com.mercandalli.android.apps.files.file_online
 
 interface FileOnlineContract {
 
-    interface UserAction {
+    interface UserAction
 
-    }
-
-    interface Screen {
-
-    }
+    interface Screen
 }

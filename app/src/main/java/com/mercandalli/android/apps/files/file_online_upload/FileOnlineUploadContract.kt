@@ -15,5 +15,4 @@ interface FileOnlineUploadContract {
 
         fun quit()
     }
-
 }
