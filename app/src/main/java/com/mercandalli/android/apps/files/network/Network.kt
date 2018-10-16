@@ -19,7 +19,8 @@ interface Network {
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,
-            javaFile: java.io.File
+            javaFile: java.io.File,
+            listener: UploadProgressListener
     ): String?
 
     fun deleteSync(
@@ -27,4 +28,12 @@ interface Network {
             headers: Map<String, String>,
             jsonObject: JSONObject
     ): String?
+
+    interface UploadProgressListener {
+
+        fun onUploadProgress(
+                current: Long,
+                size: Long
+        )
+    }
 }

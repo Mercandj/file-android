@@ -22,7 +22,9 @@ internal class FileOnlineApiImpl(
         return ServerResponseFiles.fromJson(jsonObject)
     }
 
-    override fun getFromParent(parentPath: String): ServerResponseFiles? {
+    override fun getFromParent(
+            parentPath: String
+    ): ServerResponseFiles? {
         val headers = createHeaders()
         val body = fileOnlineApiNetwork.getSync(
                 "$API_DOMAIN/file?parent_path=$parentPath",
@@ -32,7 +34,9 @@ internal class FileOnlineApiImpl(
         return ServerResponseFiles.fromJson(jsonObject)
     }
 
-    override fun getSize(path: String): ServerResponse? {
+    override fun getSize(
+            path: String
+    ): ServerResponse? {
         val headers = createHeaders()
         val body = fileOnlineApiNetwork.getSync(
                 "$API_DOMAIN/file/size?path=$path",
@@ -42,7 +46,9 @@ internal class FileOnlineApiImpl(
         return ServerResponse.fromJson(jsonObject)
     }
 
-    override fun post(file: File) {
+    override fun post(
+            file: File
+    ) {
         val headers = createHeaders()
         val fileJsonObject = File.toJson(file)
         fileOnlineApiNetwork.postSync(
@@ -52,18 +58,29 @@ internal class FileOnlineApiImpl(
         )
     }
 
-    override fun postUpload(file: File, javaFile: java.io.File) {
+    override fun postUpload(
+            file: File,
+            javaFile: java.io.File,
+            listener: FileOnlineApi.UploadProgressListener
+    ) {
         val headers = createHeaders()
         val fileJsonObject = File.toJson(file)
         fileOnlineApiNetwork.postUploadSync(
                 "$API_DOMAIN/file/upload",
                 headers,
                 fileJsonObject,
-                javaFile
+                javaFile,
+                object : FileOnlineApiNetwork.UploadProgressListener {
+                    override fun onUploadProgress(current: Long, size: Long) {
+                        listener.onUploadProgress(file, current, size)
+                    }
+                }
         )
     }
 
-    override fun delete(path: String): Boolean {
+    override fun delete(
+            path: String
+    ): Boolean {
         val headers = createHeaders()
         val fileJsonObject = JSONObject()
         fileJsonObject.put(File.JSON_KEY_PATH, path)
@@ -76,7 +93,10 @@ internal class FileOnlineApiImpl(
         return serverResponse.succeeded
     }
 
-    override fun rename(path: String, name: String): Boolean {
+    override fun rename(
+            path: String,
+            name: String
+    ): Boolean {
         val headers = createHeaders()
         val fileJsonObject = JSONObject()
         fileJsonObject.put(File.JSON_KEY_PATH, path)

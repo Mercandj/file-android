@@ -24,6 +24,10 @@ class NetworkModule {
         builder.build()
     }
 
+    private val networkUploader: NetworkUploader by lazy {
+        NetworkUploaderImpl(okHttpClient)
+    }
+
     fun createOkHttpClientLazy(): Lazy<OkHttpClient> = okHttpClient
 
     fun createNetwork() = object : Network {
@@ -53,43 +57,15 @@ class NetworkModule {
                 url: String,
                 headers: Map<String, String>,
                 jsonObject: JSONObject,
-                javaFile: java.io.File
-        ): String? {
-            val mimeTypeString = getMimeType(javaFile.absolutePath)
-            val mimeType = if (mimeTypeString == null) {
-                MediaType.parse("*/*")
-            } else {
-                MediaType.parse(mimeTypeString)
-            }
-            val req = MultipartBody
-                    .Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart(
-                            "json",
-                            jsonObject.toString()
-                    )
-                    .addFormDataPart(
-                            "file",
-                            javaFile.name,
-                            RequestBody.create(mimeType, javaFile)
-                    )
-                    .build()
-            val request = Request.Builder()
-                    .url(url)
-                    .headers(Headers.of(headers))
-                    .post(req)
-                    .build()
-            return call(request)
-        }
-
-        fun getMimeType(url: String): String? {
-            var type: String? = null
-            val extension = MimeTypeMap.getFileExtensionFromUrl(url)
-            if (extension != null) {
-                type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-            }
-            return type
-        }
+                javaFile: java.io.File,
+                listener: Network.UploadProgressListener
+        ) = networkUploader.postUploadSync(
+                url,
+                headers,
+                jsonObject,
+                javaFile,
+                listener
+        )
 
         override fun deleteSync(
                 url: String,
@@ -123,16 +99,17 @@ class NetworkModule {
         }
     }
 
-    private fun closeSilently(vararg xs: Closeable?) {
-        for (x in xs) {
-            try {
-                x?.close()
-            } catch (ignored: Throwable) {
+    companion object {
+
+        private val MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8")
+
+        private fun closeSilently(vararg xs: Closeable?) {
+            for (x in xs) {
+                try {
+                    x?.close()
+                } catch (ignored: Throwable) {
+                }
             }
         }
-    }
-
-    companion object {
-        private val MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8")
     }
 }

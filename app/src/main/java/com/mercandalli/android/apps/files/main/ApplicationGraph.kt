@@ -12,6 +12,7 @@ import com.mercandalli.android.apps.files.developer.DeveloperModule
 import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
+import com.mercandalli.android.apps.files.network.Network
 import com.mercandalli.android.apps.files.toast.ToastModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
@@ -139,12 +140,18 @@ class ApplicationGraph(
                     url: String,
                     headers: Map<String, String>,
                     jsonObject: JSONObject,
-                    javaFile: File
+                    javaFile: File,
+                    listener: FileOnlineApiNetwork.UploadProgressListener
             ) = getNetwork().postUploadSync(
                     url,
                     headers,
                     jsonObject,
-                    javaFile
+                    javaFile,
+                    object : Network.UploadProgressListener {
+                        override fun onUploadProgress(current: Long, size: Long) {
+                            listener.onUploadProgress(current, size)
+                        }
+                    }
             )
 
             override fun deleteSync(
