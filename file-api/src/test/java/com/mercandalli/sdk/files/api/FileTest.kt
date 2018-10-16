@@ -11,7 +11,7 @@ class FileTest {
         val file = File.create(
                 "id",
                 "path",
-                "parentPath",
+                "/parentPath",
                 false,
                 "name",
                 42,

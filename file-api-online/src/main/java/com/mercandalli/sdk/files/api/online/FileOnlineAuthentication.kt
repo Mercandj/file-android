@@ -1,15 +1,24 @@
 package com.mercandalli.sdk.files.api.online
 
+import java.util.*
+
 data class FileOnlineAuthentication(
         val login: String,
         val passwordSha1: String
 ) {
 
-    fun createToken() = FileOnlineTokenCreator.createToken(login, passwordSha1)
+    fun createToken() = fileOnlineTokenCreator.createToken(login, passwordSha1)
 
-    fun createTokens() = FileOnlineTokenCreator.createTokens(login, passwordSha1, 8)
+    fun createTokens() = fileOnlineTokenCreator.createTokens(login, passwordSha1, 8)
 
     companion object {
+
+        private val fileOnlineTokenCreator: FileOnlineTokenCreator by lazy {
+            val addOn = object : FileOnlineTokenCreatorImpl.AddOn {
+                override fun getCurrentDate() = Date()
+            }
+            FileOnlineTokenCreatorImpl(addOn)
+        }
 
         fun isLogged(token: String, fileOnlineAuthentications: List<FileOnlineAuthentication>): Boolean {
             for (fileOnlineAuthentication in fileOnlineAuthentications) {

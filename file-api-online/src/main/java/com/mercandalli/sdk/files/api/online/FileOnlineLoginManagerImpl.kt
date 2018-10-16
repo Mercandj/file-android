@@ -3,7 +3,8 @@ package com.mercandalli.sdk.files.api.online
 import com.mercandalli.sdk.files.api.online.utils.HashUtils
 
 internal class FileOnlineLoginManagerImpl(
-        private val fileOnlineLoginRepository: FileOnlineLoginRepository?
+        private val fileOnlineLoginRepository: FileOnlineLoginRepository?,
+        private val fileOnlineTokenCreator: FileOnlineTokenCreator
 ) : FileOnlineLoginManager {
 
     private var login: String? = null
@@ -35,7 +36,7 @@ internal class FileOnlineLoginManagerImpl(
 
     override fun isLogged() = login != null && passwordSha1 != null
 
-    override fun createToken() = FileOnlineTokenCreator.createToken(login!!, passwordSha1!!)
+    override fun createToken() = fileOnlineTokenCreator.createToken(login!!, passwordSha1!!)
 
     override fun registerLoginListener(listener: FileOnlineLoginManager.LoginListener) {
         if (listeners.contains(listener)) {

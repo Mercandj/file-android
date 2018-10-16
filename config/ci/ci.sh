@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+PROJECT_DIR="$BASE_DIR/../../"
+
 # Region - Color
 CONFIG_COLOR_BOLD=$(tput bold)
 CONFIG_COLOR_RED=`tput setaf 1`
@@ -20,6 +23,9 @@ CONFIG_COLOR_RESET=`tput sgr0`
 log_d() {
     printf "${CONFIG_COLOR_CYAN}[Gradle][CI]${CONFIG_COLOR_RESET}$1\n"
 }
+log_e() {
+    printf "${CONFIG_COLOR_RED}[Gradle][CI][Error]${CONFIG_COLOR_RESET}$1\n"
+}
 log_jump() {
     printf "\n"
 }
@@ -27,6 +33,20 @@ log_line() {
     printf "${CONFIG_COLOR_RED}-------------------------------------------------------------------------------------------${CONFIG_COLOR_RESET}\n"
 }
 
+gradle_task() {
+    module_name=$1
+    task_name=$2
+
+    log_d "[${module_name}] ${task_name}"
+    ./gradlew ${module_name}:${task_name}
+    exit_status=$?
+    if [ ${exit_status} -eq 1 ]; then
+        log_e "[${module_name}] ${task_name} failed"
+        cat "$PROJECT_DIR/${module_name}/build/reports/tests/test/index.html"
+        log_e "[${module_name}] ${task_name} failed"
+        exit ${exit_status}
+    fi
+}
 
 log_jump
 log_jump
@@ -39,24 +59,35 @@ log_jump
 log_jump
 
 
-BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-log_d "Script base directory: $BASEDIR"
+log_d "Script base directory: $BASE_DIR"
+log_d "Script project directory: $PROJECT_DIR"
 log_jump
 
-pushd "$BASEDIR/../../"
+pushd "$PROJECT_DIR"
 
     pwd
-    log_d "[app] clean"
-    ./gradlew app:clean
-    log_d "[app] assembleDebug"
-    ./gradlew app:assembleDebug
-    log_d "[app] check"
-    ./gradlew app:check
-    log_d "[app] ktlint"
-    ./gradlew ktlint
-    log_d "[server] fatJar"
-    ./gradlew server:fatJar
-    log_d "[server] check"
-    ./gradlew server:check
+
+    log_line
+    log_d "APP"
+    log_line
+
+    gradle_task "app" "clean"
+    gradle_task "app" "assembleDebug"
+    gradle_task "app" "check"
+    gradle_task "app" "ktlint"
+
+    log_line
+    log_d "FILE-API"
+    log_line
+
+    gradle_task "file-api" "check"
+    gradle_task "file-api-online" "check"
+
+    log_line
+    log_d "SERVER"
+    log_line
+
+    gradle_task "server" "fatJar"
+    gradle_task "server" "check"
 
 popd
