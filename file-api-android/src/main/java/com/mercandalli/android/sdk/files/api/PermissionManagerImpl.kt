@@ -32,7 +32,8 @@ class PermissionManagerImpl(
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val checkSelfPermission = ContextCompat.checkSelfPermission(
                         context,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
                 if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
                     return false
                 }

@@ -6,7 +6,7 @@ internal class MediaScannerAndroid(
         private val addOn: AddOn
 ) : MediaScanner {
 
-    private var refreshListeners= ArrayList<MediaScanner.RefreshListener>()
+    private var refreshListeners = ArrayList<MediaScanner.RefreshListener>()
 
     override fun refresh(path: String) {
         addOn.refreshSystemMediaScanDataBase(path)

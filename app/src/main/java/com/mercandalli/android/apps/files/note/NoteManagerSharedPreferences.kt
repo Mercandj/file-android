@@ -10,7 +10,8 @@ class NoteManagerSharedPreferences(
     private var note: String
 
     init {
-        note = sharedPreferences.getString("note", "")
+        val loadedNote = sharedPreferences.getString("note", "")
+        note = loadedNote ?: ""
     }
 
     override fun getNote(): String {
@@ -32,10 +33,12 @@ class NoteManagerSharedPreferences(
     }
 
     interface AddOn {
+
         fun shareText(text: String)
     }
 
     companion object {
+
         @JvmStatic
         val PREFERENCE_NAME = "NoteManager"
     }

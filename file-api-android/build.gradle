@@ -32,6 +32,10 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:1.0.0"
     implementation "androidx.annotation:annotation:1.0.0"
+
+    // Testing-only dependencies
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
 }
 
 repositories {

@@ -21,9 +21,15 @@ CONFIG_COLOR_RESET=`tput sgr0`
 
 
 log_d() {
+    printf "${CONFIG_COLOR_CYAN}[Gradle][CI]${CONFIG_COLOR_RESET} $1\n"
+}
+log_d_tag() {
     printf "${CONFIG_COLOR_CYAN}[Gradle][CI]${CONFIG_COLOR_RESET}$1\n"
 }
 log_e() {
+    printf "${CONFIG_COLOR_RED}[Gradle][CI][Error]${CONFIG_COLOR_RESET} $1\n"
+}
+log_e_tag() {
     printf "${CONFIG_COLOR_RED}[Gradle][CI][Error]${CONFIG_COLOR_RESET}$1\n"
 }
 log_jump() {
@@ -37,13 +43,13 @@ gradle_task() {
     module_name=$1
     task_name=$2
 
-    log_d "[${module_name}] ${task_name}"
+    log_d_tag "[${module_name}] ${task_name}"
     ./gradlew ${module_name}:${task_name}
     exit_status=$?
     if [ ${exit_status} -eq 1 ]; then
-        log_e "[${module_name}] ${task_name} failed"
+        log_e_tag "[${module_name}] ${task_name} failed"
         cat "$PROJECT_DIR/${module_name}/build/reports/tests/test/index.html"
-        log_e "[${module_name}] ${task_name} failed"
+        log_e_tag "[${module_name}] ${task_name} failed"
         exit ${exit_status}
     fi
 }
@@ -75,13 +81,16 @@ pushd "$PROJECT_DIR"
     gradle_task "app" "assembleDebug"
     gradle_task "app" "check"
     gradle_task "app" "ktlint"
+    gradle_task "app" "detekt"
 
     log_line
     log_d "FILE-API"
     log_line
 
     gradle_task "file-api" "check"
+    gradle_task "file-api-android" "check"
     gradle_task "file-api-online" "check"
+    gradle_task "file-api-online-android" "check"
 
     log_line
     log_d "SERVER"

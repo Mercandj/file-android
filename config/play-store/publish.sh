@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
 # Region - Color
 CONFIG_COLOR_BOLD=$(tput bold)
 CONFIG_COLOR_RED=`tput setaf 1`
@@ -27,7 +29,6 @@ log_line() {
     printf "${CONFIG_COLOR_RED}-------------------------------------------------------------------------------------------${CONFIG_COLOR_RESET}\n"
 }
 
-
 log_jump
 log_jump
 
@@ -38,33 +39,31 @@ log_line
 log_jump
 log_jump
 
-
-BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-log_d "Script base directory: $BASEDIR"
+log_d "Script base directory: $BASE_DIR"
 log_jump
 
-pushd "$BASEDIR"
+pushd "$BASE_DIR"
     log_jump
 
-    log_d "Remove pre-existing $BASEDIR/build/app.aab"
+    log_d "Remove pre-existing $BASE_DIR/build/app.aab"
     rm "./build/app.aab"
     log_jump
 
-    log_d "Remove pre-existing $BASEDIR/build/app-release.apk"
+    log_d "Remove pre-existing $BASE_DIR/build/app-release.apk"
     rm "./build/app-release.apk"
     log_jump
 
-    log_d "Remove pre-existing $BASEDIR/build/mapping.txt"
+    log_d "Remove pre-existing $BASE_DIR/build/mapping.txt"
     rm "./build/mapping.txt"
     log_jump
 
-    log_d "Remove pre-existing $BASEDIR/build/play-store.jar"
+    log_d "Remove pre-existing $BASE_DIR/build/play-store.jar"
     rm "./build/play-store.jar"
     log_jump
 
-    if [ -d "$BASEDIR/build/play-store" ]; then
+    if [ -d "$BASE_DIR/build/play-store" ]; then
         log_d "Pull play-store GitHub project"
-        pushd "$BASEDIR/build/play-store"
+        pushd "$BASE_DIR/build/play-store"
             git pull
         popd
     else

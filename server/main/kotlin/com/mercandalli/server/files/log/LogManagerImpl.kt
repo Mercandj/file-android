@@ -42,18 +42,18 @@ internal class LogManagerImpl(
         val local = request.local
         val remoteHost = local.remoteHost
         val method = local.method.value
-        val userAgent = request.userAgent()?.substring(0, 40)
-        d("$tag][Request", "$ANSI_PURPLE Uri$ANSI_RESET: $uri -" +
-                "$ANSI_PURPLE Method$ANSI_RESET: $method -" +
-                "$ANSI_PURPLE RemoteHost$ANSI_RESET: $remoteHost -" +
-                "$ANSI_PURPLE UserAgent$ANSI_RESET: $userAgent"
+        val userAgent = request.userAgent()?.substring(0, 56)
+        d("$tag][Request", "${ANSI_PURPLE}uri$ANSI_RESET:$uri " +
+                "${ANSI_PURPLE}method$ANSI_RESET:$method " +
+                "${ANSI_PURPLE}host$ANSI_RESET:$remoteHost " +
+                "${ANSI_PURPLE}user-agent$ANSI_RESET:$userAgent"
         )
     }
 
     override fun logResponse(tag: String, request: ApplicationRequest, response: String) {
         val uri = request.uri
-        d("$tag][Response", "$ANSI_PURPLE Uri$ANSI_RESET: $uri -" +
-                "$ANSI_PURPLE Response$ANSI_RESET: $response")
+        d("$tag][Response", "${ANSI_PURPLE}uri$ANSI_RESET:$uri " +
+                "${ANSI_PURPLE}response$ANSI_RESET:$response")
     }
 
     override fun log1418ContactUs(
@@ -79,6 +79,7 @@ internal class LogManagerImpl(
         log1418File.writeText(jsonArray.toString())
     }
 
+    @Suppress("unused")
     companion object {
 
         private const val ANSI_RESET = "\u001B[0m"

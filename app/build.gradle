@@ -7,6 +7,10 @@ apply plugin: 'kotlin-android-extensions'
 // https://github.com/ben-manes/gradle-versions-plugin
 apply plugin: 'com.github.ben-manes.versions'
 
+// Detekt - Static code analysis
+// https://github.com/arturbosch/detekt
+apply from: "../config/quality/detekt/detekt.gradle"
+
 // Fabric
 apply plugin: 'io.fabric'
 

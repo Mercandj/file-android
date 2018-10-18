@@ -40,8 +40,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.0.0"
     implementation "androidx.annotation:annotation:1.0.0"
 
+    // Testing-only dependencies
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.json:json:20180813'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
 
     // Third party - Network
     androidTestImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -56,4 +57,10 @@ dependencies {
 
 repositories {
     mavenCentral()
+}
+
+android {
+    lintOptions {
+        abortOnError false
+    }
 }

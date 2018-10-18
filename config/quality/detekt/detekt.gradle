@@ -1,0 +1,33 @@
+// https://medium.com/@heri.sulis/integrating-kotlin-detekt-cli-on-android-gradle-task-a02ca0378dcc
+
+configurations {
+    detekt
+}
+
+task detekt(type: JavaExec) {
+    main = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = configurations.detekt
+    def input = "$projectDir/src/main/java"
+    def config = "$rootDir/config/quality/detekt/detekt-ruleset.yml"
+    def filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    def output = "$buildDir/reports/detekt"
+    def outputName = "detekt-report"
+    def params = [
+            '-i',
+            input,
+            '-c',
+            config,
+            '-f',
+            filters,
+            '-o',
+            output,
+            '-on',
+            outputName
+    ]
+    println("PARAMS = $params") // to make sure the path is right
+    args(params)
+}
+
+dependencies {
+    detekt 'io.gitlab.arturbosch.detekt:detekt-cli:1.0.0.RC6-3'
+}

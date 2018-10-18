@@ -52,7 +52,8 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
     //region SettingsDeveloper
     class SettingsDeveloper
 
-    private class SettingsDeveloperAdapterDelegate : AbsListItemAdapterDelegate<Any, Any, SettingsDeveloperViewHolder>() {
+    private class SettingsDeveloperAdapterDelegate :
+            AbsListItemAdapterDelegate<Any, Any, SettingsDeveloperViewHolder>() {
 
         override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsDeveloper
 

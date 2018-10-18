@@ -65,7 +65,8 @@ class MainActivity : AppCompatActivity(),
         toolbarFileList.setOnClickListener { userAction.onToolbarFileListClicked() }
         toolbarFilePaste.setOnClickListener { userAction.onToolbarFilePasteClicked() }
         fileList.setFileListViewSelectedFileListener(fileListViewSelectedFileListener)
-        fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(createFileHorizontalListsSelectedFileListener())
+        val fileHorizontalListsSelectedFileListener = createFileHorizontalListsSelectedFileListener()
+        fileColumnHorizontalLists.setFileHorizontalListsSelectedFileListener(fileHorizontalListsSelectedFileListener)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val decorView = window.decorView
             bottomBarBlurView.setupWith(decorView.findViewById<View>(android.R.id.content) as ViewGroup)
