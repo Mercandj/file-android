@@ -1,10 +1,9 @@
 package com.mercandalli.server.files.log
 
 import com.mercandalli.server.files.time.TimeManager
-import io.ktor.features.origin
 import io.ktor.request.*
 import org.json.JSONArray
-import org.json.JSONObject
+import sun.net.www.protocol.http.HttpURLConnection.userAgent
 import kotlin.collections.ArrayList
 
 internal class LogManagerImpl(
@@ -28,32 +27,81 @@ internal class LogManagerImpl(
     }
 
     override fun d(tag: String, message: String) {
-        val time = timeManager.getTimeString()
-        println("$ANSI_CYAN$time$ANSI_RESET [$tag] $message")
+        val tags = listOf(tag)
+        val contentString = HashMap<String, String>()
+        contentString["message"] = message
+        val log = LogData(
+                LogData.Type.Description,
+                tags,
+                timeManager.getDayString(),
+                timeManager.getTimeString(),
+                timeManager.getTimeLong(),
+                contentString,
+                HashMap(),
+                HashMap()
+        )
+        print(log)
     }
 
     override fun e(tag: String, message: String) {
-        val time = timeManager.getTimeString()
-        println("$ANSI_RED_BOLD$time [$tag] $message$ANSI_RESET")
+        val tags = listOf(tag)
+        val contentString = HashMap<String, String>()
+        contentString["message"] = message
+        val log = LogData(
+                LogData.Type.Error,
+                tags,
+                timeManager.getDayString(),
+                timeManager.getTimeString(),
+                timeManager.getTimeLong(),
+                contentString,
+                HashMap(),
+                HashMap()
+        )
+        print(log)
     }
 
     override fun logRequest(tag: String, request: ApplicationRequest) {
+        val tags = listOf(tag, "Request")
         val uri = request.uri
         val local = request.local
         val remoteHost = local.remoteHost
         val method = local.method.value
-        val userAgent = request.userAgent()?.substring(0, 56)
-        d("$tag][Request", "${ANSI_PURPLE}uri$ANSI_RESET:$uri " +
-                "${ANSI_PURPLE}method$ANSI_RESET:$method " +
-                "${ANSI_PURPLE}host$ANSI_RESET:$remoteHost " +
-                "${ANSI_PURPLE}user-agent$ANSI_RESET:$userAgent"
+        val userAgent = request.userAgent() ?: ""
+        val contentString = HashMap<String, String>()
+        contentString["uri"] = uri
+        contentString["remote_host"] = remoteHost
+        contentString["method"] = method
+        contentString["user_agent"] = userAgent
+        val log = LogData(
+                LogData.Type.Description,
+                tags,
+                timeManager.getDayString(),
+                timeManager.getTimeString(),
+                timeManager.getTimeLong(),
+                contentString,
+                HashMap(),
+                HashMap()
         )
+        print(log)
     }
 
     override fun logResponse(tag: String, request: ApplicationRequest, response: String) {
+        val tags = listOf(tag, "Response")
         val uri = request.uri
-        d("$tag][Response", "${ANSI_PURPLE}uri$ANSI_RESET:$uri " +
-                "${ANSI_PURPLE}response$ANSI_RESET:$response")
+        val contentString = HashMap<String, String>()
+        contentString["uri"] = uri
+        contentString["response"] = response
+        val log = LogData(
+                LogData.Type.Description,
+                tags,
+                timeManager.getDayString(),
+                timeManager.getTimeString(),
+                timeManager.getTimeLong(),
+                contentString,
+                HashMap(),
+                HashMap()
+        )
+        print(log)
     }
 
     override fun log1418ContactUs(
@@ -79,74 +127,7 @@ internal class LogManagerImpl(
         log1418File.writeText(jsonArray.toString())
     }
 
-    @Suppress("unused")
-    companion object {
-
-        private const val ANSI_RESET = "\u001B[0m"
-        private const val ANSI_BLACK = "\u001B[30m"
-        private const val ANSI_RED = "\u001B[31m"
-        private const val ANSI_GREEN = "\u001B[32m"
-        private const val ANSI_YELLOW = "\u001B[33m"
-        private const val ANSI_BLUE = "\u001B[34m"
-        private const val ANSI_PURPLE = "\u001B[35m"
-        private const val ANSI_CYAN = "\u001B[36m"
-        private const val ANSI_WHITE = "\u001B[37m"
-        private const val ANSI_RED_BOLD = "\u001B[1;31m"
-
-    }
-
-    data class ContactUs(
-            val time: String,
-            val firstName: String?,
-            val lastName: String?,
-            val email: String?,
-            val text: String?
-    ) {
-        companion object {
-
-            fun fromJson(jsonObject: JSONObject): ContactUs {
-                val time = jsonObject.getString("time")
-                val firstName = jsonObject.getString("first_name")
-                val lastName = jsonObject.getString("last_name")
-                val email = jsonObject.getString("email")
-                val text = jsonObject.getString("text")
-                return ContactUs(
-                        time,
-                        firstName,
-                        lastName,
-                        email,
-                        text
-                )
-            }
-
-            fun fromJson(jsonArray: JSONArray): List<ContactUs> {
-                val list = ArrayList<ContactUs>()
-                for (i in 0 until jsonArray.length()) {
-                    val jsonObject = jsonArray.getJSONObject(i)
-                    val contactUs = fromJson(jsonObject)
-                    list.add(contactUs)
-                }
-                return list
-            }
-
-            fun toJson(contactUs: ContactUs): JSONObject {
-                val jsonObject = JSONObject()
-                jsonObject.put("time", contactUs.time)
-                jsonObject.put("first_name", contactUs.firstName)
-                jsonObject.put("last_name", contactUs.lastName)
-                jsonObject.put("email", contactUs.email)
-                jsonObject.put("text", contactUs.text)
-                return jsonObject
-            }
-
-            fun toJson(contactUss: List<ContactUs>): JSONArray {
-                val jsonArray = JSONArray()
-                for (contactUs in contactUss) {
-                    val jsonObject = toJson(contactUs)
-                    jsonArray.put(jsonObject)
-                }
-                return jsonArray
-            }
-        }
+    private fun print(logData: LogData) {
+        println(logData.toTerminalInput())
     }
 }
