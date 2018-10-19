@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Region - Constants
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 # Region - Color
@@ -17,24 +18,26 @@ CONFIG_COLOR_DARKCYAN=$(tput setaf 6)
 CONFIG_COLOR_CYAN="$CONFIG_COLOR_BOLD$CONFIG_COLOR_DARKCYAN"
 CONFIG_COLOR_RESET=`tput sgr0`
 # EndRegion - Color
+# EndRegion - Constants
 
-
+# Region - Methods
 log_d() {
     printf "${CONFIG_COLOR_CYAN}[PlayStore][Publish]${CONFIG_COLOR_RESET} $1\n"
 }
 log_jump() {
     printf "\n"
 }
-log_line() {
-    printf "${CONFIG_COLOR_RED}-------------------------------------------------------------------------------------------${CONFIG_COLOR_RESET}\n"
+log_delimiter() {
+    printf "${CONFIG_COLOR_RED}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${CONFIG_COLOR_RESET}\n"
 }
+# EndRegion - Methods
 
 log_jump
 log_jump
 
-log_line
+log_delimiter
 log_d "Play store publishing!!!"
-log_line
+log_delimiter
 
 log_jump
 log_jump
@@ -104,13 +107,13 @@ pushd "$BASE_DIR"
     java -jar ./build/play-store.jar --force
     log_jump
 
-    log_line
+    log_delimiter
     log_d "Script ended."
     log_d "If all succeeded, AppBundle should have been uploaded in the internal chanel."
     log_d "If all succeeded, mapping.txt should be in the ./build folder."
     log_d "If all succeeded, app-release.apk should be in the ./build folder."
     log_d "Please create a GitHub release with the apk rename filespace-app-release-<version>.apk"
     log_d "Please upload the mapping to the PlayStore"
-    log_line
+    log_delimiter
 
 popd

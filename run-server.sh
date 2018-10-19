@@ -27,17 +27,17 @@ log_d() {
 log_jump() {
     printf "\n"
 }
-log_line() {
-    printf "${CONFIG_COLOR_RED}-------------------------------------------------------------------------------------------${CONFIG_COLOR_RESET}\n"
+log_delimiter() {
+    printf "${CONFIG_COLOR_RED}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${CONFIG_COLOR_RESET}\n"
 }
 # EndRegion - Methods
 
 log_jump
 log_jump
 
-log_line
+log_delimiter
 log_d "Server!!!"
-log_line
+log_delimiter
 
 log_jump
 log_jump

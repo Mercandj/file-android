@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Region - Constants
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 PROJECT_DIR="$BASE_DIR/../../"
 
@@ -18,8 +19,9 @@ CONFIG_COLOR_DARKCYAN=$(tput setaf 6)
 CONFIG_COLOR_CYAN="$CONFIG_COLOR_BOLD$CONFIG_COLOR_DARKCYAN"
 CONFIG_COLOR_RESET=`tput sgr0`
 # EndRegion - Color
+# EndRegion - Constants
 
-
+# Region - Methods
 log_d() {
     printf "${CONFIG_COLOR_CYAN}[Gradle][CI]${CONFIG_COLOR_RESET} $1\n"
 }
@@ -35,9 +37,10 @@ log_e_tag() {
 log_jump() {
     printf "\n"
 }
-log_line() {
-    printf "${CONFIG_COLOR_RED}-------------------------------------------------------------------------------------------${CONFIG_COLOR_RESET}\n"
+log_delimiter() {
+    printf "${CONFIG_COLOR_RED}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${CONFIG_COLOR_RESET}\n"
 }
+# EndRegion - Methods
 
 gradle_task() {
     module_name=$1
@@ -57,13 +60,12 @@ gradle_task() {
 log_jump
 log_jump
 
-log_line
+log_delimiter
 log_d "CI script!!!"
-log_line
+log_delimiter
 
 log_jump
 log_jump
-
 
 log_d "Script base directory: $BASE_DIR"
 log_d "Script project directory: $PROJECT_DIR"
@@ -73,9 +75,9 @@ pushd "$PROJECT_DIR"
 
     pwd
 
-    log_line
+    log_delimiter
     log_d "APP"
-    log_line
+    log_delimiter
 
     gradle_task "app" "clean"
     gradle_task "app" "assembleDebug"
@@ -83,18 +85,18 @@ pushd "$PROJECT_DIR"
     gradle_task "app" "ktlint"
     gradle_task "app" "detekt"
 
-    log_line
+    log_delimiter
     log_d "FILE-API"
-    log_line
+    log_delimiter
 
     gradle_task "file-api" "check"
     gradle_task "file-api-android" "check"
     gradle_task "file-api-online" "check"
     gradle_task "file-api-online-android" "check"
 
-    log_line
+    log_delimiter
     log_d "SERVER"
-    log_line
+    log_delimiter
 
     gradle_task "server" "fatJar"
     gradle_task "server" "check"
