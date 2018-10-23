@@ -3,7 +3,6 @@ package com.mercandalli.server.files.log
 import com.mercandalli.server.files.time.TimeManager
 import io.ktor.request.*
 import org.json.JSONArray
-import sun.net.www.protocol.http.HttpURLConnection.userAgent
 import kotlin.collections.ArrayList
 
 internal class LogManagerImpl(
