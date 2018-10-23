@@ -3,15 +3,10 @@ package com.mercandalli.android.sdk.files.api
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCopyCutUtils
 import com.mercandalli.sdk.files.api.MediaScanner
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.android.Main
-import kotlinx.coroutines.experimental.launch
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-@Suppress("EXPERIMENTAL_FEATURE_WARNING")
 class FileCopyCutManagerAndroid(
         private val mediaScanner: MediaScanner
 ) : FileCopyCutManager {

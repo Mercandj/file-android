@@ -51,7 +51,5 @@ data class LogData(
         private const val ANSI_CYAN = "\u001B[36m"
         private const val ANSI_WHITE = "\u001B[37m"
         private const val ANSI_RED_BOLD = "\u001B[1;31m"
-
     }
-
 }

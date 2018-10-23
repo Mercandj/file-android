@@ -2,10 +2,9 @@ package com.mercandalli.android.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileSizeResult
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.android.Main
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 internal class FileOnlineSizeManagerAndroid(
         private val fileOnlineApi: FileOnlineApi

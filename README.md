@@ -1,18 +1,41 @@
 [![Build Status](https://travis-ci.org/Mercandj/file-android.svg?branch=master)](https://travis-ci.org/Mercandj/file-android)
+[![Version](https://img.shields.io/badge/download-1.00.11-607D8B.svg?style=flat-square&label=version)](https://github.com/Mercandj/file-android/releases/tag/1.00.11)
+[![Kotlin](https://img.shields.io/badge/kotlin-1.3.0.rc.190-f5801e.svg?style=flat-square)](http://kotlinlang.org) 
+[![PlayStore URL](https://img.shields.io/badge/play%20store-team%20mercan-1DA1F2.svg?style=flat-square&logo=android)](https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files)
 
 # File manager on Android
 
-<p align="center">
-	<a margin="20px 0" href="https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files">
-		<img src="https://raw.github.com/Mercandj/file-android/master/config/screenshot/mercandalli_file_1.png" width="560" />
-	</a>
-</p>
+Light file manager app. Browse and manager your files.
+
+<a href='https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files'>
+    <img 
+        src="app/src/main/res/icon/mipmap-xxhdpi/ic_launcher.png"
+        align="left"
+        width="190"
+        hspace="10"
+        vspace="10" />
+</a>
+
+* Copy / Cut / Paste
+* Open multimedia (musics, videos, pdf, apk...)
+* Online
+* Dark theme
+* Take notes
 
 <a href='https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
     <img 
-    alt='Get it on Google Play' 
-    src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'
-    width="220"/>
+        alt='Get it on Google Play' 
+        src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'
+        height="80" />
+</a>
+
+<br/>
+
+<a margin="20px 0 20px 40px" href="https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files">
+	<img 
+	    src="https://raw.github.com/Mercandj/file-android/master/config/screenshot/mercandalli_file_1.png" 
+	    align="right"
+	    width="250" />
 </a>
 
 ## Run the server

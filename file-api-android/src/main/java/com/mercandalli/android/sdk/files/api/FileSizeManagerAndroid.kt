@@ -3,12 +3,10 @@ package com.mercandalli.android.sdk.files.api
 import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileSizeResult
 import com.mercandalli.sdk.files.api.FileSizeUtils
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.android.Main
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-@Suppress("EXPERIMENTAL_FEATURE_WARNING")
 internal class FileSizeManagerAndroid(
         private val permissionManager: PermissionManager
 ) : FileSizeManager {
