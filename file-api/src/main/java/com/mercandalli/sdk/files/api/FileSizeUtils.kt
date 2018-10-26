@@ -52,7 +52,8 @@ object FileSizeUtils {
 
     private fun computeSizeFromJavaFolderSync(directory: java.io.File): Long {
         var length: Long = 0
-        for (file in directory.listFiles()) {
+        val listFiles = directory.listFiles() ?: return 0
+        for (file in listFiles) {
             length += if (file.isFile) {
                 file.length()
             } else {
