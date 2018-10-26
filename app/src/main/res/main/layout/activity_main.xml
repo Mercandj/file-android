@@ -17,6 +17,7 @@
             android:layout_gravity="center_vertical|start"
             android:layout_marginStart="@dimen/default_space_2"
             android:layout_marginEnd="@dimen/default_space_2"
+            android:fontFamily="@font/google_sans_regular"
             android:text="FileSpace"
             android:textColor="@color/toolbar_title_light"
             android:textSize="@dimen/text_size_xl" />

@@ -26,6 +26,7 @@
             android:id="@+id/view_bottom_bar_section_file_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
             android:text="Files"
             android:textSize="@dimen/bottom_bar_text_size" />
 
@@ -51,6 +52,7 @@
             android:id="@+id/view_bottom_bar_section_online_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
             android:text="Online"
             android:textSize="@dimen/bottom_bar_text_size" />
 
@@ -76,6 +78,7 @@
             android:id="@+id/view_bottom_bar_section_note_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
             android:text="Notes"
             android:textSize="@dimen/bottom_bar_text_size" />
 
@@ -101,6 +104,7 @@
             android:id="@+id/view_bottom_bar_section_settings_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
             android:text="Settings"
             android:textSize="@dimen/bottom_bar_text_size" />
 

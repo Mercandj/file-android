@@ -16,8 +16,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="top"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/bottom_bar_height_plus_6"
             android:paddingTop="6dp"
+            android:paddingBottom="@dimen/bottom_bar_height_plus_6"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
             tools:itemCount="5"
@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/google_sans_regular"
         android:text="No file"
         tools:visibility="gone" />
 
@@ -38,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/google_sans_regular"
         android:text="Error"
         tools:visibility="gone" />
 

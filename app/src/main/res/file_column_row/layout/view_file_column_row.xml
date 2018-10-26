@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp">
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_file_column_row_icon"
@@ -24,14 +24,15 @@
             android:id="@+id/view_file_column_row_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_space"
-            android:layout_marginEnd="0dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="@dimen/default_space"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="@dimen/default_space"
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:fontFamily="@font/google_sans_regular"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="true"
@@ -43,8 +44,8 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="0dp"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="0dp"
             android:src="@drawable/ic_play_arrow_black_24dp"
             android:tint="#888888" />
 
