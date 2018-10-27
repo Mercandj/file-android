@@ -55,6 +55,13 @@ class FileOnlineAndroidModule(
         )
     }
 
+    fun createFileOnlineDownloadManager(): FileOnlineDownloadManager {
+        return FileOnlineDownloadManagerAndroid(
+                fileOnlineApi,
+                mediaScanner
+        )
+    }
+
     fun getFileOnlineLoginManager() = fileOnlineLoginManagerInternal
 
     fun createFileOnlineRenameManager(): FileRenameManager {
@@ -77,7 +84,7 @@ class FileOnlineAndroidModule(
     }
 
     fun createFileOnlineUploadManager(): FileOnlineUploadManager {
-        return FileOnlineUploadManagerImpl(
+        return FileOnlineUploadManagerAndroid(
                 fileOnlineApi,
                 mediaScanner
         )

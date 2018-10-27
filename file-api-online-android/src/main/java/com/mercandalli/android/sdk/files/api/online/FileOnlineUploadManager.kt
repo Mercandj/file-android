@@ -4,7 +4,10 @@ import com.mercandalli.sdk.files.api.File
 
 interface FileOnlineUploadManager {
 
-    fun upload(file: File, javaFile: java.io.File)
+    fun upload(
+            inputJavaFile: java.io.File,
+            outputFile: File
+    )
 
     fun registerListener(listener: UploadListener)
 

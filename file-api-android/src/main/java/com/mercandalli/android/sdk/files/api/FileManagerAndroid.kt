@@ -78,35 +78,10 @@ internal class FileManagerAndroid(
             val ioFiles = ioFile.listFiles()
             val files = ArrayList<File>()
             for (ioFileLoop in ioFiles) {
-                val file = convertToFile(ioFileLoop)
+                val file = File.create(ioFileLoop)
                 files.add(file)
             }
             return FileChildrenResult.createLoaded(path, files)
-        }
-
-        @JvmStatic
-        private fun convertToFile(ioFile: java.io.File): File {
-            val id = ioFile.absolutePath
-            val path = ioFile.absolutePath
-            val name = ioFile.name
-            val directory = ioFile.isDirectory
-            val parentPath = parentPath(ioFile)
-            val length = ioFile.length()
-            val lastModified = ioFile.lastModified()
-            return File.create(
-                    id,
-                    path,
-                    parentPath,
-                    directory,
-                    name,
-                    length,
-                    lastModified)
-        }
-
-        @JvmStatic
-        private fun parentPath(ioFile: java.io.File): String? {
-            val ioParentPath = ioFile.parent
-            return if (ioParentPath == "") null else ioParentPath
         }
     }
 }

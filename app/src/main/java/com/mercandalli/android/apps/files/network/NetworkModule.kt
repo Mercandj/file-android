@@ -10,6 +10,7 @@ import okhttp3.Request
 import okhttp3.MediaType
 import org.json.JSONObject
 import java.io.Closeable
+import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import java.net.SocketTimeoutException
@@ -27,6 +28,10 @@ class NetworkModule {
         builder.build()
     }
 
+    private val networkDownloader: NetworkDownloader by lazy {
+        NetworkDownloaderImpl(okHttpClient)
+    }
+
     private val networkUploader: NetworkUploader by lazy {
         NetworkUploaderImpl(okHttpClient)
     }
@@ -34,13 +39,31 @@ class NetworkModule {
     fun createOkHttpClientLazy(): Lazy<OkHttpClient> = okHttpClient
 
     fun createNetwork() = object : Network {
-        override fun getSync(url: String, headers: Map<String, String>): String? {
+
+        override fun getSync(
+                url: String,
+                headers: Map<String, String>
+        ): String? {
             val request = Request.Builder()
                     .url(url)
                     .headers(Headers.of(headers))
                     .build()
             return call(request)
         }
+
+        override fun getDownloadSync(
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject,
+                javaFile: File,
+                listener: Network.DownloadProgressListener
+        ) = networkDownloader.getDownloadSync(
+                url,
+                headers,
+                jsonObject,
+                javaFile,
+                listener
+        )
 
         override fun postSync(
                 url: String,

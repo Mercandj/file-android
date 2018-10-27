@@ -43,6 +43,7 @@ class ApplicationGraph(
     private val fileOnlineCopyCutManagerInternal by lazy { FileOnlineGraph.getFileOnlineCopyCutManager() }
     private val fileOnlineCreatorManagerInternal by lazy { FileOnlineGraph.getFileOnlineCreatorManager() }
     private val fileOnlineDeleteManagerInternal by lazy { FileOnlineGraph.getFileOnlineDeleteManager() }
+    private val fileOnlineDownloadManagerInternal by lazy { FileOnlineGraph.getFileOnlineDownloadManager() }
     private val fileOnlineLoginManagerInternal by lazy { FileOnlineGraph.getFileOnlineLoginManager() }
     private val fileOnlineRenameManagerInternal by lazy { FileOnlineGraph.getFileOnlineRenameManager() }
     private val fileOnlineSizeManagerInternal by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
@@ -85,6 +86,7 @@ class ApplicationGraph(
         fun getFileOnlineCopyCutManager() = graph!!.fileOnlineCopyCutManagerInternal
         fun getFileOnlineCreatorManager() = graph!!.fileOnlineCreatorManagerInternal
         fun getFileOnlineDeleteManager() = graph!!.fileOnlineDeleteManagerInternal
+        fun getFileOnlineDownloadManager() = graph!!.fileOnlineDownloadManagerInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileOnlineRenameManager() = graph!!.fileOnlineRenameManagerInternal
         fun getFileOnlineSizeManager() = graph!!.fileOnlineSizeManagerInternal
@@ -124,6 +126,24 @@ class ApplicationGraph(
             ) = getNetwork().getSync(
                     url,
                     headers
+            )
+
+            override fun getDownloadSync(
+                    url: String,
+                    headers: Map<String, String>,
+                    jsonObject: JSONObject,
+                    javaFile: File,
+                    listener: FileOnlineApiNetwork.DownloadProgressListener
+            ) = getNetwork().getDownloadSync(
+                    url,
+                    headers,
+                    jsonObject,
+                    javaFile,
+                    object : Network.DownloadProgressListener {
+                        override fun onDownloadProgress(current: Long, size: Long) {
+                            listener.onDownloadProgress(current, size)
+                        }
+                    }
             )
 
             override fun postSync(

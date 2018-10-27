@@ -15,19 +15,19 @@ class FileOnlineUploadPresenter(
         if (path == null) {
             return
         }
-        val javaFile = java.io.File(path)
-        val file = File.create(
+        val inputJavaFile = java.io.File(path)
+        val outputFile = File.create(
                 UUID.randomUUID().toString(),
-                "/${javaFile.name}",
+                "/${inputJavaFile.name}",
                 "/",
                 false,
-                javaFile.name,
-                javaFile.length(),
-                javaFile.lastModified()
+                inputJavaFile.name,
+                inputJavaFile.length(),
+                inputJavaFile.lastModified()
         )
         fileOnlineUploadManager.upload(
-                file,
-                javaFile
+                inputJavaFile,
+                outputFile
         )
         screen.quit()
     }

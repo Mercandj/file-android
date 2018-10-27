@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-internal class FileOnlineUploadManagerImpl(
+internal class FileOnlineUploadManagerAndroid(
         private val fileOnlineApi: FileOnlineApi,
         private val mediaScanner: MediaScanner
 ) : FileOnlineUploadManager {
@@ -15,22 +15,22 @@ internal class FileOnlineUploadManagerImpl(
     private val uploadProgressListener = createUploadProgressListener()
 
     override fun upload(
-            file: File,
-            javaFile: java.io.File
+            inputJavaFile: java.io.File,
+            outputFile: File
     ) {
-        notifyUploadStarted(file)
+        notifyUploadStarted(outputFile)
         GlobalScope.launch(Dispatchers.Default) {
             fileOnlineApi.postUpload(
-                    file,
-                    javaFile,
+                    inputJavaFile,
+                    outputFile,
                     uploadProgressListener
             )
             GlobalScope.launch(Dispatchers.Main) {
-                mediaScanner.refresh(file.path)
-                file.parentPath?.let {
+                mediaScanner.refresh(outputFile.path)
+                outputFile.parentPath?.let {
                     mediaScanner.refresh(it)
                 }
-                notifyUploadEnded(file)
+                notifyUploadEnded(outputFile)
             }
         }
     }

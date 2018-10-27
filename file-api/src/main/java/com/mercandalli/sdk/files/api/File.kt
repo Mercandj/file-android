@@ -96,6 +96,25 @@ data class File private constructor(
             )
         }
 
+        fun create(javaFile: java.io.File): File {
+            val id = javaFile.absolutePath
+            val path = javaFile.absolutePath
+            val name = javaFile.name
+            val directory = javaFile.isDirectory
+            val javaParentPath = javaFile.parent
+            val parentPath = if (javaParentPath == "") null else javaParentPath
+            val length = javaFile.length()
+            val lastModified = javaFile.lastModified()
+            return create(
+                    id,
+                    path,
+                    parentPath,
+                    directory,
+                    name,
+                    length,
+                    lastModified)
+        }
+
         @JvmStatic
         fun fromJson(jsonObject: JSONObject): File {
             val id = jsonObject.getString("id")

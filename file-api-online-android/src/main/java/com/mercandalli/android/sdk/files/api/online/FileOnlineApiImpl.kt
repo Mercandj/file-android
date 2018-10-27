@@ -46,6 +46,26 @@ internal class FileOnlineApiImpl(
         return ServerResponse.fromJson(jsonObject)
     }
 
+    override fun getDownload(
+            inputFile: File,
+            outputJavaFile: java.io.File,
+            listener: FileOnlineApi.DownloadProgressListener
+    ) {
+        val headers = createHeaders()
+        val fileJsonObject = File.toJson(inputFile)
+        fileOnlineApiNetwork.getDownloadSync(
+                "$API_DOMAIN/file/download",
+                headers,
+                fileJsonObject,
+                outputJavaFile,
+                object : FileOnlineApiNetwork.DownloadProgressListener {
+                    override fun onDownloadProgress(current: Long, size: Long) {
+                        listener.onDownloadProgress(inputFile, current, size)
+                    }
+                }
+        )
+    }
+
     override fun post(
             file: File
     ) {
@@ -59,20 +79,20 @@ internal class FileOnlineApiImpl(
     }
 
     override fun postUpload(
-            file: File,
-            javaFile: java.io.File,
+            inputJavaFile: java.io.File,
+            outputFile: File,
             listener: FileOnlineApi.UploadProgressListener
     ) {
         val headers = createHeaders()
-        val fileJsonObject = File.toJson(file)
+        val fileJsonObject = File.toJson(outputFile)
         fileOnlineApiNetwork.postUploadSync(
                 "$API_DOMAIN/file/upload",
                 headers,
                 fileJsonObject,
-                javaFile,
+                inputJavaFile,
                 object : FileOnlineApiNetwork.UploadProgressListener {
                     override fun onUploadProgress(current: Long, size: Long) {
-                        listener.onUploadProgress(file, current, size)
+                        listener.onUploadProgress(outputFile, current, size)
                     }
                 }
         )

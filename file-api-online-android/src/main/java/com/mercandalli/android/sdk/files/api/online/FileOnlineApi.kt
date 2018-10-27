@@ -16,13 +16,19 @@ internal interface FileOnlineApi {
             path: String
     ): ServerResponse?
 
+    fun getDownload(
+            inputFile: File,
+            outputJavaFile: java.io.File,
+            listener:DownloadProgressListener
+    )
+
     fun post(
             file: File
     )
 
     fun postUpload(
-            file: File,
-            javaFile: java.io.File,
+            inputJavaFile: java.io.File,
+            outputFile: File,
             listener: UploadProgressListener
     )
 
@@ -44,6 +50,15 @@ internal interface FileOnlineApi {
             pathInput: String,
             pathDirectoryOutput: String
     ): Boolean
+
+    interface DownloadProgressListener {
+
+        fun onDownloadProgress(
+                file: File,
+                current: Long,
+                size: Long
+        )
+    }
 
     interface UploadProgressListener {
 
