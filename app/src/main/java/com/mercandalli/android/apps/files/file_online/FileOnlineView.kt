@@ -9,7 +9,8 @@ import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileOnlineView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr),
+        FileOnlineContract.Screen {
 
     private val fileListView = FileListView(context)
     private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
@@ -17,6 +18,7 @@ class FileOnlineView @JvmOverloads constructor(
     private val fileDeleteManager = ApplicationGraph.getFileOnlineDeleteManager()
     private val fileRenameManager = ApplicationGraph.getFileOnlineRenameManager()
     private val fileSizeManager = ApplicationGraph.getFileOnlineSizeManager()
+    private val userAction = createUserAction()
 
     init {
         val fileOpenManager = createFileOpenManager()
@@ -32,6 +34,16 @@ class FileOnlineView @JvmOverloads constructor(
         addView(fileListView)
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        userAction.onAttached()
+    }
+
+    override fun onDetachedFromWindow() {
+        userAction.onDetached()
+        super.onDetachedFromWindow()
+    }
+
     fun getCurrentPath() = fileListView.getCurrentPath()
 
     fun setFileListViewSelectedFileListener(listener: FileListView.FileListViewSelectedFileListener?) {
@@ -40,7 +52,15 @@ class FileOnlineView @JvmOverloads constructor(
 
     private fun createFileOpenManager() = object : FileOpenManager {
         override fun open(path: String, mime: String?) {
-            // TODO
+            userAction.onFileOpenClicked(path)
         }
+    }
+
+    private fun createUserAction(): FileOnlineContract.UserAction {
+        val dialogManager = ApplicationGraph.getDialogManager()
+        return FileOnlinePresenter(
+                this,
+                dialogManager
+        )
     }
 }
