@@ -20,7 +20,7 @@ internal class FileOnlineDownloadManagerAndroid(
     ) {
         notifyDownloadStarted(inputFilePath)
         GlobalScope.launch(Dispatchers.Default) {
-            fileOnlineApi.getDownload(
+            fileOnlineApi.postDownload(
                     inputFilePath,
                     outputJavaFile,
                     uploadProgressListener

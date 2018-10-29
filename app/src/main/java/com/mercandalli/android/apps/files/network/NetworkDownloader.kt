@@ -4,7 +4,7 @@ import org.json.JSONObject
 
 interface NetworkDownloader {
 
-    fun getDownloadSync(
+    fun postDownloadSync(
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,

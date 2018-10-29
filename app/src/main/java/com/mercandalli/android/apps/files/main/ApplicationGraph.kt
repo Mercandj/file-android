@@ -130,13 +130,23 @@ class ApplicationGraph(
                     headers
             )
 
-            override fun getDownloadSync(
+            override fun postSync(
+                    url: String,
+                    headers: Map<String, String>,
+                    jsonObject: JSONObject
+            ) = getNetwork().postSync(
+                    url,
+                    headers,
+                    jsonObject
+            )
+
+            override fun postDownloadSync(
                     url: String,
                     headers: Map<String, String>,
                     jsonObject: JSONObject,
                     javaFile: File,
                     listener: FileOnlineApiNetwork.DownloadProgressListener
-            ) = getNetwork().getDownloadSync(
+            ) = getNetwork().postDownloadSync(
                     url,
                     headers,
                     jsonObject,
@@ -146,16 +156,6 @@ class ApplicationGraph(
                             listener.onDownloadProgress(current, size)
                         }
                     }
-            )
-
-            override fun postSync(
-                    url: String,
-                    headers: Map<String, String>,
-                    jsonObject: JSONObject
-            ) = getNetwork().postSync(
-                    url,
-                    headers,
-                    jsonObject
             )
 
             override fun postUploadSync(

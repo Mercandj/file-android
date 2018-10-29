@@ -1,9 +1,7 @@
 package com.mercandalli.android.apps.files.network
 
 import android.util.Log
-import okhttp3.Headers
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
 import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
@@ -14,17 +12,18 @@ internal class NetworkDownloaderImpl(
         private val okHttpClientLazy: Lazy<OkHttpClient>
 ) : NetworkDownloader {
 
-    override fun getDownloadSync(
+    override fun postDownloadSync(
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,
             outputJavaFile: File,
             listener: Network.DownloadProgressListener
     ): String? {
+        val body = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
         val request = Request.Builder()
                 .url(url)
                 .headers(Headers.of(headers))
-                .get()
+                .post(body)
                 .build()
         val call = okHttpClientLazy.value.newCall(request)
         try {
@@ -80,5 +79,10 @@ internal class NetworkDownloaderImpl(
             Log.e("jm/debug", "Download error 2/2", e)
             return null
         }
+    }
+
+    companion object {
+
+        private val MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8")
     }
 }

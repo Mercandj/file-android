@@ -16,14 +16,14 @@ internal interface FileOnlineApi {
             path: String
     ): ServerResponse?
 
-    fun getDownload(
+    fun post(
+            file: File
+    )
+
+    fun postDownload(
             inputFilePath: String,
             outputJavaFile: java.io.File,
             listener:DownloadProgressListener
-    )
-
-    fun post(
-            file: File
     )
 
     fun postUpload(

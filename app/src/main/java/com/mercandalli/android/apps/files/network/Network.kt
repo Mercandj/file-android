@@ -9,18 +9,18 @@ interface Network {
             headers: Map<String, String>
     ): String?
 
-    fun getDownloadSync(
+    fun postSync(
+            url: String,
+            headers: Map<String, String>,
+            jsonObject: JSONObject
+    ): String?
+
+    fun postDownloadSync(
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,
             javaFile: java.io.File,
             listener: DownloadProgressListener
-    ): String?
-
-    fun postSync(
-            url: String,
-            headers: Map<String, String>,
-            jsonObject: JSONObject
     ): String?
 
     fun postUploadSync(

@@ -51,20 +51,6 @@ class NetworkModule {
             return call(request)
         }
 
-        override fun getDownloadSync(
-                url: String,
-                headers: Map<String, String>,
-                jsonObject: JSONObject,
-                javaFile: File,
-                listener: Network.DownloadProgressListener
-        ) = networkDownloader.getDownloadSync(
-                url,
-                headers,
-                jsonObject,
-                javaFile,
-                listener
-        )
-
         override fun postSync(
                 url: String,
                 headers: Map<String, String>,
@@ -78,6 +64,20 @@ class NetworkModule {
                     .build()
             return call(request)
         }
+
+        override fun postDownloadSync(
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject,
+                javaFile: File,
+                listener: Network.DownloadProgressListener
+        ) = networkDownloader.postDownloadSync(
+                url,
+                headers,
+                jsonObject,
+                javaFile,
+                listener
+        )
 
         override fun postUploadSync(
                 url: String,
