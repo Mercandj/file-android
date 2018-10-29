@@ -5,6 +5,8 @@ import com.mercandalli.sdk.files.api.FileSizeResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.json.JSONException
+import java.lang.IllegalStateException
 
 internal class FileOnlineSizeManagerAndroid(
         private val fileOnlineApi: FileOnlineApi
@@ -61,6 +63,11 @@ internal class FileOnlineSizeManagerAndroid(
         val sizeServerResponse = fileOnlineApi.getSize(path)
                 ?: return FileSizeResult.createErrorNetwork(path)
         val content = sizeServerResponse.content
+        if (!content.has("size")) {
+            throw IllegalStateException("Path: $path\ncontent: $content",
+                    JSONException("No value for size")
+            )
+        }
         val size = content.getLong("size")
         return FileSizeResult.createLoaded(path, size)
     }

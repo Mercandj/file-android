@@ -8,7 +8,7 @@ interface NetworkDownloader {
             url: String,
             headers: Map<String, String>,
             jsonObject: JSONObject,
-            javaFile: java.io.File,
+            outputJavaFile: java.io.File,
             listener: Network.DownloadProgressListener
     ): String?
 }

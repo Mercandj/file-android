@@ -1,6 +1,7 @@
 package com.mercandalli.android.sdk.files.api.online
 
 import android.content.Context
+import com.mercandalli.sdk.files.api.MediaScanner
 
 class FileOnlineGraph(
         private val fileOnlineModule: FileOnlineAndroidModule
@@ -32,11 +33,13 @@ class FileOnlineGraph(
 
         fun init(
                 context: Context,
-                fileOnlineApiNetwork: FileOnlineApiNetwork
+                fileOnlineApiNetwork: FileOnlineApiNetwork,
+                localMediaScanner: MediaScanner
         ) {
             val fileOnlineModule = FileOnlineAndroidModule(
                     context,
-                    fileOnlineApiNetwork
+                    fileOnlineApiNetwork,
+                    localMediaScanner
             )
             graph = FileOnlineGraph(
                     fileOnlineModule

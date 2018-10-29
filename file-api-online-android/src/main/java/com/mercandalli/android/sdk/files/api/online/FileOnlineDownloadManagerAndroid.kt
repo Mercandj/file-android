@@ -8,30 +8,30 @@ import kotlinx.coroutines.launch
 
 internal class FileOnlineDownloadManagerAndroid(
         private val fileOnlineApi: FileOnlineApi,
-        private val mediaScanner: MediaScanner
+        private val localMediaScanner: MediaScanner
 ) : FileOnlineDownloadManager {
 
     private val listeners = ArrayList<FileOnlineDownloadManager.DownloadListener>()
     private val uploadProgressListener = createUploadProgressListener()
 
     override fun download(
-            inputFile: File,
+            inputFilePath: String,
             outputJavaFile: java.io.File
     ) {
-        notifyDownloadStarted(inputFile)
+        notifyDownloadStarted(inputFilePath)
         GlobalScope.launch(Dispatchers.Default) {
             fileOnlineApi.getDownload(
-                    inputFile,
+                    inputFilePath,
                     outputJavaFile,
                     uploadProgressListener
             )
             GlobalScope.launch(Dispatchers.Main) {
                 val outputFile = File.create(outputJavaFile)
-                mediaScanner.refresh(outputFile.path)
+                localMediaScanner.refresh(outputFile.path)
                 outputFile.parentPath?.let {
-                    mediaScanner.refresh(it)
+                    localMediaScanner.refresh(it)
                 }
-                notifyDownloadEnded(outputFile)
+                notifyDownloadEnded(inputFilePath, outputJavaFile)
             }
         }
     }
@@ -52,39 +52,40 @@ internal class FileOnlineDownloadManagerAndroid(
     }
 
     private fun notifyDownloadStarted(
-            file: File
+            inputFilePath: String
     ) {
         for (listener in listeners) {
-            listener.onDownloadStarted(file)
+            listener.onDownloadStarted(inputFilePath)
         }
     }
 
     private fun notifyDownloadProgress(
-            file: File,
+            inputFilePath: String,
             current: Long,
             size: Long
     ) {
         for (listener in listeners) {
-            listener.onDownloadProgress(file, current, size)
+            listener.onDownloadProgress(inputFilePath, current, size)
         }
     }
 
     private fun notifyDownloadEnded(
-            file: File
+            inputFilePath: String,
+            outputJavaFile: java.io.File
     ) {
         for (listener in listeners) {
-            listener.onDownloadEnded(file)
+            listener.onDownloadEnded(inputFilePath)
         }
     }
 
     private fun createUploadProgressListener() = object : FileOnlineApi.DownloadProgressListener {
         override fun onDownloadProgress(
-                file: File,
+                inputFilePath: String,
                 current: Long,
                 size: Long
         ) {
             notifyDownloadProgress(
-                    file,
+                    inputFilePath,
                     current,
                     size
             )

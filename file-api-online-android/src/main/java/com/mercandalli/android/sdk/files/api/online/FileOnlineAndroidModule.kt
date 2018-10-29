@@ -7,10 +7,11 @@ import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
 class FileOnlineAndroidModule(
         private val context: Context,
-        private val fileOnlineApiNetwork: FileOnlineApiNetwork
+        private val fileOnlineApiNetwork: FileOnlineApiNetwork,
+        private val localMediaScanner: MediaScanner
 ) {
 
-    private val mediaScanner: MediaScanner by lazy {
+    private val onlineMediaScanner: MediaScanner by lazy {
         MediaScannerOnlineAndroid()
     }
 
@@ -26,7 +27,7 @@ class FileOnlineAndroidModule(
         val fileManager = FileOnlineManagerAndroid(
                 fileOnlineApi
         )
-        mediaScanner.addListener(object : MediaScanner.RefreshListener {
+        onlineMediaScanner.addListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileManager.refresh(path)
             }
@@ -37,28 +38,28 @@ class FileOnlineAndroidModule(
     fun createFileOnlineCopyCutManager(): FileCopyCutManager {
         return FileOnlineCopyCutManagerAndroid(
                 fileOnlineApi,
-                mediaScanner
+                onlineMediaScanner
         )
     }
 
     fun createFileOnlineCreatorManager(): FileCreatorManager {
         return FileOnlineCreatorManagerAndroid(
                 fileOnlineApi,
-                mediaScanner
+                onlineMediaScanner
         )
     }
 
     fun createFileOnlineDeleteManager(): FileDeleteManager {
         return FileOnlineDeleteManagerAndroid(
                 fileOnlineApi,
-                mediaScanner
+                onlineMediaScanner
         )
     }
 
     fun createFileOnlineDownloadManager(): FileOnlineDownloadManager {
         return FileOnlineDownloadManagerAndroid(
                 fileOnlineApi,
-                mediaScanner
+                localMediaScanner
         )
     }
 
@@ -67,7 +68,7 @@ class FileOnlineAndroidModule(
     fun createFileOnlineRenameManager(): FileRenameManager {
         return FileOnlineRenameManagerAndroid(
                 fileOnlineApi,
-                mediaScanner
+                onlineMediaScanner
         )
     }
 
@@ -75,7 +76,7 @@ class FileOnlineAndroidModule(
         val fileSizeManager = FileOnlineSizeManagerAndroid(
                 fileOnlineApi
         )
-        mediaScanner.addListener(object : MediaScanner.RefreshListener {
+        onlineMediaScanner.addListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileSizeManager.loadSize(path, true)
             }
@@ -86,7 +87,7 @@ class FileOnlineAndroidModule(
     fun createFileOnlineUploadManager(): FileOnlineUploadManager {
         return FileOnlineUploadManagerAndroid(
                 fileOnlineApi,
-                mediaScanner
+                onlineMediaScanner
         )
     }
 

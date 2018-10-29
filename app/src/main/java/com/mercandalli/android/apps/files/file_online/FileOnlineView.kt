@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.file_online
 
 import android.content.Context
+import android.os.Environment
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.mercandalli.android.apps.files.file_list.FileListView
@@ -58,9 +59,14 @@ class FileOnlineView @JvmOverloads constructor(
 
     private fun createUserAction(): FileOnlineContract.UserAction {
         val dialogManager = ApplicationGraph.getDialogManager()
+        val fileOnlineDownloadManager = ApplicationGraph.getFileOnlineDownloadManager()
+        val toastManager = ApplicationGraph.getToastManager()
         return FileOnlinePresenter(
                 this,
-                dialogManager
+                dialogManager,
+                fileOnlineDownloadManager,
+                toastManager,
+                Environment.getExternalStorageDirectory().absolutePath
         )
     }
 }

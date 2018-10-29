@@ -35,6 +35,7 @@ class ApplicationGraph(
     private val developerManagerInternal by lazy { developerModule.createDeveloperManager() }
     private val dialogManagerInternal by lazy { DialogModule(context).createDialogManager() }
     private val fileManagerInternal by lazy { fileModule.createFileManager() }
+    private val fileMediaScannerInternal by lazy { fileModule.getMediaScanner() }
     private val fileOpenManagerInternal by lazy { fileModule.createFileOpenManager() }
     private val fileDeleteManagerInternal by lazy { fileModule.createFileDeleteManager() }
     private val fileCopyCutManagerInternal by lazy { fileModule.createFileCopyCutManager() }
@@ -113,7 +114,8 @@ class ApplicationGraph(
                 val fileOnlineApiNetwork = createFileOnlineApiNetwork()
                 FileOnlineGraph.init(
                         applicationContext,
-                        fileOnlineApiNetwork
+                        fileOnlineApiNetwork,
+                        graph!!.fileMediaScannerInternal
                 )
             }
         }
