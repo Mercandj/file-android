@@ -1,7 +1,7 @@
 package com.mercandalli.server.files.file_handler
 
-import io.ktor.content.MultiPartData
 import io.ktor.http.Headers
+import io.ktor.http.content.MultiPartData
 
 interface FileHandlerPost {
 
