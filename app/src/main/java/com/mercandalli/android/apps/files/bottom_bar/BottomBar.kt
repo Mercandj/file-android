@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.bottom_bar
 
 import android.content.Context
@@ -16,9 +19,11 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class BottomBar @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr),
-        BottomBarContract.Screen {
+    BottomBarContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_bottom_bar, this)
     private val sectionFileIcon: ImageView = view.findViewById(R.id.view_bottom_bar_section_file_icon)
@@ -161,12 +166,12 @@ class BottomBar @JvmOverloads constructor(
         val selectedColor = ContextCompat.getColor(context, R.color.bottom_bar_selected)
         val notSelectedColor = ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
         BottomBarPresenter(
-                this,
-                themeManager,
-                developerManager,
-                fileOnlineLoginManager,
-                selectedColor,
-                notSelectedColor
+            this,
+            themeManager,
+            developerManager,
+            fileOnlineLoginManager,
+            selectedColor,
+            notSelectedColor
         )
     }
 

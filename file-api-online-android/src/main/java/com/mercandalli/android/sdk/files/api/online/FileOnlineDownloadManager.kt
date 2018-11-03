@@ -3,8 +3,8 @@ package com.mercandalli.android.sdk.files.api.online
 interface FileOnlineDownloadManager {
 
     fun download(
-            inputFilePath: String,
-            outputJavaFile: java.io.File
+        inputFilePath: String,
+        outputJavaFile: java.io.File
     )
 
     fun registerListener(listener: DownloadListener)
@@ -14,17 +14,17 @@ interface FileOnlineDownloadManager {
     interface DownloadListener {
 
         fun onDownloadStarted(
-                inputFilePath: String
+            inputFilePath: String
         )
 
         fun onDownloadProgress(
-                inputFilePath: String,
-                current: Long,
-                size: Long
+            inputFilePath: String,
+            current: Long,
+            size: Long
         )
 
         fun onDownloadEnded(
-                inputFilePath: String
+            inputFilePath: String
         )
     }
 }

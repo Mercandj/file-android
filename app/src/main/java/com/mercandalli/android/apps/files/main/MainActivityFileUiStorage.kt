@@ -12,8 +12,8 @@ interface MainActivityFileUiStorage {
     companion object {
 
         @IntDef(
-                SECTION_FILE_LIST,
-                SECTION_FILE_COLUMN
+            SECTION_FILE_LIST,
+            SECTION_FILE_COLUMN
         )
         @Retention(AnnotationRetention.SOURCE)
         annotation class Section

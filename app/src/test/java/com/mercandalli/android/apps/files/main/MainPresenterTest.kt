@@ -43,7 +43,7 @@ class MainPresenterTest {
     fun onFileSectionClickedShowsFileView() {
         // Given
         `when`(mainActivityFileUiStorage!!.getCurrentFileUi()).thenReturn(
-                MainActivityFileUiStorage.SECTION_FILE_COLUMN)
+            MainActivityFileUiStorage.SECTION_FILE_COLUMN)
         val presenter = createInstanceToTest()
         reset(screen)
 
@@ -80,15 +80,15 @@ class MainPresenterTest {
 
     private fun createInstanceToTest(): MainActivityPresenter {
         return MainActivityPresenter(
-                screen!!,
-                fileCreatorManager!!,
-                fileOnlineCreatorManager!!,
-                fileCopyCutManager!!,
-                fileOnlineCopyCutManager!!,
-                themeManager!!,
-                mainActivityFileUiStorage!!,
-                rootPathLocal,
-                rootPathOnline
+            screen!!,
+            fileCreatorManager!!,
+            fileOnlineCreatorManager!!,
+            fileCopyCutManager!!,
+            fileOnlineCopyCutManager!!,
+            themeManager!!,
+            mainActivityFileUiStorage!!,
+            rootPathLocal,
+            rootPathOnline
         )
     }
 }

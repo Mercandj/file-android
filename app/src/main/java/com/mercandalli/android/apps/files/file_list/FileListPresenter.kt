@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list
 
 import com.mercandalli.android.apps.files.theme.ThemeManager
@@ -8,12 +11,12 @@ import com.mercandalli.sdk.files.api.FileOpenManager
 import com.mercandalli.sdk.files.api.FileSortManager
 
 class FileListPresenter(
-        private val screen: FileListContract.Screen,
-        private var fileManager: FileManager,
-        private var fileOpenManager: FileOpenManager,
-        private val fileSortManager: FileSortManager,
-        private val themeManager: ThemeManager,
-        private var rootPath: String
+    private val screen: FileListContract.Screen,
+    private var fileManager: FileManager,
+    private var fileOpenManager: FileOpenManager,
+    private val fileSortManager: FileSortManager,
+    private val themeManager: ThemeManager,
+    private var rootPath: String
 ) : FileListContract.UserAction {
 
     private var currentPath = rootPath
@@ -59,9 +62,9 @@ class FileListPresenter(
     }
 
     override fun onSetFileManagers(
-            fileManager: FileManager,
-            fileOpenManager: FileOpenManager,
-            rootPath: String
+        fileManager: FileManager,
+        fileOpenManager: FileOpenManager,
+        rootPath: String
     ) {
         this.fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
         this.fileManager = fileManager
@@ -76,7 +79,7 @@ class FileListPresenter(
     private fun syncFileChildren() {
         var fileChildrenResult = fileManager.getFileChildren(currentPath)
         if (fileChildrenResult.status == FileChildrenResult.Status.UNLOADED ||
-                fileChildrenResult.status == FileChildrenResult.Status.ERROR_NOT_FOLDER) {
+            fileChildrenResult.status == FileChildrenResult.Status.ERROR_NOT_FOLDER) {
             fileChildrenResult = fileManager.loadFileChildren(currentPath)
         }
         syncFileChildren(fileChildrenResult)

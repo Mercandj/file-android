@@ -1,15 +1,18 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_repository
 
 import com.mercandalli.sdk.files.api.File
 import org.json.JSONObject
 
 class FileRepositoryImpl(
-        private val fileMetadataJson: java.io.File,
-        private val folderContainer: java.io.File
+    private val fileMetadataJson: java.io.File,
+    private val folderContainer: java.io.File
 ) : FileRepository {
 
     private var fileRepositoryMetadata = FileRepositoryMetadata(
-            HashMap()
+        HashMap()
     )
 
     init {

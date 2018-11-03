@@ -9,13 +9,13 @@ class FileTest {
         @JvmStatic
         fun createFakeFile(): File {
             return File.create(
-                    "id",
-                    "path",
-                    "parentPath",
-                    false,
-                    "name",
-                    42,
-                    4242
+                "id",
+                "path",
+                "parentPath",
+                false,
+                "name",
+                42,
+                4242
             )
         }
     }

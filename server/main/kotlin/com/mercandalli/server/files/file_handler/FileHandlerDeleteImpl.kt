@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.sdk.files.api.File
@@ -10,21 +13,21 @@ import io.ktor.http.Headers
 import org.json.JSONObject
 
 class FileHandlerDeleteImpl(
-        private val fileRepository: FileRepository,
-        private val logManager: LogManager,
-        private val authorizationManager: AuthorizationManager
+    private val fileRepository: FileRepository,
+    private val logManager: LogManager,
+    private val authorizationManager: AuthorizationManager
 ) : FileHandlerDelete {
 
     override fun deleteFile(
-            headers: Headers,
-            body: String
+        headers: Headers,
+        body: String
     ): String {
         logd("delete(body: $body)")
         if (!authorizationManager.isAuthorized(headers)) {
             loge("delete: Not logged")
             return ServerResponse.create(
-                    "Oops, not logged",
-                    false
+                "Oops, not logged",
+                false
             ).toJsonString()
         }
         val fileJsonObject = JSONObject(body)
@@ -40,9 +43,9 @@ class FileHandlerDeleteImpl(
             loge("delete: Failed to delete: path == $path")
         }
         return ServerResponse.create(
-                JSONObject(),
-                "File deleted in the repository $deleteSucceeded",
-                deleteSucceeded
+            JSONObject(),
+            "File deleted in the repository $deleteSucceeded",
+            deleteSucceeded
         ).toJsonString()
     }
 

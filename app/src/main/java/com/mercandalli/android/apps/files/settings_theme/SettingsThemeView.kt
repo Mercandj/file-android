@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_theme
 
 import android.content.Context
@@ -14,9 +17,11 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.files.R
 
 class SettingsThemeView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr),
-        SettingsThemeContract.Screen {
+    SettingsThemeContract.Screen {
 
     private val view = LayoutInflater.from(context).inflate(R.layout.view_settings_theme, this)
 
@@ -82,8 +87,8 @@ class SettingsThemeView @JvmOverloads constructor(
     } else {
         val themeManager = ApplicationGraph.getThemeManager()
         SettingsThemePresenter(
-                this,
-                themeManager
+            this,
+            themeManager
         )
     }
 }

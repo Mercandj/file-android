@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.sdk.files.api.File
@@ -13,88 +16,88 @@ import io.ktor.http.Headers
 import org.json.JSONObject
 
 class FileHandlerGetImpl(
-        private val fileRepository: FileRepository,
-        private val logManager: LogManager,
-        private val authorizationManager: AuthorizationManager
+    private val fileRepository: FileRepository,
+    private val logManager: LogManager,
+    private val authorizationManager: AuthorizationManager
 ) : FileHandlerGet {
 
     override fun get(
-            headers: Headers
+        headers: Headers
     ): String {
         logd("get()")
         if (!authorizationManager.isAuthorized(headers)) {
             loge("get: Not logged")
             return ServerResponseFiles.create(
-                    ArrayList(),
-                    "Oops, not logged",
-                    false
+                ArrayList(),
+                "Oops, not logged",
+                false
             ).toJsonString()
         }
         val files = fileRepository.get()
         return ServerResponseFiles.create(
-                files,
-                "Get all the files",
-                true
+            files,
+            "Get all the files",
+            true
         ).toJsonString()
     }
 
     override fun get(
-            headers: Headers,
-            id: String
+        headers: Headers,
+        id: String
     ): String {
         logd("get(id: $id)")
         if (!authorizationManager.isAuthorized(headers)) {
             loge("get: Not logged")
             return ServerResponse.create(
-                    "Oops, not logged",
-                    false
+                "Oops, not logged",
+                false
             ).toJsonString()
         }
         val file = File.createFake(id)
         return ServerResponseFile.create(
-                file,
-                "Get one file",
-                true
+            file,
+            "Get one file",
+            true
         ).toJsonString()
     }
 
     override fun getFromParent(
-            headers: Headers,
-            parentPath: String
+        headers: Headers,
+        parentPath: String
     ): String {
         logd("getFromParent(parentPath: $parentPath)")
         if (!authorizationManager.isAuthorized(headers)) {
             loge("getFromParent: Not logged")
             return ServerResponse.create(
-                    "Oops, not logged",
-                    false
+                "Oops, not logged",
+                false
             ).toJsonString()
         }
         val files = fileRepository.getFromParent(parentPath)
         return ServerResponseFiles.create(
-                files,
-                "Get one file",
-                true
+            files,
+            "Get one file",
+            true
         ).toJsonString()
     }
 
     override fun getSize(
-            headers: Headers,
-            path: String?
+        headers: Headers,
+        path: String?
     ): String {
         logd("getSize(path: $path)")
         if (!authorizationManager.isAuthorized(headers)) {
             loge("getSize: Not logged")
             return ServerResponse.create(
-                    "Oops, not logged",
-                    false
+                "Oops, not logged",
+                false
             ).toJsonString()
         }
         if (path == null) {
             loge("getSize: path is null")
             return ServerResponse.create(
-                    "Path is null",
-                    false
+                "Path is null",
+                false
             ).toJsonString()
         }
         val folderContainerPath = fileRepository.getFolderContainerPath()
@@ -103,17 +106,17 @@ class FileHandlerGetImpl(
         if (fileSizeResult.status != FileSizeResult.Status.LOADED_SUCCEEDED) {
             loge("getSize: Error load error. path == $path. error == ${fileSizeResult.status}")
             return ServerResponse.create(
-                    "Error load error. ${fileSizeResult.status}",
-                    false
+                "Error load error. ${fileSizeResult.status}",
+                false
             ).toJsonString()
         }
         val jsonObject = JSONObject()
         jsonObject.put("path", fileSizeResult.path)
         jsonObject.put("size", fileSizeResult.size)
         return ServerResponse.create(
-                jsonObject,
-                "Get size file",
-                true
+            jsonObject,
+            "Get size file",
+            true
         ).toJsonString()
     }
 

@@ -17,9 +17,9 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
         populate(listOf(
-                SettingsTheme(),
-                SettingsDeveloper(),
-                SettingsAbout()
+            SettingsTheme(),
+            SettingsDeveloper(),
+            SettingsAbout()
         ))
     }
 
@@ -45,7 +45,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
     }
 
     private class SettingsThemeViewHolder(
-            view: View
+        view: View
     ) : RecyclerView.ViewHolder(view)
     //endregion SettingsTheme
 
@@ -53,7 +53,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
     class SettingsDeveloper
 
     private class SettingsDeveloperAdapterDelegate :
-            AbsListItemAdapterDelegate<Any, Any, SettingsDeveloperViewHolder>() {
+        AbsListItemAdapterDelegate<Any, Any, SettingsDeveloperViewHolder>() {
 
         override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsDeveloper
 
@@ -91,8 +91,8 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
     companion object {
 
         private fun createDefaultRecyclerViewLayoutParam() = RecyclerView.LayoutParams(
-                RecyclerView.LayoutParams.MATCH_PARENT,
-                RecyclerView.LayoutParams.WRAP_CONTENT
+            RecyclerView.LayoutParams.MATCH_PARENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
         )
     }
 }

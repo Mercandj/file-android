@@ -3,9 +3,9 @@ package com.mercandalli.android.apps.files.note
 import com.mercandalli.android.apps.files.theme.ThemeManager
 
 class NotePresenter(
-        private val screen: NoteContract.Screen,
-        private val noteManager: NoteManager,
-        private val themeManager: ThemeManager
+    private val screen: NoteContract.Screen,
+    private val noteManager: NoteManager,
+    private val themeManager: ThemeManager
 ) : NoteContract.UserAction {
 
     init {

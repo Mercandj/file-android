@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list_row
 
 import androidx.annotation.ColorRes
@@ -36,10 +39,10 @@ interface FileListRowContract {
         fun onOverflowClicked()
 
         fun onSetFileManagers(
-                fileCopyCutManager: FileCopyCutManager,
-                fileDeleteManager: FileDeleteManager,
-                fileRenameManager: FileRenameManager,
-                fileSizeManager: FileSizeManager
+            fileCopyCutManager: FileCopyCutManager,
+            fileDeleteManager: FileDeleteManager,
+            fileRenameManager: FileRenameManager,
+            fileSizeManager: FileSizeManager
         )
     }
 

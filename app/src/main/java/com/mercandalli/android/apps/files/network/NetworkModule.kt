@@ -41,69 +41,69 @@ class NetworkModule {
     fun createNetwork() = object : Network {
 
         override fun getSync(
-                url: String,
-                headers: Map<String, String>
+            url: String,
+            headers: Map<String, String>
         ): String? {
             val request = Request.Builder()
-                    .url(url)
-                    .headers(Headers.of(headers))
-                    .build()
+                .url(url)
+                .headers(Headers.of(headers))
+                .build()
             return call(request)
         }
 
         override fun postSync(
-                url: String,
-                headers: Map<String, String>,
-                jsonObject: JSONObject
+            url: String,
+            headers: Map<String, String>,
+            jsonObject: JSONObject
         ): String? {
             val body = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
             val request = Request.Builder()
-                    .url(url)
-                    .headers(Headers.of(headers))
-                    .post(body)
-                    .build()
+                .url(url)
+                .headers(Headers.of(headers))
+                .post(body)
+                .build()
             return call(request)
         }
 
         override fun postDownloadSync(
-                url: String,
-                headers: Map<String, String>,
-                jsonObject: JSONObject,
-                javaFile: File,
-                listener: Network.DownloadProgressListener
+            url: String,
+            headers: Map<String, String>,
+            jsonObject: JSONObject,
+            javaFile: File,
+            listener: Network.DownloadProgressListener
         ) = networkDownloader.postDownloadSync(
-                url,
-                headers,
-                jsonObject,
-                javaFile,
-                listener
+            url,
+            headers,
+            jsonObject,
+            javaFile,
+            listener
         )
 
         override fun postUploadSync(
-                url: String,
-                headers: Map<String, String>,
-                jsonObject: JSONObject,
-                javaFile: java.io.File,
-                listener: Network.UploadProgressListener
+            url: String,
+            headers: Map<String, String>,
+            jsonObject: JSONObject,
+            javaFile: java.io.File,
+            listener: Network.UploadProgressListener
         ) = networkUploader.postUploadSync(
-                url,
-                headers,
-                jsonObject,
-                javaFile,
-                listener
+            url,
+            headers,
+            jsonObject,
+            javaFile,
+            listener
         )
 
         override fun deleteSync(
-                url: String,
-                headers: Map<String, String>,
-                jsonObject: JSONObject
+            url: String,
+            headers: Map<String, String>,
+            jsonObject: JSONObject
         ): String? {
             val body = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
             val request = Request.Builder()
-                    .url(url)
-                    .headers(Headers.of(headers))
-                    .delete(body)
-                    .build()
+                .url(url)
+                .headers(Headers.of(headers))
+                .delete(body)
+                .build()
             return call(request)
         }
 

@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_list
 
 import android.content.Context
@@ -17,7 +20,9 @@ import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileManager
 
 class FileColumnListView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnListContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_list, this)
@@ -135,11 +140,11 @@ class FileColumnListView @JvmOverloads constructor(
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
         FileColumnListPresenter(
-                this,
-                fileManager,
-                fileSortManager,
-                themeManager,
-                Environment.getExternalStorageDirectory().absolutePath
+            this,
+            fileManager,
+            fileSortManager,
+            themeManager,
+            Environment.getExternalStorageDirectory().absolutePath
         )
     }
 

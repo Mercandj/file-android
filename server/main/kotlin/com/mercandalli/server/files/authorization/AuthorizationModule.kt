@@ -8,8 +8,8 @@ class AuthorizationModule {
         val logManager = ApplicationGraph.getLogManager()
         val fileOnlineAuthentications = ApplicationGraph.getFileOnlineAuthentications()
         return AuthorizationManagerImpl(
-                logManager,
-                fileOnlineAuthentications
+            logManager,
+            fileOnlineAuthentications
         )
     }
 }

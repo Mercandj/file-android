@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list
 
 import android.view.ViewGroup
@@ -13,7 +16,7 @@ import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListAdapter(
-        fileListClickListener: FileListRow.FileClickListener?
+    fileListClickListener: FileListRow.FileClickListener?
 ) : ListDelegationAdapter<List<Any>>() {
 
     private val fileAdapterDelegate = FileAdapterDelegate(fileListClickListener)
@@ -33,22 +36,22 @@ class FileListAdapter(
     }
 
     fun setFileManagers(
-            fileCopyCutManager: FileCopyCutManager,
-            fileDeleteManager: FileDeleteManager,
-            fileRenameManager: FileRenameManager,
-            fileSizeManager: FileSizeManager
+        fileCopyCutManager: FileCopyCutManager,
+        fileDeleteManager: FileDeleteManager,
+        fileRenameManager: FileRenameManager,
+        fileSizeManager: FileSizeManager
     ) {
         fileAdapterDelegate.setFileManagers(
-                fileCopyCutManager,
-                fileDeleteManager,
-                fileRenameManager,
-                fileSizeManager
+            fileCopyCutManager,
+            fileDeleteManager,
+            fileRenameManager,
+            fileSizeManager
         )
     }
 
     //region File
     private class FileAdapterDelegate(
-            private val fileListClickListener: FileListRow.FileClickListener?
+        private val fileListClickListener: FileListRow.FileClickListener?
     ) : AbsListItemAdapterDelegate<Any, Any, VideoRowHolder>() {
 
         private val fileListRows = ArrayList<FileListRow>()
@@ -66,15 +69,15 @@ class FileListAdapter(
         override fun onCreateViewHolder(viewGroup: ViewGroup): VideoRowHolder {
             val view = FileListRow(viewGroup.context)
             view.layoutParams = RecyclerView.LayoutParams(
-                    RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.WRAP_CONTENT)
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT)
             view.setFileClickListener(fileListClickListener)
             if (fileDeleteManager != null && fileCopyCutManager != null && fileRenameManager != null) {
                 view.setFileManagers(
-                        fileCopyCutManager!!,
-                        fileDeleteManager!!,
-                        fileRenameManager!!,
-                        fileSizeManager!!
+                    fileCopyCutManager!!,
+                    fileDeleteManager!!,
+                    fileRenameManager!!,
+                    fileSizeManager!!
                 )
             }
             fileListRows.add(view)
@@ -82,15 +85,18 @@ class FileListAdapter(
         }
 
         override fun onBindViewHolder(
-                model: Any, playlistViewHolder: VideoRowHolder, list: List<Any>) {
+            model: Any,
+            playlistViewHolder: VideoRowHolder,
+            list: List<Any>
+        ) {
             playlistViewHolder.bind(model as File, selectedPath)
         }
 
         fun setFileManagers(
-                fileCopyCutManager: FileCopyCutManager,
-                fileDeleteManager: FileDeleteManager,
-                fileRenameManager: FileRenameManager,
-                fileSizeManager: FileSizeManager
+            fileCopyCutManager: FileCopyCutManager,
+            fileDeleteManager: FileDeleteManager,
+            fileRenameManager: FileRenameManager,
+            fileSizeManager: FileSizeManager
         ) {
             this.fileCopyCutManager = fileCopyCutManager
             this.fileDeleteManager = fileDeleteManager
@@ -98,10 +104,10 @@ class FileListAdapter(
             this.fileSizeManager = fileSizeManager
             for (fileListRow in fileListRows) {
                 fileListRow.setFileManagers(
-                        fileCopyCutManager,
-                        fileDeleteManager,
-                        fileRenameManager,
-                        fileSizeManager
+                    fileCopyCutManager,
+                    fileDeleteManager,
+                    fileRenameManager,
+                    fileSizeManager
                 )
             }
         }
@@ -112,7 +118,7 @@ class FileListAdapter(
     }
 
     private class VideoRowHolder(
-            private val view: FileListRow
+        private val view: FileListRow
     ) : RecyclerView.ViewHolder(view) {
         fun bind(file: File, selectedPath: String?) {
             view.setFile(file, selectedPath)

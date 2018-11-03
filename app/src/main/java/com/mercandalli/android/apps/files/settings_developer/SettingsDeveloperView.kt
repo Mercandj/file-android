@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_developer
 
 import android.content.Context
@@ -14,9 +17,11 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.files.R
 
 class SettingsDeveloperView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr),
-        SettingsDeveloperContract.Screen {
+    SettingsDeveloperContract.Screen {
 
     private val view = LayoutInflater.from(context).inflate(R.layout.view_settings_developer, this)
 
@@ -114,12 +119,12 @@ class SettingsDeveloperView @JvmOverloads constructor(
             override fun getString(stringRes: Int, value: String) = resources.getString(stringRes, value)
         }
         SettingsDeveloperPresenter(
-                this,
-                themeManager,
-                developerManager,
-                fileOnlineLoginManager,
-                dialogManager,
-                addOn
+            this,
+            themeManager,
+            developerManager,
+            fileOnlineLoginManager,
+            dialogManager,
+            addOn
         )
     }
 }

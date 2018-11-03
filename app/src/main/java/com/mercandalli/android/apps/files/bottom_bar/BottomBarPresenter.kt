@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.bottom_bar
 
 import android.os.Bundle
@@ -7,12 +10,12 @@ import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 
 class BottomBarPresenter(
-        private val screen: BottomBarContract.Screen,
-        private val themeManager: ThemeManager,
-        private val developerManager: DeveloperManager,
-        private val fileOnlineLoginManager: FileOnlineLoginManager,
-        @ColorInt private val selectedColor: Int,
-        @ColorInt private val notSelectedColor: Int
+    private val screen: BottomBarContract.Screen,
+    private val themeManager: ThemeManager,
+    private val developerManager: DeveloperManager,
+    private val fileOnlineLoginManager: FileOnlineLoginManager,
+    @ColorInt private val selectedColor: Int,
+    @ColorInt private val notSelectedColor: Int
 ) : BottomBarContract.UserAction {
 
     private var selectedSection: Int = SECTION_UNDEFINED
@@ -131,8 +134,8 @@ class BottomBarPresenter(
     }
 
     private fun syncWithDeveloperMode(
-            developerMode: Boolean = developerManager.isDeveloperMode(),
-            isLogged: Boolean = fileOnlineLoginManager.isLogged()
+        developerMode: Boolean = developerManager.isDeveloperMode(),
+        isLogged: Boolean = fileOnlineLoginManager.isLogged()
     ) {
         if (developerMode && isLogged) {
             screen.showOnlineSection()

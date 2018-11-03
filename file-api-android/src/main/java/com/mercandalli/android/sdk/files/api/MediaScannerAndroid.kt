@@ -3,7 +3,7 @@ package com.mercandalli.android.sdk.files.api
 import com.mercandalli.sdk.files.api.MediaScanner
 
 internal class MediaScannerAndroid(
-        private val addOn: AddOn
+    private val addOn: AddOn
 ) : MediaScanner {
 
     private var refreshListeners = ArrayList<MediaScanner.RefreshListener>()

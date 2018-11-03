@@ -1,7 +1,7 @@
 package com.mercandalli.sdk.files.api
 
 enum class FileExtension(
-        private val extension: String
+    private val extension: String
 ) {
 
     MP3("mp3"),

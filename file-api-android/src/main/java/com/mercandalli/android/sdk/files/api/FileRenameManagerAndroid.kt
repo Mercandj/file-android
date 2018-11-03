@@ -5,7 +5,7 @@ import com.mercandalli.sdk.files.api.FileRenameUtils
 import com.mercandalli.sdk.files.api.MediaScanner
 
 class FileRenameManagerAndroid(
-        private val mediaScanner: MediaScanner
+    private val mediaScanner: MediaScanner
 ) : FileRenameManager {
 
     override fun rename(path: String, fileName: String) {

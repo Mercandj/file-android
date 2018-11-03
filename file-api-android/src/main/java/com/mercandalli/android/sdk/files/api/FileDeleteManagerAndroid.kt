@@ -4,7 +4,7 @@ import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.MediaScanner
 
 class FileDeleteManagerAndroid(
-        private val mediaScanner: MediaScanner
+    private val mediaScanner: MediaScanner
 ) : FileDeleteManager {
 
     private val listeners = ArrayList<FileDeleteManager.FileDeleteCompletionListener>()

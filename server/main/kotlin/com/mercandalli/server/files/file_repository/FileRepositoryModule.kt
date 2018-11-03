@@ -1,9 +1,12 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_repository
 
 import com.mercandalli.server.files.main.ApplicationGraph
 
 class FileRepositoryModule(
-        private val rootPath: String
+    private val rootPath: String
 ) {
 
     fun createFileRepository(): FileRepository {
@@ -29,8 +32,8 @@ class FileRepositoryModule(
             folderContainer.mkdirs()
         }
         return FileRepositoryImpl(
-                repositoryMetadataJsonFile,
-                folderContainer
+            repositoryMetadataJsonFile,
+            folderContainer
         )
     }
 }

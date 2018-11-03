@@ -5,10 +5,10 @@ import org.json.JSONObject
 interface NetworkUploader {
 
     fun postUploadSync(
-            url: String,
-            headers: Map<String, String>,
-            jsonObject: JSONObject,
-            javaFile: java.io.File,
-            listener: Network.UploadProgressListener
+        url: String,
+        headers: Map<String, String>,
+        jsonObject: JSONObject,
+        javaFile: java.io.File,
+        listener: Network.UploadProgressListener
     ): String?
 }

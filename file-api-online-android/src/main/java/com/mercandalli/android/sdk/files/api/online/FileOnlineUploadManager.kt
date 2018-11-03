@@ -5,8 +5,8 @@ import com.mercandalli.sdk.files.api.File
 interface FileOnlineUploadManager {
 
     fun upload(
-            inputJavaFile: java.io.File,
-            outputFile: File
+        inputJavaFile: java.io.File,
+        outputFile: File
     )
 
     fun registerListener(listener: UploadListener)
@@ -16,17 +16,17 @@ interface FileOnlineUploadManager {
     interface UploadListener {
 
         fun onUploadStarted(
-                file: File
+            file: File
         )
 
         fun onUploadProgress(
-                file: File,
-                current: Long,
-                size: Long
+            file: File,
+            current: Long,
+            size: Long
         )
 
         fun onUploadEnded(
-                file: File
+            file: File
         )
     }
 }

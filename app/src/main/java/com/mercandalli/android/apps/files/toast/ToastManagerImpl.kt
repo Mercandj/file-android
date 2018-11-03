@@ -7,7 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ToastManagerImpl(
-        private val context: Context
+    private val context: Context
 ) : ToastManager {
 
     override fun toast(message: Int) {

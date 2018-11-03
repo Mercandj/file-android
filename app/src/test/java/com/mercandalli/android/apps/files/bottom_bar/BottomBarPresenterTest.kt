@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.bottom_bar
 
 import com.mercandalli.android.apps.files.developer.DeveloperManager
@@ -75,12 +78,12 @@ class BottomBarPresenterTest {
 
     private fun createInstanceToTest(): BottomBarPresenter {
         return BottomBarPresenter(
-                screen,
-                themeManager,
-                developerManager,
-                fileOnlineLoginManager,
-                selectedColor,
-                notSelectedColor
+            screen,
+            themeManager,
+            developerManager,
+            fileOnlineLoginManager,
+            selectedColor,
+            notSelectedColor
         )
     }
 }

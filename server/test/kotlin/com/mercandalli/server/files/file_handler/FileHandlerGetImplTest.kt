@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.server.files.authorization.AuthorizationManager
@@ -38,9 +41,9 @@ class FileHandlerGetImplTest {
 
     private fun createInstanceToTest(): FileHandlerGet {
         return FileHandlerGetImpl(
-                fileRepository,
-                logManager,
-                authorizationManager
+            fileRepository,
+            logManager,
+            authorizationManager
         )
     }
 }

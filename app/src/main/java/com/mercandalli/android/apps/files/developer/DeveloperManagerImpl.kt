@@ -3,7 +3,7 @@ package com.mercandalli.android.apps.files.developer
 import android.content.SharedPreferences
 
 class DeveloperManagerImpl(
-        private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences
 ) : DeveloperManager {
 
     private var isDeveloper = false
@@ -21,8 +21,8 @@ class DeveloperManagerImpl(
         }
         isDeveloper = enable
         sharedPreferences.edit()
-                .putBoolean(SHARED_PREFERENCE_KEY_DEVELOPER_MODE, isDeveloper)
-                .apply()
+            .putBoolean(SHARED_PREFERENCE_KEY_DEVELOPER_MODE, isDeveloper)
+            .apply()
         for (listener in developerModeListeners) {
             listener.onDeveloperModeChanged()
         }

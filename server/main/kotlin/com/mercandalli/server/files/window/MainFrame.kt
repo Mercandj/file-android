@@ -7,9 +7,9 @@ import javax.swing.JPanel
 import javax.swing.BoxLayout
 
 class MainFrame(
-        title: String
+    title: String
 ) : JFrame(),
-        MainContract.Screen {
+    MainContract.Screen {
 
     private val userAction = createUserAction()
 
@@ -59,11 +59,11 @@ class MainFrame(
         val rootPath = ApplicationGraph.getRootPath()
         val pullSubRepositoryShellFile = ApplicationGraph.getPullSubRepositoryShellFile()
         return MainPresenter(
-                this,
-                serverManager,
-                shellManager,
-                rootPath,
-                pullSubRepositoryShellFile
+            this,
+            serverManager,
+            shellManager,
+            rootPath,
+            pullSubRepositoryShellFile
         )
     }
 
@@ -75,7 +75,7 @@ class MainFrame(
 
         private fun createAndShowGUI() {
             val frame = MainFrame(
-                    "Server - mercandalli.com"
+                "Server - mercandalli.com"
             )
             frame.isVisible = true
         }

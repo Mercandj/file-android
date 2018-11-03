@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_detail
 
 import com.mercandalli.android.apps.files.audio.AudioManager
@@ -62,19 +65,19 @@ class FileColumnDetailPresenterTest {
 
     private fun createInstanceToTest(): FileColumnDetailPresenter {
         return FileColumnDetailPresenter(
-                screen,
-                audioManager,
-                audioQueueManager,
-                fileOpenManager,
-                fileDeleteManager,
-                fileCopyCutManager,
-                fileRenameManager,
-                fileShareManager,
-                themeManager,
-                toastManager,
-                playStringRes,
-                pauseStringRes,
-                deleteFailedTextRes
+            screen,
+            audioManager,
+            audioQueueManager,
+            fileOpenManager,
+            fileDeleteManager,
+            fileCopyCutManager,
+            fileRenameManager,
+            fileShareManager,
+            themeManager,
+            toastManager,
+            playStringRes,
+            pauseStringRes,
+            deleteFailedTextRes
         )
     }
 }

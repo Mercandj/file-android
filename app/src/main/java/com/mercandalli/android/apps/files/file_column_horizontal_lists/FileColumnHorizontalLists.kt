@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_horizontal_lists
 
 import android.content.Context
@@ -16,7 +19,9 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
 class FileColumnHorizontalLists @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnHorizontalListsContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_horizontal_lists, this)
@@ -51,7 +56,7 @@ class FileColumnHorizontalLists @JvmOverloads constructor(
     override fun createList(path: String, index: Int) {
         if (index != fileListViews.size) {
             throw IllegalStateException("Wrong index. Index:$index fileListViews.size:" +
-                    fileListViews.size)
+                fileListViews.size)
         }
         val fileListView = createList(index)
         fileListView.setPath(path)
@@ -64,7 +69,7 @@ class FileColumnHorizontalLists @JvmOverloads constructor(
     override fun setPath(path: String, index: Int) {
         if (index >= fileListViews.size) {
             throw IllegalStateException("Wrong index. Index:$index fileListViews.size:" +
-                    fileListViews.size)
+                fileListViews.size)
         }
         fileListViews[index].setPath(path)
     }
@@ -136,19 +141,19 @@ class FileColumnHorizontalLists @JvmOverloads constructor(
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         FileColumnHorizontalListsPresenter(
-                this,
-                fileManager,
-                fileOpenManager,
-                fileCopyCutManager,
-                Environment.getExternalStorageDirectory().absolutePath
+            this,
+            fileManager,
+            fileOpenManager,
+            fileCopyCutManager,
+            Environment.getExternalStorageDirectory().absolutePath
         )
     }
 
     private fun createList(index: Int): FileColumnListView {
         val fileListView = FileColumnListView(context)
         fileListView.layoutParams = FrameLayout.LayoutParams(
-                context.resources.getDimensionPixelSize(R.dimen.file_horizontal_lists_list_width),
-                FrameLayout.LayoutParams.MATCH_PARENT)
+            context.resources.getDimensionPixelSize(R.dimen.file_horizontal_lists_list_width),
+            FrameLayout.LayoutParams.MATCH_PARENT)
         fileListView.setFileClickListener(object : FileColumnRow.FileClickListener {
             override fun onFileClicked(file: File) {
                 userAction.onFileClicked(index, file)

@@ -4,7 +4,7 @@ import android.content.Context
 import com.mercandalli.sdk.files.api.MediaScanner
 
 class FileOnlineGraph(
-        private val fileOnlineModule: FileOnlineAndroidModule
+    private val fileOnlineModule: FileOnlineAndroidModule
 ) {
 
     private val fileOnlineManager by lazy { fileOnlineModule.createFileOnlineManager() }
@@ -32,17 +32,17 @@ class FileOnlineGraph(
         fun getFileOnlineUploadManager() = graph.fileOnlineUploadManager
 
         fun init(
-                context: Context,
-                fileOnlineApiNetwork: FileOnlineApiNetwork,
-                localMediaScanner: MediaScanner
+            context: Context,
+            fileOnlineApiNetwork: FileOnlineApiNetwork,
+            localMediaScanner: MediaScanner
         ) {
             val fileOnlineModule = FileOnlineAndroidModule(
-                    context,
-                    fileOnlineApiNetwork,
-                    localMediaScanner
+                context,
+                fileOnlineApiNetwork,
+                localMediaScanner
             )
             graph = FileOnlineGraph(
-                    fileOnlineModule
+                fileOnlineModule
             )
         }
     }

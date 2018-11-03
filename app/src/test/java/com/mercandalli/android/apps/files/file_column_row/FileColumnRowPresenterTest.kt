@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_row
 
 import androidx.annotation.ColorRes
@@ -80,17 +83,17 @@ class FileColumnRowPresenterTest {
     private fun createInstanceToTest(): FileColumnRowPresenter {
         Mockito.`when`(themeManager!!.getTheme()).thenReturn(theme)
         return FileColumnRowPresenter(
-                screen!!,
-                fileDeleteManager!!,
-                fileCopyCutManager!!,
-                fileRenameManager!!,
-                audioManager!!,
-                themeManager!!,
-                toastManager!!,
-                drawableRightIconDirectoryDrawableRes,
-                drawableRightIconSoundDrawableRes,
-                selectedTextColorRes,
-                selectedBackgroundColorRes
+            screen!!,
+            fileDeleteManager!!,
+            fileCopyCutManager!!,
+            fileRenameManager!!,
+            audioManager!!,
+            themeManager!!,
+            toastManager!!,
+            drawableRightIconDirectoryDrawableRes,
+            drawableRightIconSoundDrawableRes,
+            selectedTextColorRes,
+            selectedBackgroundColorRes
         )
     }
 }

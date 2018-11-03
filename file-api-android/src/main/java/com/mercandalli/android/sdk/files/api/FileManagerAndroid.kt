@@ -8,7 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileManagerAndroid(
-        private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager
 ) : FileManager {
 
     private val fileChildrenResultMap = HashMap<String, FileChildrenResult>()

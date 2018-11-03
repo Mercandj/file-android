@@ -8,7 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileSizeManagerAndroid(
-        private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager
 ) : FileSizeManager {
 
     private val fileSizeResultMap = HashMap<String, FileSizeResult>()

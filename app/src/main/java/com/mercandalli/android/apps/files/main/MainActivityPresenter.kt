@@ -6,15 +6,15 @@ import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
 class MainActivityPresenter(
-        private val screen: MainActivityContract.Screen,
-        private val fileCreatorManager: FileCreatorManager,
-        private val fileOnlineCreatorManager: FileCreatorManager,
-        private val fileCopyCutManager: FileCopyCutManager,
-        private val fileOnlineCopyCutManager: FileCopyCutManager,
-        private val themeManager: ThemeManager,
-        private val mainActivityFileUiStorage: MainActivityFileUiStorage,
-        private val rootPathLocal: String,
-        private val rootPathOnline: String
+    private val screen: MainActivityContract.Screen,
+    private val fileCreatorManager: FileCreatorManager,
+    private val fileOnlineCreatorManager: FileCreatorManager,
+    private val fileCopyCutManager: FileCopyCutManager,
+    private val fileOnlineCopyCutManager: FileCopyCutManager,
+    private val themeManager: ThemeManager,
+    private val mainActivityFileUiStorage: MainActivityFileUiStorage,
+    private val rootPathLocal: String,
+    private val rootPathOnline: String
 ) : MainActivityContract.UserAction {
 
     private var currentPath: String? = null
@@ -236,8 +236,8 @@ class MainActivityPresenter(
 
     private fun syncToolbarPasteIconVisibility() {
         if (selectedSection != SECTION_FILE_LIST &&
-                selectedSection != SECTION_FILE_COLUMN &&
-                selectedSection != SECTION_ONLINE) {
+            selectedSection != SECTION_FILE_COLUMN &&
+            selectedSection != SECTION_ONLINE) {
             screen.setPasteIconVisibility(false)
             return
         }

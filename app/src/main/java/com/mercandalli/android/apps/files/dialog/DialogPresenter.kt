@@ -1,8 +1,8 @@
 package com.mercandalli.android.apps.files.dialog
 
 internal class DialogPresenter(
-        private val screen: DialogContract.Screen,
-        private val dialogManager: DialogManager
+    private val screen: DialogContract.Screen,
+    private val dialogManager: DialogManager
 ) : DialogContract.UserAction {
 
     private lateinit var dialogInput: DialogActivity.DialogInput
@@ -24,22 +24,22 @@ internal class DialogPresenter(
     override fun onPositiveClicked(input: String) {
         screen.quit()
         val dialogAction = DialogManager.DialogAction(
-                dialogInput.dialogId,
-                input
+            dialogInput.dialogId,
+            input
         )
         dialogManager.onDialogPositiveClicked(
-                dialogAction
+            dialogAction
         )
     }
 
     override fun onNegativeClicked(input: String) {
         screen.quit()
         val dialogAction = DialogManager.DialogAction(
-                dialogInput.dialogId,
-                input
+            dialogInput.dialogId,
+            input
         )
         dialogManager.onDialogNegativeClicked(
-                dialogAction
+            dialogAction
         )
     }
 }

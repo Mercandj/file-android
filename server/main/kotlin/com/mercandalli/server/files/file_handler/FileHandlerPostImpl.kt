@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.sdk.files.api.File
@@ -23,14 +26,14 @@ import java.io.OutputStream
 import java.lang.StringBuilder
 
 class FileHandlerPostImpl(
-        private val fileRepository: FileRepository,
-        private val logManager: LogManager,
-        private val authorizationManager: AuthorizationManager
+    private val fileRepository: FileRepository,
+    private val logManager: LogManager,
+    private val authorizationManager: AuthorizationManager
 ) : FileHandlerPost {
 
     override fun create(
-            headers: Headers,
-            body: String
+        headers: Headers,
+        body: String
     ): String {
         logd("create(body: $body)")
         val debugMessage = StringBuilder()
@@ -50,15 +53,15 @@ class FileHandlerPostImpl(
             javaFile.createNewFile()
         }
         return ServerResponseFile.create(
-                file,
-                debugMessage.toString(),
-                true
+            file,
+            debugMessage.toString(),
+            true
         ).toJsonString()
     }
 
     override fun rename(
-            headers: Headers,
-            body: String
+        headers: Headers,
+        body: String
     ): String {
         logd("rename(body: $body)")
         val fileJsonObject = JSONObject(body)
@@ -68,15 +71,15 @@ class FileHandlerPostImpl(
         if (renamedFile == null) {
             loge("rename: Repository rename failed")
             return ServerResponse.create(
-                    "File not renamed. Maybe not found in the server",
-                    false
+                "File not renamed. Maybe not found in the server",
+                false
             ).toJsonString()
         }
         if (name.contains("/")) {
             loge("rename: Name should not contains /. name == $name")
             return ServerResponse.create(
-                    "Name should not contains /. name == $name",
-                    false
+                "Name should not contains /. name == $name",
+                false
             ).toJsonString()
         }
         logd("rename: repository rename succeeded")
@@ -88,21 +91,21 @@ class FileHandlerPostImpl(
             // Revert rename in the repo
             fileRepository.rename(renamedFile.path, java.io.File(path).name)
             return ServerResponse.create(
-                    "File not renamed. Java file rename failed",
-                    false
+                "File not renamed. Java file rename failed",
+                false
             ).toJsonString()
         }
         logd("rename: File renamed")
         return ServerResponseFile.create(
-                renamedFile,
-                "File renamed",
-                true
+            renamedFile,
+            "File renamed",
+            true
         ).toJsonString()
     }
 
     override fun copy(
-            headers: Headers,
-            body: String
+        headers: Headers,
+        body: String
     ): String {
         logd("copy(body: $body)")
         val fileJsonObject = JSONObject(body)
@@ -112,8 +115,8 @@ class FileHandlerPostImpl(
         if (copiedFile == null) {
             loge("copy: Repository copy failed")
             return ServerResponse.create(
-                    "File not copy. Maybe not found in the server",
-                    false
+                "File not copy. Maybe not found in the server",
+                false
             ).toJsonString()
         }
         val folderContainerPath = fileRepository.getFolderContainerPath()
@@ -122,27 +125,27 @@ class FileHandlerPostImpl(
         logd("copy: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
         logd("copy: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
         val succeeded = FileCopyCutUtils.copyJavaFileSync(
-                javaFileInput.absolutePath,
-                javaFileDirectoryOutput.absolutePath
+            javaFileInput.absolutePath,
+            javaFileDirectoryOutput.absolutePath
         )
         if (!succeeded) {
             loge("copy: File not copy")
             return ServerResponse.create(
-                    "File not copied",
-                    false
+                "File not copied",
+                false
             ).toJsonString()
         }
         logd("copy: File copied")
         return ServerResponseFile.create(
-                copiedFile,
-                "File copied",
-                true
+            copiedFile,
+            "File copied",
+            true
         ).toJsonString()
     }
 
     override fun cut(
-            headers: Headers,
-            body: String
+        headers: Headers,
+        body: String
     ): String {
         logd("cut(body: $body)")
         val fileJsonObject = JSONObject(body)
@@ -152,8 +155,8 @@ class FileHandlerPostImpl(
         if (cutFile == null) {
             loge("cut: Repository cut failed")
             return ServerResponse.create(
-                    "File not cut. Maybe not found in the server",
-                    false
+                "File not cut. Maybe not found in the server",
+                false
             ).toJsonString()
         }
         val folderContainerPath = fileRepository.getFolderContainerPath()
@@ -162,34 +165,34 @@ class FileHandlerPostImpl(
         logd("cut: javaFileInput.absolutePath: ${javaFileInput.absolutePath}")
         logd("cut: javaFileDirectoryOutput.absolutePath: ${javaFileDirectoryOutput.absolutePath}")
         val succeeded = FileCopyCutUtils.cutJavaFileSync(
-                javaFileInput.absolutePath,
-                javaFileDirectoryOutput.absolutePath
+            javaFileInput.absolutePath,
+            javaFileDirectoryOutput.absolutePath
         )
         if (!succeeded) {
             loge("cut: File not cut")
             return ServerResponse.create(
-                    "File not cut",
-                    false
+                "File not cut",
+                false
             ).toJsonString()
         }
         logd("cut: File cut")
         return ServerResponseFile.create(
-                cutFile,
-                "File cut",
-                true
+            cutFile,
+            "File cut",
+            true
         ).toJsonString()
     }
 
     override suspend fun upload(
-            headers: Headers,
-            multipart: MultiPartData
+        headers: Headers,
+        multipart: MultiPartData
     ): String {
         logd("upload()")
         if (!authorizationManager.isAuthorized(headers)) {
             loge("upload: Not logged")
             return ServerResponse.create(
-                    "Oops, not logged",
-                    false
+                "Oops, not logged",
+                false
             ).toJsonString()
         }
         logd("upload: Logged")
@@ -213,8 +216,8 @@ class FileHandlerPostImpl(
                     name = part.originalFileName
                 }
                 val javaFile = java.io.File(
-                        fileRepository.getFolderContainerPath(),
-                        name
+                    fileRepository.getFolderContainerPath(),
+                    name
                 )
                 part.streamProvider().use { inputStream ->
                     javaFile.outputStream().buffered().use { bufferedOutputStream ->
@@ -229,14 +232,14 @@ class FileHandlerPostImpl(
         if (file == null) {
             loge("upload: File not uploaded into the repository: file == null")
             return ServerResponse.create(
-                    "File not uploaded into the repository",
-                    false
+                "File not uploaded into the repository",
+                false
             ).toJsonString()
         }
         return ServerResponseFile.create(
-                file!!,
-                "File uploaded into the repository",
-                true
+            file!!,
+            "File uploaded into the repository",
+            true
         ).toJsonString()
     }
 
@@ -261,10 +264,10 @@ class FileHandlerPostImpl(
      * By default the dispatcher uses the [ioCoroutineDispatcher] intended I/O operations.
      */
     private suspend fun InputStream.copyToSuspend(
-            out: OutputStream,
-            bufferSize: Int = DEFAULT_BUFFER_SIZE,
-            yieldSize: Int = 4 * 1_024 * 1_024,
-            dispatcher: CoroutineDispatcher = ioCoroutineDispatcher
+        out: OutputStream,
+        bufferSize: Int = DEFAULT_BUFFER_SIZE,
+        yieldSize: Int = 4 * 1_024 * 1_024,
+        dispatcher: CoroutineDispatcher = ioCoroutineDispatcher
     ): Long {
         return withContext(dispatcher) {
             val buffer = ByteArray(bufferSize)

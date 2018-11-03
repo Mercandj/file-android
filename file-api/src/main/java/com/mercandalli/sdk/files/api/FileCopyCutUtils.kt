@@ -32,8 +32,8 @@ object FileCopyCutUtils {
                 val children = inputFile.listFiles()
                 for (child in children) {
                     val succeeded = copyJavaFileSync(
-                            child.absolutePath,
-                            copy.absolutePath + File.separator
+                        child.absolutePath,
+                        copy.absolutePath + File.separator
                     )
                     if (!succeeded) {
                         return false

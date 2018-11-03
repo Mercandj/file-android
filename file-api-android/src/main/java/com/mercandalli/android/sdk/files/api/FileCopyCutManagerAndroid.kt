@@ -8,7 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class FileCopyCutManagerAndroid(
-        private val mediaScanner: MediaScanner
+    private val mediaScanner: MediaScanner
 ) : FileCopyCutManager {
 
     private var pathToCopy: String? = null

@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_row
 
 import androidx.annotation.ColorRes
@@ -11,21 +14,21 @@ import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileRenameManager
 
 class FileColumnRowPresenter(
-        private val screen: FileColumnRowContract.Screen,
-        private val fileDeleteManager: FileDeleteManager,
-        private val fileCopyCutManager: FileCopyCutManager,
-        private val fileRenameManager: FileRenameManager,
-        private val audioManager: AudioManager,
-        private val themeManager: ThemeManager,
-        private val toastManager: ToastManager,
-        @DrawableRes
-        private val drawableRightIconDirectoryDrawableRes: Int,
-        @DrawableRes
-        private val drawableRightIconSoundDrawableRes: Int,
-        @ColorRes
-        private val selectedTextColorRes: Int,
-        @ColorRes
-        private val selectedBackgroundColorRes: Int
+    private val screen: FileColumnRowContract.Screen,
+    private val fileDeleteManager: FileDeleteManager,
+    private val fileCopyCutManager: FileCopyCutManager,
+    private val fileRenameManager: FileRenameManager,
+    private val audioManager: AudioManager,
+    private val themeManager: ThemeManager,
+    private val toastManager: ToastManager,
+    @DrawableRes
+    private val drawableRightIconDirectoryDrawableRes: Int,
+    @DrawableRes
+    private val drawableRightIconSoundDrawableRes: Int,
+    @ColorRes
+    private val selectedTextColorRes: Int,
+    @ColorRes
+    private val selectedBackgroundColorRes: Int
 ) : FileColumnRowContract.UserAction {
 
     private val playListener = createPlayListener()

@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_online_upload
 
 import android.app.Activity
@@ -14,7 +17,7 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileOnlineUploadActivity : AppCompatActivity(),
-        FileOnlineUploadContract.Screen {
+    FileOnlineUploadContract.Screen {
 
     private val upload: View by bind(R.id.activity_file_online_upload_upload)
     private val path: TextView by bind(R.id.activity_file_online_upload_path)
@@ -45,8 +48,8 @@ class FileOnlineUploadActivity : AppCompatActivity(),
     private fun createUserAction(): FileOnlineUploadContract.UserAction {
         val fileOnlineUploadManager = ApplicationGraph.getFileOnlineUploadManager()
         return FileOnlineUploadPresenter(
-                this,
-                fileOnlineUploadManager
+            this,
+            fileOnlineUploadManager
         )
     }
 

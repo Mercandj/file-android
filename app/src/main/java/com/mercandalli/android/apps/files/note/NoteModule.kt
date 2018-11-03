@@ -5,18 +5,18 @@ import android.content.Context
 import android.content.Intent
 
 class NoteModule(
-        private val context: Context
+    private val context: Context
 ) {
 
     fun createNoteManager(): NoteManager {
         val sharedPreferences = context.getSharedPreferences(
-                NoteManagerSharedPreferences.PREFERENCE_NAME,
-                Context.MODE_PRIVATE
+            NoteManagerSharedPreferences.PREFERENCE_NAME,
+            Context.MODE_PRIVATE
         )
         val addOn = createNoteManagerSharedPreferencesAddOn()
         return NoteManagerSharedPreferences(
-                sharedPreferences,
-                addOn
+            sharedPreferences,
+            addOn
         )
     }
 

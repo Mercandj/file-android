@@ -13,22 +13,22 @@ import java.io.IOException
 import java.io.InputStream
 
 internal class NetworkDownloaderImpl(
-        private val okHttpClientLazy: Lazy<OkHttpClient>
+    private val okHttpClientLazy: Lazy<OkHttpClient>
 ) : NetworkDownloader {
 
     override fun postDownloadSync(
-            url: String,
-            headers: Map<String, String>,
-            jsonObject: JSONObject,
-            outputJavaFile: File,
-            listener: Network.DownloadProgressListener
+        url: String,
+        headers: Map<String, String>,
+        jsonObject: JSONObject,
+        outputJavaFile: File,
+        listener: Network.DownloadProgressListener
     ): String? {
         val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
         val request = Request.Builder()
-                .url(url)
-                .headers(Headers.of(headers))
-                .post(requestBody)
-                .build()
+            .url(url)
+            .headers(Headers.of(headers))
+            .post(requestBody)
+            .build()
         val call = okHttpClientLazy.value.newCall(request)
         try {
             val response = call.execute()
@@ -49,8 +49,8 @@ internal class NetworkDownloaderImpl(
                 val target = body.contentLength()
                 val output = FileOutputStream(outputJavaFile)
                 listener.onDownloadProgress(
-                        0L,
-                        target
+                    0L,
+                    target
                 )
                 while (true) {
                     val contentRead = inputStream!!.read(buff)
@@ -60,8 +60,8 @@ internal class NetworkDownloaderImpl(
                     output.write(buff, 0, contentRead)
                     downloaded += contentRead.toLong()
                     listener.onDownloadProgress(
-                            downloaded,
-                            target
+                        downloaded,
+                        target
                     )
                 }
                 output.flush()
@@ -88,7 +88,7 @@ internal class NetworkDownloaderImpl(
     companion object {
 
         private val MEDIA_TYPE_JSON = MediaType.parse(
-                "application/json; charset=utf-8"
+            "application/json; charset=utf-8"
         )
     }
 }

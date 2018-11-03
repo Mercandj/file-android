@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_about
 
 import com.mercandalli.android.apps.files.dialog.DialogManager
@@ -72,13 +75,13 @@ class SettingsAboutPresenterTest {
 
     private fun createInstanceToTest(): SettingsAboutPresenter {
         return SettingsAboutPresenter(
-                screen!!,
-                versionManager!!,
-                themeManager!!,
-                dialogManager!!,
-                developerManager!!,
-                hashManager!!,
-                addOn!!
+            screen!!,
+            versionManager!!,
+            themeManager!!,
+            dialogManager!!,
+            developerManager!!,
+            hashManager!!,
+            addOn!!
         )
     }
 }

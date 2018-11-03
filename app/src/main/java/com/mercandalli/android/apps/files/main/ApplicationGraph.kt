@@ -22,7 +22,7 @@ import org.json.JSONObject
 import java.io.File
 
 class ApplicationGraph(
-        private val context: Context
+    private val context: Context
 ) {
     private val fileModule by lazy { FileModule(context, createPermissionRequestAddOn()) }
     private val developerModule by lazy { DeveloperModule(context) }
@@ -109,13 +109,13 @@ class ApplicationGraph(
             if (graph == null) {
                 val applicationContext = context.applicationContext
                 graph = ApplicationGraph(
-                        applicationContext
+                    applicationContext
                 )
                 val fileOnlineApiNetwork = createFileOnlineApiNetwork()
                 FileOnlineGraph.init(
-                        applicationContext,
-                        fileOnlineApiNetwork,
-                        graph!!.fileMediaScannerInternal
+                    applicationContext,
+                    fileOnlineApiNetwork,
+                    graph!!.fileMediaScannerInternal
                 )
             }
         }
@@ -123,67 +123,67 @@ class ApplicationGraph(
         private fun createFileOnlineApiNetwork() = object : FileOnlineApiNetwork {
 
             override fun getSync(
-                    url: String,
-                    headers: Map<String, String>
+                url: String,
+                headers: Map<String, String>
             ) = getNetwork().getSync(
-                    url,
-                    headers
+                url,
+                headers
             )
 
             override fun postSync(
-                    url: String,
-                    headers: Map<String, String>,
-                    jsonObject: JSONObject
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject
             ) = getNetwork().postSync(
-                    url,
-                    headers,
-                    jsonObject
+                url,
+                headers,
+                jsonObject
             )
 
             override fun postDownloadSync(
-                    url: String,
-                    headers: Map<String, String>,
-                    jsonObject: JSONObject,
-                    javaFile: File,
-                    listener: FileOnlineApiNetwork.DownloadProgressListener
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject,
+                javaFile: File,
+                listener: FileOnlineApiNetwork.DownloadProgressListener
             ) = getNetwork().postDownloadSync(
-                    url,
-                    headers,
-                    jsonObject,
-                    javaFile,
-                    object : Network.DownloadProgressListener {
-                        override fun onDownloadProgress(current: Long, size: Long) {
-                            listener.onDownloadProgress(current, size)
-                        }
+                url,
+                headers,
+                jsonObject,
+                javaFile,
+                object : Network.DownloadProgressListener {
+                    override fun onDownloadProgress(current: Long, size: Long) {
+                        listener.onDownloadProgress(current, size)
                     }
+                }
             )
 
             override fun postUploadSync(
-                    url: String,
-                    headers: Map<String, String>,
-                    jsonObject: JSONObject,
-                    javaFile: File,
-                    listener: FileOnlineApiNetwork.UploadProgressListener
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject,
+                javaFile: File,
+                listener: FileOnlineApiNetwork.UploadProgressListener
             ) = getNetwork().postUploadSync(
-                    url,
-                    headers,
-                    jsonObject,
-                    javaFile,
-                    object : Network.UploadProgressListener {
-                        override fun onUploadProgress(current: Long, size: Long) {
-                            listener.onUploadProgress(current, size)
-                        }
+                url,
+                headers,
+                jsonObject,
+                javaFile,
+                object : Network.UploadProgressListener {
+                    override fun onUploadProgress(current: Long, size: Long) {
+                        listener.onUploadProgress(current, size)
                     }
+                }
             )
 
             override fun deleteSync(
-                    url: String,
-                    headers: Map<String, String>,
-                    jsonObject: JSONObject
+                url: String,
+                headers: Map<String, String>,
+                jsonObject: JSONObject
             ) = getNetwork().deleteSync(
-                    url,
-                    headers,
-                    jsonObject
+                url,
+                headers,
+                jsonObject
             )
         }
     }

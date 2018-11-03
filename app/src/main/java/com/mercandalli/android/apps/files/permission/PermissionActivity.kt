@@ -28,9 +28,10 @@ class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray) {
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode != REQUEST_CODE) {
             return
@@ -44,14 +45,14 @@ class PermissionActivity : AppCompatActivity(), PermissionContract.Screen {
 
     override fun requestStoragePermission() {
         ActivityCompat.requestPermissions(
-                this,
-                PERMISSIONS,
-                REQUEST_CODE)
+            this,
+            PERMISSIONS,
+            REQUEST_CODE)
     }
 
     private fun createUserAction(): PermissionContract.UserAction {
         return PermissionPresenter(
-                this
+            this
         )
     }
 

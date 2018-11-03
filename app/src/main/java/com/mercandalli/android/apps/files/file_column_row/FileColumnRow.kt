@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_row
 
 import android.content.Context
@@ -19,7 +22,9 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
 class FileColumnRow @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileColumnRowContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_row, this)
@@ -76,7 +81,7 @@ class FileColumnRow @JvmOverloads constructor(
     override fun setRowSelected(selected: Boolean) {
         if (selected) {
             val selectedTitleColor = ContextCompat.getColor(
-                    context, R.color.view_file_row_selected_title)
+                context, R.color.view_file_row_selected_title)
             title.setTextColor(selectedTitleColor)
             icon.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
             arrayRight.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
@@ -103,34 +108,34 @@ class FileColumnRow @JvmOverloads constructor(
 
     override fun showDeleteConfirmation(fileName: String) {
         DialogUtils.alert(
-                context,
-                "Delete file?",
-                "Do you want to delete: $fileName",
-                "Yes",
-                object : DialogUtils.OnDialogUtilsListener {
-                    override fun onDialogUtilsCalledBack() {
-                        userAction.onDeleteConfirmedClicked()
-                    }
-                },
-                "No",
-                null
+            context,
+            "Delete file?",
+            "Do you want to delete: $fileName",
+            "Yes",
+            object : DialogUtils.OnDialogUtilsListener {
+                override fun onDialogUtilsCalledBack() {
+                    userAction.onDeleteConfirmedClicked()
+                }
+            },
+            "No",
+            null
         )
     }
 
     override fun showRenamePrompt(fileName: String) {
         DialogUtils.prompt(context, "Rename file?",
-                "Enter a new name for: $fileName",
-                "Rename",
-                object : DialogUtils.OnDialogUtilsStringListener {
-                    override fun onDialogUtilsStringCalledBack(text: String) {
-                        userAction.onRenameConfirmedClicked(text)
-                    }
-                },
-                "Dismiss",
-                null,
-                fileName,
-                "File name",
-                null
+            "Enter a new name for: $fileName",
+            "Rename",
+            object : DialogUtils.OnDialogUtilsStringListener {
+                override fun onDialogUtilsStringCalledBack(text: String) {
+                    userAction.onRenameConfirmedClicked(text)
+                }
+            },
+            "Dismiss",
+            null,
+            fileName,
+            "File name",
+            null
         )
     }
 
@@ -174,17 +179,17 @@ class FileColumnRow @JvmOverloads constructor(
         val themeManager = ApplicationGraph.getThemeManager()
         val toastManager = ApplicationGraph.getToastManager()
         FileColumnRowPresenter(
-                this,
-                fileDeleteManager,
-                fileCopyCutManager,
-                fileRenameManager,
-                audioManager,
-                themeManager,
-                toastManager,
-                R.drawable.ic_play_arrow_black_24dp,
-                R.drawable.ic_volume_up_black_24dp,
-                R.color.view_file_row_selected_title,
-                R.color.view_file_row_selected_background
+            this,
+            fileDeleteManager,
+            fileCopyCutManager,
+            fileRenameManager,
+            audioManager,
+            themeManager,
+            toastManager,
+            R.drawable.ic_play_arrow_black_24dp,
+            R.drawable.ic_volume_up_black_24dp,
+            R.color.view_file_row_selected_title,
+            R.color.view_file_row_selected_background
         )
     }
 

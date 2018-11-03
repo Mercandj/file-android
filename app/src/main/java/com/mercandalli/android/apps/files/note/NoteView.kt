@@ -14,9 +14,11 @@ import com.mercandalli.android.apps.files.common.DialogUtils
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class NoteView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr),
-        NoteContract.Screen {
+    NoteContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_note, this)
     private val editText: EditText = view.findViewById(R.id.view_note_input)
@@ -42,16 +44,16 @@ class NoteView @JvmOverloads constructor(
 
     override fun showDeleteConfirmation() {
         DialogUtils.alert(
-                context,
-                "Delete note?",
-                "Do you want note", "Yes",
-                object : DialogUtils.OnDialogUtilsListener {
-                    override fun onDialogUtilsCalledBack() {
-                        userAction.onDeleteConfirmedClicked()
-                    }
-                },
-                "No",
-                null
+            context,
+            "Delete note?",
+            "Do you want note", "Yes",
+            object : DialogUtils.OnDialogUtilsListener {
+                override fun onDialogUtilsCalledBack() {
+                    userAction.onDeleteConfirmedClicked()
+                }
+            },
+            "No",
+            null
         )
     }
 
@@ -92,9 +94,9 @@ class NoteView @JvmOverloads constructor(
         val noteManager = ApplicationGraph.getNoteManager()
         val themeManager = ApplicationGraph.getThemeManager()
         return NotePresenter(
-                this,
-                noteManager,
-                themeManager
+            this,
+            noteManager,
+            themeManager
         )
     }
 

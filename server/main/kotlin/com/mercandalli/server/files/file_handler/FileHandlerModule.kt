@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_handler
 
 import com.mercandalli.server.files.main.ApplicationGraph
@@ -10,25 +13,25 @@ class FileHandlerModule {
 
     fun createFileHandlerGet(): FileHandlerGet {
         return FileHandlerGetImpl(
-                fileRepository,
-                logManager,
-                authorizationManager
+            fileRepository,
+            logManager,
+            authorizationManager
         )
     }
 
     fun createFileHandlerPost(): FileHandlerPost {
         return FileHandlerPostImpl(
-                fileRepository,
-                logManager,
-                authorizationManager
+            fileRepository,
+            logManager,
+            authorizationManager
         )
     }
 
     fun createFileHandlerDelete(): FileHandlerDelete {
         return FileHandlerDeleteImpl(
-                fileRepository,
-                logManager,
-                authorizationManager
+            fileRepository,
+            logManager,
+            authorizationManager
         )
     }
 }

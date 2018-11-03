@@ -17,15 +17,15 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 
 internal class NetworkUploaderImpl(
-        private val okHttpClientLazy: Lazy<OkHttpClient>
+    private val okHttpClientLazy: Lazy<OkHttpClient>
 ) : NetworkUploader {
 
     override fun postUploadSync(
-            url: String,
-            headers: Map<String, String>,
-            jsonObject: JSONObject,
-            javaFile: File,
-            listener: Network.UploadProgressListener
+        url: String,
+        headers: Map<String, String>,
+        jsonObject: JSONObject,
+        javaFile: File,
+        listener: Network.UploadProgressListener
     ): String? {
         val mimeTypeString = getMimeType(javaFile.absolutePath)
         val mimeType = if (mimeTypeString == null) {
@@ -34,23 +34,23 @@ internal class NetworkUploaderImpl(
             MediaType.parse(mimeTypeString)
         }
         val req = MultipartBody
-                .Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart(
-                        "json",
-                        jsonObject.toString()
-                )
-                .addFormDataPart(
-                        "file",
-                        javaFile.name,
-                        RequestBody.create(mimeType, javaFile)
-                )
-                .build()
+            .Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(
+                "json",
+                jsonObject.toString()
+            )
+            .addFormDataPart(
+                "file",
+                javaFile.name,
+                RequestBody.create(mimeType, javaFile)
+            )
+            .build()
         val request = Request.Builder()
-                .url(url)
-                .headers(Headers.of(headers))
-                .post(req)
-                .build()
+            .url(url)
+            .headers(Headers.of(headers))
+            .post(req)
+            .build()
         return call(request)
     }
 

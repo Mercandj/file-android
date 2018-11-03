@@ -12,10 +12,9 @@ object FileSizeUtils {
             return bytes.toString() + " B"
         }
         val exp = (
-                Math.log(bytes.toDouble())
-                        /
-                        Math.log(unit.toDouble())
-                ).toInt()
+            Math.log(bytes.toDouble()) /
+                Math.log(unit.toDouble())
+            ).toInt()
         val units = if (si) {
             "kMGTPE"
         } else {
@@ -27,13 +26,13 @@ object FileSizeUtils {
             "i"
         }
         return String.format(
-                "%.1f %sB",
-                bytes /
-                        Math.pow(
-                                unit.toDouble(),
-                                exp.toDouble()
-                        ),
-                pre
+            "%.1f %sB",
+            bytes /
+                Math.pow(
+                    unit.toDouble(),
+                    exp.toDouble()
+                ),
+            pre
         )
     }
 

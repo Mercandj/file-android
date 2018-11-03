@@ -3,8 +3,8 @@ package com.mercandalli.android.apps.files.notification
 import com.mercandalli.android.apps.files.audio.AudioManager
 
 class NotificationAudioManagerImpl(
-        private val audioManager: AudioManager,
-        private val addOn: AddOn
+    private val audioManager: AudioManager,
+    private val addOn: AddOn
 ) : NotificationAudioManager {
 
     override fun initialize() {
@@ -27,8 +27,8 @@ class NotificationAudioManagerImpl(
         }
         val fileName = addOn.pathToFileName(sourcePath)
         addOn.createNotification(
-                NOTIFICATION_AUDIO_ID,
-                fileName
+            NOTIFICATION_AUDIO_ID,
+            fileName
         )
     }
 

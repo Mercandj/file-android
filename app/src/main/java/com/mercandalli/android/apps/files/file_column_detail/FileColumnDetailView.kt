@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_detail
 
 import android.app.AlertDialog
@@ -16,9 +19,11 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 
 class FileColumnDetailView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr),
-        FileColumnDetailContract.Screen {
+    FileColumnDetailContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_column_detail, this)
     private val title: TextView = view.findViewById(R.id.view_file_column_detail_title)
@@ -88,7 +93,7 @@ class FileColumnDetailView @JvmOverloads constructor(
 
     override fun setLastModified(lastModifiedDateString: String) {
         this.lastModified.text = context.getString(
-                R.string.view_file_detail_last_modified, lastModifiedDateString)
+            R.string.view_file_detail_last_modified, lastModifiedDateString)
     }
 
     override fun showPlayPauseButton() {
@@ -121,45 +126,45 @@ class FileColumnDetailView @JvmOverloads constructor(
 
     override fun showDeleteConfirmation(fileName: String) {
         DialogUtils.alert(
-                context,
-                "Delete file?",
-                "Do you want to delete: $fileName",
-                "Yes",
-                object : DialogUtils.OnDialogUtilsListener {
-                    override fun onDialogUtilsCalledBack() {
-                        userAction.onDeleteConfirmedClicked()
-                    }
-                },
-                "No",
-                null
+            context,
+            "Delete file?",
+            "Do you want to delete: $fileName",
+            "Yes",
+            object : DialogUtils.OnDialogUtilsListener {
+                override fun onDialogUtilsCalledBack() {
+                    userAction.onDeleteConfirmedClicked()
+                }
+            },
+            "No",
+            null
         )
     }
 
     override fun showRenamePrompt(fileName: String) {
         DialogUtils.prompt(context, "Rename file?",
-                "Enter a new name for: $fileName",
-                "Rename",
-                object : DialogUtils.OnDialogUtilsStringListener {
-                    override fun onDialogUtilsStringCalledBack(text: String) {
-                        userAction.onRenameConfirmedClicked(text)
-                    }
-                },
-                "Dismiss",
-                null,
-                fileName,
-                "File name",
-                null
+            "Enter a new name for: $fileName",
+            "Rename",
+            object : DialogUtils.OnDialogUtilsStringListener {
+                override fun onDialogUtilsStringCalledBack(text: String) {
+                    userAction.onRenameConfirmedClicked(text)
+                }
+            },
+            "Dismiss",
+            null,
+            fileName,
+            "File name",
+            null
         )
     }
 
     override fun showOpenAsSelection() {
         val menuAlert = AlertDialog.Builder(context)
         val menuList = arrayOf(
-                "Text",
-                "Image",
-                "Audio",
-                "Video",
-                "Other")
+            "Text",
+            "Image",
+            "Audio",
+            "Video",
+            "Other")
         menuAlert.setTitle("Open as:")
         menuAlert.setItems(menuList) { _, item ->
             val typeMime: String = when (item) {
@@ -226,19 +231,19 @@ class FileColumnDetailView @JvmOverloads constructor(
         val themeManager = ApplicationGraph.getThemeManager()
         val toastManager = ApplicationGraph.getToastManager()
         FileColumnDetailPresenter(
-                this,
-                audioManager,
-                audioQueueManager,
-                fileOpenManager,
-                fileDeleteManager,
-                fileCopyCutManager,
-                fileRenameManager,
-                fileShareManager,
-                themeManager,
-                toastManager,
-                R.drawable.ic_play_arrow_black_24dp,
-                R.drawable.ic_pause_black_24dp,
-                R.string.view_file_detail_delete_failed
+            this,
+            audioManager,
+            audioQueueManager,
+            fileOpenManager,
+            fileDeleteManager,
+            fileCopyCutManager,
+            fileRenameManager,
+            fileShareManager,
+            themeManager,
+            toastManager,
+            R.drawable.ic_play_arrow_black_24dp,
+            R.drawable.ic_pause_black_24dp,
+            R.string.view_file_detail_delete_failed
         )
     }
 }

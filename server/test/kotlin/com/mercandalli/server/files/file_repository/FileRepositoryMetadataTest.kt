@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_repository
 
 import com.mercandalli.sdk.files.api.File
@@ -12,15 +15,15 @@ class FileRepositoryMetadataTest {
         // Given
         val files = ArrayList<File>()
         files.add(
-                File.create(
-                        "id-file",
-                        "/index.html",
-                        "/",
-                        false,
-                        "index.html",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-file",
+                "/index.html",
+                "/",
+                false,
+                "index.html",
+                0L,
+                0L
+            )
         )
         val filesMap = HashMap<String, File>()
         for (file in files) {
@@ -30,9 +33,9 @@ class FileRepositoryMetadataTest {
 
         // When
         val fileRepositoryMetadataRenamed = FileRepositoryMetadata.rename(
-                fileRepositoryMetadata,
-                "/index.html",
-                "my-web super website.html"
+            fileRepositoryMetadata,
+            "/index.html",
+            "my-web super website.html"
         )
 
         // Then
@@ -41,16 +44,16 @@ class FileRepositoryMetadataTest {
         val renamedFile = renamedFiles["/my-web super website.html"]
         Assert.assertNotNull(renamedFile)
         FileTest.areEquals(
-                File.create(
-                        "id-file",
-                        "/my-web super website.html",
-                        "/",
-                        false,
-                        "my-web super website.html",
-                        0L,
-                        0L
-                ),
-                renamedFile!!
+            File.create(
+                "id-file",
+                "/my-web super website.html",
+                "/",
+                false,
+                "my-web super website.html",
+                0L,
+                0L
+            ),
+            renamedFile!!
         )
     }
 
@@ -59,26 +62,26 @@ class FileRepositoryMetadataTest {
         // Given
         val files = ArrayList<File>()
         files.add(
-                File.create(
-                        "id-folder",
-                        "/coucou",
-                        "/",
-                        true,
-                        "coucou",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-folder",
+                "/coucou",
+                "/",
+                true,
+                "coucou",
+                0L,
+                0L
+            )
         )
         files.add(
-                File.create(
-                        "id-file",
-                        "/coucou/index.html",
-                        "/coucou",
-                        false,
-                        "index.html",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-file",
+                "/coucou/index.html",
+                "/coucou",
+                false,
+                "index.html",
+                0L,
+                0L
+            )
         )
         val filesMap = HashMap<String, File>()
         for (file in files) {
@@ -88,9 +91,9 @@ class FileRepositoryMetadataTest {
 
         // When
         val fileRepositoryMetadataRenamed = FileRepositoryMetadata.rename(
-                fileRepositoryMetadata,
-                "/coucou",
-                "toto"
+            fileRepositoryMetadata,
+            "/coucou",
+            "toto"
         )
 
         // Then
@@ -99,29 +102,29 @@ class FileRepositoryMetadataTest {
         for (renamedFile in renamedFiles.values) {
             if (renamedFile.directory) {
                 FileTest.areEquals(
-                        File.create(
-                                "id-folder",
-                                "/toto",
-                                "/",
-                                true,
-                                "toto",
-                                0L,
-                                0L
-                        ),
-                        renamedFile
+                    File.create(
+                        "id-folder",
+                        "/toto",
+                        "/",
+                        true,
+                        "toto",
+                        0L,
+                        0L
+                    ),
+                    renamedFile
                 )
             } else {
                 FileTest.areEquals(
-                        File.create(
-                                "id-file",
-                                "/toto/index.html",
-                                "/toto",
-                                false,
-                                "index.html",
-                                0L,
-                                0L
-                        ),
-                        renamedFile
+                    File.create(
+                        "id-file",
+                        "/toto/index.html",
+                        "/toto",
+                        false,
+                        "index.html",
+                        0L,
+                        0L
+                    ),
+                    renamedFile
                 )
             }
         }
@@ -132,26 +135,26 @@ class FileRepositoryMetadataTest {
         // Given
         val files = ArrayList<File>()
         files.add(
-                File.create(
-                        "id-folder",
-                        "/coucou",
-                        "/",
-                        true,
-                        "coucou",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-folder",
+                "/coucou",
+                "/",
+                true,
+                "coucou",
+                0L,
+                0L
+            )
         )
         files.add(
-                File.create(
-                        "id-file",
-                        "/coucou/index.html",
-                        "/coucou",
-                        false,
-                        "index.html",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-file",
+                "/coucou/index.html",
+                "/coucou",
+                false,
+                "index.html",
+                0L,
+                0L
+            )
         )
         val filesMap = HashMap<String, File>()
         for (file in files) {
@@ -161,9 +164,9 @@ class FileRepositoryMetadataTest {
 
         // When
         val fileRepositoryMetadataRenamed = FileRepositoryMetadata.rename(
-                fileRepositoryMetadata,
-                "/coucou/index.html",
-                "indextest.html"
+            fileRepositoryMetadata,
+            "/coucou/index.html",
+            "indextest.html"
         )
 
         // Then
@@ -172,29 +175,29 @@ class FileRepositoryMetadataTest {
         for (renamedFile in renamedFiles.values) {
             if (renamedFile.directory) {
                 FileTest.areEquals(
-                        File.create(
-                                "id-folder",
-                                "/coucou",
-                                "/",
-                                true,
-                                "coucou",
-                                0L,
-                                0L
-                        ),
-                        renamedFile
+                    File.create(
+                        "id-folder",
+                        "/coucou",
+                        "/",
+                        true,
+                        "coucou",
+                        0L,
+                        0L
+                    ),
+                    renamedFile
                 )
             } else {
                 FileTest.areEquals(
-                        File.create(
-                                "id-file",
-                                "/coucou/indextest.html",
-                                "/coucou",
-                                false,
-                                "indextest.html",
-                                0L,
-                                0L
-                        ),
-                        renamedFile
+                    File.create(
+                        "id-file",
+                        "/coucou/indextest.html",
+                        "/coucou",
+                        false,
+                        "indextest.html",
+                        0L,
+                        0L
+                    ),
+                    renamedFile
                 )
             }
         }
@@ -205,26 +208,26 @@ class FileRepositoryMetadataTest {
         // Given
         val files = ArrayList<File>()
         files.add(
-                File.create(
-                        "id-folder",
-                        "/coucou",
-                        "/",
-                        true,
-                        "coucou",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-folder",
+                "/coucou",
+                "/",
+                true,
+                "coucou",
+                0L,
+                0L
+            )
         )
         files.add(
-                File.create(
-                        "id-file",
-                        "/coucou/index.html",
-                        "/coucou",
-                        false,
-                        "index.html",
-                        0L,
-                        0L
-                )
+            File.create(
+                "id-file",
+                "/coucou/index.html",
+                "/coucou",
+                false,
+                "index.html",
+                0L,
+                0L
+            )
         )
         val filesMap = HashMap<String, File>()
         for (file in files) {
@@ -234,9 +237,9 @@ class FileRepositoryMetadataTest {
 
         // When
         val fileRepositoryMetadataRenamed = FileRepositoryMetadata.cut(
-                fileRepositoryMetadata,
-                "/coucou/index.html",
-                "/"
+            fileRepositoryMetadata,
+            "/coucou/index.html",
+            "/"
         )
 
         // Then
@@ -245,29 +248,29 @@ class FileRepositoryMetadataTest {
         for (renamedFile in renamedFiles.values) {
             if (renamedFile.directory) {
                 FileTest.areEquals(
-                        File.create(
-                                "id-folder",
-                                "/coucou",
-                                "/",
-                                true,
-                                "coucou",
-                                0L,
-                                0L
-                        ),
-                        renamedFile
+                    File.create(
+                        "id-folder",
+                        "/coucou",
+                        "/",
+                        true,
+                        "coucou",
+                        0L,
+                        0L
+                    ),
+                    renamedFile
                 )
             } else {
                 FileTest.areEquals(
-                        File.create(
-                                "id-file",
-                                "/index.html",
-                                "/",
-                                false,
-                                "index.html",
-                                0L,
-                                0L
-                        ),
-                        renamedFile
+                    File.create(
+                        "id-file",
+                        "/index.html",
+                        "/",
+                        false,
+                        "index.html",
+                        0L,
+                        0L
+                    ),
+                    renamedFile
                 )
             }
         }

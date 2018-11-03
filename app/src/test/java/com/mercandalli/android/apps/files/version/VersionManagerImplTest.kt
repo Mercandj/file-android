@@ -33,7 +33,7 @@ class VersionManagerImplTest {
 
     private fun createInstanceToTest(): VersionManagerImpl {
         return VersionManagerImpl(
-                addOn!!
+            addOn!!
         )
     }
 }

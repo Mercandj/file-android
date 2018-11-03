@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_about
 
 import androidx.annotation.VisibleForTesting
@@ -10,13 +13,13 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.hash.HashManager
 
 class SettingsAboutPresenter(
-        private val screen: SettingsAboutContract.Screen,
-        versionManager: VersionManager,
-        private val themeManager: ThemeManager,
-        private val dialogManager: DialogManager,
-        private val developerManager: DeveloperManager,
-        private val hashManager: HashManager,
-        private val addOn: AddOn
+    private val screen: SettingsAboutContract.Screen,
+    versionManager: VersionManager,
+    private val themeManager: ThemeManager,
+    private val dialogManager: DialogManager,
+    private val developerManager: DeveloperManager,
+    private val hashManager: HashManager,
+    private val addOn: AddOn
 ) : SettingsAboutContract.UserAction {
 
     private val themeListener = createThemeListener()
@@ -58,11 +61,11 @@ class SettingsAboutPresenter(
         }
         dialogManager.registerListener(dialogListener)
         dialogManager.alert(
-                DIALOG_ID_VERSION_NAME,
-                R.string.view_settings_developer_activation_message_title,
-                R.string.view_settings_developer_activation_message,
-                R.string.view_settings_developer_activation_message_positive,
-                R.string.view_settings_developer_activation_message_negative
+            DIALOG_ID_VERSION_NAME,
+            R.string.view_settings_developer_activation_message_title,
+            R.string.view_settings_developer_activation_message,
+            R.string.view_settings_developer_activation_message_positive,
+            R.string.view_settings_developer_activation_message_negative
         )
     }
 
@@ -80,16 +83,16 @@ class SettingsAboutPresenter(
         when (dialogAction.dialogId) {
             DIALOG_ID_VERSION_NAME -> {
                 dialogManager.prompt(
-                        DIALOG_ID_PROMPT_PASS,
-                        R.string.view_settings_developer_activation_message_title,
-                        R.string.view_settings_developer_activation_password,
-                        R.string.view_settings_developer_activation_ok,
-                        R.string.view_settings_developer_activation_cancel
+                    DIALOG_ID_PROMPT_PASS,
+                    R.string.view_settings_developer_activation_message_title,
+                    R.string.view_settings_developer_activation_password,
+                    R.string.view_settings_developer_activation_ok,
+                    R.string.view_settings_developer_activation_cancel
                 )
             }
             DIALOG_ID_PROMPT_PASS -> {
                 val isAppDeveloperModeEnabled = hashManager.sha256(dialogAction.userInput, 32) ==
-                        "1753549de2d885325195f6ab9e3f86174f7f2626ccd3d4eccae82398b48de19d"
+                    "1753549de2d885325195f6ab9e3f86174f7f2626ccd3d4eccae82398b48de19d"
                 setIsAppDeveloperEnabled(isAppDeveloperModeEnabled)
             }
         }
@@ -98,18 +101,18 @@ class SettingsAboutPresenter(
     private fun setIsAppDeveloperEnabled(isAppDeveloperModeEnabled: Boolean) {
         developerManager.setDeveloperMode(isAppDeveloperModeEnabled)
         screen.showSnackbar(
-                if (isAppDeveloperModeEnabled) R.string.view_settings_developer_mode_enabled
-                else R.string.view_settings_developer_mode_disabled,
-                Snackbar.LENGTH_SHORT
+            if (isAppDeveloperModeEnabled) R.string.view_settings_developer_mode_enabled
+            else R.string.view_settings_developer_mode_disabled,
+            Snackbar.LENGTH_SHORT
         )
         versionClickTimestampsMs.clear()
     }
 
     private fun isEnoughVersionClick(
-            timestamps: List<Long>,
-            currentTimestamp: Long,
-            nbClick: Int,
-            duration: Long
+        timestamps: List<Long>,
+        currentTimestamp: Long,
+        nbClick: Int,
+        duration: Long
     ): Boolean {
         if (timestamps.size < nbClick) {
             return false

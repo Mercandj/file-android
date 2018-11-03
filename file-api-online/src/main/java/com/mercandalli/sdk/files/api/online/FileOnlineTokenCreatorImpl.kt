@@ -2,11 +2,14 @@ package com.mercandalli.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.online.utils.HashUtils
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.TimeZone
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import kotlin.collections.ArrayList
 
 class FileOnlineTokenCreatorImpl(
-        val addOn: AddOn
+    val addOn: AddOn
 ) : FileOnlineTokenCreator {
 
     override fun createToken(login: String, passwordSha1: String): String {

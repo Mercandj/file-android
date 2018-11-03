@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_detail
 
 import android.annotation.SuppressLint
@@ -14,19 +17,19 @@ import com.mercandalli.sdk.files.api.FileShareManager
 import java.util.Date
 
 class FileColumnDetailPresenter(
-        private val screen: FileColumnDetailContract.Screen,
-        private val audioManager: AudioManager,
-        private val audioQueueManager: AudioQueueManager,
-        private val fileOpenManager: FileOpenManager,
-        private val fileDeleteManager: FileDeleteManager,
-        private val fileCopyCutManager: FileCopyCutManager,
-        private val fileRenameManager: FileRenameManager,
-        private val fileShareManager: FileShareManager,
-        private val themeManager: ThemeManager,
-        private val toastManager: ToastManager,
-        private val playDrawableRes: Int,
-        private val pauseDrawableRes: Int,
-        private val deleteFailedTextRes: Int
+    private val screen: FileColumnDetailContract.Screen,
+    private val audioManager: AudioManager,
+    private val audioQueueManager: AudioQueueManager,
+    private val fileOpenManager: FileOpenManager,
+    private val fileDeleteManager: FileDeleteManager,
+    private val fileCopyCutManager: FileCopyCutManager,
+    private val fileRenameManager: FileRenameManager,
+    private val fileShareManager: FileShareManager,
+    private val themeManager: ThemeManager,
+    private val toastManager: ToastManager,
+    private val playDrawableRes: Int,
+    private val pauseDrawableRes: Int,
+    private val deleteFailedTextRes: Int
 ) : FileColumnDetailContract.UserAction {
 
     private val playListener = createPlayListener()

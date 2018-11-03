@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_horizontal_lists
 
 import com.mercandalli.android.apps.files.R
@@ -7,11 +10,11 @@ import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileColumnHorizontalListsPresenter(
-        private val screen: FileColumnHorizontalListsContract.Screen,
-        private val fileManager: FileManager,
-        private val fileOpenManager: FileOpenManager,
-        private val fileCopyCutManager: FileCopyCutManager,
-        private val rootPath: String
+    private val screen: FileColumnHorizontalListsContract.Screen,
+    private val fileManager: FileManager,
+    private val fileOpenManager: FileOpenManager,
+    private val fileCopyCutManager: FileCopyCutManager,
+    private val rootPath: String
 ) : FileColumnHorizontalListsContract.UserAction {
 
     private var sizeLists = 1

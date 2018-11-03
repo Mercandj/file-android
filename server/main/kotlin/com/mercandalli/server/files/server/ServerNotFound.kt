@@ -11,7 +11,7 @@ import io.ktor.request.uri
 import io.ktor.response.respond
 import org.json.JSONObject
 
-object ServerNotFound{
+object ServerNotFound {
 
     suspend fun PipelineContext<Unit, ApplicationCall>.respondNotFound(httpStatusCode: HttpStatusCode) {
         val statusCode = httpStatusCode.value
@@ -22,12 +22,12 @@ object ServerNotFound{
         responseJson.put("status_code", statusCode)
         responseJson.put("status_description", statusDescription)
         val message = TextContent(
-                responseJson.toString(),
-                ContentType.Text.Plain.withCharset(Charsets.UTF_8),
-                httpStatusCode
+            responseJson.toString(),
+            ContentType.Text.Plain.withCharset(Charsets.UTF_8),
+            httpStatusCode
         )
         call.respond(
-                message
+            message
         )
     }
 }

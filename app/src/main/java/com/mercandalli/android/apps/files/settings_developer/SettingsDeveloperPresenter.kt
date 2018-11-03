@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_developer
 
 import android.widget.ScrollView
@@ -10,12 +13,12 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.dialog.DialogManager
 
 class SettingsDeveloperPresenter(
-        private val screen: SettingsDeveloperContract.Screen,
-        private val themeManager: ThemeManager,
-        private val developerManager: DeveloperManager,
-        private val fileOnlineLoginManager: FileOnlineLoginManager,
-        private val dialogManager: DialogManager,
-        private val addOn: AddOn
+    private val screen: SettingsDeveloperContract.Screen,
+    private val themeManager: ThemeManager,
+    private val developerManager: DeveloperManager,
+    private val fileOnlineLoginManager: FileOnlineLoginManager,
+    private val dialogManager: DialogManager,
+    private val addOn: AddOn
 ) : SettingsDeveloperContract.UserAction {
 
     private val themeListener = createThemeListener()
@@ -38,21 +41,21 @@ class SettingsDeveloperPresenter(
 
     override fun onOnlineLoginRowClicked() {
         dialogManager.prompt(
-                DIALOG_ID_ONLINE_LOGIN,
-                R.string.view_settings_developer_online_login_label,
-                R.string.view_settings_developer_online_login_label,
-                R.string.ok,
-                R.string.cancel
+            DIALOG_ID_ONLINE_LOGIN,
+            R.string.view_settings_developer_online_login_label,
+            R.string.view_settings_developer_online_login_label,
+            R.string.ok,
+            R.string.cancel
         )
     }
 
     override fun onOnlinePasswordRowClicked() {
         dialogManager.prompt(
-                DIALOG_ID_ONLINE_PASSWORD,
-                R.string.view_settings_developer_online_password_label,
-                R.string.view_settings_developer_online_password_label,
-                R.string.ok,
-                R.string.cancel
+            DIALOG_ID_ONLINE_PASSWORD,
+            R.string.view_settings_developer_online_password_label,
+            R.string.view_settings_developer_online_password_label,
+            R.string.ok,
+            R.string.cancel
         )
     }
 

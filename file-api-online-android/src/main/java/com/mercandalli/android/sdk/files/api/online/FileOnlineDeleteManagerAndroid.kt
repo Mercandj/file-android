@@ -7,8 +7,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineDeleteManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi,
-        private val mediaScanner: MediaScanner
+    private val fileOnlineApi: FileOnlineApi,
+    private val mediaScanner: MediaScanner
 ) : FileDeleteManager {
 
     private val listeners = ArrayList<FileDeleteManager.FileDeleteCompletionListener>()

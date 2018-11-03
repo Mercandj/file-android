@@ -7,8 +7,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineRenameManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi,
-        private val mediaScanner: MediaScanner
+    private val fileOnlineApi: FileOnlineApi,
+    private val mediaScanner: MediaScanner
 ) : FileRenameManager {
 
     override fun rename(path: String, fileName: String) {

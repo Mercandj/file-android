@@ -3,14 +3,14 @@ package com.mercandalli.server.files.log
 import java.lang.StringBuilder
 
 data class LogData(
-        val type: Type,
-        val tags: List<String>,
-        val dayString: String,
-        val dateString: String,
-        val dateLong: Long,
-        val contentString: Map<String, String>,
-        val contentLong: Map<String, Long>,
-        val contentBoolean: Map<String, Boolean>
+    val type: Type,
+    val tags: List<String>,
+    val dayString: String,
+    val dateString: String,
+    val dateLong: Long,
+    val contentString: Map<String, String>,
+    val contentLong: Map<String, Long>,
+    val contentBoolean: Map<String, Boolean>
 ) {
 
     enum class Type {
@@ -28,12 +28,12 @@ data class LogData(
         for (key in contentString.keys) {
             val value = contentString[key]
             stringBuilder
-                    .append(ANSI_PURPLE)
-                    .append(key)
-                    .append(ANSI_RESET)
-                    .append(':')
-                    .append(value)
-                    .append(' ')
+                .append(ANSI_PURPLE)
+                .append(key)
+                .append(ANSI_RESET)
+                .append(':')
+                .append(value)
+                .append(' ')
         }
         return stringBuilder.toString()
     }

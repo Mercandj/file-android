@@ -4,12 +4,13 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 data class ContactUs(
-        val time: String,
-        val firstName: String?,
-        val lastName: String?,
-        val email: String?,
-        val text: String?
+    val time: String,
+    val firstName: String?,
+    val lastName: String?,
+    val email: String?,
+    val text: String?
 ) {
+
     companion object {
 
         fun fromJson(jsonObject: JSONObject): ContactUs {
@@ -19,11 +20,11 @@ data class ContactUs(
             val email = jsonObject.getString("email")
             val text = jsonObject.getString("text")
             return ContactUs(
-                    time,
-                    firstName,
-                    lastName,
-                    email,
-                    text
+                time,
+                firstName,
+                lastName,
+                email,
+                text
             )
         }
 

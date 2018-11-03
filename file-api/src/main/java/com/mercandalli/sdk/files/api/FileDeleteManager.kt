@@ -11,8 +11,8 @@ interface FileDeleteManager {
     interface FileDeleteCompletionListener {
 
         fun onFileDeletedCompleted(
-                path: String,
-                succeeded: Boolean
+            path: String,
+            succeeded: Boolean
         )
     }
 }

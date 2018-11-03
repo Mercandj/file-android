@@ -5,8 +5,8 @@ interface FileZipManager {
     fun isZip(path: String): Boolean
 
     fun unzip(
-            path: String,
-            outputPath: String
+        path: String,
+        outputPath: String
     )
 
     fun registerFileZipListener(listener: FileZipListener)
@@ -16,8 +16,8 @@ interface FileZipManager {
     interface FileZipListener {
 
         fun onUnzipEnded(
-                path: String,
-                outputPath: String
+            path: String,
+            outputPath: String
         )
     }
 }

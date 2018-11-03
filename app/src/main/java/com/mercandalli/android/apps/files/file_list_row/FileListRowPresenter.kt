@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
@@ -12,14 +15,14 @@ import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListRowPresenter(
-        private val screen: FileListRowContract.Screen,
-        private var fileCopyCutManager: FileCopyCutManager,
-        private var fileDeleteManager: FileDeleteManager,
-        private var fileRenameManager: FileRenameManager,
-        private var fileSizeManager: FileSizeManager,
-        private val audioManager: AudioManager,
-        private val themeManager: ThemeManager,
-        private val toastManager: ToastManager
+    private val screen: FileListRowContract.Screen,
+    private var fileCopyCutManager: FileCopyCutManager,
+    private var fileDeleteManager: FileDeleteManager,
+    private var fileRenameManager: FileRenameManager,
+    private var fileSizeManager: FileSizeManager,
+    private val audioManager: AudioManager,
+    private val themeManager: ThemeManager,
+    private val toastManager: ToastManager
 ) : FileListRowContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -94,10 +97,10 @@ class FileListRowPresenter(
     }
 
     override fun onSetFileManagers(
-            fileCopyCutManager: FileCopyCutManager,
-            fileDeleteManager: FileDeleteManager,
-            fileRenameManager: FileRenameManager,
-            fileSizeManager: FileSizeManager
+        fileCopyCutManager: FileCopyCutManager,
+        fileDeleteManager: FileDeleteManager,
+        fileRenameManager: FileRenameManager,
+        fileSizeManager: FileSizeManager
     ) {
         this.fileDeleteManager = fileDeleteManager
         this.fileCopyCutManager = fileCopyCutManager

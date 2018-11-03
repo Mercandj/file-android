@@ -1,10 +1,10 @@
 package com.mercandalli.sdk.files.api.online
 
-import java.util.*
+import java.util.Date
 
 data class FileOnlineAuthentication(
-        val login: String,
-        val passwordSha1: String
+    val login: String,
+    val passwordSha1: String
 ) {
 
     fun createToken() = fileOnlineTokenCreator.createToken(login, passwordSha1)
@@ -32,10 +32,10 @@ data class FileOnlineAuthentication(
 
         @Suppress("unused")
         private fun isLoggedWithToken(token: String, fileOnlineAuthentication: FileOnlineAuthentication) =
-                fileOnlineAuthentication.createToken() == token
+            fileOnlineAuthentication.createToken() == token
 
         @Suppress("unused")
         private fun isLoggedWithTokens(token: String, fileOnlineAuthentication: FileOnlineAuthentication) =
-                fileOnlineAuthentication.createTokens().contains(token)
+            fileOnlineAuthentication.createTokens().contains(token)
     }
 }

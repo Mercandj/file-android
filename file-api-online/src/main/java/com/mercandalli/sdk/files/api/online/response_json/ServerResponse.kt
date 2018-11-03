@@ -1,11 +1,14 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.sdk.files.api.online.response_json
 
 import org.json.JSONObject
 
 data class ServerResponse private constructor(
-        val content: JSONObject,
-        val debugMessage: String,
-        val succeeded: Boolean
+    val content: JSONObject,
+    val debugMessage: String,
+    val succeeded: Boolean
 ) {
 
     fun toJsonString() = toJson(this).toString()
@@ -27,34 +30,34 @@ data class ServerResponse private constructor(
             val debugMessage = jsonObject.getString("debug_message")
             val succeeded = jsonObject.getBoolean("succeeded")
             return ServerResponse(
-                    content,
-                    debugMessage,
-                    succeeded
+                content,
+                debugMessage,
+                succeeded
             )
         }
 
         @JvmStatic
         fun create(
-                debugMessage: String,
-                succeeded: Boolean
+            debugMessage: String,
+            succeeded: Boolean
         ): ServerResponse {
             return create(
-                    JSONObject(),
-                    debugMessage,
-                    succeeded
+                JSONObject(),
+                debugMessage,
+                succeeded
             )
         }
 
         @JvmStatic
         fun create(
-                content: JSONObject,
-                debugMessage: String,
-                succeeded: Boolean
+            content: JSONObject,
+            debugMessage: String,
+            succeeded: Boolean
         ): ServerResponse {
             return ServerResponse(
-                    content,
-                    debugMessage,
-                    succeeded
+                content,
+                debugMessage,
+                succeeded
             )
         }
     }

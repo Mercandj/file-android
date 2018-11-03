@@ -41,13 +41,13 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class ServerManagerImpl(
-        private val rootServerPath: String,
-        private val fileHandlerGet: FileHandlerGet,
-        private val fileHandlerPost: FileHandlerPost,
-        private val fileHandlerDelete: FileHandlerDelete,
-        private val shellManager: ShellManager,
-        private val logManager: LogManager,
-        private val pullSubRepositoryShellFile: java.io.File
+    private val rootServerPath: String,
+    private val fileHandlerGet: FileHandlerGet,
+    private val fileHandlerPost: FileHandlerPost,
+    private val fileHandlerDelete: FileHandlerDelete,
+    private val shellManager: ShellManager,
+    private val logManager: LogManager,
+    private val pullSubRepositoryShellFile: java.io.File
 ) : ServerManager {
 
     private val server: NettyApplicationEngine
@@ -56,10 +56,10 @@ class ServerManagerImpl(
         val module: Application.() -> Unit = createModule()
         // http://ktor.io/servers/configuration.html
         server = embeddedServer(
-                Netty,
-                port = 80,
-                module = module,
-                host = "0.0.0.0"
+            Netty,
+            port = 80,
+            module = module,
+            host = "0.0.0.0"
         )
     }
 
@@ -120,12 +120,12 @@ class ServerManagerImpl(
                     val parentPath = queryParameters["parent_path"]
                     val response = if (parentPath == null) {
                         fileHandlerGet.get(
-                                headers
+                            headers
                         )
                     } else {
                         fileHandlerGet.getFromParent(
-                                headers,
-                                parentPath
+                            headers,
+                            parentPath
                         )
                     }
                     logManager.logResponse(TAG, call.request, response)
@@ -135,8 +135,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val body = call.receiveText()
                     val response = fileHandlerPost.create(
-                            headers,
-                            body
+                        headers,
+                        body
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -145,8 +145,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val body = call.receiveText()
                     val response = fileHandlerDelete.deleteFile(
-                            headers,
-                            body
+                        headers,
+                        body
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -156,8 +156,8 @@ class ServerManagerImpl(
                     val queryParameters = call.request.queryParameters
                     val path = queryParameters["path"]
                     val response = fileHandlerGet.getSize(
-                            headers,
-                            path
+                        headers,
+                        path
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -166,13 +166,13 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val body = call.receiveText()
                     val response = fileHandlerPost.download(
-                            headers,
-                            body
+                        headers,
+                        body
                     )
                     if (response == null) {
                         call.respondText(ServerResponse.create(
-                                "Error",
-                                false
+                            "Error",
+                            false
                         ).toJsonString())
                         return@post
                     }
@@ -182,8 +182,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val multipart = call.receiveMultipart()
                     val response = fileHandlerPost.upload(
-                            headers,
-                            multipart
+                        headers,
+                        multipart
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -192,8 +192,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val body = call.receiveText()
                     val response = fileHandlerPost.rename(
-                            headers,
-                            body
+                        headers,
+                        body
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -202,8 +202,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val body = call.receiveText()
                     val response = fileHandlerPost.copy(
-                            headers,
-                            body
+                        headers,
+                        body
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -212,8 +212,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val body = call.receiveText()
                     val response = fileHandlerPost.cut(
-                            headers,
-                            body
+                        headers,
+                        body
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -222,8 +222,8 @@ class ServerManagerImpl(
                     val headers = call.request.headers
                     val id = call.parameters["id"]
                     val response = fileHandlerGet.get(
-                            headers,
-                            id!!
+                        headers,
+                        id!!
                     )
                     logManager.logResponse(TAG, call.request, response)
                     call.respondText(response)
@@ -246,10 +246,10 @@ class ServerManagerImpl(
                     val email = post["email"]
                     val text = post["text"]
                     logManager.log1418ContactUs(
-                            firstName,
-                            lastName,
-                            email,
-                            text
+                        firstName,
+                        lastName,
+                        email,
+                        text
                     )
                     call.respondText("Message envoyé")
                 }

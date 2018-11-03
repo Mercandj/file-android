@@ -13,9 +13,9 @@ fun main(args: Array<String>) {
     val pullSubRepositoryShellFile = createPullSubRepositoryShellFile(rootPath)
 
     ApplicationGraph.initialize(
-            rootPath,
-            pullSubRepositoryShellFile,
-            fileOnlineAuthentications
+        rootPath,
+        pullSubRepositoryShellFile,
+        fileOnlineAuthentications
     )
 
     val logManager = ApplicationGraph.getLogManager()
@@ -35,11 +35,11 @@ private fun extractFileOnlineAuthentications(args: Array<String>): List<FileOnli
         return listOf()
     }
     val fileOnlineAuthentication = FileOnlineAuthentication(
-            args[0],
-            args[1]
+        args[0],
+        args[1]
     )
     return listOf(
-            fileOnlineAuthentication
+        fileOnlineAuthentication
     )
 }
 
@@ -56,11 +56,11 @@ private fun createPullSubRepositoryShellFile(rootPath: String): File {
     }
     pullSubRepositoryShellFile.createNewFile()
     pullSubRepositoryShellFile.writeText(createPullSubRepositoryShellContent(
-            listOf(
-                    "$rootPath/static",
-                    "$rootPath/static/1418",
-                    "$rootPath/static/timothe"
-            )
+        listOf(
+            "$rootPath/static",
+            "$rootPath/static/1418",
+            "$rootPath/static/timothe"
+        )
     ))
     return pullSubRepositoryShellFile
 }
@@ -74,4 +74,3 @@ private fun createPullSubRepositoryShellContent(paths: List<String>): String {
     }
     return stringBuilder.toString()
 }
-

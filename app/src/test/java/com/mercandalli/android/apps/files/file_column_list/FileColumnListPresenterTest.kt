@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_list
 
 import com.mercandalli.android.apps.files.file.FileTest
@@ -35,7 +38,7 @@ class FileColumnListPresenterTest {
         val files = ArrayList<File>()
         files.add(FileTest.createFakeFile())
         Mockito.`when`(fileManager!!.getFileChildren(path)).thenReturn(
-                FileChildrenResult.createLoaded(path, files))
+            FileChildrenResult.createLoaded(path, files))
         Mockito.`when`(fileSortManager!!.sort(files)).thenReturn(files)
         val presenter = createInstanceToTest()
 
@@ -47,14 +50,14 @@ class FileColumnListPresenterTest {
     }
 
     private fun createInstanceToTest(
-            currentPath: String = "/path"
+        currentPath: String = "/path"
     ): FileColumnListPresenter {
         return FileColumnListPresenter(
-                screen!!,
-                fileManager!!,
-                fileSortManager!!,
-                themeManager!!,
-                currentPath
+            screen!!,
+            fileManager!!,
+            fileSortManager!!,
+            themeManager!!,
+            currentPath
         )
     }
 }

@@ -11,7 +11,5 @@ interface MainContract {
         fun onPullSubFoldersClicked()
     }
 
-    interface Screen {
-
-    }
+    interface Screen
 }

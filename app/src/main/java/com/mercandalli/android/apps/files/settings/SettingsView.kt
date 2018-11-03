@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mercandalli.android.apps.files.R
 
 class SettingsView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val view = LayoutInflater.from(context).inflate(R.layout.view_settings, this)

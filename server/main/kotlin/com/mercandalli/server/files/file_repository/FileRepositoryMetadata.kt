@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_repository
 
 import com.mercandalli.sdk.files.api.File
@@ -5,7 +8,7 @@ import org.json.JSONObject
 
 data class FileRepositoryMetadata(
 
-        private val files: HashMap<String, File>
+    private val files: HashMap<String, File>
 ) {
 
     fun getFiles(): HashMap<String, File> {
@@ -22,7 +25,7 @@ data class FileRepositoryMetadata(
                 files[file.path] = file
             }
             return FileRepositoryMetadata(
-                    files
+                files
             )
         }
 
@@ -64,8 +67,7 @@ data class FileRepositoryMetadata(
                     if (currentPath == path) {
                         pathsToRemove.add(currentPath)
                         filesToAdd.add(renamedFile)
-                    }
-                    else if (currentPath.startsWith(path)) {
+                    } else if (currentPath.startsWith(path)) {
                         val currentNewPath = currentPath.replaceFirst(path, newPath)
                         val currentNewParentPath = java.io.File(currentNewPath).parentFile.absolutePath
                         val currentFile = files[currentPath]!!

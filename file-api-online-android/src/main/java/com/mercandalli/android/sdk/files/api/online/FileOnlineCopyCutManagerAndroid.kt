@@ -7,8 +7,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineCopyCutManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi,
-        private val mediaScanner: MediaScanner
+    private val fileOnlineApi: FileOnlineApi,
+    private val mediaScanner: MediaScanner
 ) : FileCopyCutManager {
 
     private var pathToCopy: String? = null

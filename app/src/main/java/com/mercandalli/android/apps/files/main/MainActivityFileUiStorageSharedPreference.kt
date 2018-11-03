@@ -3,7 +3,7 @@ package com.mercandalli.android.apps.files.main
 import android.content.SharedPreferences
 
 class MainActivityFileUiStorageSharedPreference(
-        private val sharedPreference: SharedPreferences
+    private val sharedPreference: SharedPreferences
 ) : MainActivityFileUiStorage {
 
     private var currentFileUi = MainActivityFileUiStorage.SECTION_FILE_LIST

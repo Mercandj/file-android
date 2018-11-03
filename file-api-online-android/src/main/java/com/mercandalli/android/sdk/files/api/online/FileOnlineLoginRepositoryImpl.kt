@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
 
 internal class FileOnlineLoginRepositoryImpl(
-        private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences
 ) : FileOnlineLoginRepository {
 
     override fun save(key: String, value: String) {

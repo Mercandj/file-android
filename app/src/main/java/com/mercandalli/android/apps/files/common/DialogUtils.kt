@@ -16,17 +16,18 @@ import java.lang.ref.WeakReference
 object DialogUtils {
 
     fun seekBarDialog(
-            context: Context?,
-            title: String,
-            initValue: Int,
-            maxValue: Int,
-            positive: String?,
-            onDialogUtilsSeekBarListenerParam: OnDialogUtilsSeekBarListener?) {
+        context: Context?,
+        title: String,
+        initValue: Int,
+        maxValue: Int,
+        positive: String?,
+        onDialogUtilsSeekBarListenerParam: OnDialogUtilsSeekBarListener?
+    ) {
         if (context == null) {
             return
         }
         val onDialogUtilsSeekBarListenerReference = WeakReference<OnDialogUtilsSeekBarListener>(
-                onDialogUtilsSeekBarListenerParam
+            onDialogUtilsSeekBarListenerParam
         )
         val builder = AlertDialog.Builder(context)
         builder.setTitle(title)
@@ -39,8 +40,8 @@ object DialogUtils {
         valueText.gravity = Gravity.CENTER_HORIZONTAL
         valueText.textSize = 32f
         layout.addView(valueText, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT))
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT))
 
         val seekBar = SeekBar(context)
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -50,7 +51,7 @@ object DialogUtils {
                     valueText.setText(progress)
                 } else {
                     valueText.text = onDialogUtilsSeekBarListener.onDialogUtilsSeekBarChanged(
-                            progress
+                        progress
                     )
                 }
             }
@@ -62,8 +63,8 @@ object DialogUtils {
         seekBar.max = maxValue
         seekBar.progress = initValue
         layout.addView(seekBar, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT))
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT))
         if (onDialogUtilsSeekBarListenerParam == null) {
             valueText.setText(initValue)
         } else {
@@ -73,17 +74,18 @@ object DialogUtils {
         builder.setPositiveButton(positive) { dialog, _ ->
             val onDialogUtilsSeekBarListener = onDialogUtilsSeekBarListenerReference.get()
             onDialogUtilsSeekBarListener?.onDialogUtilsSeekBarCalledBack(
-                    seekBar.progress)
+                seekBar.progress)
             dialog.dismiss()
         }
         builder.create().show()
     }
 
     fun listDialog(
-            context: Context?,
-            title: String,
-            items: List<String>,
-            listener: DialogInterface.OnClickListener?) {
+        context: Context?,
+        title: String,
+        items: List<String>,
+        listener: DialogInterface.OnClickListener?
+    ) {
         if (context == null) {
             return
         }
@@ -99,13 +101,14 @@ object DialogUtils {
     }
 
     fun alert(
-            context: Context,
-            title: String,
-            message: String,
-            positive: String?,
-            positiveListenerParam: OnDialogUtilsListener?,
-            negative: String?,
-            negativeListenerParam: OnDialogUtilsListener?) {
+        context: Context,
+        title: String,
+        message: String,
+        positive: String?,
+        positiveListenerParam: OnDialogUtilsListener?,
+        negative: String?,
+        negativeListenerParam: OnDialogUtilsListener?
+    ) {
         val positiveListenerReference = WeakReference<OnDialogUtilsListener>(positiveListenerParam)
         val negativeListenerReference = WeakReference<OnDialogUtilsListener>(negativeListenerParam)
         val builder = AlertDialog.Builder(context)
@@ -129,14 +132,14 @@ object DialogUtils {
     }
 
     fun alert(
-            context: Context,
-            title: String,
-            message: Spanned,
-            positive: String?,
-            positiveListenerParam: OnDialogUtilsListener,
-            negative: String?,
-            negativeListenerParam: OnDialogUtilsListener) {
-
+        context: Context,
+        title: String,
+        message: Spanned,
+        positive: String?,
+        positiveListenerParam: OnDialogUtilsListener,
+        negative: String?,
+        negativeListenerParam: OnDialogUtilsListener
+    ) {
         val positiveListenerReference = WeakReference(positiveListenerParam)
         val negativeListenerReference = WeakReference(negativeListenerParam)
         val builder = AlertDialog.Builder(context)
@@ -161,59 +164,62 @@ object DialogUtils {
     }
 
     fun prompt(
-            context: Context,
-            title: String,
-            message: String,
-            positive: String,
-            positiveListener: OnDialogUtilsStringListener,
-            negative: String,
-            negativeListener: OnDialogUtilsListener,
-            dismissListener: OnDialogUtilsListener?) {
+        context: Context,
+        title: String,
+        message: String,
+        positive: String,
+        positiveListener: OnDialogUtilsStringListener,
+        negative: String,
+        negativeListener: OnDialogUtilsListener,
+        dismissListener: OnDialogUtilsListener?
+    ) {
         prompt(
-                context,
-                title,
-                message,
-                positive,
-                positiveListener,
-                negative,
-                negativeListener, null,
-                dismissListener)
+            context,
+            title,
+            message,
+            positive,
+            positiveListener,
+            negative,
+            negativeListener, null,
+            dismissListener)
     }
 
     @JvmOverloads
     fun prompt(
-            context: Context,
-            title: String,
-            message: String,
-            positive: String,
-            positiveListener: OnDialogUtilsStringListener,
-            negative: String,
-            negativeListener: OnDialogUtilsListener?,
-            preTex: String? = null,
-            dismissListener: OnDialogUtilsListener? = null) {
+        context: Context,
+        title: String,
+        message: String,
+        positive: String,
+        positiveListener: OnDialogUtilsStringListener,
+        negative: String,
+        negativeListener: OnDialogUtilsListener?,
+        preTex: String? = null,
+        dismissListener: OnDialogUtilsListener? = null
+    ) {
         prompt(
-                context,
-                title,
-                message,
-                positive,
-                positiveListener,
-                negative,
-                negativeListener,
-                preTex, null,
-                dismissListener)
+            context,
+            title,
+            message,
+            positive,
+            positiveListener,
+            negative,
+            negativeListener,
+            preTex, null,
+            dismissListener)
     }
 
     fun prompt(
-            context: Context,
-            title: String,
-            message: String?,
-            positive: String,
-            positiveListener: OnDialogUtilsStringListener?,
-            negative: String,
-            negativeListener: OnDialogUtilsListener?,
-            preText: String?,
-            hint: String?,
-            dismissListener: OnDialogUtilsListener?) {
+        context: Context,
+        title: String,
+        message: String?,
+        positive: String,
+        positiveListener: OnDialogUtilsStringListener?,
+        negative: String,
+        negativeListener: OnDialogUtilsListener?,
+        preText: String?,
+        hint: String?,
+        dismissListener: OnDialogUtilsListener?
+    ) {
         val alert = AlertDialog.Builder(context)
 
         alert.setTitle(title)
@@ -242,14 +248,14 @@ object DialogUtils {
             dismissListener?.onDialogUtilsCalledBack()
         }
 
-        //alert.show();
+        // alert.show();
         val alertDialog = alert.create()
         alertDialog.setView(
-                input,
-                38,
-                20,
-                38,
-                0
+            input,
+            38,
+            20,
+            38,
+            0
         )
         alertDialog.show()
     }

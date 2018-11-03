@@ -13,9 +13,9 @@ interface LogManager {
     fun logResponse(tag: String, request: ApplicationRequest, response: String)
 
     fun log1418ContactUs(
-            firstName: String?,
-            lastName: String?,
-            email: String?,
-            text: String?
+        firstName: String?,
+        lastName: String?,
+        email: String?,
+        text: String?
     )
 }

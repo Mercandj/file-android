@@ -8,14 +8,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineCreatorManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi,
-        private val mediaScanner: MediaScanner
+    private val fileOnlineApi: FileOnlineApi,
+    private val mediaScanner: MediaScanner
 ) : FileCreatorManager {
 
     override fun create(parentPath: String, name: String) {
         val file = File.create(
-                parentPath,
-                name
+            parentPath,
+            name
         )
         GlobalScope.launch(Dispatchers.Default) {
             fileOnlineApi.post(file)

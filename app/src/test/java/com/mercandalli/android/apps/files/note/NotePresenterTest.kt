@@ -37,9 +37,9 @@ class NotePresenterTest {
 
     private fun createInstanceToTest(): NotePresenter {
         return NotePresenter(
-                screen!!,
-                noteManager!!,
-                themeManager!!
+            screen!!,
+            noteManager!!,
+            themeManager!!
         )
     }
 }

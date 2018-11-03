@@ -8,7 +8,7 @@ class ShellModule {
 
     fun createShellManager(): ShellManager {
         return ShellManagerImpl(
-                logManager
+            logManager
         )
     }
 }

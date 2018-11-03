@@ -3,8 +3,8 @@ package com.mercandalli.sdk.files.api.online
 import com.mercandalli.sdk.files.api.online.utils.HashUtils
 
 internal class FileOnlineLoginManagerImpl(
-        private val fileOnlineLoginRepository: FileOnlineLoginRepository?,
-        private val fileOnlineTokenCreator: FileOnlineTokenCreator
+    private val fileOnlineLoginRepository: FileOnlineLoginRepository?,
+    private val fileOnlineTokenCreator: FileOnlineTokenCreator
 ) : FileOnlineLoginManager {
 
     private var login: String? = null

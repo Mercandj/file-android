@@ -32,8 +32,8 @@ object ServerStatus {
 
     private fun String.runCommand(workingDir: File): String {
         val process = ProcessBuilder(*split(" ").toTypedArray())
-                .directory(workingDir)
-                .start()
+            .directory(workingDir)
+            .start()
         val reader = BufferedReader(InputStreamReader(process.inputStream))
         return reader.readLine()
     }

@@ -4,8 +4,8 @@ import com.mercandalli.sdk.files.api.FileSortManager
 import java.io.File
 
 class AudioQueueManagerImpl(
-        private val audioManager: AudioManager,
-        private val fileSortManager: FileSortManager
+    private val audioManager: AudioManager,
+    private val fileSortManager: FileSortManager
 ) : AudioQueueManager {
 
     override fun next(path: String): String {

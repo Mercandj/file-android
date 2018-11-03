@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.server.files.file_handler
 
 import io.ktor.http.Headers
@@ -5,21 +8,21 @@ import io.ktor.http.Headers
 interface FileHandlerGet {
 
     fun get(
-            headers: Headers
+        headers: Headers
     ): String
 
     fun get(
-            headers: Headers,
-            id: String
+        headers: Headers,
+        id: String
     ): String
 
     fun getFromParent(
-            headers: Headers,
-            parentPath: String
+        headers: Headers,
+        parentPath: String
     ): String
 
     fun getSize(
-            headers: Headers,
-            path: String?
+        headers: Headers,
+        path: String?
     ): String
 }

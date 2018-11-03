@@ -7,23 +7,23 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineUploadManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi,
-        private val mediaScanner: MediaScanner
+    private val fileOnlineApi: FileOnlineApi,
+    private val mediaScanner: MediaScanner
 ) : FileOnlineUploadManager {
 
     private val listeners = ArrayList<FileOnlineUploadManager.UploadListener>()
     private val uploadProgressListener = createUploadProgressListener()
 
     override fun upload(
-            inputJavaFile: java.io.File,
-            outputFile: File
+        inputJavaFile: java.io.File,
+        outputFile: File
     ) {
         notifyUploadStarted(outputFile)
         GlobalScope.launch(Dispatchers.Default) {
             fileOnlineApi.postUpload(
-                    inputJavaFile,
-                    outputFile,
-                    uploadProgressListener
+                inputJavaFile,
+                outputFile,
+                uploadProgressListener
             )
             GlobalScope.launch(Dispatchers.Main) {
                 mediaScanner.refresh(outputFile.path)
@@ -36,7 +36,7 @@ internal class FileOnlineUploadManagerAndroid(
     }
 
     override fun registerListener(
-            listener: FileOnlineUploadManager.UploadListener
+        listener: FileOnlineUploadManager.UploadListener
     ) {
         if (listeners.contains(listener)) {
             return
@@ -45,13 +45,13 @@ internal class FileOnlineUploadManagerAndroid(
     }
 
     override fun unregisterListener(
-            listener: FileOnlineUploadManager.UploadListener
+        listener: FileOnlineUploadManager.UploadListener
     ) {
         listeners.remove(listener)
     }
 
     private fun notifyUploadStarted(
-            file: File
+        file: File
     ) {
         for (listener in listeners) {
             listener.onUploadStarted(file)
@@ -59,9 +59,9 @@ internal class FileOnlineUploadManagerAndroid(
     }
 
     private fun notifyUploadProgress(
-            file: File,
-            current: Long,
-            size: Long
+        file: File,
+        current: Long,
+        size: Long
     ) {
         for (listener in listeners) {
             listener.onUploadProgress(file, current, size)
@@ -69,7 +69,7 @@ internal class FileOnlineUploadManagerAndroid(
     }
 
     private fun notifyUploadEnded(
-            file: File
+        file: File
     ) {
         for (listener in listeners) {
             listener.onUploadEnded(file)
@@ -78,14 +78,14 @@ internal class FileOnlineUploadManagerAndroid(
 
     private fun createUploadProgressListener() = object : FileOnlineApi.UploadProgressListener {
         override fun onUploadProgress(
-                file: File,
-                current: Long,
-                size: Long
+            file: File,
+            current: Long,
+            size: Long
         ) {
             notifyUploadProgress(
-                    file,
-                    current,
-                    size
+                file,
+                current,
+                size
             )
         }
     }

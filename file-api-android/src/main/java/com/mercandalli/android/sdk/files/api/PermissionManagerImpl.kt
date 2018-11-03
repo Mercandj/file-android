@@ -7,8 +7,8 @@ import android.os.Build
 import androidx.core.content.ContextCompat
 
 class PermissionManagerImpl(
-        private val context: Context,
-        private val permissionRequestAddOn: PermissionRequestAddOn
+    private val context: Context,
+    private val permissionRequestAddOn: PermissionRequestAddOn
 ) : PermissionManager {
 
     override fun shouldRequestStoragePermission(): Boolean {
@@ -31,8 +31,8 @@ class PermissionManagerImpl(
         fun checkStoragePermission(context: Context): Boolean {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val checkSelfPermission = ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    context,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
                 if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
                     return false

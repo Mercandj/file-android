@@ -1,11 +1,14 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_theme
 
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 
 class SettingsThemePresenter(
-        private val screen: SettingsThemeContract.Screen,
-        private val themeManager: ThemeManager
+    private val screen: SettingsThemeContract.Screen,
+    private val themeManager: ThemeManager
 ) : SettingsThemeContract.UserAction {
 
     private val themeListener = createThemeListener()
@@ -29,6 +32,7 @@ class SettingsThemePresenter(
         screen.setTextSecondaryColorRes(theme.textSecondaryColorRes)
         screen.setSectionColor(theme.cardBackgroundColorRes)
     }
+
     private fun createThemeListener() = object : ThemeManager.ThemeListener {
         override fun onThemeChanged() {
             updateTheme()

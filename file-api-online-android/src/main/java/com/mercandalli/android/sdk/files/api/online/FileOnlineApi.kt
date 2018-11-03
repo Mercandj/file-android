@@ -9,63 +9,63 @@ internal interface FileOnlineApi {
     fun get(): ServerResponseFiles?
 
     fun getFromParent(
-            parentPath: String
+        parentPath: String
     ): ServerResponseFiles?
 
     fun getSize(
-            path: String
+        path: String
     ): ServerResponse?
 
     fun post(
-            file: File
+        file: File
     )
 
     fun postDownload(
-            inputFilePath: String,
-            outputJavaFile: java.io.File,
-            listener:DownloadProgressListener
+        inputFilePath: String,
+        outputJavaFile: java.io.File,
+        listener: DownloadProgressListener
     )
 
     fun postUpload(
-            inputJavaFile: java.io.File,
-            outputFile: File,
-            listener: UploadProgressListener
+        inputJavaFile: java.io.File,
+        outputFile: File,
+        listener: UploadProgressListener
     )
 
     fun delete(
-            path: String
+        path: String
     ): Boolean
 
     fun rename(
-            path: String,
-            name: String
+        path: String,
+        name: String
     ): Boolean
 
     fun copy(
-            pathInput: String,
-            pathDirectoryOutput: String
+        pathInput: String,
+        pathDirectoryOutput: String
     ): Boolean
 
     fun cut(
-            pathInput: String,
-            pathDirectoryOutput: String
+        pathInput: String,
+        pathDirectoryOutput: String
     ): Boolean
 
     interface DownloadProgressListener {
 
         fun onDownloadProgress(
-                inputFilePath: String,
-                current: Long,
-                size: Long
+            inputFilePath: String,
+            current: Long,
+            size: Long
         )
     }
 
     interface UploadProgressListener {
 
         fun onUploadProgress(
-                file: File,
-                current: Long,
-                size: Long
+            file: File,
+            current: Long,
+            size: Long
         )
     }
 }

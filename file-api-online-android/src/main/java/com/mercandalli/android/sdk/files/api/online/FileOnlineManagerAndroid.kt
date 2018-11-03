@@ -7,7 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi
+    private val fileOnlineApi: FileOnlineApi
 ) : FileManager {
 
     private val fileChildrenResultMap = HashMap<String, FileChildrenResult>()
@@ -65,7 +65,7 @@ internal class FileOnlineManagerAndroid(
 
     private fun loadFileChildrenSync(path: String): FileChildrenResult {
         val serverResponseFiles = fileOnlineApi.getFromParent(path)
-                ?: return FileChildrenResult.createErrorNetwork(path)
+            ?: return FileChildrenResult.createErrorNetwork(path)
         return FileChildrenResult.createLoaded(path, serverResponseFiles.files)
     }
 }

@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_online
 
 import com.mercandalli.android.apps.files.dialog.DialogManager
@@ -6,11 +9,11 @@ import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.android.sdk.files.api.online.FileOnlineDownloadManager
 
 class FileOnlinePresenter(
-        private val screen: FileOnlineContract.Screen,
-        private val dialogManager: DialogManager,
-        private val fileOnlineDownloadManager: FileOnlineDownloadManager,
-        private val toastManager: ToastManager,
-        private val rootPath: String
+    private val screen: FileOnlineContract.Screen,
+    private val dialogManager: DialogManager,
+    private val fileOnlineDownloadManager: FileOnlineDownloadManager,
+    private val toastManager: ToastManager,
+    private val rootPath: String
 ) : FileOnlineContract.UserAction {
 
     private var path: String? = null
@@ -27,11 +30,11 @@ class FileOnlinePresenter(
     override fun onFileOpenClicked(path: String) {
         this.path = path
         dialogManager.alert(
-                DIALOG_DOWNLOAD_ID,
-                R.string.file_online_download_title,
-                R.string.file_online_download_message,
-                R.string.file_online_download_positive,
-                R.string.file_online_download_negative
+            DIALOG_DOWNLOAD_ID,
+            R.string.file_online_download_title,
+            R.string.file_online_download_message,
+            R.string.file_online_download_positive,
+            R.string.file_online_download_negative
         )
     }
 
@@ -47,16 +50,16 @@ class FileOnlinePresenter(
         }
         toastManager.toast("Download started")
         val outputJavaFile = java.io.File(
-                filespaceLocalJavaFile,
-                currentPath
+            filespaceLocalJavaFile,
+            currentPath
         )
         val outputJavaParentFile = outputJavaFile.parentFile
         if (!outputJavaParentFile.exists()) {
             outputJavaParentFile.mkdirs()
         }
         fileOnlineDownloadManager.download(
-                currentPath,
-                outputJavaFile
+            currentPath,
+            outputJavaFile
         )
     }
 

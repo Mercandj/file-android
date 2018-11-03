@@ -30,7 +30,7 @@ class PermissionPresenterTest {
 
     private fun createInstanceToTest(): PermissionPresenter {
         return PermissionPresenter(
-                screen!!
+            screen!!
         )
     }
 }

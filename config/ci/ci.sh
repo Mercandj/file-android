@@ -90,9 +90,13 @@ pushd "$PROJECT_DIR"
     log_delimiter
 
     gradle_task "file-api" "check"
+    gradle_task "file-api" "ktlint"
     gradle_task "file-api-android" "check"
+    gradle_task "file-api-android" "ktlint"
     gradle_task "file-api-online" "check"
+    gradle_task "file-api-online" "ktlint"
     gradle_task "file-api-online-android" "check"
+    gradle_task "file-api-online-android" "ktlint"
 
     log_delimiter
     log_d "SERVER"
@@ -100,5 +104,6 @@ pushd "$PROJECT_DIR"
 
     gradle_task "server" "fatJar"
     gradle_task "server" "check"
+    gradle_task "server" "ktlint"
 
 popd

@@ -3,7 +3,7 @@ package com.mercandalli.android.sdk.files.api
 import com.mercandalli.sdk.files.api.FileShareManager
 
 class FileShareManagerAndroid(
-        private val addOn: AddOn
+    private val addOn: AddOn
 ) : FileShareManager {
 
     override fun share(path: String) {

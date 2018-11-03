@@ -9,7 +9,7 @@ import org.json.JSONException
 import java.lang.IllegalStateException
 
 internal class FileOnlineSizeManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi
+    private val fileOnlineApi: FileOnlineApi
 ) : FileSizeManager {
 
     private val fileSizeResultMap = HashMap<String, FileSizeResult>()
@@ -47,7 +47,6 @@ internal class FileOnlineSizeManagerAndroid(
         return fileSizeResultUnloaded
     }
 
-
     override fun registerFileSizeResultListener(listener: FileSizeManager.FileSizeResultListener) {
         if (fileSizeResultListeners.contains(listener)) {
             return
@@ -61,11 +60,11 @@ internal class FileOnlineSizeManagerAndroid(
 
     private fun computeSizeSync(path: String): FileSizeResult {
         val sizeServerResponse = fileOnlineApi.getSize(path)
-                ?: return FileSizeResult.createErrorNetwork(path)
+            ?: return FileSizeResult.createErrorNetwork(path)
         val content = sizeServerResponse.content
         if (!content.has("size")) {
             throw IllegalStateException("Path: $path\ncontent: $content",
-                    JSONException("No value for size")
+                JSONException("No value for size")
             )
         }
         val size = content.getLong("size")

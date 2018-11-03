@@ -7,23 +7,23 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileOnlineDownloadManagerAndroid(
-        private val fileOnlineApi: FileOnlineApi,
-        private val localMediaScanner: MediaScanner
+    private val fileOnlineApi: FileOnlineApi,
+    private val localMediaScanner: MediaScanner
 ) : FileOnlineDownloadManager {
 
     private val listeners = ArrayList<FileOnlineDownloadManager.DownloadListener>()
     private val uploadProgressListener = createUploadProgressListener()
 
     override fun download(
-            inputFilePath: String,
-            outputJavaFile: java.io.File
+        inputFilePath: String,
+        outputJavaFile: java.io.File
     ) {
         notifyDownloadStarted(inputFilePath)
         GlobalScope.launch(Dispatchers.Default) {
             fileOnlineApi.postDownload(
-                    inputFilePath,
-                    outputJavaFile,
-                    uploadProgressListener
+                inputFilePath,
+                outputJavaFile,
+                uploadProgressListener
             )
             GlobalScope.launch(Dispatchers.Main) {
                 val outputFile = File.create(outputJavaFile)
@@ -37,7 +37,7 @@ internal class FileOnlineDownloadManagerAndroid(
     }
 
     override fun registerListener(
-            listener: FileOnlineDownloadManager.DownloadListener
+        listener: FileOnlineDownloadManager.DownloadListener
     ) {
         if (listeners.contains(listener)) {
             return
@@ -46,13 +46,13 @@ internal class FileOnlineDownloadManagerAndroid(
     }
 
     override fun unregisterListener(
-            listener: FileOnlineDownloadManager.DownloadListener
+        listener: FileOnlineDownloadManager.DownloadListener
     ) {
         listeners.remove(listener)
     }
 
     private fun notifyDownloadStarted(
-            inputFilePath: String
+        inputFilePath: String
     ) {
         for (listener in listeners) {
             listener.onDownloadStarted(inputFilePath)
@@ -60,9 +60,9 @@ internal class FileOnlineDownloadManagerAndroid(
     }
 
     private fun notifyDownloadProgress(
-            inputFilePath: String,
-            current: Long,
-            size: Long
+        inputFilePath: String,
+        current: Long,
+        size: Long
     ) {
         for (listener in listeners) {
             listener.onDownloadProgress(inputFilePath, current, size)
@@ -70,8 +70,8 @@ internal class FileOnlineDownloadManagerAndroid(
     }
 
     private fun notifyDownloadEnded(
-            inputFilePath: String,
-            outputJavaFile: java.io.File
+        inputFilePath: String,
+        outputJavaFile: java.io.File
     ) {
         for (listener in listeners) {
             listener.onDownloadEnded(inputFilePath)
@@ -80,14 +80,14 @@ internal class FileOnlineDownloadManagerAndroid(
 
     private fun createUploadProgressListener() = object : FileOnlineApi.DownloadProgressListener {
         override fun onDownloadProgress(
-                inputFilePath: String,
-                current: Long,
-                size: Long
+            inputFilePath: String,
+            current: Long,
+            size: Long
         ) {
             notifyDownloadProgress(
-                    inputFilePath,
-                    current,
-                    size
+                inputFilePath,
+                current,
+                size
             )
         }
     }

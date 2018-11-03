@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_list
 
 import android.view.ViewGroup
@@ -9,7 +12,7 @@ import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.sdk.files.api.File
 
 class FileColumnAdapter(
-        fileColumnClickListener: FileColumnRow.FileClickListener?
+    fileColumnClickListener: FileColumnRow.FileClickListener?
 ) : ListDelegationAdapter<List<Any>>() {
 
     private val fileAdapterDelegate = FileAdapterDelegate(fileColumnClickListener)
@@ -30,7 +33,7 @@ class FileColumnAdapter(
 
     //region File
     private class FileAdapterDelegate(
-            private val fileColumnClickListener: FileColumnRow.FileClickListener?
+        private val fileColumnClickListener: FileColumnRow.FileClickListener?
     ) : AbsListItemAdapterDelegate<Any, Any, VideoRowHolder>() {
 
         private var selectedPath: String? = null
@@ -40,8 +43,8 @@ class FileColumnAdapter(
         override fun onCreateViewHolder(viewGroup: ViewGroup): VideoRowHolder {
             val videoRow = FileColumnRow(viewGroup.context)
             videoRow.layoutParams = RecyclerView.LayoutParams(
-                    RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.WRAP_CONTENT)
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT)
             videoRow.setFileClickListener(fileColumnClickListener)
             return VideoRowHolder(videoRow)
         }
@@ -56,7 +59,7 @@ class FileColumnAdapter(
     }
 
     private class VideoRowHolder(
-            private val view: FileColumnRow
+        private val view: FileColumnRow
     ) : RecyclerView.ViewHolder(view) {
         fun bind(file: File, selectedPath: String?) {
             view.setFile(file, selectedPath)

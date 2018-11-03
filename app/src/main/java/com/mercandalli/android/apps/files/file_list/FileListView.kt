@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
@@ -24,7 +27,9 @@ import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_file_list, this)
@@ -130,24 +135,24 @@ class FileListView @JvmOverloads constructor(
     fun getCurrentPath() = userAction.getCurrentPath()
 
     fun setFileManagers(
-            fileManager: FileManager,
-            fileDeleteManager: FileDeleteManager,
-            fileCopyCutManager: FileCopyCutManager,
-            fileOpenManager: FileOpenManager,
-            fileRenameManager: FileRenameManager,
-            fileSizeManager: FileSizeManager,
-            rootPath: String
+        fileManager: FileManager,
+        fileDeleteManager: FileDeleteManager,
+        fileCopyCutManager: FileCopyCutManager,
+        fileOpenManager: FileOpenManager,
+        fileRenameManager: FileRenameManager,
+        fileSizeManager: FileSizeManager,
+        rootPath: String
     ) {
         userAction.onSetFileManagers(
-                fileManager,
-                fileOpenManager,
-                rootPath
+            fileManager,
+            fileOpenManager,
+            rootPath
         )
         adapter.setFileManagers(
-                fileCopyCutManager,
-                fileDeleteManager,
-                fileRenameManager,
-                fileSizeManager
+            fileCopyCutManager,
+            fileDeleteManager,
+            fileRenameManager,
+            fileSizeManager
         )
     }
 
@@ -165,9 +170,9 @@ class FileListView @JvmOverloads constructor(
             override fun onFileClicked(file: File) {}
             override fun onFabUpArrowClicked() {}
             override fun onSetFileManagers(
-                    fileManager: FileManager,
-                    fileOpenManager: FileOpenManager,
-                    rootPath: String
+                fileManager: FileManager,
+                fileOpenManager: FileOpenManager,
+                rootPath: String
             ) {
             }
 
@@ -179,12 +184,12 @@ class FileListView @JvmOverloads constructor(
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
         FileListPresenter(
-                this,
-                fileManager,
-                fileOpenManager,
-                fileSortManager,
-                themeManager,
-                Environment.getExternalStorageDirectory().absolutePath
+            this,
+            fileManager,
+            fileOpenManager,
+            fileSortManager,
+            themeManager,
+            Environment.getExternalStorageDirectory().absolutePath
         )
     }
 

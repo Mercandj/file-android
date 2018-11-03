@@ -10,14 +10,14 @@ class FileOnlineApiImplAndroidTest {
         val fileOnlineApiNetwork = FileOnlineApiNetworkAndroidTest.createFileOnlineApiNetwork()
         val fileOnlineLoginManager = FileOnlineLoginManagerImplAndroidTest.createFake()
         val fileOnlineApi = FileOnlineApiImpl(
-                fileOnlineApiNetwork,
-                fileOnlineLoginManager
+            fileOnlineApiNetwork,
+            fileOnlineLoginManager
         )
 
         // When
         val getJson = fileOnlineApi.get()
 
         // Then
-        //Assert.assertNotNull(getJson)
+        // Assert.assertNotNull(getJson)
     }
 }

@@ -5,8 +5,8 @@ import com.mercandalli.server.files.log.LogManager
 import io.ktor.http.Headers
 
 internal class AuthorizationManagerImpl(
-        private val logManager: LogManager,
-        private val fileOnlineAuthentications: List<FileOnlineAuthentication>
+    private val logManager: LogManager,
+    private val fileOnlineAuthentications: List<FileOnlineAuthentication>
 ) : AuthorizationManager {
 
     override fun isAuthorized(headers: Headers): Boolean {

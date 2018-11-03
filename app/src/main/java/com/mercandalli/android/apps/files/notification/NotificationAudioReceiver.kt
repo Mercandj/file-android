@@ -113,15 +113,16 @@ class NotificationAudioReceiver : BroadcastReceiver() {
         }
 
         private fun getPendingIntent(
-                context: Context,
-                action: String): PendingIntent {
+            context: Context,
+            action: String
+        ): PendingIntent {
             val intent = Intent(context, NotificationAudioReceiver::class.java)
             intent.action = action
             return PendingIntent.getBroadcast(
-                    context,
-                    0,
-                    intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT)
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT)
         }
     }
 }

@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_selection
 
 import android.content.Context
@@ -10,7 +13,9 @@ import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileSelectionView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val fileColumnListView = FileListView(context)
@@ -63,13 +68,13 @@ class FileSelectionView @JvmOverloads constructor(
             }
         }
         fileColumnListView.setFileManagers(
-                fileManager,
-                fileDeleteManager,
-                fileCopyCutManager,
-                fileOpenManager,
-                fileRenameManager,
-                fileSizeManager,
-                Environment.getExternalStorageDirectory().absolutePath
+            fileManager,
+            fileDeleteManager,
+            fileCopyCutManager,
+            fileOpenManager,
+            fileRenameManager,
+            fileSizeManager,
+            Environment.getExternalStorageDirectory().absolutePath
         )
         addView(fileColumnListView)
     }

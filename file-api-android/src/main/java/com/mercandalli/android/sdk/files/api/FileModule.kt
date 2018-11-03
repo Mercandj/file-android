@@ -11,12 +11,23 @@ import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import android.widget.Toast
-import com.mercandalli.sdk.files.api.*
+import com.mercandalli.sdk.files.api.MediaScanner
+import com.mercandalli.sdk.files.api.FileZipManager
+import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
+import com.mercandalli.sdk.files.api.FileCreatorManager
+import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileShareManager
+import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileSortManager
+import com.mercandalli.sdk.files.api.FileSortManagerImpl
 import java.io.File
 
 class FileModule(
-        private val context: Context,
-        private val permissionRequestAddOn: PermissionRequestAddOn
+    private val context: Context,
+    private val permissionRequestAddOn: PermissionRequestAddOn
 ) {
 
     private val mediaScannerInternal: MediaScanner by lazy {
@@ -36,7 +47,7 @@ class FileModule(
     fun createFileManager(): FileManager {
         val fileManager = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
-                Environment.getExternalStorageDirectory().absolutePath
+            Environment.getExternalStorageDirectory().absolutePath
         ) {
             if (it != null && !it.endsWith("/null")) {
                 val path = File(it).parentFile.absolutePath
@@ -67,26 +78,26 @@ class FileModule(
             }
         }
         return FileOpenManagerAndroid(
-                fileZipManagerInternal,
-                addOn
+            fileZipManagerInternal,
+            addOn
         )
     }
 
     fun createFileDeleteManager(): FileDeleteManager = FileDeleteManagerAndroid(
-            mediaScannerInternal
+        mediaScannerInternal
     )
 
     fun createFileCopyCutManager(): FileCopyCutManager = FileCopyCutManagerAndroid(
-            mediaScannerInternal
+        mediaScannerInternal
     )
 
     fun createFileCreatorManager(): FileCreatorManager = FileCreatorManagerAndroid(
-            permissionManager,
-            mediaScannerInternal
+        permissionManager,
+        mediaScannerInternal
     )
 
     fun createFileRenameManager(): FileRenameManager = FileRenameManagerAndroid(
-            mediaScannerInternal
+        mediaScannerInternal
     )
 
     fun createFileShareManager(): FileShareManager {
@@ -108,7 +119,7 @@ class FileModule(
 
     fun createFileSizeManager(): FileSizeManager {
         val fileSizeManager = FileSizeManagerAndroid(
-                permissionManager
+            permissionManager
         )
         mediaScannerInternal.addListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
@@ -123,8 +134,8 @@ class FileModule(
     companion object {
 
         private fun getUriFromFile(
-                context: Context,
-                file: File
+            context: Context,
+            file: File
         ): Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getUriFromFileOverN(context, file)
         } else {
@@ -132,17 +143,17 @@ class FileModule(
         }
 
         private fun getUriFromFileOverN(
-                context: Context,
-                file: File
+            context: Context,
+            file: File
         ): Uri = FileProvider.getUriForFile(
-                context,
-                context.applicationContext.packageName + ".provider",
-                file
+            context,
+            context.applicationContext.packageName + ".provider",
+            file
         )
 
         private fun startActivity(
-                context: Context,
-                intent: Intent
+            context: Context,
+            intent: Intent
         ) {
             try {
                 if (Build.VERSION.SDK_INT >= N) {
@@ -152,21 +163,21 @@ class FileModule(
                 }
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(context, "Oops, there is an error. Try with \"Open as...\"",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT).show()
             }
         }
 
         @RequiresApi(api = N)
         private fun startActivityOverN(
-                context: Context,
-                intent: Intent
+            context: Context,
+            intent: Intent
         ) {
             try {
                 context.startActivity(intent)
             } catch (e: Exception) { // Catch a FileUriExposedException.
                 // Test on KitKat if your replace Exception by FileUriExposedException.
                 Toast.makeText(context, "Oops, there is an error.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT).show()
             }
         }
 

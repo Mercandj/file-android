@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list
 
 import androidx.annotation.ColorRes
@@ -20,9 +23,9 @@ interface FileListContract {
         fun onFabUpArrowClicked()
 
         fun onSetFileManagers(
-                fileManager: FileManager,
-                fileOpenManager: FileOpenManager,
-                rootPath: String
+            fileManager: FileManager,
+            fileOpenManager: FileOpenManager,
+            rootPath: String
         )
 
         fun getCurrentPath(): String

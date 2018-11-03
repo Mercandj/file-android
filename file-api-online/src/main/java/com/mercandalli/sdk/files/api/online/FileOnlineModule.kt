@@ -1,6 +1,6 @@
 package com.mercandalli.sdk.files.api.online
 
-import java.util.*
+import java.util.Date
 
 class FileOnlineModule {
 
@@ -12,11 +12,11 @@ class FileOnlineModule {
     }
 
     fun createFileOnlineLoginManager(
-            fileOnlineLoginRepository: FileOnlineLoginRepository? = null
+        fileOnlineLoginRepository: FileOnlineLoginRepository? = null
     ): FileOnlineLoginManager {
         return FileOnlineLoginManagerImpl(
-                fileOnlineLoginRepository,
-                fileOnlineTokenCreator
+            fileOnlineLoginRepository,
+            fileOnlineTokenCreator
         )
     }
 }

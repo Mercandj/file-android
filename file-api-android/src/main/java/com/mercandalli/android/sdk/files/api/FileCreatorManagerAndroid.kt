@@ -5,8 +5,8 @@ import com.mercandalli.sdk.files.api.MediaScanner
 import java.io.IOException
 
 class FileCreatorManagerAndroid(
-        private val permissionManager: PermissionManager,
-        private val mediaScanner: MediaScanner
+    private val permissionManager: PermissionManager,
+    private val mediaScanner: MediaScanner
 ) : FileCreatorManager {
 
     override fun create(parentPath: String, name: String) {

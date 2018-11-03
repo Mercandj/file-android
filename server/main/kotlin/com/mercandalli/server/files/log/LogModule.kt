@@ -9,8 +9,8 @@ class LogModule {
     fun createLogManager(): LogManager {
         val rootPath = ApplicationGraph.getRootPath()
         return LogManagerImpl(
-                rootPath,
-                timeManager
+            rootPath,
+            timeManager
         )
     }
 }

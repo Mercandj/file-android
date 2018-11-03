@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_about
 
 import android.app.Activity
@@ -18,7 +21,9 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class SettingsAboutView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr), SettingsAboutContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_settings_about, this)
@@ -102,13 +107,13 @@ class SettingsAboutView @JvmOverloads constructor(
             override fun getCurrentTimeMillis() = System.currentTimeMillis()
         }
         SettingsAboutPresenter(
-                this,
-                versionManager,
-                themeManager,
-                dialogManager,
-                developerManager,
-                hashManager,
-                addOn
+            this,
+            versionManager,
+            themeManager,
+            dialogManager,
+            developerManager,
+            hashManager,
+            addOn
         )
     }
 }

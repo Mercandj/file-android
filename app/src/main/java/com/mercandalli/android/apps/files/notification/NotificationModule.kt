@@ -20,8 +20,8 @@ import com.mercandalli.android.apps.files.notification.NotificationAudioReceiver
 import com.mercandalli.android.apps.files.notification.NotificationAudioReceiver.Companion.getNotificationIntentPrevious
 
 class NotificationModule(
-        private val context: Context,
-        private val audioManager: AudioManager
+    private val context: Context,
+    private val audioManager: AudioManager
 ) {
 
     fun createNotificationAudioManager(): NotificationAudioManager {
@@ -29,8 +29,9 @@ class NotificationModule(
         val addOn = object : NotificationAudioManagerImpl.AddOn {
 
             override fun createNotification(
-                    notificationId: Int,
-                    fileName: String) {
+                notificationId: Int,
+                fileName: String
+            ) {
                 val channelId = "filespace_notification_channel_audio"
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val name = "FileSpace audio channel"
@@ -45,28 +46,28 @@ class NotificationModule(
 
                 remoteViews.setTextViewText(R.id.view_notification_audio_title, fileName)
                 remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_title,
-                        getNotificationIntentActivity(context))
+                    getNotificationIntentActivity(context))
                 remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_close,
-                        getNotificationIntentClose(context))
+                    getNotificationIntentClose(context))
                 remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_play_pause,
-                        getNotificationIntentPlayPause(context))
+                    getNotificationIntentPlayPause(context))
                 remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_next,
-                        getNotificationIntentNext(context))
+                    getNotificationIntentNext(context))
                 remoteViews.setOnClickPendingIntent(R.id.view_notification_audio_previous,
-                        getNotificationIntentPrevious(context))
+                    getNotificationIntentPrevious(context))
 
                 NotificationManagerCompat.from(context).notify(notificationId,
-                        NotificationCompat.Builder(context, channelId)
-                                .setSmallIcon(R.drawable.ic_sd_storage_black_24dp)
-                                .setAutoCancel(false)
-                                .setOngoing(true)
-                                .setContent(remoteViews)
-                                .setDeleteIntent(getNotificationIntentPause(context))
-                                .setContentIntent(PendingIntent.getActivity(context, 0,
-                                        Intent(context, MainActivity::class.java),
-                                        PendingIntent.FLAG_UPDATE_CURRENT))
+                    NotificationCompat.Builder(context, channelId)
+                        .setSmallIcon(R.drawable.ic_sd_storage_black_24dp)
+                        .setAutoCancel(false)
+                        .setOngoing(true)
+                        .setContent(remoteViews)
+                        .setDeleteIntent(getNotificationIntentPause(context))
+                        .setContentIntent(PendingIntent.getActivity(context, 0,
+                            Intent(context, MainActivity::class.java),
+                            PendingIntent.FLAG_UPDATE_CURRENT))
 
-                                .build())
+                        .build())
             }
 
             override fun cancelNotification(notificationId: Int) {
@@ -79,8 +80,8 @@ class NotificationModule(
             }
         }
         return NotificationAudioManagerImpl(
-                audioManager,
-                addOn
+            audioManager,
+            addOn
         )
     }
 }

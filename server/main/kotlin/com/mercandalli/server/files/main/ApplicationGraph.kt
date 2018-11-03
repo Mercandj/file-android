@@ -11,9 +11,9 @@ import com.mercandalli.server.files.shell.ShellModule
 import com.mercandalli.server.files.time.TimeModule
 
 class ApplicationGraph(
-        val rootPath: String,
-        val pullSubRepositoryShellFile: java.io.File,
-        val fileOnlineAuthentications: List<FileOnlineAuthentication>
+    val rootPath: String,
+    val pullSubRepositoryShellFile: java.io.File,
+    val fileOnlineAuthentications: List<FileOnlineAuthentication>
 ) {
 
     private val authorizationModule = AuthorizationModule()
@@ -55,14 +55,14 @@ class ApplicationGraph(
         fun getTimeManager() = graph!!.timeManagerInternal
 
         fun initialize(
-                rootPath: String,
-                pullSubRepositoryShellFile: java.io.File,
-                fileOnlineAuthentications: List<FileOnlineAuthentication>
+            rootPath: String,
+            pullSubRepositoryShellFile: java.io.File,
+            fileOnlineAuthentications: List<FileOnlineAuthentication>
         ) {
             graph = ApplicationGraph(
-                    rootPath,
-                    pullSubRepositoryShellFile,
-                    fileOnlineAuthentications
+                rootPath,
+                pullSubRepositoryShellFile,
+                fileOnlineAuthentications
             )
         }
     }

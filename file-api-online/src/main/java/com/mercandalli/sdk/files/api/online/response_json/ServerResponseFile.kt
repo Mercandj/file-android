@@ -1,11 +1,14 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.sdk.files.api.online.response_json
 
 import com.mercandalli.sdk.files.api.File
 import org.json.JSONObject
 
 data class ServerResponseFile private constructor(
-        private val file: File,
-        private val serverResponse: ServerResponse
+    private val file: File,
+    private val serverResponse: ServerResponse
 ) {
 
     fun toJsonString() = toJson(this).toString()
@@ -14,20 +17,20 @@ data class ServerResponseFile private constructor(
 
         @JvmStatic
         fun create(
-                file: File,
-                debugMessage: String,
-                succeeded:Boolean
+            file: File,
+            debugMessage: String,
+            succeeded: Boolean
         ): ServerResponseFile {
             val content = JSONObject()
             content.put("file", File.toJson(file))
             val serverResponse = ServerResponse.create(
-                    content,
-                    debugMessage,
-                    succeeded
+                content,
+                debugMessage,
+                succeeded
             )
             return ServerResponseFile(
-                    file,
-                    serverResponse
+                file,
+                serverResponse
             )
         }
 
@@ -42,8 +45,8 @@ data class ServerResponseFile private constructor(
             val content = serverResponse.content
             val file = File.fromJson(content.getJSONObject("file"))
             return ServerResponseFile(
-                    file,
-                    serverResponse
+                file,
+                serverResponse
             )
         }
     }

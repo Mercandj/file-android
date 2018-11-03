@@ -2,7 +2,7 @@ package com.mercandalli.sdk.files.api
 
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.*
+import java.util.UUID
 
 /**
  * Memo: goal is to keep file class as light as possible.
@@ -16,42 +16,42 @@ import java.util.*
  */
 data class File private constructor(
 
-        /**
-         * Unique uuid
-         */
-        val id: String,
+    /**
+     * Unique uuid
+     */
+    val id: String,
 
-        /**
-         * The file path (dom/tree representation)
-         */
-        val path: String,
+    /**
+     * The file path (dom/tree representation)
+     */
+    val path: String,
 
-        /**
-         * The parent file path or null if no parent (root for example).
-         */
-        val parentPath: String?,
+    /**
+     * The parent file path or null if no parent (root for example).
+     */
+    val parentPath: String?,
 
-        /**
-         * Is this file a file container (named folder/directory)
-         */
-        val directory: Boolean,
+    /**
+     * Is this file a file container (named folder/directory)
+     */
+    val directory: Boolean,
 
-        /**
-         * File name. If it's not a directory, contains extension.
-         */
-        val name: String,
+    /**
+     * File name. If it's not a directory, contains extension.
+     */
+    val name: String,
 
-        /**
-         * Returns the length of the file denoted by this abstract pathname.
-         * The return value is unspecified if this pathname denotes a directory.
-         */
-        val length: Long,
+    /**
+     * Returns the length of the file denoted by this abstract pathname.
+     * The return value is unspecified if this pathname denotes a directory.
+     */
+    val length: Long,
 
-        /**
-         * Returns the time that the file denoted by this abstract pathname was
-         * last modified.
-         */
-        val lastModified: Long
+    /**
+     * Returns the time that the file denoted by this abstract pathname was
+     * last modified.
+     */
+    val lastModified: Long
 ) {
 
     companion object {
@@ -60,39 +60,39 @@ data class File private constructor(
         const val JSON_KEY_NAME = "name"
 
         fun create(
-                id: String,
-                path: String,
-                parentPath: String?,
-                directory: Boolean,
-                name: String,
-                length: Long,
-                lastModified: Long
+            id: String,
+            path: String,
+            parentPath: String?,
+            directory: Boolean,
+            name: String,
+            length: Long,
+            lastModified: Long
         ): File {
             val cleanedPath = cleanPath(path)
             return File(
-                    id,
-                    cleanedPath,
-                    parentPath,
-                    directory,
-                    name,
-                    length,
-                    lastModified
+                id,
+                cleanedPath,
+                parentPath,
+                directory,
+                name,
+                length,
+                lastModified
             )
         }
 
         fun create(
-                parentPath: String,
-                name: String
+            parentPath: String,
+            name: String
         ): File {
             val directory = !name.contains(".")
             return create(
-                    UUID.randomUUID().toString(),
-                    "$parentPath/$name",
-                    "$parentPath/",
-                    directory,
-                    name,
-                    0,
-                    0
+                UUID.randomUUID().toString(),
+                "$parentPath/$name",
+                "$parentPath/",
+                directory,
+                name,
+                0,
+                0
             )
         }
 
@@ -106,13 +106,13 @@ data class File private constructor(
             val length = javaFile.length()
             val lastModified = javaFile.lastModified()
             return create(
-                    id,
-                    path,
-                    parentPath,
-                    directory,
-                    name,
-                    length,
-                    lastModified)
+                id,
+                path,
+                parentPath,
+                directory,
+                name,
+                length,
+                lastModified)
         }
 
         @JvmStatic
@@ -127,13 +127,13 @@ data class File private constructor(
             val length = jsonObject.getLong("length")
             val lastModified = jsonObject.getLong("last_modified")
             return create(
-                    id,
-                    path,
-                    parentPath,
-                    directory,
-                    name,
-                    length,
-                    lastModified
+                id,
+                path,
+                parentPath,
+                directory,
+                name,
+                length,
+                lastModified
             )
         }
 
@@ -190,13 +190,13 @@ data class File private constructor(
             val path = file.path
             val newPath = renamePathFromName(path, name)
             return File.create(
-                    file.id,
-                    newPath,
-                    file.parentPath,
-                    file.directory,
-                    name,
-                    file.length,
-                    file.lastModified
+                file.id,
+                newPath,
+                file.parentPath,
+                file.directory,
+                name,
+                file.length,
+                file.lastModified
             )
         }
 
@@ -214,24 +214,24 @@ data class File private constructor(
             val pathDirectoryOutputCleaned = cleanPath(pathDirectoryOutput)
             val name = file.name
             return File.create(
-                    file.id,
-                    "$pathDirectoryOutputCleaned/$name",
-                    pathDirectoryOutputCleaned,
-                    file.directory,
-                    name,
-                    file.length,
-                    file.lastModified
+                file.id,
+                "$pathDirectoryOutputCleaned/$name",
+                pathDirectoryOutputCleaned,
+                file.directory,
+                name,
+                file.length,
+                file.lastModified
             )
         }
 
         fun createFake(id: String) = File(
-                id,
-                "/Root",
-                "/",
-                true,
-                "Root",
-                0,
-                4242
+            id,
+            "/Root",
+            "/",
+            true,
+            "Root",
+            0,
+            4242
         )
 
         fun createFakeJson(id: String): String {

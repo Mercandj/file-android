@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.settings_theme
 
 import com.mercandalli.android.apps.files.theme.LightTheme

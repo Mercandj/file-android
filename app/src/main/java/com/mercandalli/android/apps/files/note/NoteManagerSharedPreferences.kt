@@ -3,8 +3,8 @@ package com.mercandalli.android.apps.files.note
 import android.content.SharedPreferences
 
 class NoteManagerSharedPreferences(
-        private val sharedPreferences: SharedPreferences,
-        private val addOn: AddOn
+    private val sharedPreferences: SharedPreferences,
+    private val addOn: AddOn
 ) : NoteManager {
 
     private var note: String

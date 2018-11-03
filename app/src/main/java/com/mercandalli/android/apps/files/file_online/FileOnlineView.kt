@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_online
 
 import android.content.Context
@@ -9,9 +12,11 @@ import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileOnlineView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr),
-        FileOnlineContract.Screen {
+    FileOnlineContract.Screen {
 
     private val fileListView = FileListView(context)
     private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
@@ -24,13 +29,13 @@ class FileOnlineView @JvmOverloads constructor(
     init {
         val fileOpenManager = createFileOpenManager()
         fileListView.setFileManagers(
-                fileOnlineManager,
-                fileDeleteManager,
-                fileCopyCutManager,
-                fileOpenManager,
-                fileRenameManager,
-                fileSizeManager,
-                "/"
+            fileOnlineManager,
+            fileDeleteManager,
+            fileCopyCutManager,
+            fileOpenManager,
+            fileRenameManager,
+            fileSizeManager,
+            "/"
         )
         addView(fileListView)
     }
@@ -62,11 +67,11 @@ class FileOnlineView @JvmOverloads constructor(
         val fileOnlineDownloadManager = ApplicationGraph.getFileOnlineDownloadManager()
         val toastManager = ApplicationGraph.getToastManager()
         return FileOnlinePresenter(
-                this,
-                dialogManager,
-                fileOnlineDownloadManager,
-                toastManager,
-                Environment.getExternalStorageDirectory().absolutePath
+            this,
+            dialogManager,
+            fileOnlineDownloadManager,
+            toastManager,
+            Environment.getExternalStorageDirectory().absolutePath
         )
     }
 }

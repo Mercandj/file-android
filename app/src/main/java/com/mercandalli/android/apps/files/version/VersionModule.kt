@@ -3,7 +3,7 @@ package com.mercandalli.android.apps.files.version
 import android.content.Context
 
 class VersionModule(
-        private val context: Context
+    private val context: Context
 ) {
 
     fun createVersionManager(): VersionManager {
@@ -14,7 +14,7 @@ class VersionModule(
             }
         }
         return VersionManagerImpl(
-                addOn
+            addOn
         )
     }
 }

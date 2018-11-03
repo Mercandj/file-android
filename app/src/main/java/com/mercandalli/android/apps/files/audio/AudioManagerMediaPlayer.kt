@@ -3,7 +3,7 @@ package com.mercandalli.android.apps.files.audio
 import com.mercandalli.sdk.files.api.FileExtension
 
 class AudioManagerMediaPlayer(
-        private val mediaPlayer: MediaPlayerWrapper
+    private val mediaPlayer: MediaPlayerWrapper
 ) : AudioManager {
 
     private val sourceListeners = ArrayList<AudioManager.SourceListener>()
@@ -65,8 +65,8 @@ class AudioManagerMediaPlayer(
 
     override fun isSupportedPath(path: String): Boolean {
         return FileExtension.OGG.isCompliant(path) ||
-                FileExtension.MP3.isCompliant(path) ||
-                FileExtension.WAV.isCompliant(path)
+            FileExtension.MP3.isCompliant(path) ||
+            FileExtension.WAV.isCompliant(path)
     }
 
     override fun getProgressPercent(): Float {

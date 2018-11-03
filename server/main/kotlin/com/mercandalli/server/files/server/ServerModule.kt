@@ -3,7 +3,7 @@ package com.mercandalli.server.files.server
 import com.mercandalli.server.files.main.ApplicationGraph
 
 class ServerModule(
-        private val rootPath: String
+    private val rootPath: String
 ) {
 
     private val fileHandlerGet by lazy { ApplicationGraph.getFileGetHandler() }
@@ -15,13 +15,13 @@ class ServerModule(
 
     fun createServerManager(): ServerManager {
         return ServerManagerImpl(
-                rootPath,
-                fileHandlerGet,
-                fileHandlerPost,
-                fileHandlerDelete,
-                shellManager,
-                logManager,
-                pullSubRepositoryShellFile
+            rootPath,
+            fileHandlerGet,
+            fileHandlerPost,
+            fileHandlerDelete,
+            shellManager,
+            logManager,
+            pullSubRepositoryShellFile
         )
     }
 }

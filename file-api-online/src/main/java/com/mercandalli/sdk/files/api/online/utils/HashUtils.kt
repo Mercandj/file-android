@@ -95,8 +95,9 @@ object HashUtils {
     }
 
     private fun hash(
-            messageDigest: MessageDigest,
-            text: String?): String? {
+        messageDigest: MessageDigest,
+        text: String?
+    ): String? {
         if (text == null) {
             return null
         }
@@ -125,4 +126,3 @@ object HashUtils {
         return buf.toString()
     }
 }
-

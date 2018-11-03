@@ -10,7 +10,7 @@ import java.io.IOException
 import java.util.zip.ZipInputStream
 
 class FileZipManagerAndroid(
-        private val mediaScanner: MediaScanner
+    private val mediaScanner: MediaScanner
 ) : FileZipManager {
 
     private val listeners = ArrayList<FileZipManager.FileZipListener>()
@@ -18,8 +18,8 @@ class FileZipManagerAndroid(
     override fun isZip(path: String) = FileExtension.ZIP.isCompliant(path)
 
     override fun unzip(
-            path: String,
-            outputPath: String
+        path: String,
+        outputPath: String
     ) {
         GlobalScope.launch(Dispatchers.Default) {
             val zipInput = java.io.File(path)
@@ -33,7 +33,6 @@ class FileZipManagerAndroid(
             }
         }
     }
-
 
     override fun registerFileZipListener(listener: FileZipManager.FileZipListener) {
         if (listeners.contains(listener)) {
@@ -51,11 +50,11 @@ class FileZipManagerAndroid(
         @Throws(IOException::class)
         private fun unzipSync(zipFile: java.io.File, targetDirectory: java.io.File) {
             val zipInputStream = ZipInputStream(
-                    java.io.BufferedInputStream(
-                            java.io.FileInputStream(
-                                    zipFile
-                            )
+                java.io.BufferedInputStream(
+                    java.io.FileInputStream(
+                        zipFile
                     )
+                )
             )
             zipInputStream.use { zis ->
                 var count: Int
@@ -66,7 +65,7 @@ class FileZipManagerAndroid(
                     val dir = if (zipEntry.isDirectory) file else file.parentFile
                     if (!dir.isDirectory && !dir.mkdirs())
                         throw java.io.FileNotFoundException(
-                                "Failed to ensure directory: " + dir.absolutePath
+                            "Failed to ensure directory: " + dir.absolutePath
                         )
                     if (zipEntry.isDirectory) {
                         zipEntry = zis.nextEntry

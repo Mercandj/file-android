@@ -124,7 +124,7 @@ class AudioManagerMediaPlayerTest {
 
     private fun createInstanceToTest(): AudioManagerMediaPlayer {
         return AudioManagerMediaPlayer(
-                mediaPlayer!!
+            mediaPlayer!!
         )
     }
 }

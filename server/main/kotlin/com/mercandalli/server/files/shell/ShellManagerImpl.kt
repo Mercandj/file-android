@@ -8,7 +8,7 @@ import java.util.concurrent.Executors
 import java.util.function.Consumer
 
 class ShellManagerImpl(
-        private val logManager: LogManager
+    private val logManager: LogManager
 ) : ShellManager {
 
     override fun execute(command: String, block: (result: String) -> Unit) {
@@ -28,8 +28,9 @@ class ShellManagerImpl(
     }
 
     private class StreamGobbler(
-            private val inputStream: InputStream,
-            private val consumer: Consumer<String>) : Runnable {
+        private val inputStream: InputStream,
+        private val consumer: Consumer<String>
+    ) : Runnable {
 
         override fun run() {
             BufferedReader(InputStreamReader(inputStream)).lines().forEach(consumer)

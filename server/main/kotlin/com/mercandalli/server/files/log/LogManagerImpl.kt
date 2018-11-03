@@ -6,8 +6,8 @@ import org.json.JSONArray
 import kotlin.collections.ArrayList
 
 internal class LogManagerImpl(
-        rootPath: String,
-        private val timeManager: TimeManager
+    rootPath: String,
+    private val timeManager: TimeManager
 ) : LogManager {
 
     private val log1418File = java.io.File(rootPath, "static/1418/contact-us.json")
@@ -30,14 +30,14 @@ internal class LogManagerImpl(
         val contentString = HashMap<String, String>()
         contentString["message"] = message
         val log = LogData(
-                LogData.Type.Description,
-                tags,
-                timeManager.getDayString(),
-                timeManager.getTimeString(),
-                timeManager.getTimeLong(),
-                contentString,
-                HashMap(),
-                HashMap()
+            LogData.Type.Description,
+            tags,
+            timeManager.getDayString(),
+            timeManager.getTimeString(),
+            timeManager.getTimeLong(),
+            contentString,
+            HashMap(),
+            HashMap()
         )
         print(log)
     }
@@ -47,14 +47,14 @@ internal class LogManagerImpl(
         val contentString = HashMap<String, String>()
         contentString["message"] = message
         val log = LogData(
-                LogData.Type.Error,
-                tags,
-                timeManager.getDayString(),
-                timeManager.getTimeString(),
-                timeManager.getTimeLong(),
-                contentString,
-                HashMap(),
-                HashMap()
+            LogData.Type.Error,
+            tags,
+            timeManager.getDayString(),
+            timeManager.getTimeString(),
+            timeManager.getTimeLong(),
+            contentString,
+            HashMap(),
+            HashMap()
         )
         print(log)
     }
@@ -72,14 +72,14 @@ internal class LogManagerImpl(
         contentString["method"] = method
         contentString["user_agent"] = userAgent
         val log = LogData(
-                LogData.Type.Description,
-                tags,
-                timeManager.getDayString(),
-                timeManager.getTimeString(),
-                timeManager.getTimeLong(),
-                contentString,
-                HashMap(),
-                HashMap()
+            LogData.Type.Description,
+            tags,
+            timeManager.getDayString(),
+            timeManager.getTimeString(),
+            timeManager.getTimeLong(),
+            contentString,
+            HashMap(),
+            HashMap()
         )
         print(log)
     }
@@ -91,31 +91,31 @@ internal class LogManagerImpl(
         contentString["uri"] = uri
         contentString["response"] = response
         val log = LogData(
-                LogData.Type.Description,
-                tags,
-                timeManager.getDayString(),
-                timeManager.getTimeString(),
-                timeManager.getTimeLong(),
-                contentString,
-                HashMap(),
-                HashMap()
+            LogData.Type.Description,
+            tags,
+            timeManager.getDayString(),
+            timeManager.getTimeString(),
+            timeManager.getTimeLong(),
+            contentString,
+            HashMap(),
+            HashMap()
         )
         print(log)
     }
 
     override fun log1418ContactUs(
-            firstName: String?,
-            lastName: String?,
-            email: String?,
-            text: String?
+        firstName: String?,
+        lastName: String?,
+        email: String?,
+        text: String?
     ) {
         val time = timeManager.getTimeString()
         val contactUs = ContactUs(
-                time,
-                firstName,
-                lastName,
-                email,
-                text
+            time,
+            firstName,
+            lastName,
+            email,
+            text
         )
         contactUs1418List.add(contactUs)
         saveContactUs1418()
