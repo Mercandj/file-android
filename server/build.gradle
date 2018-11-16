@@ -47,6 +47,7 @@ dependencies {
 
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "io.ktor:ktor-auth:$ktor_version"
+    compile "io.ktor:ktor-html-builder:$ktor_version"
 
     compile "ch.qos.logback:logback-classic:1.2.1"
     compile 'org.json:json:20180813'

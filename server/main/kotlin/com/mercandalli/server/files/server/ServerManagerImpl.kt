@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
+import com.mercandalli.server.files.android_tos.AndroidTosHandler.androidTermsOfUseGet
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
@@ -105,7 +106,7 @@ class ServerManagerImpl(
                 get("/status") {
                     respondStatus()
                 }
-                get("/pull") { _ ->
+                get("/pull") {
                     val absolutePath = pullSubRepositoryShellFile.absolutePath
                     shellManager.execute("bash $absolutePath") {
 
@@ -252,6 +253,10 @@ class ServerManagerImpl(
                         text
                     )
                     call.respondText("Message envoyé")
+                }
+                get("/android/apps/terms-of-use/{appName}") {
+                    val appName = call.parameters["appName"]
+                    androidTermsOfUseGet(appName.toString())
                 }
                 static("/1418") {
                     staticRootFolder = File("$rootServerPath/static")
