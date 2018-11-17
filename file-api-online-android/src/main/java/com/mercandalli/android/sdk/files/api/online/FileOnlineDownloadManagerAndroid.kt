@@ -74,7 +74,10 @@ internal class FileOnlineDownloadManagerAndroid(
         outputJavaFile: java.io.File
     ) {
         for (listener in listeners) {
-            listener.onDownloadEnded(inputFilePath)
+            listener.onDownloadEnded(
+                inputFilePath,
+                outputJavaFile
+            )
         }
     }
 

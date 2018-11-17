@@ -24,7 +24,8 @@ interface FileOnlineDownloadManager {
         )
 
         fun onDownloadEnded(
-            inputFilePath: String
+            inputFilePath: String,
+            outputJavaFile: java.io.File
         )
     }
 }
