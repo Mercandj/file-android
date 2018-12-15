@@ -43,8 +43,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
-    implementation "androidx.appcompat:appcompat:1.0.0"
-    implementation "androidx.annotation:annotation:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.annotation:annotation:1.0.1"
 
     // KtLint - Static code analysis
     // https://proandroiddev.com/kotlin-static-analysis-why-and-how-a12042e34a98
@@ -52,17 +52,17 @@ dependencies {
 
     // Testing-only dependencies
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.0'
+    testImplementation 'org.mockito:mockito-core:2.23.4'
 
     // Third party - Network
     androidTestImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     androidTestImplementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     androidTestImplementation "com.squareup.okhttp:okhttp-urlconnection:2.7.5"
 
-    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
-    androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
-    androidTestImplementation "androidx.annotation:annotation:1.0.0"
+    androidTestImplementation 'androidx.test:runner:1.1.1-beta01'
+    androidTestImplementation 'androidx.test:rules:1.1.1-beta01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1-beta01'
+    androidTestImplementation "androidx.annotation:annotation:1.0.1"
 }
 
 repositories {
