@@ -6,7 +6,7 @@ import io.ktor.content.TextContent
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.withCharset
-import io.ktor.pipeline.PipelineContext
+import io.ktor.util.pipeline.PipelineContext
 import io.ktor.request.uri
 import io.ktor.response.respond
 import org.json.JSONObject
