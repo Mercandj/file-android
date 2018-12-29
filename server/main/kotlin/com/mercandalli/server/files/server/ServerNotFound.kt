@@ -13,7 +13,7 @@ import org.json.JSONObject
 
 object ServerNotFound {
 
-    suspend fun PipelineContext<Unit, ApplicationCall>.respondNotFound(httpStatusCode: HttpStatusCode) {
+    suspend fun PipelineContext<*, ApplicationCall>.respondNotFound(httpStatusCode: HttpStatusCode) {
         val statusCode = httpStatusCode.value
         val statusDescription = httpStatusCode.description
         val responseJson = JSONObject()
