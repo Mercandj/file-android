@@ -12,11 +12,12 @@ class FileRenameManagerAndroid(
         if (fileName.contains("/")) {
             return
         }
-        val ioFile = java.io.File(path)
-        val parentPath = ioFile.parentFile.absolutePath
+        val ioFileInput = java.io.File(path)
+        val inputPath = ioFileInput.absolutePath
+        val parentPath = ioFileInput.parentFile.absolutePath
         val ioFileOutput = java.io.File(parentPath, fileName)
         val outputPath = ioFileOutput.absolutePath
-        FileRenameUtils.renameSync(parentPath, fileName)
+        FileRenameUtils.renameSync(inputPath, fileName)
         mediaScanner.refresh(path)
         mediaScanner.refresh(outputPath)
         mediaScanner.refresh(parentPath)
