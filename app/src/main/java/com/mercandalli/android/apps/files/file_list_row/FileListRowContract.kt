@@ -36,6 +36,8 @@ interface FileListRowContract {
 
         fun onRenameConfirmedClicked(fileName: String)
 
+        fun onDetailsClicked()
+
         fun onOverflowClicked()
 
         fun onSetFileManagers(

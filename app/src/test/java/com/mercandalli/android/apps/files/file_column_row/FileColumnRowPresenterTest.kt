@@ -24,19 +24,19 @@ import org.mockito.MockitoAnnotations
 class FileColumnRowPresenterTest {
 
     @Mock
-    private var screen: FileColumnRowContract.Screen? = null
+    private lateinit var screen: FileColumnRowContract.Screen
     @Mock
-    private var fileDeleteManager: FileDeleteManager? = null
+    private lateinit var fileDeleteManager: FileDeleteManager
     @Mock
-    private var fileCopyCutManager: FileCopyCutManager? = null
+    private lateinit var fileCopyCutManager: FileCopyCutManager
     @Mock
-    private var fileRenameManager: FileRenameManager? = null
+    private lateinit var fileRenameManager: FileRenameManager
     @Mock
-    private var audioManager: AudioManager? = null
+    private lateinit var audioManager: AudioManager
     @Mock
-    private var themeManager: ThemeManager? = null
+    private lateinit var themeManager: ThemeManager
     @Mock
-    private var toastManager: ToastManager? = null
+    private lateinit var toastManager: ToastManager
     private var theme: Theme = DarkTheme()
     @DrawableRes
     private val drawableRightIconDirectoryDrawableRes: Int = 42
@@ -81,15 +81,15 @@ class FileColumnRowPresenterTest {
     }
 
     private fun createInstanceToTest(): FileColumnRowPresenter {
-        Mockito.`when`(themeManager!!.getTheme()).thenReturn(theme)
+        Mockito.`when`(themeManager.getTheme()).thenReturn(theme)
         return FileColumnRowPresenter(
-            screen!!,
-            fileDeleteManager!!,
-            fileCopyCutManager!!,
-            fileRenameManager!!,
-            audioManager!!,
-            themeManager!!,
-            toastManager!!,
+            screen,
+            fileDeleteManager,
+            fileCopyCutManager,
+            fileRenameManager,
+            audioManager,
+            themeManager,
+            toastManager,
             drawableRightIconDirectoryDrawableRes,
             drawableRightIconSoundDrawableRes,
             selectedTextColorRes,

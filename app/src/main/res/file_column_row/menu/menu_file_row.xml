@@ -17,4 +17,8 @@
         android:id="@+id/menu_file_row_rename"
         android:title="@string/file_row_rename" />
 
+    <item
+        android:id="@+id/menu_file_row_details"
+        android:title="@string/file_row_details" />
+
 </menu>

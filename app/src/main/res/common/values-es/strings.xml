@@ -5,15 +5,15 @@
 
     <!-- region WORDS -->
     <string name="cancel">Cancel</string>
-    <string name="copy">Copy</string>
-    <string name="cut">Cut</string>
-    <string name="delete">Delete</string>
-    <string name="download">Download</string>
-    <string name="folder_empty">Empty folder</string>
+    <string name="copy">Copiar</string>
+    <string name="cut">Cortar</string>
+    <string name="delete">Eliminar</string>
+    <string name="download">Descargar</string>
+    <string name="folder_empty">Pasta vazia</string>
     <string name="more">More</string>
     <string name="ok">OK</string>
-    <string name="open">open</string>
-    <string name="rename">Rename</string>
+    <string name="open">Abrir</string>
+    <string name="rename">Renombrar</string>
     <!-- endregion WORDS -->
 
 </resources>

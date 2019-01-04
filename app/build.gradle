@@ -35,7 +35,7 @@ android {
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs "en", "fr"
+        resConfigs "ar", "es", "fr", "en", "pt-rBR", "zh-rTW"
 
         // https://github.com/Dimezis/BlurView
         renderscriptTargetApi rootProject.ext.targetSdkVersion
@@ -77,6 +77,7 @@ android {
                     'src/main/res/file_column_horizontal_lists',
                     'src/main/res/file_column_list',
                     'src/main/res/file_column_row',
+                    'src/main/res/file_details',
                     'src/main/res/file_list',
                     'src/main/res/file_list_row',
                     'src/main/res/file_online',

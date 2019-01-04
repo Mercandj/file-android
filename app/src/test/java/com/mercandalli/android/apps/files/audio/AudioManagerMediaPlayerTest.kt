@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations
 class AudioManagerMediaPlayerTest {
 
     @Mock
-    private val mediaPlayer: AudioManagerMediaPlayer.MediaPlayerWrapper? = null
+    private lateinit var mediaPlayer: AudioManagerMediaPlayer.MediaPlayerWrapper
 
     @Before
     fun setup() {
@@ -124,7 +124,7 @@ class AudioManagerMediaPlayerTest {
 
     private fun createInstanceToTest(): AudioManagerMediaPlayer {
         return AudioManagerMediaPlayer(
-            mediaPlayer!!
+            mediaPlayer
         )
     }
 }

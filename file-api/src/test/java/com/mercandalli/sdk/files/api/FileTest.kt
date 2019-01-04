@@ -9,13 +9,13 @@ class FileTest {
     fun parseSerializeFileToJson() {
         // Given
         val file = File.create(
-                "id",
-                "path",
-                "/parentPath",
-                false,
-                "name",
-                42,
-                4242)
+            "id",
+            "path",
+            "/parentPath",
+            false,
+            "name",
+            42,
+            4242)
 
         // When
         val json = File.toJson(file)
@@ -31,13 +31,13 @@ class FileTest {
         val newName = "new-folder-name"
         val parentPath = ""
         val file = File.create(
-                "id",
-                "$parentPath/root",
-                "$parentPath/",
-                true,
-                "root",
-                42,
-                4242)
+            "id",
+            "$parentPath/root",
+            "$parentPath/",
+            true,
+            "root",
+            42,
+            4242)
 
         // When
         val renamedFile = File.rename(file, newName)
@@ -52,13 +52,13 @@ class FileTest {
         val newName = "new-folder-name"
         val parentPath = ""
         val file = File.create(
-                "id",
-                "$parentPath/root",
-                "$parentPath/",
-                true,
-                "root",
-                42,
-                4242)
+            "id",
+            "$parentPath/root",
+            "$parentPath/",
+            true,
+            "root",
+            42,
+            4242)
 
         // When
         val renamedFile = File.rename(file, newName)
@@ -80,6 +80,19 @@ class FileTest {
     }
 
     companion object {
+
+        @JvmStatic
+        fun createFakeByName(
+            name: String
+        ) = File.create(
+            "id-$name",
+            "path-$name",
+            "parentPath-$name",
+            false,
+            name,
+            42,
+            4242
+        )
 
         @JvmStatic
         fun areEquals(fileReference: File, file: File) {

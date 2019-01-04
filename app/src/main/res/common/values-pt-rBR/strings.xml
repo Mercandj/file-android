@@ -5,15 +5,13 @@
 
     <!-- region WORDS -->
     <string name="cancel">Cancel</string>
-    <string name="copy">Copy</string>
-    <string name="cut">Cut</string>
-    <string name="delete">Delete</string>
+    <string name="copy">Copiar</string>
+    <string name="cut">Cortar</string>
+    <string name="delete">Apagar</string>
     <string name="download">Download</string>
-    <string name="folder_empty">Empty folder</string>
     <string name="more">More</string>
     <string name="ok">OK</string>
-    <string name="open">open</string>
-    <string name="rename">Rename</string>
+    <string name="rename">Renomear</string>
     <!-- endregion WORDS -->
 
 </resources>

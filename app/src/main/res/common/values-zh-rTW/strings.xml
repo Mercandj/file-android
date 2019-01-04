@@ -5,15 +5,13 @@
 
     <!-- region WORDS -->
     <string name="cancel">Cancel</string>
-    <string name="copy">Copy</string>
-    <string name="cut">Cut</string>
-    <string name="delete">Delete</string>
-    <string name="download">Download</string>
-    <string name="folder_empty">Empty folder</string>
+    <string name="copy">複製</string>
+    <string name="cut">剪下</string>
+    <string name="delete">刪除</string>
+    <string name="download">下載</string>
     <string name="more">More</string>
     <string name="ok">OK</string>
-    <string name="open">open</string>
-    <string name="rename">Rename</string>
+    <string name="rename">重新命名</string>
     <!-- endregion WORDS -->
 
 </resources>

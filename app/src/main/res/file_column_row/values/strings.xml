@@ -1,6 +1,7 @@
 <resources>
-    <string name="file_row_copy">Copy</string>
-    <string name="file_row_cut">Cut</string>
-    <string name="file_row_delete">Delete</string>
-    <string name="file_row_rename">Rename</string>
+    <string name="file_row_copy" translatable="false">@string/copy</string>
+    <string name="file_row_cut" translatable="false">@string/cut</string>
+    <string name="file_row_delete" translatable="false">@string/delete</string>
+    <string name="file_row_rename" translatable="false">@string/rename</string>
+    <string name="file_row_details" translatable="false">@string/more</string>
 </resources>

@@ -13,6 +13,7 @@ import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
 import com.mercandalli.android.apps.files.network.Network
+import com.mercandalli.android.apps.files.screen.ScreenModule
 import com.mercandalli.android.apps.files.toast.ToastModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
@@ -28,6 +29,7 @@ class ApplicationGraph(
     private val developerModule by lazy { DeveloperModule(context) }
     private val networkModule by lazy { NetworkModule() }
     private val noteModule by lazy { NoteModule(context) }
+    private val screenModule by lazy { ScreenModule(context) }
 
     private val audioManagerInternal by lazy { audioModuleInternal.createAudioManager() }
     private val audioQueueManagerInternal by lazy { audioModuleInternal.createAudioQueueManager(audioManagerInternal) }
@@ -59,6 +61,7 @@ class ApplicationGraph(
     private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
     private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
     private val okHttpClientLazy = networkModule.createOkHttpClientLazy()
+    private val screenManagerInternal by lazy { screenModule.createScreenManager() }
     private val themeManagerInternal by lazy { ThemeModule(context).createThemeManager() }
     private val toastManagerInternal by lazy { ToastModule(context).createToastManager() }
     private val versionManagerInternal by lazy { VersionModule(context).createVersionManager() }
@@ -101,6 +104,7 @@ class ApplicationGraph(
         fun getNoteManager() = graph!!.noteManagerInternal
         fun getNotificationAudioManager() = graph!!.notificationAudioManagerInternal
         fun getOkHttpClientLazy() = graph!!.okHttpClientLazy
+        fun getScreenManager() = graph!!.screenManagerInternal
         fun getThemeManager() = graph!!.themeManagerInternal
         fun getToastManager() = graph!!.toastManagerInternal
         fun getVersionManager() = graph!!.versionManagerInternal

@@ -44,6 +44,11 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
 
+        <activity
+            android:name=".file_details.FileDetailsActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+
         <receiver
             android:name=".notification.NotificationAudioReceiver"
             android:exported="false" />

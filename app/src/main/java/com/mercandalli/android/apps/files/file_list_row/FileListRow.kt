@@ -182,6 +182,7 @@ class FileListRow @JvmOverloads constructor(
                 R.id.menu_file_row_cut -> userAction.onCutClicked()
                 R.id.menu_file_row_delete -> userAction.onDeleteClicked()
                 R.id.menu_file_row_rename -> userAction.onRenameClicked()
+                R.id.menu_file_row_details -> userAction.onDetailsClicked()
             }
             false
         }
@@ -201,6 +202,7 @@ class FileListRow @JvmOverloads constructor(
             override fun onDeleteConfirmedClicked() {}
             override fun onRenameClicked() {}
             override fun onRenameConfirmedClicked(fileName: String) {}
+            override fun onDetailsClicked() {}
             override fun onOverflowClicked() {}
             override fun onSetFileManagers(
                 fileCopyCutManager: FileCopyCutManager,
@@ -218,6 +220,7 @@ class FileListRow @JvmOverloads constructor(
         val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
         val toastManager = ApplicationGraph.getToastManager()
+        val screenManager = ApplicationGraph.getScreenManager()
         FileListRowPresenter(
             this,
             fileCopyCutManager,
@@ -225,6 +228,7 @@ class FileListRow @JvmOverloads constructor(
             fileRenameManager,
             fileSizeManager,
             audioManager,
+            screenManager,
             themeManager,
             toastManager
         )
