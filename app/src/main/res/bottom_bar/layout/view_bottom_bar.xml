@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans_regular"
-            android:text="Files"
+            android:text="@string/bottom_bar_files"
             android:textSize="@dimen/bottom_bar_text_size" />
 
     </LinearLayout>
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans_regular"
-            android:text="Notes"
+            android:text="@string/bottom_bar_notes"
             android:textSize="@dimen/bottom_bar_text_size" />
 
     </LinearLayout>
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans_regular"
-            android:text="Settings"
+            android:text="@string/bottom_bar_settings"
             android:textSize="@dimen/bottom_bar_text_size" />
 
     </LinearLayout>

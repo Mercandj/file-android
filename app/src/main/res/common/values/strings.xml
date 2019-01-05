@@ -9,11 +9,16 @@
     <string name="cut">Cut</string>
     <string name="delete">Delete</string>
     <string name="download">Download</string>
+    <string name="directory">Directory</string>
+    <string name="files">Files</string>
+    <string name="file">File</string>
     <string name="folder_empty">Empty folder</string>
     <string name="more">More</string>
+    <string name="notes">Notes</string>
     <string name="ok">OK</string>
     <string name="open">open</string>
     <string name="rename">Rename</string>
+    <string name="settings">Settings</string>
     <!-- endregion WORDS -->
 
 </resources>

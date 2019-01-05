@@ -221,6 +221,8 @@ class FileListRow @JvmOverloads constructor(
         val themeManager = ApplicationGraph.getThemeManager()
         val toastManager = ApplicationGraph.getToastManager()
         val screenManager = ApplicationGraph.getScreenManager()
+        val fileString = context.getString(R.string.file_list_row_file)
+        val directoryString = context.getString(R.string.file_list_row_directory)
         FileListRowPresenter(
             this,
             fileCopyCutManager,
@@ -230,7 +232,9 @@ class FileListRow @JvmOverloads constructor(
             audioManager,
             screenManager,
             themeManager,
-            toastManager
+            toastManager,
+            fileString,
+            directoryString
         )
     }
 

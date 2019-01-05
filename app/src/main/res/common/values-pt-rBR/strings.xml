@@ -1,16 +1,21 @@
 <resources>
     <string name="app_name">FileSpace</string>
 
-    <string name="oops_something_went_wrong">Oops, something went wrong :(</string>
+    <string name="oops_something_went_wrong">Ops, algo deu errado :(</string>
 
     <!-- region WORDS -->
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Cancelar</string>
     <string name="copy">Copiar</string>
     <string name="cut">Cortar</string>
     <string name="delete">Apagar</string>
     <string name="download">Download</string>
-    <string name="more">More</string>
+    <string name="directory">Diretório</string>
+    <string name="files">Arquivos</string>
+    <string name="file">Arquivo</string>
+    <string name="more">Mais</string>
+    <string name="notes">Notas</string>
     <string name="ok">OK</string>
+    <string name="open">open</string>
     <string name="rename">Renomear</string>
     <!-- endregion WORDS -->
 

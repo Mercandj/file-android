@@ -4,16 +4,21 @@
     <string name="oops_something_went_wrong">Oops, something went wrong :(</string>
 
     <!-- region WORDS -->
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Annuler</string>
     <string name="copy">Copier</string>
     <string name="cut">Couper</string>
     <string name="delete">Supprimer</string>
     <string name="download">Télécharger</string>
+    <string name="directory">Dossier</string>
+    <string name="files">Fichiers</string>
+    <string name="file">Fichier</string>
     <string name="folder_empty">Dossier vide</string>
-    <string name="more">More</string>
+    <string name="more">Plus</string>
+    <string name="notes">Notes</string>
     <string name="ok">OK</string>
     <string name="open">Ouvrir</string>
-    <string name="rename">Renomer</string>
+    <string name="rename">Renommer</string>
+    <string name="settings">Paramètres</string>
     <!-- endregion WORDS -->
 
 </resources>

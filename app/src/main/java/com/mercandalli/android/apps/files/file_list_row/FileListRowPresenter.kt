@@ -24,7 +24,9 @@ class FileListRowPresenter(
     private val audioManager: AudioManager,
     private val screenManager: ScreenManager,
     private val themeManager: ThemeManager,
-    private val toastManager: ToastManager
+    private val toastManager: ToastManager,
+    private val fileString: String,
+    private val directoryString: String
 ) : FileListRowContract.UserAction {
 
     private val playListener = createPlayListener()
@@ -144,16 +146,22 @@ class FileListRowPresenter(
         screen.setSubtitle(subtitle)
     }
 
-    private fun syncSubtitle(file: File, fileSizeResult: FileSizeResult) {
+    private fun syncSubtitle(
+        file: File,
+        fileSizeResult: FileSizeResult
+    ) {
         val subtitle = createSubtitle(file, fileSizeResult)
         screen.setSubtitle(subtitle)
     }
 
-    private fun createSubtitle(file: File, fileSizeResult: FileSizeResult): String {
+    private fun createSubtitle(
+        file: File,
+        fileSizeResult: FileSizeResult
+    ): String {
         val fileTypeString = if (file.directory) {
-            "Directory"
+            directoryString
         } else {
-            "File"
+            fileString
         }
         return if (fileSizeResult.status != FileSizeResult.Status.LOADED_SUCCEEDED) {
             fileTypeString
