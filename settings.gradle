@@ -1,4 +1,5 @@
 include ':app',
+        ':app-tv',
         ':file-api',
         ':file-api-android',
         ':file-api-online',

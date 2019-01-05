@@ -86,6 +86,15 @@ pushd "$PROJECT_DIR"
     gradle_task "app" "detekt"
 
     log_delimiter
+    log_d "APP TV"
+    log_delimiter
+
+    gradle_task "app-tv" "clean"
+    gradle_task "app-tv" "assembleDebug"
+    gradle_task "app-tv" "check"
+    gradle_task "app-tv" "ktlint"
+
+    log_delimiter
     log_d "FILE-API"
     log_delimiter
 

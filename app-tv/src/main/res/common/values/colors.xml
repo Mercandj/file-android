@@ -1,0 +1,13 @@
+<resources>
+    <color name="color_primary">#0091EA</color>
+    <color name="color_primary_dark">#0277BD</color>
+    <color name="color_accent">#FF4081</color>
+    <color name="color_accent_dark">#B31217</color>
+
+    <color name="background_gradient_start">#000000</color>
+    <color name="background_gradient_end">#DDDDDD</color>
+    <color name="fastlane_background">@color/color_primary</color>
+    <color name="search_opaque">@color/color_accent</color>
+    <color name="selected_background">@color/color_accent</color>
+    <color name="main_card_background">#909090</color>
+</resources>
