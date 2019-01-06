@@ -4,6 +4,7 @@
 package com.mercandalli.android.apps.files.file_list_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.toast.ToastManager
@@ -17,6 +18,7 @@ import com.mercandalli.sdk.files.api.FileSizeManager
 
 class FileListRowPresenter(
     private val screen: FileListRowContract.Screen,
+    private var fileProvider: FileProvider,
     private var fileCopyCutManager: FileCopyCutManager,
     private var fileDeleteManager: FileDeleteManager,
     private var fileRenameManager: FileRenameManager,
@@ -97,7 +99,10 @@ class FileListRowPresenter(
     }
 
     override fun onDetailsClicked() {
-        screenManager.showFileDetails(file!!.path)
+        screenManager.showFileDetails(
+            file!!.path,
+            fileProvider
+        )
     }
 
     override fun onOverflowClicked() {
@@ -105,11 +110,13 @@ class FileListRowPresenter(
     }
 
     override fun onSetFileManagers(
+        fileProvider: FileProvider,
         fileCopyCutManager: FileCopyCutManager,
         fileDeleteManager: FileDeleteManager,
         fileRenameManager: FileRenameManager,
         fileSizeManager: FileSizeManager
     ) {
+        this.fileProvider = fileProvider
         this.fileDeleteManager = fileDeleteManager
         this.fileCopyCutManager = fileCopyCutManager
         this.fileRenameManager = fileRenameManager

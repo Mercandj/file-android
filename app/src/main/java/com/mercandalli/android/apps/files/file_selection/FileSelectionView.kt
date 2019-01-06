@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Environment
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.FileCopyCutManager
@@ -19,7 +20,7 @@ class FileSelectionView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val fileColumnListView = FileListView(context)
-    private val fileManager = ApplicationGraph.getFileManager()
+    private val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
     private val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
     private val fileRenameManager = ApplicationGraph.getFileRenameManager()
     private val fileSizeManager = ApplicationGraph.getFileSizeManager()
@@ -68,7 +69,8 @@ class FileSelectionView @JvmOverloads constructor(
             }
         }
         fileColumnListView.setFileManagers(
-            fileManager,
+            FileProvider.Local,
+            fileChildrenManager,
             fileDeleteManager,
             fileCopyCutManager,
             fileOpenManager,

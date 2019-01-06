@@ -7,9 +7,11 @@ import com.mercandalli.sdk.files.api.File
 import org.json.JSONObject
 
 data class ServerResponseFiles private constructor(
-    val files: List<File>,
+    private val files: List<File>,
     private val serverResponse: ServerResponse
 ) {
+
+    fun getFiles() = ArrayList<File>(files)
 
     fun toJsonString() = toJson(this).toString()
 

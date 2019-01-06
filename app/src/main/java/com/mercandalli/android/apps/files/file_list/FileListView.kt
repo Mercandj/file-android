@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileOpenManager
@@ -135,7 +136,8 @@ class FileListView @JvmOverloads constructor(
     fun getCurrentPath() = userAction.getCurrentPath()
 
     fun setFileManagers(
-        fileManager: FileManager,
+        fileProvider: FileProvider,
+        fileChildrenManager: FileChildrenManager,
         fileDeleteManager: FileDeleteManager,
         fileCopyCutManager: FileCopyCutManager,
         fileOpenManager: FileOpenManager,
@@ -144,11 +146,12 @@ class FileListView @JvmOverloads constructor(
         rootPath: String
     ) {
         userAction.onSetFileManagers(
-            fileManager,
+            fileChildrenManager,
             fileOpenManager,
             rootPath
         )
         adapter.setFileManagers(
+            fileProvider,
             fileCopyCutManager,
             fileDeleteManager,
             fileRenameManager,
@@ -170,7 +173,7 @@ class FileListView @JvmOverloads constructor(
             override fun onFileClicked(file: File) {}
             override fun onFabUpArrowClicked() {}
             override fun onSetFileManagers(
-                fileManager: FileManager,
+                fileChildrenManager: FileChildrenManager,
                 fileOpenManager: FileOpenManager,
                 rootPath: String
             ) {
@@ -179,13 +182,13 @@ class FileListView @JvmOverloads constructor(
             override fun getCurrentPath() = "/"
         }
     } else {
-        val fileManager = ApplicationGraph.getFileManager()
+        val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
         FileListPresenter(
             this,
-            fileManager,
+            fileChildrenManager,
             fileOpenManager,
             fileSortManager,
             themeManager,

@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Environment
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.file_list.FileListView
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.FileOpenManager
@@ -19,7 +20,7 @@ class FileOnlineView @JvmOverloads constructor(
     FileOnlineContract.Screen {
 
     private val fileListView = FileListView(context)
-    private val fileOnlineManager = ApplicationGraph.getFileOnlineManager()
+    private val fileOnlineChildrenManager = ApplicationGraph.getFileOnlineChildrenManager()
     private val fileCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
     private val fileDeleteManager = ApplicationGraph.getFileOnlineDeleteManager()
     private val fileRenameManager = ApplicationGraph.getFileOnlineRenameManager()
@@ -29,7 +30,8 @@ class FileOnlineView @JvmOverloads constructor(
     init {
         val fileOpenManager = createFileOpenManager()
         fileListView.setFileManagers(
-            fileOnlineManager,
+            FileProvider.Online,
+            fileOnlineChildrenManager,
             fileDeleteManager,
             fileCopyCutManager,
             fileOpenManager,

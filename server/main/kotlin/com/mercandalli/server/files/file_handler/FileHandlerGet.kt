@@ -11,12 +11,17 @@ interface FileHandlerGet {
         headers: Headers
     ): String
 
-    fun get(
+    fun getFromId(
         headers: Headers,
         id: String
     ): String
 
-    fun getFromParent(
+    fun getFromPath(
+        headers: Headers,
+        path: String
+    ): String
+
+    fun getChildren(
         headers: Headers,
         parentPath: String
     ): String

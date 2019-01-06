@@ -15,7 +15,7 @@ interface FileRepository {
 
     fun get(path: String): File
 
-    fun getFromParent(parentPath: String): List<File>
+    fun getChildren(parentPath: String): List<File>
 
     fun put(file: File)
 

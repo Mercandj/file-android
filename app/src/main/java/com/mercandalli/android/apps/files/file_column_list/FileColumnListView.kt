@@ -17,7 +17,7 @@ import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.file_column_row.FileColumnRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 
 class FileColumnListView @JvmOverloads constructor(
     context: Context,
@@ -121,8 +121,8 @@ class FileColumnListView @JvmOverloads constructor(
         userAction.onPathSelected(path)
     }
 
-    fun setFileManager(fileManager: FileManager) {
-        userAction.onSetFileManager(fileManager)
+    fun setFileManager(fileChildrenManager: FileChildrenManager) {
+        userAction.onSetFileManager(fileChildrenManager)
     }
 
     private fun createUserAction() = if (isInEditMode) {
@@ -133,15 +133,15 @@ class FileColumnListView @JvmOverloads constructor(
             override fun onRefresh() {}
             override fun onPathChanged(path: String) {}
             override fun onPathSelected(path: String?) {}
-            override fun onSetFileManager(fileManager: FileManager) {}
+            override fun onSetFileManager(fileChildrenManager: FileChildrenManager) {}
         }
     } else {
-        val fileManager = ApplicationGraph.getFileManager()
+        val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
         FileColumnListPresenter(
             this,
-            fileManager,
+            fileChildrenManager,
             fileSortManager,
             themeManager,
             Environment.getExternalStorageDirectory().absolutePath

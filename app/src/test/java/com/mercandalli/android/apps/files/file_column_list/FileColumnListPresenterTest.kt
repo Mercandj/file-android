@@ -7,7 +7,7 @@ import com.mercandalli.android.apps.files.file.FileTest
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
-import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileSortManager
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +20,7 @@ class FileColumnListPresenterTest {
     @Mock
     private val screen: FileColumnListContract.Screen? = null
     @Mock
-    private val fileManager: FileManager? = null
+    private val fileChildrenManager: FileChildrenManager? = null
     @Mock
     private val fileSortManager: FileSortManager? = null
     @Mock
@@ -37,7 +37,7 @@ class FileColumnListPresenterTest {
         val path = "/new-path"
         val files = ArrayList<File>()
         files.add(FileTest.createFakeFile())
-        Mockito.`when`(fileManager!!.getFileChildren(path)).thenReturn(
+        Mockito.`when`(fileChildrenManager!!.getFileChildren(path)).thenReturn(
             FileChildrenResult.createLoaded(path, files))
         Mockito.`when`(fileSortManager!!.sort(files)).thenReturn(files)
         val presenter = createInstanceToTest()
@@ -54,7 +54,7 @@ class FileColumnListPresenterTest {
     ): FileColumnListPresenter {
         return FileColumnListPresenter(
             screen!!,
-            fileManager!!,
+            fileChildrenManager!!,
             fileSortManager!!,
             themeManager!!,
             currentPath

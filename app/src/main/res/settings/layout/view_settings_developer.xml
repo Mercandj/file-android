@@ -95,6 +95,7 @@
                 android:id="@+id/view_settings_developer_online_login_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/default_space_1_5"
                 android:paddingBottom="@dimen/default_space_1_5">
@@ -135,6 +136,7 @@
                 android:id="@+id/view_settings_developer_online_password_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/default_space_1_5"
                 android:paddingBottom="@dimen/default_space_1_5">

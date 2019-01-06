@@ -5,7 +5,7 @@ package com.mercandalli.android.apps.files.file_column_list
 
 import androidx.annotation.ColorRes
 import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 
 interface FileColumnListContract {
 
@@ -23,7 +23,7 @@ interface FileColumnListContract {
 
         fun onPathSelected(path: String?)
 
-        fun onSetFileManager(fileManager: FileManager)
+        fun onSetFileManager(fileChildrenManager: FileChildrenManager)
     }
 
     interface Screen {

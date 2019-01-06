@@ -4,6 +4,7 @@
 package com.mercandalli.android.apps.files.file_list_row
 
 import androidx.annotation.ColorRes
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -41,6 +42,7 @@ interface FileListRowContract {
         fun onOverflowClicked()
 
         fun onSetFileManagers(
+            fileProvider: FileProvider,
             fileCopyCutManager: FileCopyCutManager,
             fileDeleteManager: FileDeleteManager,
             fileRenameManager: FileRenameManager,

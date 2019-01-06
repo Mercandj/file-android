@@ -118,13 +118,21 @@ class ServerManagerImpl(
                 get("/file-api/file") {
                     val headers = call.request.headers
                     val queryParameters = call.request.queryParameters
+                    val path = queryParameters["path"]
                     val parentPath = queryParameters["parent_path"]
                     val response = if (parentPath == null) {
-                        fileHandlerGet.get(
-                            headers
-                        )
+                        if (path == null) {
+                            fileHandlerGet.get(
+                                headers
+                            )
+                        } else {
+                            fileHandlerGet.getFromPath(
+                                headers,
+                                path
+                            )
+                        }
                     } else {
-                        fileHandlerGet.getFromParent(
+                        fileHandlerGet.getChildren(
                             headers,
                             parentPath
                         )
@@ -222,7 +230,7 @@ class ServerManagerImpl(
                 get("/file-api/file/{id}") {
                     val headers = call.request.headers
                     val id = call.parameters["id"]
-                    val response = fileHandlerGet.get(
+                    val response = fileHandlerGet.getFromId(
                         headers,
                         id!!
                     )

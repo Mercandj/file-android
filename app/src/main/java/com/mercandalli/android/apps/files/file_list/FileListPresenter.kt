@@ -6,13 +6,13 @@ package com.mercandalli.android.apps.files.file_list
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
-import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 import com.mercandalli.sdk.files.api.FileSortManager
 
 class FileListPresenter(
     private val screen: FileListContract.Screen,
-    private var fileManager: FileManager,
+    private var fileChildrenManager: FileChildrenManager,
     private var fileOpenManager: FileOpenManager,
     private val fileSortManager: FileSortManager,
     private val themeManager: ThemeManager,
@@ -24,19 +24,19 @@ class FileListPresenter(
     private val themeListener = createThemeListener()
 
     override fun onAttached() {
-        fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
+        fileChildrenManager.registerFileChildrenResultListener(fileChildrenResultListener)
         syncFileChildren()
         themeManager.registerThemeListener(themeListener)
         syncWithCurrentTheme()
     }
 
     override fun onDetached() {
-        fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        fileChildrenManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
         themeManager.unregisterThemeListener(themeListener)
     }
 
     override fun onRefresh() {
-        val fileChildrenResult = fileManager.loadFileChildren(currentPath, true)
+        val fileChildrenResult = fileChildrenManager.loadFileChildren(currentPath, true)
         syncFileChildren(fileChildrenResult)
     }
 
@@ -62,25 +62,25 @@ class FileListPresenter(
     }
 
     override fun onSetFileManagers(
-        fileManager: FileManager,
+        fileChildrenManager: FileChildrenManager,
         fileOpenManager: FileOpenManager,
         rootPath: String
     ) {
-        this.fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
-        this.fileManager = fileManager
+        this.fileChildrenManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        this.fileChildrenManager = fileChildrenManager
         this.fileOpenManager = fileOpenManager
         this.rootPath = rootPath
         this.currentPath = rootPath
-        fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
+        fileChildrenManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 
     override fun getCurrentPath() = currentPath
 
     private fun syncFileChildren() {
-        var fileChildrenResult = fileManager.getFileChildren(currentPath)
+        var fileChildrenResult = fileChildrenManager.getFileChildren(currentPath)
         if (fileChildrenResult.status == FileChildrenResult.Status.UNLOADED ||
             fileChildrenResult.status == FileChildrenResult.Status.ERROR_NOT_FOLDER) {
-            fileChildrenResult = fileManager.loadFileChildren(currentPath)
+            fileChildrenResult = fileChildrenManager.loadFileChildren(currentPath)
         }
         syncFileChildren(fileChildrenResult)
         if (rootPath == currentPath) {
@@ -139,12 +139,12 @@ class FileListPresenter(
         }
     }
 
-    private fun createFileChildrenResultListener() = object : FileManager.FileChildrenResultListener {
+    private fun createFileChildrenResultListener() = object : FileChildrenManager.FileChildrenResultListener {
         override fun onFileChildrenResultChanged(path: String) {
             if (currentPath != path) {
                 return
             }
-            val fileChildren = fileManager.getFileChildren(currentPath)
+            val fileChildren = fileChildrenManager.getFileChildren(currentPath)
             syncFileChildren(fileChildren)
         }
     }

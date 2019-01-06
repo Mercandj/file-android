@@ -2,16 +2,16 @@ package com.mercandalli.sdk.files.api
 
 interface FileManager {
 
-    fun loadFileChildren(path: String, forceRefresh: Boolean = false): FileChildrenResult
+    fun loadFile(path: String, forceRefresh: Boolean = false): FileResult
 
-    fun getFileChildren(path: String): FileChildrenResult
+    fun getFile(path: String): FileResult
 
-    fun registerFileChildrenResultListener(listener: FileChildrenResultListener)
+    fun registerFileResultListener(listener: FileResultListener)
 
-    fun unregisterFileChildrenResultListener(listener: FileChildrenResultListener)
+    fun unregisterFileResultListener(listener: FileResultListener)
 
-    interface FileChildrenResultListener {
+    interface FileResultListener {
 
-        fun onFileChildrenResultChanged(path: String)
+        fun onFileResultChanged(path: String)
     }
 }

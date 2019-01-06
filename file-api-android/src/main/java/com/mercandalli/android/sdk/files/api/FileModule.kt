@@ -11,18 +11,19 @@ import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import android.widget.Toast
-import com.mercandalli.sdk.files.api.MediaScanner
 import com.mercandalli.sdk.files.api.FileZipManager
+import com.mercandalli.sdk.files.api.MediaScanner
 import com.mercandalli.sdk.files.api.FileManager
-import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileOpenManager
-import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
-import com.mercandalli.sdk.files.api.FileRenameManager
-import com.mercandalli.sdk.files.api.FileShareManager
-import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileSortManager
+import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSortManagerImpl
+import com.mercandalli.sdk.files.api.FileShareManager
 import java.io.File
 
 class FileModule(
@@ -61,6 +62,25 @@ class FileModule(
         })
         fileObserver.startWatching()
         return fileManager
+    }
+
+    fun createFileChildrenManager(): FileChildrenManager {
+        val fileChildrenManager = FileChildrenManagerAndroid(permissionManager)
+        val fileObserver = RecursiveFileObserver(
+            Environment.getExternalStorageDirectory().absolutePath
+        ) {
+            if (it != null && !it.endsWith("/null")) {
+                val path = File(it).parentFile.absolutePath
+                fileChildrenManager.refresh(path)
+            }
+        }
+        mediaScannerInternal.addListener(object : MediaScanner.RefreshListener {
+            override fun onContentChanged(path: String) {
+                fileChildrenManager.refresh(path)
+            }
+        })
+        fileObserver.startWatching()
+        return fileChildrenManager
     }
 
     fun createFileOpenManager(): FileOpenManager {

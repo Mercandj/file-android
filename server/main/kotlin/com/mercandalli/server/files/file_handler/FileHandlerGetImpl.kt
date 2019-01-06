@@ -41,7 +41,7 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
-    override fun get(
+    override fun getFromId(
         headers: Headers,
         id: String
     ): String {
@@ -61,7 +61,27 @@ class FileHandlerGetImpl(
         ).toJsonString()
     }
 
-    override fun getFromParent(
+    override fun getFromPath(
+        headers: Headers,
+        path: String
+    ): String {
+        logd("get(path: $path)")
+        if (!authorizationManager.isAuthorized(headers)) {
+            loge("get: Not logged")
+            return ServerResponse.create(
+                "Oops, not logged",
+                false
+            ).toJsonString()
+        }
+        val file = fileRepository.get(path)
+        return ServerResponseFile.create(
+            file,
+            "Get one file",
+            true
+        ).toJsonString()
+    }
+
+    override fun getChildren(
         headers: Headers,
         parentPath: String
     ): String {
@@ -73,7 +93,7 @@ class FileHandlerGetImpl(
                 false
             ).toJsonString()
         }
-        val files = fileRepository.getFromParent(parentPath)
+        val files = fileRepository.getChildren(parentPath)
         return ServerResponseFiles.create(
             files,
             "Get one file",

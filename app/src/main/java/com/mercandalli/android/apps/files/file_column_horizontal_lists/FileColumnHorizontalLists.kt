@@ -137,12 +137,12 @@ class FileColumnHorizontalLists @JvmOverloads constructor(
             override fun onFabClicked() {}
         }
     } else {
-        val fileManager = ApplicationGraph.getFileManager()
+        val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         FileColumnHorizontalListsPresenter(
             this,
-            fileManager,
+            fileChildrenManager,
             fileOpenManager,
             fileCopyCutManager,
             Environment.getExternalStorageDirectory().absolutePath

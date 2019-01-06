@@ -37,12 +37,14 @@ class ApplicationGraph(
     private val developerManagerInternal by lazy { developerModule.createDeveloperManager() }
     private val dialogManagerInternal by lazy { DialogModule(context).createDialogManager() }
     private val fileManagerInternal by lazy { fileModule.createFileManager() }
+    private val fileChildrenManagerInternal by lazy { fileModule.createFileChildrenManager() }
     private val fileMediaScannerInternal by lazy { fileModule.getMediaScanner() }
     private val fileOpenManagerInternal by lazy { fileModule.createFileOpenManager() }
     private val fileDeleteManagerInternal by lazy { fileModule.createFileDeleteManager() }
     private val fileCopyCutManagerInternal by lazy { fileModule.createFileCopyCutManager() }
     private val fileCreatorManagerInternal by lazy { fileModule.createFileCreatorManager() }
     private val fileOnlineManagerInternal by lazy { FileOnlineGraph.getFileOnlineManager() }
+    private val fileOnlineChildrenManagerInternal by lazy { FileOnlineGraph.getFileOnlineChildrenManager() }
     private val fileOnlineCopyCutManagerInternal by lazy { FileOnlineGraph.getFileOnlineCopyCutManager() }
     private val fileOnlineCreatorManagerInternal by lazy { FileOnlineGraph.getFileOnlineCreatorManager() }
     private val fileOnlineDeleteManagerInternal by lazy { FileOnlineGraph.getFileOnlineDeleteManager() }
@@ -82,11 +84,13 @@ class ApplicationGraph(
         fun getDeveloperManager() = graph!!.developerManagerInternal
         fun getDialogManager() = graph!!.dialogManagerInternal
         fun getFileManager() = graph!!.fileManagerInternal
+        fun getFileChildrenManager() = graph!!.fileChildrenManagerInternal
         fun getFileOpenManager() = graph!!.fileOpenManagerInternal
         fun getFileDeleteManager() = graph!!.fileDeleteManagerInternal
         fun getFileCopyCutManager() = graph!!.fileCopyCutManagerInternal
         fun getFileCreatorManager() = graph!!.fileCreatorManagerInternal
         fun getFileOnlineManager() = graph!!.fileOnlineManagerInternal
+        fun getFileOnlineChildrenManager() = graph!!.fileOnlineChildrenManagerInternal
         fun getFileOnlineCopyCutManager() = graph!!.fileOnlineCopyCutManagerInternal
         fun getFileOnlineCreatorManager() = graph!!.fileOnlineCreatorManagerInternal
         fun getFileOnlineDeleteManager() = graph!!.fileOnlineDeleteManagerInternal

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
@@ -36,12 +37,14 @@ class FileListAdapter(
     }
 
     fun setFileManagers(
+        fileProvider: FileProvider,
         fileCopyCutManager: FileCopyCutManager,
         fileDeleteManager: FileDeleteManager,
         fileRenameManager: FileRenameManager,
         fileSizeManager: FileSizeManager
     ) {
         fileAdapterDelegate.setFileManagers(
+            fileProvider,
             fileCopyCutManager,
             fileDeleteManager,
             fileRenameManager,
@@ -57,6 +60,7 @@ class FileListAdapter(
         private val fileListRows = ArrayList<FileListRow>()
         private var selectedPath: String? = null
 
+        private var fileProvider = FileProvider.Local
         private var fileCopyCutManager: FileCopyCutManager? = null
         private var fileDeleteManager: FileDeleteManager? = null
         private var fileRenameManager: FileRenameManager? = null
@@ -74,6 +78,7 @@ class FileListAdapter(
             view.setFileClickListener(fileListClickListener)
             if (fileDeleteManager != null && fileCopyCutManager != null && fileRenameManager != null) {
                 view.setFileManagers(
+                    fileProvider,
                     fileCopyCutManager!!,
                     fileDeleteManager!!,
                     fileRenameManager!!,
@@ -93,17 +98,20 @@ class FileListAdapter(
         }
 
         fun setFileManagers(
+            fileProvider: FileProvider,
             fileCopyCutManager: FileCopyCutManager,
             fileDeleteManager: FileDeleteManager,
             fileRenameManager: FileRenameManager,
             fileSizeManager: FileSizeManager
         ) {
+            this.fileProvider = fileProvider
             this.fileCopyCutManager = fileCopyCutManager
             this.fileDeleteManager = fileDeleteManager
             this.fileRenameManager = fileRenameManager
             this.fileSizeManager = fileSizeManager
             for (fileListRow in fileListRows) {
                 fileListRow.setFileManagers(
+                    fileProvider,
                     fileCopyCutManager,
                     fileDeleteManager,
                     fileRenameManager,

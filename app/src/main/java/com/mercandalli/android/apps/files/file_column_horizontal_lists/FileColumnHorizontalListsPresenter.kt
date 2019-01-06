@@ -6,12 +6,12 @@ package com.mercandalli.android.apps.files.file_column_horizontal_lists
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 
 class FileColumnHorizontalListsPresenter(
     private val screen: FileColumnHorizontalListsContract.Screen,
-    private val fileManager: FileManager,
+    private val fileChildrenManager: FileChildrenManager,
     private val fileOpenManager: FileOpenManager,
     private val fileCopyCutManager: FileCopyCutManager,
     private val rootPath: String
@@ -29,12 +29,12 @@ class FileColumnHorizontalListsPresenter(
     override fun onAttached() {
         fileCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncFab()
-        fileManager.registerFileChildrenResultListener(fileChildrenResultListener)
+        fileChildrenManager.registerFileChildrenResultListener(fileChildrenResultListener)
     }
 
     override fun onDetached() {
         fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
-        fileManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
+        fileChildrenManager.unregisterFileChildrenResultListener(fileChildrenResultListener)
     }
 
     override fun onFileClicked(index: Int, file: File) {
@@ -126,7 +126,7 @@ class FileColumnHorizontalListsPresenter(
         }
     }
 
-    private fun createFileChildrenResultListener() = object : FileManager.FileChildrenResultListener {
+    private fun createFileChildrenResultListener() = object : FileChildrenManager.FileChildrenResultListener {
         override fun onFileChildrenResultChanged(path: String) {
             if (selectedFile == null) {
                 return

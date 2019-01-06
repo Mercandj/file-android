@@ -1,8 +1,8 @@
 package com.mercandalli.android.sdk.files.api
 
 import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,77 +11,72 @@ internal class FileManagerAndroid(
     private val permissionManager: PermissionManager
 ) : FileManager {
 
-    private val fileChildrenResultMap = HashMap<String, FileChildrenResult>()
-    private val fileChildrenResultListeners = ArrayList<FileManager.FileChildrenResultListener>()
+    private val fileResultMap = HashMap<String, FileResult>()
+    private val fileResultListeners = ArrayList<FileManager.FileResultListener>()
 
-    override fun loadFileChildren(path: String, forceRefresh: Boolean): FileChildrenResult {
-        if (fileChildrenResultMap.contains(path)) {
-            val status = fileChildrenResultMap[path]!!.status
-            if (status == FileChildrenResult.Status.LOADING) {
-                return getFileChildren(path)
+    override fun loadFile(
+        path: String,
+        forceRefresh: Boolean
+    ): FileResult {
+        if (fileResultMap.contains(path)) {
+            val status = fileResultMap[path]!!.status
+            if (status == FileResult.Status.LOADING) {
+                return getFile(path)
             }
-            if (status == FileChildrenResult.Status.LOADED_SUCCEEDED && !forceRefresh) {
-                return getFileChildren(path)
+            if (status == FileResult.Status.LOADED_SUCCEEDED && !forceRefresh) {
+                return getFile(path)
             }
         }
         if (permissionManager.shouldRequestStoragePermission()) {
-            return getFileChildren(path)
+            return getFile(path)
         }
-        fileChildrenResultMap[path] = FileChildrenResult.createLoading(path)
+        fileResultMap[path] = FileResult.createLoading(path)
         GlobalScope.launch(Dispatchers.Default) {
-            val fileChildrenResult = loadFileChildrenSync(path)
+            val fileResult = FileManagerAndroid.loadFileSync(path)
             GlobalScope.launch(Dispatchers.Main) {
-                fileChildrenResultMap[path] = fileChildrenResult
-                for (listener in fileChildrenResultListeners) {
-                    listener.onFileChildrenResultChanged(path)
+                fileResultMap[path] = fileResult
+                for (listener in fileResultListeners) {
+                    listener.onFileResultChanged(path)
                 }
             }
         }
-        return getFileChildren(path)
+        return getFile(path)
     }
 
-    override fun getFileChildren(path: String): FileChildrenResult {
-        if (fileChildrenResultMap.contains(path)) {
-            return fileChildrenResultMap[path]!!
+    override fun getFile(path: String): FileResult {
+        if (fileResultMap.contains(path)) {
+            return fileResultMap[path]!!
         }
-        val fileChildrenResultUnloaded = FileChildrenResult.createUnloaded(path)
-        fileChildrenResultMap[path] = fileChildrenResultUnloaded
-        return fileChildrenResultUnloaded
+        val fileResultUnloaded = FileResult.createUnloaded(path)
+        fileResultMap[path] = fileResultUnloaded
+        return fileResultUnloaded
     }
 
-    override fun registerFileChildrenResultListener(listener: FileManager.FileChildrenResultListener) {
-        if (fileChildrenResultListeners.contains(listener)) {
+    override fun registerFileResultListener(listener: FileManager.FileResultListener) {
+        if (fileResultListeners.contains(listener)) {
             return
         }
-        fileChildrenResultListeners.add(listener)
+        fileResultListeners.add(listener)
     }
 
-    override fun unregisterFileChildrenResultListener(listener: FileManager.FileChildrenResultListener) {
-        fileChildrenResultListeners.remove(listener)
+    override fun unregisterFileResultListener(listener: FileManager.FileResultListener) {
+        fileResultListeners.remove(listener)
     }
 
     fun refresh(path: String) {
-        if (!fileChildrenResultMap.containsKey(path)) {
+        if (!fileResultMap.containsKey(path)) {
             return
         }
-        loadFileChildren(path, true)
+        loadFile(path, true)
     }
 
     companion object {
 
         @JvmStatic
-        private fun loadFileChildrenSync(path: String): FileChildrenResult {
+        private fun loadFileSync(path: String): FileResult {
             val ioFile = java.io.File(path)
-            if (!ioFile.isDirectory) {
-                return FileChildrenResult.createErrorNotFolder(path)
-            }
-            val ioFiles = ioFile.listFiles()
-            val files = ArrayList<File>()
-            for (ioFileLoop in ioFiles) {
-                val file = File.create(ioFileLoop)
-                files.add(file)
-            }
-            return FileChildrenResult.createLoaded(path, files)
+            val file = File.create(ioFile)
+            return FileResult.createLoaded(path, file)
         }
     }
 }

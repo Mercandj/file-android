@@ -70,6 +70,10 @@ Do our future selves a favour and start writing better commit messages now :)
 
 * ```./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=json``` : Check [dependencies](https://github.com/ben-manes/gradle-versions-plugin)
 
+## Previous project
+
+This project is the 2nd version of [this repository](https://github.com/Mercandj/FileSpace-Android): all the project has been re-written in kotlin with a modular architecture.
+
 ## Developer
 
 * Mercandalli Jonathan

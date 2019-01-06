@@ -8,6 +8,7 @@ import com.mercandalli.sdk.files.api.FileCreatorManager
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
@@ -31,6 +32,18 @@ class FileOnlineAndroidModule(
 
     fun createFileOnlineManager(): FileManager {
         val fileManager = FileOnlineManagerAndroid(
+            fileOnlineApi
+        )
+        onlineMediaScanner.addListener(object : MediaScanner.RefreshListener {
+            override fun onContentChanged(path: String) {
+                fileManager.refresh(path)
+            }
+        })
+        return fileManager
+    }
+
+    fun createFileOnlineChildrenManager(): FileChildrenManager {
+        val fileManager = FileOnlineChildrenManagerAndroid(
             fileOnlineApi
         )
         onlineMediaScanner.addListener(object : MediaScanner.RefreshListener {

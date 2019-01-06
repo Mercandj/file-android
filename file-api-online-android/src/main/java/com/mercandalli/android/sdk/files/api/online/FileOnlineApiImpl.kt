@@ -3,6 +3,7 @@ package com.mercandalli.android.sdk.files.api.online
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
+import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFile
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponseFiles
 import org.json.JSONObject
 import kotlin.collections.HashMap
@@ -22,7 +23,17 @@ internal class FileOnlineApiImpl(
         return ServerResponseFiles.fromJson(jsonObject)
     }
 
-    override fun getFromParent(
+    override fun get(path: String): ServerResponseFile? {
+        val headers = createHeaders()
+        val body = fileOnlineApiNetwork.getSync(
+            "$API_DOMAIN/file?path=$path",
+            headers
+        ) ?: return null
+        val jsonObject = JSONObject(body)
+        return ServerResponseFile.fromJson(jsonObject)
+    }
+
+    override fun getChildren(
         parentPath: String
     ): ServerResponseFiles? {
         val headers = createHeaders()

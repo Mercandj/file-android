@@ -32,7 +32,7 @@ class FileRepositoryImpl(
         return fileRepositoryMetadata.getFiles()[path]!!
     }
 
-    override fun getFromParent(parentPath: String): List<File> {
+    override fun getChildren(parentPath: String): List<File> {
         val files = fileRepositoryMetadata.getFiles().values
         return files.filter {
             it.parentPath == parentPath

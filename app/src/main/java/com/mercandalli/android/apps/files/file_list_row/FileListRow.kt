@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
+import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileDeleteManager
@@ -155,12 +156,14 @@ class FileListRow @JvmOverloads constructor(
     }
 
     fun setFileManagers(
+        fileProvider: FileProvider,
         fileCopyCutManager: FileCopyCutManager,
         fileDeleteManager: FileDeleteManager,
         fileRenameManager: FileRenameManager,
         fileSizeManager: FileSizeManager
     ) {
         userAction.onSetFileManagers(
+            fileProvider,
             fileCopyCutManager,
             fileDeleteManager,
             fileRenameManager,
@@ -205,6 +208,7 @@ class FileListRow @JvmOverloads constructor(
             override fun onDetailsClicked() {}
             override fun onOverflowClicked() {}
             override fun onSetFileManagers(
+                fileProvider: FileProvider,
                 fileCopyCutManager: FileCopyCutManager,
                 fileDeleteManager: FileDeleteManager,
                 fileRenameManager: FileRenameManager,
@@ -225,6 +229,7 @@ class FileListRow @JvmOverloads constructor(
         val directoryString = context.getString(R.string.file_list_row_directory)
         FileListRowPresenter(
             this,
+            FileProvider.Local,
             fileCopyCutManager,
             fileDeleteManager,
             fileRenameManager,

@@ -7,7 +7,7 @@ import com.mercandalli.sdk.files.api.File
 import org.json.JSONObject
 
 data class ServerResponseFile private constructor(
-    private val file: File,
+    val file: File,
     private val serverResponse: ServerResponse
 ) {
 
