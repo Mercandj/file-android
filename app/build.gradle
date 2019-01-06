@@ -35,7 +35,7 @@ android {
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resConfigs "ar", "es", "fr", "en", "pt-rBR", "zh-rTW"
+        resConfigs "ar", "es", "fr", "en", "pt-rBR", "ru", "zh-rTW"
 
         // https://github.com/Dimezis/BlurView
         renderscriptTargetApi rootProject.ext.targetSdkVersion

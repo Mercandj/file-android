@@ -21,7 +21,9 @@ interface SettingsDeveloperContract {
 
         fun setDeveloperActivationChecked(checked: Boolean)
 
-        fun setOnlineSubLabelText(text: String)
+        fun setOnlineLoginSubLabelText(text: String)
+
+        fun setOnlinePasswordSubLabelText(text: String)
     }
 
     interface UserAction {

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FileSpace</string>
+
+    <string name="oops_something_went_wrong">Упс! Что-то пошло не так :(</string>
+
+    <!-- region WORDS -->
+    <string name="cancel">отменить</string>
+    <string name="copy">Копировать</string>
+    <string name="cut">Вырезать</string>
+    <string name="delete">Удалить</string>
+    <string name="download">Загрузки</string>
+    <string name="directory">каталог</string>
+    <string name="files">файлы</string>
+    <string name="file">файл</string>
+    <string name="folder_empty">Empty folder</string>
+    <string name="more">More</string>
+    <string name="name">Name</string>
+    <string name="notes">Заметки</string>
+    <string name="ok">OK</string>
+    <string name="open">Open</string>
+    <string name="path">Path</string>
+    <string name="rename">Переименовать</string>
+    <string name="settings">настройки</string>
+    <string name="size">Размер</string>
+    <!-- endregion WORDS -->
+
+</resources>

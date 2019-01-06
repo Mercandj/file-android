@@ -28,4 +28,6 @@
     <string name="view_settings_developer_online_password_label">Password</string>
     <string name="view_settings_developer_online_sublabel_not_logged">Not logged</string>
     <string name="view_settings_developer_online_sublabel">Current user is %1$s</string>
+    <string name="view_settings_developer_online_passowrd_sublabel_logged">User logged</string>
+    <string name="view_settings_developer_online_passowrd_sublabel_not_logged">User not logged</string>
 </resources>

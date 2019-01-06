@@ -23,6 +23,7 @@ internal class FileOnlineRenameManagerAndroid(
             val renameSucceeded = fileOnlineApi.rename(path, fileName)
             GlobalScope.launch(Dispatchers.Main) {
                 if (!renameSucceeded) {
+                    @Suppress("LABEL_NAME_CLASH")
                     return@launch
                 }
                 mediaScanner.refresh(outputPath)

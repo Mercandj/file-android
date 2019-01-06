@@ -76,12 +76,20 @@ class SettingsDeveloperPresenter(
         screen.setDeveloperActivationChecked(isAppDeveloperModeEnabled)
 
         val login = fileOnlineLoginManager.getLogin()
-        val onlineSubLabel = if (login == null) {
+        val onlineLoginSubLabel = if (login == null) {
             addOn.getString(R.string.view_settings_developer_online_sublabel_not_logged)
         } else {
             addOn.getString(R.string.view_settings_developer_online_sublabel, login)
         }
-        screen.setOnlineSubLabelText(onlineSubLabel)
+        screen.setOnlineLoginSubLabelText(onlineLoginSubLabel)
+
+        val logged = fileOnlineLoginManager.isLogged()
+        val onlinePasswordSubLabel = if (logged) {
+            addOn.getString(R.string.view_settings_developer_online_passowrd_sublabel_logged)
+        } else {
+            addOn.getString(R.string.view_settings_developer_online_passowrd_sublabel_not_logged)
+        }
+        screen.setOnlinePasswordSubLabelText(onlinePasswordSubLabel)
 
         if (!isAppDeveloperModeEnabled) {
             return

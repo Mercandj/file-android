@@ -95,8 +95,12 @@ class SettingsDeveloperView @JvmOverloads constructor(
         developerActivation.isChecked = checked
     }
 
-    override fun setOnlineSubLabelText(text: String) {
+    override fun setOnlineLoginSubLabelText(text: String) {
         developerOnlineLoginSubLabel.text = text
+    }
+
+    override fun setOnlinePasswordSubLabelText(text: String) {
+        developerOnlinePasswordSubLabel.text = text
     }
 
     private fun createUserAction(): SettingsDeveloperContract.UserAction = if (isInEditMode) {

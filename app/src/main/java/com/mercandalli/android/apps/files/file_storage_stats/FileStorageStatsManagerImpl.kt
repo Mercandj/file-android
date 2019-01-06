@@ -19,6 +19,7 @@ class FileStorageStatsManagerImpl : FileStorageStatsManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             statFs.blockCountLong
         } else {
+            @Suppress("DEPRECATION")
             statFs.blockCount.toLong()
         }
     }
@@ -27,6 +28,7 @@ class FileStorageStatsManagerImpl : FileStorageStatsManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             statFs.blockSizeLong
         } else {
+            @Suppress("DEPRECATION")
             statFs.blockSize.toLong()
         }
     }
@@ -35,6 +37,7 @@ class FileStorageStatsManagerImpl : FileStorageStatsManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             statFs.availableBlocksLong
         } else {
+            @Suppress("DEPRECATION")
             statFs.availableBlocks.toLong()
         }
     }
