@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="file_details_name" translatable="false">@string/name</string>
+    <string name="file_details_path" translatable="false">@string/path</string>
+    <string name="file_details_size" translatable="false">@string/size</string>
+
+</resources>

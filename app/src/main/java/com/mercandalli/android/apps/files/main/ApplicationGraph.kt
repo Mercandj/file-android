@@ -9,6 +9,7 @@ import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.notification.NotificationModule
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.apps.files.developer.DeveloperModule
+import com.mercandalli.android.apps.files.file_storage_stats.FileStorageStatsModule
 import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
@@ -54,6 +55,7 @@ class ApplicationGraph(
     private val fileOnlineSizeManagerInternal by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
     private val fileOnlineUploadManagerInternal by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
+    private val fileStorageStatsManagerInternal by lazy { FileStorageStatsModule().createFileStorageStatsManager() }
     private val fileRenameManagerInternal by lazy { fileModule.createFileRenameManager() }
     private val fileSizeManagerInternal by lazy { fileModule.createFileSizeManager() }
     private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
@@ -100,6 +102,7 @@ class ApplicationGraph(
         fun getFileOnlineSizeManager() = graph!!.fileOnlineSizeManagerInternal
         fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManagerInternal
         fun getFileShareManager() = graph!!.fileShareManagerInternal
+        fun getFileStorageStatsManager() = graph!!.fileStorageStatsManagerInternal
         fun getFileRenameManager() = graph!!.fileRenameManagerInternal
         fun getFileSizeManager() = graph!!.fileSizeManagerInternal
         fun getFileSortManager() = graph!!.fileSortManagerInternal

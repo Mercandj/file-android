@@ -1,21 +1,21 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.android.apps.files.settings_theme
+package com.mercandalli.android.apps.files.settings_storage
 
 import androidx.annotation.ColorRes
 
-interface SettingsThemeContract {
+interface SettingsStorageContract {
 
     interface Screen {
-
-        fun setDarkThemeCheckBox(checked: Boolean)
-
-        fun setSectionColor(@ColorRes colorRes: Int)
 
         fun setTextPrimaryColorRes(@ColorRes colorRes: Int)
 
         fun setTextSecondaryColorRes(@ColorRes colorRes: Int)
+
+        fun setSectionColor(@ColorRes colorRes: Int)
+
+        fun setLocalSubLabelText(text: String)
     }
 
     interface UserAction {
@@ -24,6 +24,6 @@ interface SettingsThemeContract {
 
         fun onDetached()
 
-        fun onDarkThemeCheckBoxCheckedChanged(isChecked: Boolean)
+        fun onStorageLocalRowClicked()
     }
 }

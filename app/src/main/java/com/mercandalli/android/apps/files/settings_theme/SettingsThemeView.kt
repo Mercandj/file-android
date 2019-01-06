@@ -60,22 +60,21 @@ class SettingsThemeView @JvmOverloads constructor(
         themeCheckBox.isChecked = checked
     }
 
-    override fun setSectionColor(@ColorRes sectionColorRes: Int) {
-        val sectionColor = ContextCompat.getColor(context, sectionColorRes)
-        themeSection.setCardBackgroundColor(sectionColor)
+    override fun setSectionColor(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        themeSection.setCardBackgroundColor(color)
     }
 
-    override fun setTextPrimaryColorRes(@ColorRes textPrimaryColorRes: Int) {
-        val textColor = ContextCompat.getColor(context, textPrimaryColorRes)
-        themeLabel.setTextColor(textColor)
-        themeLabel.setTextColor(textColor)
-        themeCheckBox.setTextColor(textColor)
+    override fun setTextPrimaryColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        themeLabel.setTextColor(color)
+        themeCheckBox.setTextColor(color)
     }
 
-    override fun setTextSecondaryColorRes(@ColorRes textSecondaryColorRes: Int) {
-        val textColor = ContextCompat.getColor(context, textSecondaryColorRes)
-        themeSectionLabel.setTextColor(textColor)
-        themeSubLabel.setTextColor(textColor)
+    override fun setTextSecondaryColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
+        themeSectionLabel.setTextColor(color)
+        themeSubLabel.setTextColor(color)
     }
 
     private fun createUserAction(): SettingsThemeContract.UserAction = if (isInEditMode) {

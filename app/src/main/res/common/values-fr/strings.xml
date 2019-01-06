@@ -14,11 +14,14 @@
     <string name="file">Fichier</string>
     <string name="folder_empty">Dossier vide</string>
     <string name="more">Plus</string>
+    <string name="name">Nom</string>
     <string name="notes">Notes</string>
     <string name="ok">OK</string>
     <string name="open">Ouvrir</string>
+    <string name="path">Path</string>
     <string name="rename">Renommer</string>
     <string name="settings">Paramètres</string>
+    <string name="size">Taille</string>
     <!-- endregion WORDS -->
 
 </resources>

@@ -8,4 +8,6 @@ interface ScreenManager {
         path: String,
         fileProvider: FileProvider
     )
+
+    fun openSystemSettingsStorage()
 }

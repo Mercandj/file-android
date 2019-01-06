@@ -8,16 +8,19 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
+import com.mercandalli.android.apps.files.settings_storage.SettingsStorageView
 import com.mercandalli.android.apps.files.settings_theme.SettingsThemeView
 
 class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 
     init {
         delegatesManager.addDelegate(SettingsThemeAdapterDelegate() as AdapterDelegate<List<Any>>)
+        delegatesManager.addDelegate(SettingsStorageAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
         populate(listOf(
             SettingsTheme(),
+            SettingsStorage(),
             SettingsDeveloper(),
             SettingsAbout()
         ))
@@ -48,6 +51,26 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         view: View
     ) : RecyclerView.ViewHolder(view)
     //endregion SettingsTheme
+
+    //region SettingsStorage
+    class SettingsStorage
+
+    private class SettingsStorageAdapterDelegate :
+        AbsListItemAdapterDelegate<Any, Any, SettingsStorageViewHolder>() {
+
+        override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsStorage
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup): SettingsStorageViewHolder {
+            val view = SettingsStorageView(viewGroup.context)
+            view.layoutParams = createDefaultRecyclerViewLayoutParam()
+            return SettingsStorageViewHolder(view)
+        }
+
+        override fun onBindViewHolder(model: Any, titleViewHolder: SettingsStorageViewHolder, list: List<Any>) {}
+    }
+
+    private class SettingsStorageViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    //endregion SettingsStorage
 
     //region SettingsDeveloper
     class SettingsDeveloper

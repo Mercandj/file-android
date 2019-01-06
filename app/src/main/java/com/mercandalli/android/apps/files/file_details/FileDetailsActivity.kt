@@ -21,6 +21,7 @@ class FileDetailsActivity :
 
     private val path: TextView by bind(R.id.activity_file_details_path)
     private val name: TextView by bind(R.id.activity_file_details_name)
+    private val size: TextView by bind(R.id.activity_file_details_size)
     private val userAction = createUserAction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,17 +36,21 @@ class FileDetailsActivity :
             FileProvider.Local -> {
                 val fileManager = ApplicationGraph.getFileManager()
                 val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
+                val fileSizeManager = ApplicationGraph.getFileSizeManager()
                 userAction.onSetFileManagers(
                     fileManager,
-                    fileChildrenManager
+                    fileChildrenManager,
+                    fileSizeManager
                 )
             }
             FileProvider.Online -> {
                 val fileManager = ApplicationGraph.getFileOnlineManager()
                 val fileChildrenManager = ApplicationGraph.getFileOnlineChildrenManager()
+                val fileSizeManager = ApplicationGraph.getFileOnlineSizeManager()
                 userAction.onSetFileManagers(
                     fileManager,
-                    fileChildrenManager
+                    fileChildrenManager,
+                    fileSizeManager
                 )
             }
         }
@@ -65,13 +70,19 @@ class FileDetailsActivity :
         name.text = text
     }
 
+    override fun setSizeText(text: String) {
+        size.text = text
+    }
+
     private fun createUserAction(): FileDetailsContract.UserAction {
         val fileManager = ApplicationGraph.getFileManager()
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
+        val fileSizeManager = ApplicationGraph.getFileSizeManager()
         return FileDetailsPresenter(
             this,
             fileManager,
-            fileChildrenManager
+            fileChildrenManager,
+            fileSizeManager
         )
     }
 
