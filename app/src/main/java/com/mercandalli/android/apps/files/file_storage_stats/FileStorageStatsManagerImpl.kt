@@ -11,7 +11,7 @@ import kotlin.math.absoluteValue
 class FileStorageStatsManagerImpl : FileStorageStatsManager {
 
     private val statFs by lazy {
-        val rootAbsolutePath = Environment.getRootDirectory().absolutePath
+        val rootAbsolutePath = Environment.getExternalStorageDirectory().absolutePath
         StatFs(rootAbsolutePath)
     }
 

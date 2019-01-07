@@ -92,6 +92,14 @@ interface MainActivityContract {
 
         fun hideToolbarFilePaste()
 
+        fun selectBottomBarFile()
+
+        fun selectBottomBarOnline()
+
+        fun selectBottomBarNote()
+
+        fun selectBottomBarSettings()
+
         fun deleteNote()
 
         fun shareNote()

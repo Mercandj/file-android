@@ -75,6 +75,22 @@ class BottomBarPresenter(
         screen.notifyListenerSettingsClicked()
     }
 
+    override fun onSelectFile() {
+        selectFile()
+    }
+
+    override fun onSelectOnline() {
+        selectOnline()
+    }
+
+    override fun onSelectNote() {
+        selectNote()
+    }
+
+    override fun onSelectSettings() {
+        selectSettings()
+    }
+
     private fun selectFile() {
         selectedSection = SECTION_FILE
         syncSelectedSection()

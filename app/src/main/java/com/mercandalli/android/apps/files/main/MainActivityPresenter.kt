@@ -5,7 +5,7 @@ import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
-class MainActivityPresenter(
+internal class MainActivityPresenter(
     private val screen: MainActivityContract.Screen,
     private val fileCreatorManager: FileCreatorManager,
     private val fileOnlineCreatorManager: FileCreatorManager,
@@ -13,12 +13,13 @@ class MainActivityPresenter(
     private val fileOnlineCopyCutManager: FileCopyCutManager,
     private val themeManager: ThemeManager,
     private val mainActivityFileUiStorage: MainActivityFileUiStorage,
+    private val mainActivitySectionStorage: MainActivitySectionStorage,
     private val rootPathLocal: String,
     private val rootPathOnline: String
 ) : MainActivityContract.UserAction {
 
     private var currentPath: String? = null
-    private var selectedSection: Int = SECTION_UNDEFINED
+    private var selectedSection: Section = Section.UNDEFINED
     private val themeListener = createThemeListener()
     private val fileToPasteChangedListener = createFileToPasteChangedListener()
 
@@ -38,15 +39,22 @@ class MainActivityPresenter(
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            selectFile()
+            when (mainActivitySectionStorage.getSection()) {
+                MainActivitySectionStorage.Companion.Section.UNDEFINED -> selectFile()
+                MainActivitySectionStorage.Companion.Section.FILE -> selectFile()
+                MainActivitySectionStorage.Companion.Section.ONLINE -> selectFile() // Attention
+                MainActivitySectionStorage.Companion.Section.NOTE -> selectNote()
+                MainActivitySectionStorage.Companion.Section.SETTINGS -> selectSettings()
+            }
             return
         }
-        val section = savedInstanceState.getInt("section", SECTION_UNDEFINED)
+        val section = savedInstanceState.getInt("section", Section.UNDEFINED.value)
         when (section) {
-            SECTION_FILE_LIST -> selectFileList()
-            SECTION_FILE_COLUMN -> selectFileColumn()
-            SECTION_NOTE -> selectNote()
-            SECTION_SETTINGS -> selectSettings()
+            Section.FILE_LIST.value -> selectFileList()
+            Section.FILE_COLUMN.value -> selectFileColumn()
+            Section.ONLINE.value -> selectOnline()
+            Section.NOTE.value -> selectNote()
+            Section.SETTINGS.value -> selectSettings()
             else -> selectFileColumn()
         }
     }
@@ -55,7 +63,7 @@ class MainActivityPresenter(
         if (outState == null) {
             return
         }
-        outState.putInt("section", selectedSection)
+        outState.putInt("section", selectedSection.value)
     }
 
     override fun onFileSectionClicked() {
@@ -104,7 +112,7 @@ class MainActivityPresenter(
         } else {
             currentPath
         }
-        if (selectedSection == SECTION_ONLINE) {
+        if (selectedSection == Section.ONLINE) {
             fileOnlineCopyCutManager.paste(path!!)
         } else {
             fileCopyCutManager.paste(path!!)
@@ -117,7 +125,7 @@ class MainActivityPresenter(
         } else {
             currentPath
         }
-        if (selectedSection == SECTION_ONLINE) {
+        if (selectedSection == Section.ONLINE) {
             fileOnlineCreatorManager.create(parentPath!!, fileName)
         } else {
             fileCreatorManager.create(parentPath!!, fileName)
@@ -141,7 +149,7 @@ class MainActivityPresenter(
         fileCopyCutManager.cancelCopyCut()
         fileOnlineCopyCutManager.cancelCopyCut()
         mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_LIST)
-        selectedSection = SECTION_FILE_LIST
+        selectedSection = Section.FILE_LIST
         currentPath = screen.getFileListCurrentPath()
         screen.showFileListView()
         screen.hideFileColumnView()
@@ -154,14 +162,16 @@ class MainActivityPresenter(
         screen.hideToolbarUpload()
         screen.showToolbarFileColumn()
         screen.hideToolbarFileList()
+        screen.selectBottomBarFile()
         syncToolbarPasteIconVisibility()
+        mainActivitySectionStorage.putSection(MainActivitySectionStorage.Companion.Section.FILE)
     }
 
     private fun selectFileColumn() {
         fileCopyCutManager.cancelCopyCut()
         fileOnlineCopyCutManager.cancelCopyCut()
         mainActivityFileUiStorage.setCurrentFileUi(MainActivityFileUiStorage.SECTION_FILE_COLUMN)
-        selectedSection = SECTION_FILE_COLUMN
+        selectedSection = Section.FILE_COLUMN
         currentPath = screen.getFileListCurrentPath()
         screen.hideFileListView()
         screen.showFileColumnView()
@@ -174,13 +184,15 @@ class MainActivityPresenter(
         screen.hideToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.showToolbarFileList()
+        screen.selectBottomBarFile()
         syncToolbarPasteIconVisibility()
+        mainActivitySectionStorage.putSection(MainActivitySectionStorage.Companion.Section.FILE)
     }
 
     private fun selectOnline() {
         fileCopyCutManager.cancelCopyCut()
         fileOnlineCopyCutManager.cancelCopyCut()
-        selectedSection = SECTION_ONLINE
+        selectedSection = Section.ONLINE
         currentPath = screen.getFileOnlineCurrentPath()
         screen.hideFileListView()
         screen.hideFileColumnView()
@@ -193,11 +205,13 @@ class MainActivityPresenter(
         screen.showToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
+        screen.selectBottomBarOnline()
         syncToolbarPasteIconVisibility()
+        mainActivitySectionStorage.putSection(MainActivitySectionStorage.Companion.Section.ONLINE)
     }
 
     private fun selectNote() {
-        selectedSection = SECTION_NOTE
+        selectedSection = Section.NOTE
         screen.hideFileListView()
         screen.hideFileColumnView()
         screen.hideOnlineView()
@@ -209,11 +223,13 @@ class MainActivityPresenter(
         screen.hideToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
+        screen.selectBottomBarNote()
         syncToolbarPasteIconVisibility()
+        mainActivitySectionStorage.putSection(MainActivitySectionStorage.Companion.Section.NOTE)
     }
 
     private fun selectSettings() {
-        selectedSection = SECTION_SETTINGS
+        selectedSection = Section.SETTINGS
         screen.hideFileListView()
         screen.hideFileColumnView()
         screen.hideOnlineView()
@@ -225,7 +241,9 @@ class MainActivityPresenter(
         screen.hideToolbarUpload()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
+        screen.selectBottomBarSettings()
         syncToolbarPasteIconVisibility()
+        mainActivitySectionStorage.putSection(MainActivitySectionStorage.Companion.Section.SETTINGS)
     }
 
     private fun syncWithCurrentTheme() {
@@ -235,13 +253,14 @@ class MainActivityPresenter(
     }
 
     private fun syncToolbarPasteIconVisibility() {
-        if (selectedSection != SECTION_FILE_LIST &&
-            selectedSection != SECTION_FILE_COLUMN &&
-            selectedSection != SECTION_ONLINE) {
+        if (selectedSection != Section.FILE_LIST &&
+            selectedSection != Section.FILE_COLUMN &&
+            selectedSection != Section.ONLINE
+        ) {
             screen.setPasteIconVisibility(false)
             return
         }
-        val fileToPastePath = if (selectedSection != SECTION_ONLINE) {
+        val fileToPastePath = if (selectedSection != Section.ONLINE) {
             fileCopyCutManager.getFileToPastePath()
         } else {
             fileOnlineCopyCutManager.getFileToPastePath()
@@ -250,7 +269,7 @@ class MainActivityPresenter(
     }
 
     private fun getRootPath(): String {
-        if (selectedSection == SECTION_ONLINE) {
+        if (selectedSection == Section.ONLINE) {
             return rootPathOnline
         }
         return rootPathLocal
@@ -268,12 +287,12 @@ class MainActivityPresenter(
         }
     }
 
-    companion object {
-        private const val SECTION_UNDEFINED = 0
-        private const val SECTION_FILE_LIST = SECTION_UNDEFINED + 1
-        private const val SECTION_FILE_COLUMN = SECTION_FILE_LIST + 1
-        private const val SECTION_ONLINE = SECTION_FILE_COLUMN + 1
-        private const val SECTION_NOTE = SECTION_ONLINE + 1
-        private const val SECTION_SETTINGS = SECTION_NOTE + 1
+    enum class Section(val value: Int) {
+        UNDEFINED(1),
+        FILE_LIST(2),
+        FILE_COLUMN(3),
+        ONLINE(4),
+        NOTE(5),
+        SETTINGS(6)
     }
 }

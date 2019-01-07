@@ -148,6 +148,22 @@ class BottomBar @JvmOverloads constructor(
         clickListener = listener
     }
 
+    fun selectFile() {
+        userAction.onSelectFile()
+    }
+
+    fun selectOnline() {
+        userAction.onSelectOnline()
+    }
+
+    fun selectNote() {
+        userAction.onSelectNote()
+    }
+
+    fun selectSettings() {
+        userAction.onSelectSettings()
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : BottomBarContract.UserAction {
             override fun onAttached() {}
@@ -158,6 +174,10 @@ class BottomBar @JvmOverloads constructor(
             override fun onOnlineClicked() {}
             override fun onNoteClicked() {}
             override fun onSettingsClicked() {}
+            override fun onSelectFile() {}
+            override fun onSelectOnline() {}
+            override fun onSelectNote() {}
+            override fun onSelectSettings() {}
         }
     } else {
         val themeManager = ApplicationGraph.getThemeManager()

@@ -26,6 +26,14 @@ interface BottomBarContract {
         fun onNoteClicked()
 
         fun onSettingsClicked()
+
+        fun onSelectFile()
+
+        fun onSelectOnline()
+
+        fun onSelectNote()
+
+        fun onSelectSettings()
     }
 
     interface Screen {

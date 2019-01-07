@@ -2,14 +2,14 @@ package com.mercandalli.android.apps.files.main
 
 import android.content.SharedPreferences
 
-class MainActivityFileUiStorageSharedPreference(
-    private val sharedPreference: SharedPreferences
+class MainActivityFileUiStorageImpl(
+    private val sharedPreferences: SharedPreferences
 ) : MainActivityFileUiStorage {
 
     private var currentFileUi = MainActivityFileUiStorage.SECTION_FILE_LIST
 
     init {
-        currentFileUi = sharedPreference.getInt("currentFileUi", currentFileUi)
+        currentFileUi = sharedPreferences.getInt("currentFileUi", currentFileUi)
     }
 
     @MainActivityFileUiStorage.Companion.Section
@@ -22,7 +22,7 @@ class MainActivityFileUiStorageSharedPreference(
             return
         }
         currentFileUi = section
-        sharedPreference.edit().putInt("currentFileUi", section).apply()
+        sharedPreferences.edit().putInt("currentFileUi", section).apply()
     }
 
     companion object {

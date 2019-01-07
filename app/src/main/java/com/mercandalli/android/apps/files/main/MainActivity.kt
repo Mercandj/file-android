@@ -26,7 +26,7 @@ import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 
 class MainActivity : AppCompatActivity(),
-        MainActivityContract.Screen {
+    MainActivityContract.Screen {
 
     private val fileListViewSelectedFileListener = createFileListViewSelectedFileListener()
     private val fileList: FileListView by bind(R.id.activity_main_file_list)
@@ -70,10 +70,10 @@ class MainActivity : AppCompatActivity(),
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             val decorView = window.decorView
             bottomBarBlurView.setupWith(decorView.findViewById<View>(android.R.id.content) as ViewGroup)
-                    .setFrameClearDrawable(decorView.background)
-                    .setBlurAlgorithm(RenderScriptBlur(this))
-                    .setBlurRadius(2f)
-                    .setHasFixedTransformationMatrix(true)
+                .setFrameClearDrawable(decorView.background)
+                .setBlurAlgorithm(RenderScriptBlur(this))
+                .setBlurRadius(2f)
+                .setHasFixedTransformationMatrix(true)
         }
         fileList.getCurrentPath()
     }
@@ -192,6 +192,22 @@ class MainActivity : AppCompatActivity(),
         toolbarFilePaste.visibility = View.GONE
     }
 
+    override fun selectBottomBarFile() {
+        bottomBar.selectFile()
+    }
+
+    override fun selectBottomBarOnline() {
+        bottomBar.selectOnline()
+    }
+
+    override fun selectBottomBarNote() {
+        bottomBar.selectNote()
+    }
+
+    override fun selectBottomBarSettings() {
+        bottomBar.selectSettings()
+    }
+
     override fun deleteNote() {
         note.onDeleteClicked()
     }
@@ -207,18 +223,18 @@ class MainActivity : AppCompatActivity(),
         menuAlert.setItems(menuList) { _, item ->
             when (item) {
                 0 -> DialogUtils.prompt(
-                        this,
-                        getString(R.string.file_model_local_new_folder_file),
-                        getString(R.string.file_model_local_new_folder_file_description),
-                        getString(R.string.ok),
-                        object : DialogUtils.OnDialogUtilsStringListener {
-                            override fun onDialogUtilsStringCalledBack(text: String) {
-                                userAction.onFileCreationConfirmed(text)
-                            }
-                        },
-                        getString(android.R.string.cancel),
-                        null,
-                        null)
+                    this,
+                    getString(R.string.file_model_local_new_folder_file),
+                    getString(R.string.file_model_local_new_folder_file_description),
+                    getString(R.string.ok),
+                    object : DialogUtils.OnDialogUtilsStringListener {
+                        override fun onDialogUtilsStringCalledBack(text: String) {
+                            userAction.onFileCreationConfirmed(text)
+                        }
+                    },
+                    getString(android.R.string.cancel),
+                    null,
+                    null)
                 else -> throw IllegalStateException("Unsupported item: $item")
             }
         }
@@ -287,23 +303,31 @@ class MainActivity : AppCompatActivity(),
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileOnlineCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        val sharedPreferences = getSharedPreferences(
-                MainActivityFileUiStorageSharedPreference.PREFERENCE_NAME,
-                Context.MODE_PRIVATE
+        val fileUiStorageSharedPreferences = getSharedPreferences(
+            MainActivityFileUiStorageImpl.PREFERENCE_NAME,
+            Context.MODE_PRIVATE
         )
-        val mainActivityFileUiStorage = MainActivityFileUiStorageSharedPreference(
-                sharedPreferences
+        val mainActivityFileUiStorage = MainActivityFileUiStorageImpl(
+            fileUiStorageSharedPreferences
+        )
+        val sectionStorageSharedPreferences = getSharedPreferences(
+            MainActivitySectionStorageImpl.PREFERENCE_NAME,
+            Context.MODE_PRIVATE
+        )
+        val mainActivitySectionStorage = MainActivitySectionStorageImpl(
+            sectionStorageSharedPreferences
         )
         return MainActivityPresenter(
-                this,
-                fileCreatorManager,
-                fileOnlineCreatorManager,
-                fileCopyCutManager,
-                fileOnlineCopyCutManager,
-                themeManager,
-                mainActivityFileUiStorage,
-                Environment.getExternalStorageDirectory().absolutePath,
-                "/"
+            this,
+            fileCreatorManager,
+            fileOnlineCreatorManager,
+            fileCopyCutManager,
+            fileOnlineCopyCutManager,
+            themeManager,
+            mainActivityFileUiStorage,
+            mainActivitySectionStorage,
+            Environment.getExternalStorageDirectory().absolutePath,
+            "/"
         )
     }
 }

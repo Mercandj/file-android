@@ -15,34 +15,36 @@ import org.mockito.MockitoAnnotations
 class MainPresenterTest {
 
     @Mock
-    private var screen: MainActivityContract.Screen? = null
+    private lateinit var screen: MainActivityContract.Screen
     @Mock
-    private var fileCreatorManager: FileCreatorManager? = null
+    private lateinit var fileCreatorManager: FileCreatorManager
     @Mock
-    private var fileOnlineCreatorManager: FileCreatorManager? = null
+    private lateinit var fileOnlineCreatorManager: FileCreatorManager
     @Mock
-    private var fileCopyCutManager: FileCopyCutManager? = null
+    private lateinit var fileCopyCutManager: FileCopyCutManager
     @Mock
-    private var fileOnlineCopyCutManager: FileCopyCutManager? = null
+    private lateinit var fileOnlineCopyCutManager: FileCopyCutManager
     @Mock
-    private var themeManager: ThemeManager? = null
+    private lateinit var themeManager: ThemeManager
     @Mock
-    private var theme: Theme? = null
+    private lateinit var theme: Theme
     @Mock
-    private var mainActivityFileUiStorage: MainActivityFileUiStorage? = null
+    private lateinit var mainActivityFileUiStorage: MainActivityFileUiStorage
+    @Mock
+    private lateinit var mainActivitySectionStorage: MainActivitySectionStorage
     private val rootPathLocal = "/0/"
     private val rootPathOnline = "/"
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        `when`(themeManager!!.getTheme()).thenReturn(theme)
+        `when`(themeManager.getTheme()).thenReturn(theme)
     }
 
     @Test
     fun onFileSectionClickedShowsFileView() {
         // Given
-        `when`(mainActivityFileUiStorage!!.getCurrentFileUi()).thenReturn(
+        `when`(mainActivityFileUiStorage.getCurrentFileUi()).thenReturn(
             MainActivityFileUiStorage.SECTION_FILE_COLUMN)
         val presenter = createInstanceToTest()
         reset(screen)
@@ -51,7 +53,7 @@ class MainPresenterTest {
         presenter.onFileSectionClicked()
 
         // Then
-        verify(screen)!!.showFileColumnView()
+        verify(screen).showFileColumnView()
     }
 
     @Test
@@ -63,7 +65,7 @@ class MainPresenterTest {
         presenter.onNoteSectionClicked()
 
         // Then
-        verify(screen)!!.showNoteView()
+        verify(screen).showNoteView()
     }
 
     @Test
@@ -75,18 +77,19 @@ class MainPresenterTest {
         presenter.onSettingsSectionClicked()
 
         // Then
-        verify(screen)!!.showSettingsView()
+        verify(screen).showSettingsView()
     }
 
     private fun createInstanceToTest(): MainActivityPresenter {
         return MainActivityPresenter(
-            screen!!,
-            fileCreatorManager!!,
-            fileOnlineCreatorManager!!,
-            fileCopyCutManager!!,
-            fileOnlineCopyCutManager!!,
-            themeManager!!,
-            mainActivityFileUiStorage!!,
+            screen,
+            fileCreatorManager,
+            fileOnlineCreatorManager,
+            fileCopyCutManager,
+            fileOnlineCopyCutManager,
+            themeManager,
+            mainActivityFileUiStorage,
+            mainActivitySectionStorage,
             rootPathLocal,
             rootPathOnline
         )
