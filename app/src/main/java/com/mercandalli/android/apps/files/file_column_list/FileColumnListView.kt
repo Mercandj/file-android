@@ -139,12 +139,13 @@ class FileColumnListView @JvmOverloads constructor(
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
+        val currentPath = Environment.getExternalStorageDirectory().absolutePath
         FileColumnListPresenter(
             this,
             fileChildrenManager,
             fileSortManager,
             themeManager,
-            Environment.getExternalStorageDirectory().absolutePath
+            currentPath
         )
     }
 

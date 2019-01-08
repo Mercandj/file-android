@@ -7,7 +7,6 @@ import com.mercandalli.android.apps.files.dialog.DialogModule
 import com.mercandalli.android.apps.files.network.NetworkModule
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.notification.NotificationModule
-import com.mercandalli.android.apps.files.permission.PermissionActivity
 import com.mercandalli.android.apps.files.developer.DeveloperModule
 import com.mercandalli.android.apps.files.file_storage_stats.FileStorageStatsModule
 import com.mercandalli.android.apps.files.theme.ThemeModule
@@ -26,6 +25,7 @@ import java.io.File
 class ApplicationGraph(
     private val context: Context
 ) {
+
     private val fileModule by lazy { FileModule(context, createPermissionRequestAddOn()) }
     private val developerModule by lazy { DeveloperModule(context) }
     private val networkModule by lazy { NetworkModule() }
@@ -72,7 +72,7 @@ class ApplicationGraph(
 
     private fun createPermissionRequestAddOn() = object : PermissionRequestAddOn {
         override fun requestStoragePermission() {
-            PermissionActivity.start(context)
+            screenManagerInternal.startPermission()
         }
     }
 

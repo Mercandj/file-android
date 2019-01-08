@@ -41,7 +41,7 @@ class SettingsStoragePresenter(
     }
 
     override fun onStorageLocalRowClicked() {
-        screenManager.openSystemSettingsStorage()
+        screenManager.startSystemSettingsStorage()
     }
 
     private fun updateTheme(theme: Theme = themeManager.getTheme()) {

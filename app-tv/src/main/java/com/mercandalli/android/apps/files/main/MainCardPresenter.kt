@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files
+package com.mercandalli.android.apps.files.main
 
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup
@@ -7,22 +7,25 @@ import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 
 import com.bumptech.glide.Glide
+import com.mercandalli.android.apps.files.R
 import kotlin.properties.Delegates
 
 /**
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
  * It contains an ImageCardView.
  */
-class CardPresenter : Presenter() {
+class MainCardPresenter : Presenter() {
 
-    private var mDefaultCardImage: Drawable? = null
-    private var sSelectedBackgroundColor: Int by Delegates.notNull()
-    private var sDefaultBackgroundColor: Int by Delegates.notNull()
+    private var defaultDirectoryCardImage: Drawable? = null
+    private var defaultFileCardImage: Drawable? = null
+    private var selectedBackgroundColor: Int by Delegates.notNull()
+    private var defaultBackgroundColor: Int by Delegates.notNull()
 
     override fun onCreateViewHolder(parent: ViewGroup): Presenter.ViewHolder {
-        sDefaultBackgroundColor = ContextCompat.getColor(parent.context, R.color.main_card_background)
-        sSelectedBackgroundColor = ContextCompat.getColor(parent.context, R.color.selected_background)
-        mDefaultCardImage = ContextCompat.getDrawable(parent.context, R.drawable.movie)
+        defaultBackgroundColor = ContextCompat.getColor(parent.context, R.color.main_card_background)
+        selectedBackgroundColor = ContextCompat.getColor(parent.context, R.color.selected_background)
+        defaultDirectoryCardImage = ContextCompat.getDrawable(parent.context, R.drawable.card_directory)
+        defaultFileCardImage = ContextCompat.getDrawable(parent.context, R.drawable.card_file)
 
         val cardView = object : ImageCardView(parent.context) {
             override fun setSelected(selected: Boolean) {
@@ -38,16 +41,22 @@ class CardPresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any) {
-        val movie = item as FileViewModel
+        val mainFileViewModel = item as MainFileViewModel
         val cardView = viewHolder.view as ImageCardView
-        if (movie.cardImageUrl != null) {
-            cardView.titleText = movie.title
-            cardView.contentText = movie.studio
+        if (mainFileViewModel.cardImageUrl != null) {
+            cardView.titleText = mainFileViewModel.title
+            cardView.contentText = mainFileViewModel.path
             cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
+
+            val errorDrawable = if (mainFileViewModel.directory) {
+                defaultDirectoryCardImage
+            } else {
+                defaultFileCardImage
+            }
             Glide.with(viewHolder.view.context)
-                .load(movie.cardImageUrl)
+                .load(mainFileViewModel.cardImageUrl)
                 .centerCrop()
-                .error(mDefaultCardImage)
+                .error(errorDrawable)
                 .into(cardView.mainImageView)
         }
     }
@@ -60,7 +69,7 @@ class CardPresenter : Presenter() {
     }
 
     private fun updateCardBackgroundColor(view: ImageCardView, selected: Boolean) {
-        val color = if (selected) sSelectedBackgroundColor else sDefaultBackgroundColor
+        val color = if (selected) selectedBackgroundColor else defaultBackgroundColor
         // Both background colors should be set because the view's background is temporarily visible
         // during animations.
         view.setBackgroundColor(color)

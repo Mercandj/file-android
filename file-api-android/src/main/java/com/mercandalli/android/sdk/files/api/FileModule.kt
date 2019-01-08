@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.sdk.files.api
 
 import android.app.Activity
@@ -23,6 +26,7 @@ import com.mercandalli.sdk.files.api.FileSortManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSortManagerImpl
+import com.mercandalli.sdk.files.api.FileSearchManager
 import com.mercandalli.sdk.files.api.FileShareManager
 import java.io.File
 
@@ -40,6 +44,10 @@ class FileModule(
         MediaScannerAndroid(addOn)
     }
 
+    private val externalStorageDirectoryAbsolutePath by lazy {
+        Environment.getExternalStorageDirectory().absolutePath
+    }
+
     private val permissionManager: PermissionManager by lazy { PermissionManagerImpl(context, permissionRequestAddOn) }
     private val fileZipManagerInternal: FileZipManager by lazy { FileZipManagerAndroid(mediaScannerInternal) }
 
@@ -48,7 +56,7 @@ class FileModule(
     fun createFileManager(): FileManager {
         val fileManager = FileManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
-            Environment.getExternalStorageDirectory().absolutePath
+            externalStorageDirectoryAbsolutePath
         ) {
             if (it != null && !it.endsWith("/null")) {
                 val path = File(it).parentFile.absolutePath
@@ -67,7 +75,7 @@ class FileModule(
     fun createFileChildrenManager(): FileChildrenManager {
         val fileChildrenManager = FileChildrenManagerAndroid(permissionManager)
         val fileObserver = RecursiveFileObserver(
-            Environment.getExternalStorageDirectory().absolutePath
+            externalStorageDirectoryAbsolutePath
         ) {
             if (it != null && !it.endsWith("/null")) {
                 val path = File(it).parentFile.absolutePath
@@ -119,6 +127,12 @@ class FileModule(
     fun createFileRenameManager(): FileRenameManager = FileRenameManagerAndroid(
         mediaScannerInternal
     )
+
+    fun createFileSearchManager(): FileSearchManager {
+        return FileSearchManagerAndroid(
+            externalStorageDirectoryAbsolutePath
+        )
+    }
 
     fun createFileShareManager(): FileShareManager {
         val addOn = object : FileShareManagerAndroid.AddOn {

@@ -99,7 +99,7 @@ class FileListRowPresenter(
     }
 
     override fun onDetailsClicked() {
-        screenManager.showFileDetails(
+        screenManager.startFileDetails(
             file!!.path,
             fileProvider
         )

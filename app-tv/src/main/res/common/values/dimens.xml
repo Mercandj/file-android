@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="bottom_bar_height">56dp</dimen>
+    <dimen name="bottom_bar_height_plus_6">62dp</dimen>
+    <dimen name="bottom_bar_height_plus_16">72dp</dimen>
+    <dimen name="bottom_bar_height_plus_24">80dp</dimen>
+    <dimen name="bottom_bar_height_plus_fab">120dp</dimen>
+
+    <!-- Default values -->
+    <dimen name="default_space_quart">2dp</dimen>
+    <dimen name="default_space_half">4dp</dimen>
+    <dimen name="default_space">8dp</dimen>
+    <dimen name="default_space_1_5">16dp</dimen>
+    <dimen name="default_space_2">24dp</dimen>
+    <dimen name="default_space_3">32dp</dimen>
+    <dimen name="default_space_4">40dp</dimen>
+    <dimen name="default_space_5">48dp</dimen>
+    <dimen name="default_radius">2dp</dimen>
+    <dimen name="default_radius_2">4dp</dimen>
+    <dimen name="default_card_radius">12dp</dimen>
+
+    <dimen name="text_size_s">11sp</dimen>
+    <dimen name="text_size_m">12sp</dimen>
+    <dimen name="text_size_l">14sp</dimen>
+    <dimen name="text_size_l_5">16sp</dimen>
+    <dimen name="text_size_xl">18sp</dimen>
+    <dimen name="text_size_xxl">22sp</dimen>
+    <dimen name="text_size_xxxl">26sp</dimen>
+</resources>

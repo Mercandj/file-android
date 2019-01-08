@@ -6,12 +6,13 @@ import android.content.Intent
 import android.provider.Settings
 import com.mercandalli.android.apps.files.file.FileProvider
 import com.mercandalli.android.apps.files.file_details.FileDetailsActivity
+import com.mercandalli.android.apps.files.permission.PermissionActivity
 
 class ScreenManagerImpl(
     private val context: Context
 ) : ScreenManager {
 
-    override fun showFileDetails(
+    override fun startFileDetails(
         path: String,
         fileProvider: FileProvider
     ) {
@@ -22,7 +23,11 @@ class ScreenManagerImpl(
         )
     }
 
-    override fun openSystemSettingsStorage() {
+    override fun startPermission() {
+        PermissionActivity.start(context)
+    }
+
+    override fun startSystemSettingsStorage() {
         val intent = Intent(Settings.ACTION_MEMORY_CARD_SETTINGS)
         if (context !is Activity) {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP

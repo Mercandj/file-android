@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FileSpace</string>
+
+    <string name="browse_title"><![CDATA[FileSpace]]></string>
+    <string name="personal_settings">Personal Settings</string>
+
+    <!-- Error messages -->
+    <string name="error_fragment_message">An error occurred</string>
+    <string name="dismiss_error">Dismiss</string>
+
+</resources>

@@ -37,7 +37,7 @@ class SettingsStoragePresenterTest {
         presenter.onStorageLocalRowClicked()
 
         // Then
-        Mockito.verify(screenManager).openSystemSettingsStorage()
+        Mockito.verify(screenManager).startSystemSettingsStorage()
     }
 
     private fun createInstanceToTest(): SettingsStorageContract.UserAction {

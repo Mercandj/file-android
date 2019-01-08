@@ -4,10 +4,12 @@ import com.mercandalli.android.apps.files.file.FileProvider
 
 interface ScreenManager {
 
-    fun showFileDetails(
+    fun startFileDetails(
         path: String,
         fileProvider: FileProvider
     )
 
-    fun openSystemSettingsStorage()
+    fun startPermission()
+
+    fun startSystemSettingsStorage()
 }
