@@ -1,18 +1,21 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.sdk.files.api
 
+import com.mercandalli.sdk.files.api.FileSearchLocal.searchSync
 import org.junit.Assert
 import org.junit.Test
 
-class FileSearchManagerAndroidTest {
+class FileSearchLocalTest {
 
     @Test
-    fun searchSync() {
-        // When
+    fun searchSyncFindFile() {
+        // Given
         val classLoader = javaClass.classLoader
         val resource = classLoader!!.getResource("file.html")
         val resourcePath = resource.path
         val rootPath = java.io.File(resourcePath).parentFile.absolutePath
-        val paths = FileSearchManagerAndroid.searchSync("toto", rootPath)
+
+        // When
+        val paths = searchSync("toto", rootPath)
 
         // Then
         for (path in paths) {

@@ -121,7 +121,7 @@ class MainFragment : BrowseFragment(),
 
     private fun setupEventListeners() {
         setOnSearchClickedListener {
-            SelectionDialogActivity.start(context)
+            SelectionDialogActivity.start(activity)
         }
 
         onItemViewClickedListener = OnItemViewClickedListener { _,
