@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.search
 
+import com.mercandalli.android.apps.files.main.MainFileRowViewModel
+
 interface SearchFragmentContract {
 
     interface UserAction {
@@ -9,5 +11,8 @@ interface SearchFragmentContract {
         fun onQueryTextSubmit(query: String)
     }
 
-    interface Screen
+    interface Screen {
+
+        fun show(mainFileRowViewModels: List<MainFileRowViewModel>)
+    }
 }
