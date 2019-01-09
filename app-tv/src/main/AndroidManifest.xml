@@ -49,6 +49,10 @@
             android:name=".selection_dialog.SelectionDialogActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".search.SearchActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

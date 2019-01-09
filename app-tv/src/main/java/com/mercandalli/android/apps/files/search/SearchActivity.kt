@@ -1,21 +1,20 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.android.apps.files.selection_dialog
+package com.mercandalli.android.apps.files.search
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.mercandalli.android.apps.files.R
-import com.mercandalli.android.apps.files.search.SearchActivity
 
-class SelectionDialogActivity :
+class SearchActivity :
     Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_selection_dialog)
+        setContentView(R.layout.activity_search)
     }
 
     companion object {

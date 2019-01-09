@@ -29,7 +29,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
-import com.mercandalli.android.apps.files.selection_dialog.SelectionDialogActivity
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
 
@@ -121,7 +120,7 @@ class MainFragment : BrowseFragment(),
 
     private fun setupEventListeners() {
         setOnSearchClickedListener {
-            SelectionDialogActivity.start(activity)
+            ApplicationGraph.getScreenManager().startSearch()
         }
 
         onItemViewClickedListener = OnItemViewClickedListener { _,

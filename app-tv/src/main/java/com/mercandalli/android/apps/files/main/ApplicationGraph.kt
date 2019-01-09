@@ -16,6 +16,7 @@ class ApplicationGraph(
 
     private val fileChildrenManagerInternal by lazy { fileModule.createFileChildrenManager() }
     private val fileOpenManagerInternal by lazy { fileModule.createFileOpenManager() }
+    private val fileSearchManagerInternal by lazy { fileModule.createFileSearchManager() }
     private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
     private val screenManagerInternal by lazy { screenModule.createScreenManager() }
     private val toastManagerInternal by lazy { ToastModule(context).createToastManager() }
@@ -42,6 +43,7 @@ class ApplicationGraph(
 
         fun getFileChildrenManager() = graph!!.fileChildrenManagerInternal
         fun getFileOpenManager() = graph!!.fileOpenManagerInternal
+        fun getFileSearchManager() = graph!!.fileSearchManagerInternal
         fun getFileSortManager() = graph!!.fileSortManagerInternal
         fun getScreenManager() = graph!!.screenManagerInternal
         fun getToastManager() = graph!!.toastManagerInternal

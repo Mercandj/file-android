@@ -28,7 +28,8 @@ android {
             res.srcDirs = [
                     'src/main/res/common',
                     'src/main/res/file_card',
-                    'src/main/res/permission'
+                    'src/main/res/permission',
+                    'src/main/res/search'
             ]
         }
 
