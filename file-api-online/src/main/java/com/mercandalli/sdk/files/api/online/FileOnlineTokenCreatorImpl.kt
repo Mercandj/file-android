@@ -1,12 +1,13 @@
 package com.mercandalli.sdk.files.api.online
 
 import com.mercandalli.sdk.files.api.online.utils.HashUtils
+import com.mercandalli.sdk.files.api.online.utils.encodeBase64ToString
 import java.text.SimpleDateFormat
 import java.util.TimeZone
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.ArrayList
+import java.io.ByteArrayOutputStream
 
 class FileOnlineTokenCreatorImpl(
     val addOn: AddOn
@@ -41,7 +42,7 @@ class FileOnlineTokenCreatorImpl(
         val passwordHash = HashUtils.sha1(passwordSha1)
         val passwordHashWithDate = HashUtils.sha1(passwordHash + currentDate)
         val authenticationClear = String.format("%s:%s", login.toLowerCase(), passwordHashWithDate)
-        return com.mercandalli.sdk.files.api.online.utils.Base64.encodeBytes(authenticationClear.toByteArray())
+        return authenticationClear.encodeBase64ToString()
     }
 
     interface AddOn {
