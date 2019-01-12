@@ -4,11 +4,13 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
 import com.mercandalli.android.apps.files.developer.DeveloperManager
+import com.mercandalli.android.apps.files.theme.LightTheme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.never
 import org.mockito.MockitoAnnotations
@@ -34,6 +36,7 @@ class BottomBarPresenterTest {
     @Test
     fun createPresenterDoesNotNotifyListener() {
         // When
+        Mockito.`when`(themeManager.getTheme()).thenReturn(LightTheme())
         createInstanceToTest()
 
         // Then
@@ -43,6 +46,7 @@ class BottomBarPresenterTest {
     @Test
     fun onFileClickedNotifyListener() {
         // Given
+        Mockito.`when`(themeManager.getTheme()).thenReturn(LightTheme())
         val presenter = createInstanceToTest()
 
         // When
@@ -55,6 +59,7 @@ class BottomBarPresenterTest {
     @Test
     fun onNoteClickedNotifyListener() {
         // Given
+        Mockito.`when`(themeManager.getTheme()).thenReturn(LightTheme())
         val presenter = createInstanceToTest()
 
         // When
@@ -67,6 +72,7 @@ class BottomBarPresenterTest {
     @Test
     fun onSettingsClickedNotifyListener() {
         // Given
+        Mockito.`when`(themeManager.getTheme()).thenReturn(LightTheme())
         val presenter = createInstanceToTest()
 
         // When
