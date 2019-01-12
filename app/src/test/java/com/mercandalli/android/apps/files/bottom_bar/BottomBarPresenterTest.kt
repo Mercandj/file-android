@@ -23,8 +23,8 @@ class BottomBarPresenterTest {
     private lateinit var developerManager: DeveloperManager
     @Mock
     private lateinit var fileOnlineLoginManager: FileOnlineLoginManager
-    private val selectedColor: Int = 42
-    private val notSelectedColor: Int = 43
+    private val selectedColorRes: Int = 42
+    private val notSelectedColorRes: Int = 43
 
     @Before
     fun setup() {
@@ -82,8 +82,8 @@ class BottomBarPresenterTest {
             themeManager,
             developerManager,
             fileOnlineLoginManager,
-            selectedColor,
-            notSelectedColor
+            selectedColorRes,
+            notSelectedColorRes
         )
     }
 }

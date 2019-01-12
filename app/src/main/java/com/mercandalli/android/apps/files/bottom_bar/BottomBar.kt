@@ -108,19 +108,23 @@ class BottomBar @JvmOverloads constructor(
         sectionOnline.visibility = GONE
     }
 
-    override fun setFileIconColor(@ColorInt color: Int) {
+    override fun setFileIconColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
         sectionFileIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun setOnlineIconColor(@ColorInt color: Int) {
+    override fun setOnlineIconColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
         sectionOnlineIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun setNoteIconColor(@ColorInt color: Int) {
+    override fun setNoteIconColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
         sectionNoteIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
-    override fun setSettingsIconColor(@ColorInt color: Int) {
+    override fun setSettingsIconColorRes(@ColorRes colorRes: Int) {
+        val color = ContextCompat.getColor(context, colorRes)
         sectionSettingsIcon.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
@@ -183,15 +187,15 @@ class BottomBar @JvmOverloads constructor(
         val themeManager = ApplicationGraph.getThemeManager()
         val developerManager = ApplicationGraph.getDeveloperManager()
         val fileOnlineLoginManager = ApplicationGraph.getFileOnlineLoginManager()
-        val selectedColor = ContextCompat.getColor(context, R.color.bottom_bar_selected)
-        val notSelectedColor = ContextCompat.getColor(context, R.color.bottom_bar_not_selected)
+        val selectedColorRes = R.color.bottom_bar_selected
+        val notSelectedColorRes = R.color.bottom_bar_not_selected
         BottomBarPresenter(
             this,
             themeManager,
             developerManager,
             fileOnlineLoginManager,
-            selectedColor,
-            notSelectedColor
+            selectedColorRes,
+            notSelectedColorRes
         )
     }
 

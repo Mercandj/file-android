@@ -50,13 +50,13 @@ interface BottomBarContract {
 
         fun hideOnlineSection()
 
-        fun setFileIconColor(@ColorInt color: Int)
+        fun setFileIconColorRes(@ColorRes colorRes: Int)
 
-        fun setOnlineIconColor(@ColorInt color: Int)
+        fun setOnlineIconColorRes(@ColorRes colorRes: Int)
 
-        fun setNoteIconColor(@ColorInt color: Int)
+        fun setNoteIconColorRes(@ColorRes colorRes: Int)
 
-        fun setSettingsIconColor(@ColorInt color: Int)
+        fun setSettingsIconColorRes(@ColorRes colorRes: Int)
 
         fun setSectionFileTextColorRes(@ColorRes colorRes: Int)
 

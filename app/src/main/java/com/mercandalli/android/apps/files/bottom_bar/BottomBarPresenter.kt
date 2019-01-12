@@ -4,21 +4,22 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
 import android.os.Bundle
-import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginManager
+import java.lang.IllegalStateException
 
 class BottomBarPresenter(
     private val screen: BottomBarContract.Screen,
     private val themeManager: ThemeManager,
     private val developerManager: DeveloperManager,
     private val fileOnlineLoginManager: FileOnlineLoginManager,
-    @ColorInt private val selectedColor: Int,
-    @ColorInt private val notSelectedColor: Int
+    @ColorRes private val selectedColorRes: Int,
+    @ColorRes private val notSelectedColorRes: Int
 ) : BottomBarContract.UserAction {
 
-    private var selectedSection: Int = SECTION_UNDEFINED
+    private var selectedSection = Section.UNDEFINED
     private val themeListener = createThemeListener()
     private val developerModeListener = createDeveloperModeListener()
     private val fileOnlineLoginListener = createFileOnlineLoginListener()
@@ -42,15 +43,16 @@ class BottomBarPresenter(
     }
 
     override fun onSaveInstanceState(saveState: Bundle) {
-        saveState.putInt("BUNDLE_KEY_SECTION", selectedSection)
+        saveState.putInt("BUNDLE_KEY_SECTION", selectedSection.sectionId)
     }
 
     override fun onRestoreInstanceState(state: Bundle) {
-        val section = state.getInt("BUNDLE_KEY_SECTION")
+        val sectionId = state.getInt("BUNDLE_KEY_SECTION")
+        val section = getSection(sectionId)
         when (section) {
-            SECTION_FILE -> selectFile()
-            SECTION_NOTE -> selectNote()
-            SECTION_SETTINGS -> selectSettings()
+            Section.FILE -> selectFile()
+            Section.NOTE -> selectNote()
+            Section.SETTINGS -> selectSettings()
             else -> selectFile()
         }
     }
@@ -92,59 +94,90 @@ class BottomBarPresenter(
     }
 
     private fun selectFile() {
-        selectedSection = SECTION_FILE
-        syncSelectedSection()
+        selectedSection = Section.FILE
+        syncTexts()
+        syncIconsWithSelectedSection()
     }
 
     private fun selectOnline() {
-        selectedSection = SECTION_ONLINE
-        syncSelectedSection()
+        selectedSection = Section.ONLINE
+        syncTexts()
+        syncIconsWithSelectedSection()
     }
 
     private fun selectNote() {
-        selectedSection = SECTION_NOTE
-        syncSelectedSection()
+        selectedSection = Section.NOTE
+        syncTexts()
+        syncIconsWithSelectedSection()
     }
 
     private fun selectSettings() {
-        selectedSection = SECTION_SETTINGS
-        syncSelectedSection()
+        selectedSection = Section.SETTINGS
+        syncTexts()
+        syncIconsWithSelectedSection()
     }
 
     private fun syncWithCurrentTheme() {
-        val theme = themeManager.getTheme()
-        screen.setSectionFileTextColorRes(theme.textPrimaryColorRes)
-        screen.setSectionOnlineTextColorRes(theme.textPrimaryColorRes)
-        screen.setSectionNoteTextColorRes(theme.textPrimaryColorRes)
-        screen.setSectionSettingsTextColorRes(theme.textPrimaryColorRes)
+        syncTexts()
     }
 
-    private fun syncSelectedSection() {
+    private fun syncTexts() {
+        val theme = themeManager.getTheme()
         when (selectedSection) {
-            SECTION_FILE -> {
-                screen.setFileIconColor(selectedColor)
-                screen.setOnlineIconColor(notSelectedColor)
-                screen.setNoteIconColor(notSelectedColor)
-                screen.setSettingsIconColor(notSelectedColor)
+            Section.UNDEFINED -> throw IllegalStateException("Section should be affected")
+            Section.FILE -> {
+                screen.setSectionFileTextColorRes(selectedColorRes)
+                screen.setSectionOnlineTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionNoteTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionSettingsTextColorRes(theme.textPrimaryColorRes)
             }
-            SECTION_ONLINE -> {
-                screen.setFileIconColor(notSelectedColor)
-                screen.setOnlineIconColor(selectedColor)
-                screen.setNoteIconColor(notSelectedColor)
-                screen.setSettingsIconColor(notSelectedColor)
+            Section.ONLINE -> {
+                screen.setSectionFileTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionOnlineTextColorRes(selectedColorRes)
+                screen.setSectionNoteTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionSettingsTextColorRes(theme.textPrimaryColorRes)
             }
-            SECTION_NOTE -> {
-                screen.setFileIconColor(notSelectedColor)
-                screen.setOnlineIconColor(notSelectedColor)
-                screen.setNoteIconColor(selectedColor)
-                screen.setSettingsIconColor(notSelectedColor)
+            Section.NOTE -> {
+                screen.setSectionFileTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionOnlineTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionNoteTextColorRes(selectedColorRes)
+                screen.setSectionSettingsTextColorRes(theme.textPrimaryColorRes)
             }
-            SECTION_SETTINGS -> {
-                selectedSection = SECTION_SETTINGS
-                screen.setFileIconColor(notSelectedColor)
-                screen.setOnlineIconColor(notSelectedColor)
-                screen.setNoteIconColor(notSelectedColor)
-                screen.setSettingsIconColor(selectedColor)
+            Section.SETTINGS -> {
+                screen.setSectionFileTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionOnlineTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionNoteTextColorRes(theme.textPrimaryColorRes)
+                screen.setSectionSettingsTextColorRes(selectedColorRes)
+            }
+        }
+    }
+
+    private fun syncIconsWithSelectedSection() {
+        when (selectedSection) {
+            Section.UNDEFINED -> throw IllegalStateException("Section should be affected")
+            Section.FILE -> {
+                screen.setFileIconColorRes(selectedColorRes)
+                screen.setOnlineIconColorRes(notSelectedColorRes)
+                screen.setNoteIconColorRes(notSelectedColorRes)
+                screen.setSettingsIconColorRes(notSelectedColorRes)
+            }
+            Section.ONLINE -> {
+                screen.setFileIconColorRes(notSelectedColorRes)
+                screen.setOnlineIconColorRes(selectedColorRes)
+                screen.setNoteIconColorRes(notSelectedColorRes)
+                screen.setSettingsIconColorRes(notSelectedColorRes)
+            }
+            Section.NOTE -> {
+                screen.setFileIconColorRes(notSelectedColorRes)
+                screen.setOnlineIconColorRes(notSelectedColorRes)
+                screen.setNoteIconColorRes(selectedColorRes)
+                screen.setSettingsIconColorRes(notSelectedColorRes)
+            }
+            Section.SETTINGS -> {
+                screen.setFileIconColorRes(notSelectedColorRes)
+                screen.setOnlineIconColorRes(notSelectedColorRes)
+                screen.setNoteIconColorRes(notSelectedColorRes)
+                screen.setSettingsIconColorRes(selectedColorRes)
             }
         }
     }
@@ -178,11 +211,23 @@ class BottomBarPresenter(
         }
     }
 
+    private enum class Section(val sectionId: Int) {
+        UNDEFINED(0),
+        FILE(1),
+        ONLINE(2),
+        NOTE(3),
+        SETTINGS(4)
+    }
+
     companion object {
-        private const val SECTION_UNDEFINED = 0
-        private const val SECTION_FILE = 1
-        private const val SECTION_ONLINE = 2
-        private const val SECTION_NOTE = 3
-        private const val SECTION_SETTINGS = 4
+
+        private fun getSection(sectionId: Int) = when (sectionId) {
+            0 -> Section.UNDEFINED
+            1 -> Section.FILE
+            2 -> Section.ONLINE
+            3 -> Section.NOTE
+            4 -> Section.SETTINGS
+            else -> throw IllegalStateException("Wrong sectionId: $sectionId")
+        }
     }
 }
