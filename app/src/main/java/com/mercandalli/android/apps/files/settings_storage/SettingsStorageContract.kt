@@ -16,6 +16,12 @@ interface SettingsStorageContract {
         fun setSectionColor(@ColorRes colorRes: Int)
 
         fun setLocalSubLabelText(text: String)
+
+        fun setLocalBusy(text: String)
+
+        fun setLocalTotal(text: String)
+
+        fun setProgress(percent: Float)
     }
 
     interface UserAction {

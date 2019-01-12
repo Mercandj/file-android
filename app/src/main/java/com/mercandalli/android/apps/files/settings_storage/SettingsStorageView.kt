@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -26,6 +27,9 @@ class SettingsStorageView @JvmOverloads constructor(
     private val storageLocalRow: View = view.findViewById(R.id.view_settings_storage_local_row)
     private val localLabel: TextView = view.findViewById(R.id.view_settings_storage_local_label)
     private val localSubLabel: TextView = view.findViewById(R.id.view_settings_storage_local_sublabel)
+    private val busy: TextView = view.findViewById(R.id.view_settings_storage_local_busy)
+    private val total: TextView = view.findViewById(R.id.view_settings_storage_local_total)
+    private val progress: ProgressBar = view.findViewById(R.id.view_settings_storage_local_progress)
 
     private val userAction = createUserAction()
 
@@ -53,6 +57,8 @@ class SettingsStorageView @JvmOverloads constructor(
     override fun setTextSecondaryColorRes(colorRes: Int) {
         val color = ContextCompat.getColor(context, colorRes)
         localSubLabel.setTextColor(color)
+        busy.setTextColor(color)
+        total.setTextColor(color)
     }
 
     override fun setSectionColor(colorRes: Int) {
@@ -62,6 +68,19 @@ class SettingsStorageView @JvmOverloads constructor(
 
     override fun setLocalSubLabelText(text: String) {
         localSubLabel.text = text
+    }
+
+    override fun setProgress(percent: Float) {
+        progress.max = 1_000
+        progress.progress = (percent * 1_000).toInt()
+    }
+
+    override fun setLocalBusy(text: String) {
+        busy.text = text
+    }
+
+    override fun setLocalTotal(text: String) {
+        total.text = text
     }
 
     private fun createUserAction(): SettingsStorageContract.UserAction = if (isInEditMode) {

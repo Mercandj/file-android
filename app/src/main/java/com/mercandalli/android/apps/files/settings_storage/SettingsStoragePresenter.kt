@@ -21,19 +21,7 @@ class SettingsStoragePresenter(
     override fun onAttached() {
         themeManager.registerThemeListener(themeListener)
         updateTheme()
-        val freeMemory = fileStorageStatsManager.getFreeMemory()
-        val busyMemory = fileStorageStatsManager.getBusyMemory()
-        val totalMemory = fileStorageStatsManager.getTotalMemory()
-        val busyPercent = ((busyMemory.toFloat() * 100f) / totalMemory).toInt()
-        val freeMemoryString = FileSizeUtils.humanReadableByteCount(freeMemory)
-        val busyMemoryString = FileSizeUtils.humanReadableByteCount(busyMemory)
-        val totalMemoryString = FileSizeUtils.humanReadableByteCount(totalMemory)
-        screen.setLocalSubLabelText(
-            "$busyPercent% used\n\n" +
-                "Free: $freeMemoryString\n" +
-                "Busy: $busyMemoryString\n" +
-                "Total: $totalMemoryString"
-        )
+        updateStorage()
     }
 
     override fun onDetached() {
@@ -42,6 +30,20 @@ class SettingsStoragePresenter(
 
     override fun onStorageLocalRowClicked() {
         screenManager.startSystemSettingsStorage()
+    }
+
+    private fun updateStorage() {
+        val freeMemory = fileStorageStatsManager.getFreeMemory()
+        val busyMemory = fileStorageStatsManager.getBusyMemory()
+        val totalMemory = fileStorageStatsManager.getTotalMemory()
+        val busyPercent = ((busyMemory.toFloat() * 100f) / totalMemory).toInt()
+        val freeMemoryString = FileSizeUtils.humanReadableByteCount(freeMemory)
+        val busyMemoryString = FileSizeUtils.humanReadableByteCount(busyMemory)
+        val totalMemoryString = FileSizeUtils.humanReadableByteCount(totalMemory)
+        screen.setLocalSubLabelText("$busyPercent% used - $freeMemoryString free")
+        screen.setLocalBusy("$busyMemoryString busy")
+        screen.setLocalTotal("$totalMemoryString total")
+        screen.setProgress(busyMemory.toFloat() / totalMemory.toFloat())
     }
 
     private fun updateTheme(theme: Theme = themeManager.getTheme()) {

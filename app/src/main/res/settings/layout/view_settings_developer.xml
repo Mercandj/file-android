@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="26dp"
         android:fontFamily="@font/google_sans_regular"
         android:text="@string/view_settings_developer_label"
         android:textColor="@color/text_secondary_color_light"

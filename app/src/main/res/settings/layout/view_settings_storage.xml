@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="26dp"
         android:fontFamily="@font/google_sans_regular"
         android:text="@string/view_settings_storage_label"
         android:textColor="@color/text_secondary_color_light"
@@ -62,6 +63,49 @@
                     android:paddingEnd="@dimen/default_space_2"
                     android:textColor="@color/text_secondary_color_light"
                     tools:text="71% used - 18.70 GB free" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_space_1_5">
+
+                    <TextView
+                        android:id="@+id/view_settings_storage_local_busy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:paddingStart="@dimen/default_space_2"
+                        android:paddingEnd="@dimen/default_space_2"
+                        android:textColor="@color/text_secondary_color_light"
+                        android:textSize="@dimen/text_size_m"
+                        tools:text="18.70 GB busy" />
+
+                    <TextView
+                        android:id="@+id/view_settings_storage_local_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:paddingStart="@dimen/default_space_2"
+                        android:paddingEnd="@dimen/default_space_2"
+                        android:textColor="@color/text_secondary_color_light"
+                        android:textSize="@dimen/text_size_m"
+                        tools:text="18.70 GB total" />
+
+                </FrameLayout>
+
+                <ProgressBar
+                    android:id="@+id/view_settings_storage_local_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_space_2"
+                    android:layout_marginEnd="@dimen/default_space_2"
+                    android:max="1000"
+                    android:progress="450" />
 
             </LinearLayout>
 
