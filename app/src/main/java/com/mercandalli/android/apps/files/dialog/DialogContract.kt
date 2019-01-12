@@ -21,6 +21,8 @@ interface DialogContract {
 
         fun setNegative(text: String)
 
+        fun setInput(text: String)
+
         fun showInput()
 
         fun hideInput()

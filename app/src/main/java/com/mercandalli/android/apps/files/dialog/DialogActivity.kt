@@ -57,6 +57,11 @@ class DialogActivity : AppCompatActivity(),
         negative.text = text
     }
 
+    override fun setInput(text: String) {
+        input.setText(text)
+        input.setSelection(text.length)
+    }
+
     override fun showInput() {
         input.visibility = View.VISIBLE
     }
@@ -91,6 +96,7 @@ class DialogActivity : AppCompatActivity(),
         val message: String,
         val positive: String,
         val negative: String,
+        val input: String?,
         @DialogType
         val type: String
     ) {
@@ -113,6 +119,7 @@ class DialogActivity : AppCompatActivity(),
                 json.put("message", dialogInput.message)
                 json.put("positive", dialogInput.positive)
                 json.put("negative", dialogInput.negative)
+                json.put("input", dialogInput.input)
                 json.put("type", dialogInput.type)
                 return json.toString()
             }
@@ -124,6 +131,7 @@ class DialogActivity : AppCompatActivity(),
                 val message = json.getString("message")
                 val positive = json.getString("positive")
                 val negative = json.getString("negative")
+                val input = json.getString("input")
                 val type = json.getString("type")
                 return DialogInput(
                     dialogId,
@@ -131,6 +139,7 @@ class DialogActivity : AppCompatActivity(),
                     message,
                     positive,
                     negative,
+                    input,
                     type
                 )
             }

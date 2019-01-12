@@ -13,6 +13,10 @@ internal class DialogPresenter(
         screen.setMessage(dialogInput.message)
         screen.setPositive(dialogInput.positive)
         screen.setNegative(dialogInput.negative)
+        val input = dialogInput.input
+        input?.let {
+            screen.setInput(it)
+        }
         if (dialogInput.type == DialogActivity.DialogInput.DIALOG_TYPE_PROMPT) {
             screen.showInput()
             screen.showSoftInput()

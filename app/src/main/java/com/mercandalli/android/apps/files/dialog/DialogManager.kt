@@ -27,7 +27,8 @@ interface DialogManager {
         @StringRes titleStringRes: Int,
         @StringRes messageStringRes: Int,
         @StringRes positiveStringRes: Int,
-        @StringRes negativeStringRes: Int
+        @StringRes negativeStringRes: Int,
+        input: String? = null
     )
 
     /**

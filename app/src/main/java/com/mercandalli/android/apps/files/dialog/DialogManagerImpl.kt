@@ -26,6 +26,7 @@ internal class DialogManagerImpl(
             message,
             positive,
             negative,
+            null,
             DialogActivity.DialogInput.DIALOG_TYPE_ALERT
         )
         addOn.startDialogActivity(dialogInput)
@@ -36,7 +37,8 @@ internal class DialogManagerImpl(
         @StringRes titleStringRes: Int,
         @StringRes messageStringRes: Int,
         @StringRes positiveStringRes: Int,
-        @StringRes negativeStringRes: Int
+        @StringRes negativeStringRes: Int,
+        input: String?
     ) {
         val title = addOn.getString(titleStringRes)
         val message = addOn.getString(messageStringRes)
@@ -48,6 +50,7 @@ internal class DialogManagerImpl(
             message,
             positive,
             negative,
+            input,
             DialogActivity.DialogInput.DIALOG_TYPE_PROMPT
         )
         addOn.startDialogActivity(dialogInput)
