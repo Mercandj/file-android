@@ -4,7 +4,6 @@
 package com.mercandalli.android.apps.files.bottom_bar
 
 import android.os.Bundle
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 
 interface BottomBarContract {

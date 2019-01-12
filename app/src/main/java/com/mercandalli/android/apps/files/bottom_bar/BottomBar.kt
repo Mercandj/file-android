@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
