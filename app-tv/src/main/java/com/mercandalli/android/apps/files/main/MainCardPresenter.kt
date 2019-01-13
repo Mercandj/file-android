@@ -43,22 +43,23 @@ class MainCardPresenter : Presenter() {
     override fun onBindViewHolder(viewHolder: Presenter.ViewHolder, item: Any) {
         val mainFileViewModel = item as MainFileViewModel
         val cardView = viewHolder.view as ImageCardView
-        if (mainFileViewModel.cardImageUrl != null) {
-            cardView.titleText = mainFileViewModel.title
-            cardView.contentText = mainFileViewModel.path
-            cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
+        cardView.titleText = mainFileViewModel.title
+        cardView.contentText = mainFileViewModel.path
+        cardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT)
 
-            val errorDrawable = if (mainFileViewModel.directory) {
-                defaultDirectoryCardImage
-            } else {
-                defaultFileCardImage
-            }
-            Glide.with(viewHolder.view.context)
-                .load(mainFileViewModel.cardImageUrl)
-                .centerCrop()
-                .error(errorDrawable)
-                .into(cardView.mainImageView)
+        val drawable = if (mainFileViewModel.directory) {
+            defaultDirectoryCardImage
+        } else {
+            defaultFileCardImage
         }
+        cardView.mainImageView.setImageDrawable(drawable)
+        /*
+        Glide.with(viewHolder.view.context)
+            .load(drawable)
+            .centerCrop()
+            .error(drawable)
+            .into(cardView.mainImageView)
+            */
     }
 
     override fun onUnbindViewHolder(viewHolder: Presenter.ViewHolder) {

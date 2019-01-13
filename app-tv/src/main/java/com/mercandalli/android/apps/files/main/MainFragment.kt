@@ -1,13 +1,9 @@
 package com.mercandalli.android.apps.files.main
 
-import java.util.Timer
-import java.util.TimerTask
-
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.ViewGroup
@@ -25,10 +21,6 @@ import androidx.leanback.widget.RowPresenter
 import androidx.leanback.widget.HeaderItem
 import androidx.leanback.widget.OnItemViewSelectedListener
 
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.GlideDrawable
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.sdk.files.api.File
 
@@ -39,12 +31,9 @@ class MainFragment : BrowseFragment(),
     MainFragmentContract.Screen {
 
     private val userAction = createUserAction()
-    private val handler = Handler()
     private lateinit var backgroundManager: BackgroundManager
     private var defaultBackground: Drawable? = null
     private lateinit var metrics: DisplayMetrics
-    private var backgroundTimer: Timer? = null
-    private var backgroundUri: String? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -70,7 +59,6 @@ class MainFragment : BrowseFragment(),
 
     override fun onDestroy() {
         super.onDestroy()
-        backgroundTimer?.cancel()
         userAction.onDestroy()
     }
 
@@ -142,42 +130,7 @@ class MainFragment : BrowseFragment(),
             rowViewHolder: RowPresenter.ViewHolder,
             row: Row
         ) {
-            if (item is MainFileViewModel) {
-                backgroundUri = item.backgroundImageUrl
-                startBackgroundTimer()
-            }
-        }
-    }
 
-    private fun updateBackground(uri: String?) {
-        val width = metrics.widthPixels
-        val height = metrics.heightPixels
-        Glide.with(activity)
-            .load(uri)
-            .centerCrop()
-            .error(defaultBackground)
-            .into<SimpleTarget<GlideDrawable>>(
-                object : SimpleTarget<GlideDrawable>(width, height) {
-                    override fun onResourceReady(
-                        resource: GlideDrawable,
-                        glideAnimation: GlideAnimation<in GlideDrawable>
-                    ) {
-                        backgroundManager.drawable = resource
-                    }
-                })
-        backgroundTimer?.cancel()
-    }
-
-    private fun startBackgroundTimer() {
-        backgroundTimer?.cancel()
-        backgroundTimer = Timer()
-        backgroundTimer?.schedule(UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY.toLong())
-    }
-
-    private inner class UpdateBackgroundTask : TimerTask() {
-
-        override fun run() {
-            handler.post { updateBackground(backgroundUri) }
         }
     }
 
@@ -215,7 +168,6 @@ class MainFragment : BrowseFragment(),
     }
 
     companion object {
-        private const val BACKGROUND_UPDATE_DELAY = 300
         private const val GRID_ITEM_WIDTH = 200
         private const val GRID_ITEM_HEIGHT = 200
         private const val NUM_ROWS = 1

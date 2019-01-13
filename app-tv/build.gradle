@@ -2,6 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// Signing production apk with rootProject.ext.releaseFileSpaceSigningConfig data
+if (file("../config/signing/filespace-signing.gradle").exists()) {
+    apply from: '../config/signing/filespace-signing.gradle'
+} else {
+    apply from: '../config/signing/filespace-signing-template.gradle'
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -15,10 +22,26 @@ android {
         resConfigs "fr", "en"
     }
 
+    bundle {
+        density.enableSplit = true
+        abi.enableSplit = true
+        language.enableSplit = false
+    }
+
+    signingConfigs {
+        releaseSigningConfig rootProject.ext.releaseFileSpaceSigningConfig
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseSigningConfig
+            minifyEnabled true
+            shrinkResources true
+            multiDexEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            versionNameSuffix ".dev"
         }
     }
     sourceSets {

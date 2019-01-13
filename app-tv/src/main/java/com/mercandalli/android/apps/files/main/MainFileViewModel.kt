@@ -7,9 +7,6 @@ import com.mercandalli.sdk.files.api.File
  */
 data class MainFileViewModel(
     val title: String? = null,
-    val backgroundImageUrl: String? = null,
-    val cardImageUrl: String? = null,
-    val videoUrl: String? = null,
     val path: String,
     val directory: Boolean
 ) {
@@ -19,9 +16,6 @@ data class MainFileViewModel(
         fun create(file: File): MainFileViewModel {
             return MainFileViewModel(
                 file.name,
-                "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/Zeitgeist/Zeitgeist%202010_%20Year%20in%20Review/bg.jpg",
-                "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/Zeitgeist/Zeitgeist%202010_%20Year%20in%20Review/card.jpg",
-                "http://commondatastorage.googleapis.com/android-tv/Sample%20videos/Zeitgeist/Zeitgeist%202010_%20Year%20in%20Review.mp4",
                 file.id,
                 file.directory
             )
