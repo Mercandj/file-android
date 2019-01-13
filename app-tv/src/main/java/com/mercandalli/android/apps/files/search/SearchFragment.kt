@@ -36,6 +36,11 @@ class SearchFragment :
         })
     }
 
+    override fun onDestroy() {
+        userAction.onDestroy()
+        super.onDestroy()
+    }
+
     override fun show(mainFileRowViewModels: List<MainFileRowViewModel>) {
         adapter.clear()
         val cardPresenter = MainCardPresenter()

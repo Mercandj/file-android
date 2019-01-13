@@ -19,29 +19,29 @@ data class FileSearchResult(
     companion object {
 
         @JvmStatic
-        fun createUnloaded(path: String) = FileSearchResult(
-            path,
+        fun createUnloaded(query: String) = FileSearchResult(
+            query,
             Status.UNLOADED,
             ArrayList()
         )
 
         @JvmStatic
-        fun createLoading(path: String) = FileSearchResult(
-            path,
+        fun createLoading(query: String) = FileSearchResult(
+            query,
             Status.LOADING,
             ArrayList()
         )
 
         @JvmStatic
-        fun createLoaded(path: String, files: List<File>) = FileSearchResult(
-            path,
+        fun createLoaded(query: String, files: List<File>) = FileSearchResult(
+            query,
             Status.LOADED_SUCCEEDED,
             files
         )
 
         @JvmStatic
-        fun createErrorNetwork(path: String) = FileSearchResult(
-            path,
+        fun createErrorNetwork(query: String) = FileSearchResult(
+            query,
             Status.ERROR_NETWORK,
             ArrayList()
         )

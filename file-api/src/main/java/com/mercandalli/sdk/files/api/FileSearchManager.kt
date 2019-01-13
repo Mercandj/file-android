@@ -2,7 +2,10 @@ package com.mercandalli.sdk.files.api
 
 interface FileSearchManager {
 
-    fun search(query: String)
+    fun search(
+        query: String,
+        forceRefresh: Boolean = false
+    ): FileSearchResult
 
     fun getSearchResult(query: String): FileSearchResult
 
@@ -12,6 +15,6 @@ interface FileSearchManager {
 
     interface FileSearchListener {
 
-        fun onFileSearchResultChanged(path: String)
+        fun onFileSearchResultChanged(query: String)
     }
 }

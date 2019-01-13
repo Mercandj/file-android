@@ -2,6 +2,7 @@ package com.mercandalli.android.sdk.files.api
 
 import com.mercandalli.sdk.files.api.FileSearchLocal
 import com.mercandalli.sdk.files.api.FileSearchManager
+import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileSearchResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,16 +15,32 @@ class FileSearchManagerAndroid(
     private val fileSearchResultMap = HashMap<String, FileSearchResult>()
     private val fileSearchResultListeners = ArrayList<FileSearchManager.FileSearchListener>()
 
-    override fun search(query: String) {
-        // TODO
+    override fun search(
+        query: String,
+        forceRefresh: Boolean
+    ): FileSearchResult {
+        if (fileSearchResultMap.contains(query)) {
+            val status = fileSearchResultMap[query]!!.status
+            if (status == FileSearchResult.Status.LOADING) {
+                return getSearchResult(query)
+            }
+            if (status == FileSearchResult.Status.LOADED_SUCCEEDED && !forceRefresh) {
+                return getSearchResult(query)
+            }
+        }
         GlobalScope.launch(Dispatchers.Default) {
-            val paths = FileSearchLocal.searchSync(
+            val fileSearchResult = loadFileSearchSync(
                 query,
                 externalStorageDirectoryAbsolutePath
             )
             GlobalScope.launch(Dispatchers.Main) {
+                fileSearchResultMap[query] = fileSearchResult
+                for (listener in fileSearchResultListeners) {
+                    listener.onFileSearchResultChanged(query)
+                }
             }
         }
+        return getSearchResult(query)
     }
 
     override fun getSearchResult(query: String): FileSearchResult {
@@ -44,5 +61,26 @@ class FileSearchManagerAndroid(
 
     override fun unregisterFileSearchListener(listener: FileSearchManager.FileSearchListener) {
         fileSearchResultListeners.remove(listener)
+    }
+
+    companion object {
+
+        @JvmStatic
+        private fun loadFileSearchSync(
+            query: String,
+            path: String
+        ): FileSearchResult {
+            val paths = FileSearchLocal.searchSync(
+                query,
+                path
+            )
+            val files = ArrayList<File>()
+            for (currentPath in paths) {
+                val ioFile = java.io.File(currentPath)
+                val file = File.create(ioFile)
+                files.add(file)
+            }
+            return FileSearchResult.createLoaded(query, files)
+        }
     }
 }

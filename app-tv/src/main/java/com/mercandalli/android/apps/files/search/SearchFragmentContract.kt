@@ -8,6 +8,8 @@ interface SearchFragmentContract {
 
         fun onCreate()
 
+        fun onDestroy()
+
         fun onQueryTextSubmit(query: String)
     }
 
