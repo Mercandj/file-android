@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 
-import com.bumptech.glide.Glide
 import com.mercandalli.android.apps.files.R
 import kotlin.properties.Delegates
 

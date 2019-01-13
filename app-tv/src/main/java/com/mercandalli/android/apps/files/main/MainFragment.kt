@@ -130,7 +130,6 @@ class MainFragment : BrowseFragment(),
             rowViewHolder: RowPresenter.ViewHolder,
             row: Row
         ) {
-
         }
     }
 
