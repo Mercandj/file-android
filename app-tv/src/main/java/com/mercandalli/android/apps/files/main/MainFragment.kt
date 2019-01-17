@@ -116,8 +116,11 @@ class MainFragment : BrowseFragment(),
                                                                 _,
                                                                 _ ->
             run {
-                val fileViewModel = item as MainFileViewModel
-                userAction.onFileClicked(fileViewModel)
+                if (item is MainFileViewModel) {
+                    userAction.onFileClicked(item)
+                } else {
+                    userAction.onSettingsClicked()
+                }
             }
         }
         onItemViewSelectedListener = ItemViewSelectedListener()
@@ -156,12 +159,16 @@ class MainFragment : BrowseFragment(),
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
+        val toastManager = ApplicationGraph.getToastManager()
+        val versionManager = ApplicationGraph.getVersionManager()
         val currentPath = Environment.getExternalStorageDirectory().absolutePath
         return MainFragmentPresenter(
             this,
             fileChildrenManager,
             fileOpenManager,
             fileSortManager,
+            toastManager,
+            versionManager,
             currentPath
         )
     }

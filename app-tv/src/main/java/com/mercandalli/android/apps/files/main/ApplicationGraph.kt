@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.mercandalli.android.apps.files.screen.ScreenModule
 import com.mercandalli.android.apps.files.toast.ToastModule
+import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.sdk.files.api.FileModule
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 
@@ -20,6 +21,7 @@ class ApplicationGraph(
     private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
     private val screenManagerInternal by lazy { screenModule.createScreenManager() }
     private val toastManagerInternal by lazy { ToastModule(context).createToastManager() }
+    private val versionManagerInternal by lazy { VersionModule(context).createVersionManager() }
 
     private fun createPermissionRequestAddOn() = object : PermissionRequestAddOn {
         override fun requestStoragePermission() {
@@ -47,5 +49,6 @@ class ApplicationGraph(
         fun getFileSortManager() = graph!!.fileSortManagerInternal
         fun getScreenManager() = graph!!.screenManagerInternal
         fun getToastManager() = graph!!.toastManagerInternal
+        fun getVersionManager() = graph!!.versionManagerInternal
     }
 }

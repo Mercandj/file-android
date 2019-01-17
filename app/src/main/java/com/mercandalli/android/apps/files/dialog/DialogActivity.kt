@@ -131,7 +131,11 @@ class DialogActivity : AppCompatActivity(),
                 val message = json.getString("message")
                 val positive = json.getString("positive")
                 val negative = json.getString("negative")
-                val input = json.getString("input")
+                val input = if (json.has("input")) {
+                    json.getString("input")
+                } else {
+                    null
+                }
                 val type = json.getString("type")
                 return DialogInput(
                     dialogId,

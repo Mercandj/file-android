@@ -9,6 +9,8 @@ interface MainFragmentContract {
         fun onDestroy()
 
         fun onFileClicked(mainFileViewModel: MainFileViewModel)
+
+        fun onSettingsClicked()
     }
 
     interface Screen {

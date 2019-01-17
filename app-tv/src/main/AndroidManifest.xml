@@ -19,6 +19,7 @@
     <application
         android:name=".main.MainApplication"
         android:allowBackup="true"
+        android:banner="@drawable/app_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"

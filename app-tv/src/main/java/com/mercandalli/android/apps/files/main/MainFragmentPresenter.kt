@@ -1,5 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
+import com.mercandalli.android.apps.files.toast.ToastManager
+import com.mercandalli.android.apps.files.version.VersionManager
 import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileOpenManager
@@ -10,6 +12,8 @@ class MainFragmentPresenter(
     private val fileChildrenManager: FileChildrenManager,
     private val fileOpenManager: FileOpenManager,
     private val fileSortManager: FileSortManager,
+    private val toastManager: ToastManager,
+    private val versionManager: VersionManager,
     rootPath: String
 ) : MainFragmentContract.UserAction {
 
@@ -47,6 +51,11 @@ class MainFragmentPresenter(
         }
     }
 
+    override fun onSettingsClicked() {
+        val versionName = versionManager.getVersionName()
+        toastManager.toast("Version: $versionName")
+    }
+
     private fun loadFiles() {
         for (path in paths) {
             fileChildrenManager.loadFileChildren(path)
@@ -61,7 +70,8 @@ class MainFragmentPresenter(
             when (status) {
                 FileChildrenResult.Status.ERROR_NOT_FOLDER -> TODO()
                 FileChildrenResult.Status.ERROR_NETWORK -> TODO()
-                FileChildrenResult.Status.UNLOADED -> TODO()
+                FileChildrenResult.Status.UNLOADED -> {
+                }
                 FileChildrenResult.Status.LOADING -> {
                 }
                 FileChildrenResult.Status.LOADED_SUCCEEDED -> {

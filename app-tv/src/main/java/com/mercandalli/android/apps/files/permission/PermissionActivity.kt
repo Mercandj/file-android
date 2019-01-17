@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Environment
 import androidx.annotation.StringRes
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.app.ActivityCompat
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.Window
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class PermissionActivity :
     AppCompatActivity(),
@@ -39,7 +41,7 @@ class PermissionActivity :
             return
         }
         if (!grantResults.isEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            finish()
+            userAction.onPermissionSystemGranted()
         } else {
             showSnackbar("This app needs this permission to work", com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
         }
@@ -49,21 +51,30 @@ class PermissionActivity :
         ActivityCompat.requestPermissions(
             this,
             PERMISSIONS,
-            REQUEST_CODE)
-    }
-
-    private fun createUserAction(): PermissionContract.UserAction {
-        return PermissionPresenter(
-            this
+            REQUEST_CODE
         )
     }
 
+    override fun quit() {
+        finish()
+    }
+
     private fun showSnackbar(@StringRes text: Int, duration: Int) {
-        com.google.android.material.snackbar.Snackbar.make(window.decorView, text, duration).show()
+        Snackbar.make(window.decorView, text, duration).show()
     }
 
     private fun showSnackbar(text: String, duration: Int) {
-        com.google.android.material.snackbar.Snackbar.make(window.decorView, text, duration).show()
+        Snackbar.make(window.decorView, text, duration).show()
+    }
+
+    private fun createUserAction(): PermissionContract.UserAction {
+        val initialPath = Environment.getExternalStorageDirectory().absolutePath
+        val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
+        return PermissionPresenter(
+            this,
+            fileChildrenManager,
+            initialPath
+        )
     }
 
     companion object {
