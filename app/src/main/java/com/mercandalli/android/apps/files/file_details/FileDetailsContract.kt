@@ -5,6 +5,7 @@ package com.mercandalli.android.apps.files.file_details
 
 import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileShareManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 
 interface FileDetailsContract {
@@ -18,8 +19,11 @@ interface FileDetailsContract {
         fun onSetFileManagers(
             fileManager: FileManager,
             fileChildrenManager: FileChildrenManager,
+            fileShareManager: FileShareManager,
             fileSizeManager: FileSizeManager
         )
+
+        fun onSharedClicked()
     }
 
     interface Screen {
@@ -29,5 +33,9 @@ interface FileDetailsContract {
         fun setNameText(text: String)
 
         fun setSizeText(text: String)
+
+        fun showShareButton()
+
+        fun hideShareButton()
     }
 }

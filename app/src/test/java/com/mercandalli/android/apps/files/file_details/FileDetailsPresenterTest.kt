@@ -3,11 +3,7 @@
 /* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_details
 
-import com.mercandalli.sdk.files.api.FileChildrenManager
-import com.mercandalli.sdk.files.api.FileManager
-import com.mercandalli.sdk.files.api.FileResult
-import com.mercandalli.sdk.files.api.FileSizeManager
-import com.mercandalli.sdk.files.api.FileSizeResult
+import com.mercandalli.sdk.files.api.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -24,6 +20,8 @@ class FileDetailsPresenterTest {
     private lateinit var fileManager: FileManager
     @Mock
     private lateinit var fileChildrenManager: FileChildrenManager
+    @Mock
+    private lateinit var fileShareManager: FileShareManager
     @Mock
     private lateinit var fileSizeManager: FileSizeManager
 
@@ -51,6 +49,7 @@ class FileDetailsPresenterTest {
             screen,
             fileManager,
             fileChildrenManager,
+            fileShareManager,
             fileSizeManager
         )
     }

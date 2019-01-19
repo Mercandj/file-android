@@ -7,6 +7,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.mercandalli.android.apps.files.R
@@ -22,6 +24,7 @@ class FileDetailsActivity :
     private val path: TextView by bind(R.id.activity_file_details_path)
     private val name: TextView by bind(R.id.activity_file_details_name)
     private val size: TextView by bind(R.id.activity_file_details_size)
+    private val share: ImageView by bind(R.id.activity_file_details_share)
     private val userAction = createUserAction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,24 +39,30 @@ class FileDetailsActivity :
             FileProvider.Local -> {
                 val fileManager = ApplicationGraph.getFileManager()
                 val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
+                val fileShareManager = ApplicationGraph.getFileShareManager()
                 val fileSizeManager = ApplicationGraph.getFileSizeManager()
                 userAction.onSetFileManagers(
                     fileManager,
                     fileChildrenManager,
+                    fileShareManager,
                     fileSizeManager
                 )
             }
             FileProvider.Online -> {
                 val fileManager = ApplicationGraph.getFileOnlineManager()
                 val fileChildrenManager = ApplicationGraph.getFileOnlineChildrenManager()
+                val fileShareManager = ApplicationGraph.getFileOnlineShareManager()
                 val fileSizeManager = ApplicationGraph.getFileOnlineSizeManager()
+                ApplicationGraph.getFileShareManager()
                 userAction.onSetFileManagers(
                     fileManager,
                     fileChildrenManager,
+                    fileShareManager,
                     fileSizeManager
                 )
             }
         }
+        share.setOnClickListener { userAction.onSharedClicked() }
         userAction.onCreate(path)
     }
 
@@ -74,14 +83,24 @@ class FileDetailsActivity :
         size.text = text
     }
 
+    override fun showShareButton() {
+        share.visibility = View.VISIBLE
+    }
+
+    override fun hideShareButton() {
+        share.visibility = View.GONE
+    }
+
     private fun createUserAction(): FileDetailsContract.UserAction {
         val fileManager = ApplicationGraph.getFileManager()
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
+        val fileShareManager = ApplicationGraph.getFileShareManager()
         val fileSizeManager = ApplicationGraph.getFileSizeManager()
         return FileDetailsPresenter(
             this,
             fileManager,
             fileChildrenManager,
+            fileShareManager,
             fileSizeManager
         )
     }

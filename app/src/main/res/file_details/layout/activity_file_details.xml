@@ -100,6 +100,24 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/activity_file_details_share"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="13dp"
+                    android:src="@drawable/ic_share_black_24dp"
+                    android:tint="#808080" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

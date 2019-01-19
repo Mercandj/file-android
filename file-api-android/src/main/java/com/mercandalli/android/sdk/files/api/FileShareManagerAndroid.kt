@@ -11,6 +11,17 @@ class FileShareManagerAndroid(
         addOn.startActivity(path, mime)
     }
 
+    override fun isShareSupported(path: String): Boolean {
+        val ioFile = java.io.File(path)
+        if (!ioFile.exists()) {
+            return false
+        }
+        if (ioFile.isDirectory) {
+            return false
+        }
+        return true
+    }
+
     interface AddOn {
         fun startActivity(path: String, mime: String)
     }

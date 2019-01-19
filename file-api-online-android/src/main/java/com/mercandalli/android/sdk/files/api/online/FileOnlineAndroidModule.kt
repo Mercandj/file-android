@@ -9,6 +9,7 @@ import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileChildrenManager
+import com.mercandalli.sdk.files.api.FileShareManager
 import com.mercandalli.sdk.files.api.online.FileOnlineLoginRepository
 import com.mercandalli.sdk.files.api.online.FileOnlineModule
 
@@ -89,6 +90,10 @@ class FileOnlineAndroidModule(
             fileOnlineApi,
             onlineMediaScanner
         )
+    }
+
+    fun createFileOnlineShareManager(): FileShareManager {
+        return FileOnlineShareManagerAndroid()
     }
 
     fun createFileOnlineSizeManager(): FileSizeManager {

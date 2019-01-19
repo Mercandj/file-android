@@ -6,12 +6,14 @@ package com.mercandalli.android.apps.files.file_details
 import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileShareManager
 import com.mercandalli.sdk.files.api.FileSizeUtils
 
 class FileDetailsPresenter(
     private val screen: FileDetailsContract.Screen,
     private var fileManager: FileManager,
     private var fileChildrenManager: FileChildrenManager,
+    private var fileShareManager: FileShareManager,
     private var fileSizeManager: FileSizeManager
 ) : FileDetailsContract.UserAction {
 
@@ -37,15 +39,22 @@ class FileDetailsPresenter(
     override fun onSetFileManagers(
         fileManager: FileManager,
         fileChildrenManager: FileChildrenManager,
+        fileShareManager: FileShareManager,
         fileSizeManager: FileSizeManager
     ) {
         this.fileManager = fileManager
         this.fileChildrenManager = fileChildrenManager
+        this.fileShareManager = fileShareManager
         this.fileSizeManager = fileSizeManager
+    }
+
+    override fun onSharedClicked() {
+        fileShareManager.share(path!!)
     }
 
     private fun syncFile() {
         val path = if (path == null) {
+            screen.hideShareButton()
             return
         } else {
             path!!
@@ -59,6 +68,12 @@ class FileDetailsPresenter(
         val sizeLong = fileSizeResult.size
         val sizeString = FileSizeUtils.humanReadableByteCount(sizeLong)
         screen.setSizeText(sizeString)
+        val shareSupported = fileShareManager.isShareSupported(path)
+        if (shareSupported) {
+            screen.showShareButton()
+        } else {
+            screen.hideShareButton()
+        }
     }
 
     private fun createFileResultListener() = object : FileManager.FileResultListener {

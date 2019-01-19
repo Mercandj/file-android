@@ -52,6 +52,7 @@ class ApplicationGraph(
     private val fileOnlineDownloadManagerInternal by lazy { FileOnlineGraph.getFileOnlineDownloadManager() }
     private val fileOnlineLoginManagerInternal by lazy { FileOnlineGraph.getFileOnlineLoginManager() }
     private val fileOnlineRenameManagerInternal by lazy { FileOnlineGraph.getFileOnlineRenameManager() }
+    private val fileOnlineShareManagerInternal by lazy { FileOnlineGraph.getFileOnlineShareManager() }
     private val fileOnlineSizeManagerInternal by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
     private val fileOnlineUploadManagerInternal by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
@@ -99,6 +100,7 @@ class ApplicationGraph(
         fun getFileOnlineDownloadManager() = graph!!.fileOnlineDownloadManagerInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileOnlineRenameManager() = graph!!.fileOnlineRenameManagerInternal
+        fun getFileOnlineShareManager() = graph!!.fileOnlineShareManagerInternal
         fun getFileOnlineSizeManager() = graph!!.fileOnlineSizeManagerInternal
         fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManagerInternal
         fun getFileShareManager() = graph!!.fileShareManagerInternal
