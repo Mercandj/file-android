@@ -55,7 +55,7 @@ class FileListAdapter(
     //region File
     private class FileAdapterDelegate(
         private val fileListClickListener: FileListRow.FileClickListener?
-    ) : AbsListItemAdapterDelegate<Any, Any, VideoRowHolder>() {
+    ) : AbsListItemAdapterDelegate<Any, Any, FileRowHolder>() {
 
         private val fileListRows = ArrayList<FileListRow>()
         private var selectedPath: String? = null
@@ -70,7 +70,7 @@ class FileListAdapter(
             return o is File
         }
 
-        override fun onCreateViewHolder(viewGroup: ViewGroup): VideoRowHolder {
+        override fun onCreateViewHolder(viewGroup: ViewGroup): FileRowHolder {
             val view = FileListRow(viewGroup.context)
             view.layoutParams = RecyclerView.LayoutParams(
                 RecyclerView.LayoutParams.MATCH_PARENT,
@@ -86,12 +86,12 @@ class FileListAdapter(
                 )
             }
             fileListRows.add(view)
-            return VideoRowHolder(view)
+            return FileRowHolder(view)
         }
 
         override fun onBindViewHolder(
             model: Any,
-            playlistViewHolder: VideoRowHolder,
+            playlistViewHolder: FileRowHolder,
             list: List<Any>
         ) {
             playlistViewHolder.bind(model as File, selectedPath)
@@ -125,7 +125,7 @@ class FileListAdapter(
         }
     }
 
-    private class VideoRowHolder(
+    private class FileRowHolder(
         private val view: FileListRow
     ) : RecyclerView.ViewHolder(view) {
         fun bind(file: File, selectedPath: String?) {
