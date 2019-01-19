@@ -3,7 +3,12 @@
 /* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_details
 
-import com.mercandalli.sdk.files.api.*
+import com.mercandalli.sdk.files.api.FileManager
+import com.mercandalli.sdk.files.api.FileChildrenManager
+import com.mercandalli.sdk.files.api.FileShareManager
+import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileResult
+import com.mercandalli.sdk.files.api.FileSizeResult
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
