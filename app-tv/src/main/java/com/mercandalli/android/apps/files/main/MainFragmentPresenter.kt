@@ -46,9 +46,13 @@ class MainFragmentPresenter(
             paths.add(path)
             loadFiles()
             syncFiles()
-        } else {
-            fileOpenManager.open(path)
+            return
         }
+        if (path.toLowerCase().endsWith("html")) {
+            toastManager.toast("Web content not supported for now")
+            return
+        }
+        fileOpenManager.open(path)
     }
 
     override fun onSettingsClicked() {
