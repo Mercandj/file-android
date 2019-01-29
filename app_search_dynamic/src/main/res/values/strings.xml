@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="activity_dynamic_search_label" translatable="false">Search</string>
+    <string name="activity_search_input_hint" translatable="false">@string/search</string>
+</resources>

@@ -31,6 +31,8 @@ interface MainActivityContract {
 
         fun onToolbarUploadClicked()
 
+        fun onToolbarSearchClicked()
+
         fun onToolbarFileColumnClicked()
 
         fun onToolbarFileListClicked()
@@ -79,6 +81,14 @@ interface MainActivityContract {
         fun showToolbarUpload()
 
         fun hideToolbarUpload()
+
+        fun showToolbarSearch()
+
+        fun hideToolbarSearch()
+
+        fun showToolbarSearchLoading()
+
+        fun hideToolbarSearchLoading()
 
         fun showToolbarFileColumn()
 

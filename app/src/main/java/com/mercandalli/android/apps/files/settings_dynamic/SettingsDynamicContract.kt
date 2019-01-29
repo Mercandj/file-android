@@ -1,19 +1,17 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.android.apps.files.settings_storage
+package com.mercandalli.android.apps.files.settings_dynamic
 
 import androidx.annotation.ColorRes
 
-interface SettingsStorageContract {
+interface SettingsDynamicContract {
 
     interface UserAction {
 
         fun onAttached()
 
         fun onDetached()
-
-        fun onStorageLocalRowClicked()
     }
 
     interface Screen {
@@ -23,13 +21,5 @@ interface SettingsStorageContract {
         fun setTextSecondaryColorRes(@ColorRes colorRes: Int)
 
         fun setSectionColor(@ColorRes colorRes: Int)
-
-        fun setLocalSubLabelText(text: String)
-
-        fun setLocalBusy(text: String)
-
-        fun setLocalTotal(text: String)
-
-        fun setProgress(percent: Float)
     }
 }

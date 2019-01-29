@@ -1,7 +1,11 @@
 package com.mercandalli.android.apps.files.main
 
+import com.mercandalli.android.apps.files.screen.ScreenManager
+import com.mercandalli.android.apps.files.split_install.SplitInstallManager
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
+import com.mercandalli.android.apps.files.update.UpdateManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 import org.junit.Before
@@ -25,7 +29,15 @@ class MainPresenterTest {
     @Mock
     private lateinit var fileOnlineCopyCutManager: FileCopyCutManager
     @Mock
+    private lateinit var screenManager: ScreenManager
+    @Mock
+    private lateinit var splitInstallManager: SplitInstallManager
+    @Mock
     private lateinit var themeManager: ThemeManager
+    @Mock
+    private lateinit var toastManager: ToastManager
+    @Mock
+    private lateinit var updateManager: UpdateManager
     @Mock
     private lateinit var theme: Theme
     @Mock
@@ -87,9 +99,13 @@ class MainPresenterTest {
             fileOnlineCreatorManager,
             fileCopyCutManager,
             fileOnlineCopyCutManager,
-            themeManager,
             mainActivityFileUiStorage,
             mainActivitySectionStorage,
+            screenManager,
+            splitInstallManager,
+            themeManager,
+            toastManager,
+            updateManager,
             rootPathLocal,
             rootPathOnline
         )

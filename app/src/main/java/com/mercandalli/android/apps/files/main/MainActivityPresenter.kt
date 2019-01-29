@@ -1,7 +1,12 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
+import com.mercandalli.android.apps.files.screen.ScreenManager
+import com.mercandalli.android.apps.files.split_install.SplitFeature
+import com.mercandalli.android.apps.files.split_install.SplitInstallManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
+import com.mercandalli.android.apps.files.toast.ToastManager
+import com.mercandalli.android.apps.files.update.UpdateManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 
@@ -11,9 +16,13 @@ internal class MainActivityPresenter(
     private val fileOnlineCreatorManager: FileCreatorManager,
     private val fileCopyCutManager: FileCopyCutManager,
     private val fileOnlineCopyCutManager: FileCopyCutManager,
-    private val themeManager: ThemeManager,
     private val mainActivityFileUiStorage: MainActivityFileUiStorage,
     private val mainActivitySectionStorage: MainActivitySectionStorage,
+    private val screenManager: ScreenManager,
+    private val splitInstallManager: SplitInstallManager,
+    private val themeManager: ThemeManager,
+    private val toastManager: ToastManager,
+    private val updateManager: UpdateManager,
     private val rootPathLocal: String,
     private val rootPathOnline: String
 ) : MainActivityContract.UserAction {
@@ -22,6 +31,7 @@ internal class MainActivityPresenter(
     private var selectedSection: Section = Section.UNDEFINED
     private val themeListener = createThemeListener()
     private val fileToPasteChangedListener = createFileToPasteChangedListener()
+    private val splitInstallStateUpdatedListener = createSplitInstallStateUpdatedListener()
 
     override fun onCreate() {
         themeManager.registerThemeListener(themeListener)
@@ -29,12 +39,20 @@ internal class MainActivityPresenter(
         fileOnlineCopyCutManager.registerFileToPasteChangedListener(fileToPasteChangedListener)
         syncWithCurrentTheme()
         syncToolbarPasteIconVisibility()
+        splitInstallManager.registerListener(SplitFeature.Search, splitInstallStateUpdatedListener)
+
+        val firstRun = updateManager.isFirstRun()
+        val searchInstalled = splitInstallManager.isInstalled(SplitFeature.Search)
+        if (firstRun && !searchInstalled) {
+            splitInstallManager.startInstall(SplitFeature.Search)
+        }
     }
 
     override fun onDestroy() {
         themeManager.unregisterThemeListener(themeListener)
         fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
         fileOnlineCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
+        splitInstallManager.unregisterListener(SplitFeature.Search, splitInstallStateUpdatedListener)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -96,6 +114,14 @@ internal class MainActivityPresenter(
 
     override fun onToolbarUploadClicked() {
         screen.showFileUploadSelection()
+    }
+
+    override fun onToolbarSearchClicked() {
+        if (splitInstallManager.isInstalled(SplitFeature.Search)) {
+            screenManager.startSearch()
+            return
+        }
+        splitInstallManager.startInstall(SplitFeature.Search)
     }
 
     override fun onToolbarFileColumnClicked() {
@@ -160,6 +186,7 @@ internal class MainActivityPresenter(
         screen.hideToolbarShare()
         screen.showToolbarAdd()
         screen.hideToolbarUpload()
+        syncToolbarSearchVisibility()
         screen.showToolbarFileColumn()
         screen.hideToolbarFileList()
         screen.selectBottomBarFile()
@@ -182,6 +209,7 @@ internal class MainActivityPresenter(
         screen.hideToolbarShare()
         screen.showToolbarAdd()
         screen.hideToolbarUpload()
+        syncToolbarSearchVisibility()
         screen.hideToolbarFileColumn()
         screen.showToolbarFileList()
         screen.selectBottomBarFile()
@@ -203,6 +231,7 @@ internal class MainActivityPresenter(
         screen.hideToolbarShare()
         screen.showToolbarAdd()
         screen.showToolbarUpload()
+        syncToolbarSearchVisibility()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
         screen.selectBottomBarOnline()
@@ -221,6 +250,7 @@ internal class MainActivityPresenter(
         screen.showToolbarShare()
         screen.hideToolbarAdd()
         screen.hideToolbarUpload()
+        syncToolbarSearchVisibility()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
         screen.selectBottomBarNote()
@@ -239,6 +269,7 @@ internal class MainActivityPresenter(
         screen.hideToolbarShare()
         screen.hideToolbarAdd()
         screen.hideToolbarUpload()
+        syncToolbarSearchVisibility()
         screen.hideToolbarFileColumn()
         screen.hideToolbarFileList()
         screen.selectBottomBarSettings()
@@ -275,6 +306,22 @@ internal class MainActivityPresenter(
         return rootPathLocal
     }
 
+    private fun syncToolbarSearchVisibility() {
+        if (selectedSection != Section.FILE_LIST) {
+            screen.hideToolbarSearch()
+            screen.hideToolbarSearchLoading()
+            return
+        }
+        val downloadingOrInstalling = splitInstallManager.isDownloadingOrInstalling(SplitFeature.Search)
+        if (downloadingOrInstalling) {
+            screen.hideToolbarSearch()
+            screen.showToolbarSearchLoading()
+        } else {
+            screen.showToolbarSearch()
+            screen.hideToolbarSearchLoading()
+        }
+    }
+
     private fun createThemeListener() = object : ThemeManager.ThemeListener {
         override fun onThemeChanged() {
             syncWithCurrentTheme()
@@ -284,6 +331,25 @@ internal class MainActivityPresenter(
     private fun createFileToPasteChangedListener() = object : FileCopyCutManager.FileToPasteChangedListener {
         override fun onFileToPasteChanged() {
             syncToolbarPasteIconVisibility()
+        }
+    }
+
+    private fun createSplitInstallStateUpdatedListener() = object : SplitInstallManager.SplitInstallListener {
+        override fun onUninstalled(splitFeature: SplitFeature) {
+            syncToolbarSearchVisibility()
+        }
+
+        override fun onDownloading(splitFeature: SplitFeature) {
+            syncToolbarSearchVisibility()
+        }
+
+        override fun onInstalled(splitFeature: SplitFeature) {
+            syncToolbarSearchVisibility()
+        }
+
+        override fun onFailed(splitFeature: SplitFeature) {
+            syncToolbarSearchVisibility()
+            toastManager.toast("Download failed")
         }
     }
 

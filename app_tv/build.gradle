@@ -79,7 +79,7 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':file-api-android')
+    implementation project(':file_api_android')
 
     // Language
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

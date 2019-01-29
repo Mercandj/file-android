@@ -30,4 +30,7 @@
     <string name="view_settings_developer_online_sublabel">Current user is %1$s</string>
     <string name="view_settings_developer_online_passowrd_sublabel_logged">User logged</string>
     <string name="view_settings_developer_online_passowrd_sublabel_not_logged">User not logged</string>
+
+    <string name="view_settings_dynamic_feature_label">Dynamic delivery feature</string>
+    <string name="view_settings_dynamic_feature_search_label">Search</string>
 </resources>
