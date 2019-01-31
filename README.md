@@ -49,7 +49,7 @@ Apk generated is produced on the
 [PlayStore](https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files) or 
 downloadable in the [release](https://github.com/Mercandj/file-android/releases) section.
 
-- `./app-tv` [here](./app-tv)
+- `./app_tv` [here](./app_tv)
 
 Module of the Android TV devices.
 Apk generated is produced on the 

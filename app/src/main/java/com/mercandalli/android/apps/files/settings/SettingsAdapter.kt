@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
 import com.mercandalli.android.apps.files.settings_dynamic.SettingsDynamicView
@@ -20,13 +21,24 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsDynamicAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
-        populate(listOf(
-            SettingsTheme(),
-            SettingsStorage(),
-            SettingsDynamic(),
-            SettingsDeveloper(),
-            SettingsAbout()
-        ))
+        val remoteConfig = ApplicationGraph.getRemoteConfig()
+        val list = if (remoteConfig.getSearchEnabled()) {
+            listOf(
+                SettingsTheme(),
+                SettingsStorage(),
+                SettingsDynamic(),
+                SettingsDeveloper(),
+                SettingsAbout()
+            )
+        } else {
+            listOf(
+                SettingsTheme(),
+                SettingsStorage(),
+                SettingsDeveloper(),
+                SettingsAbout()
+            )
+        }
+        populate(list)
     }
 
     private fun populate(list: List<Any>) {

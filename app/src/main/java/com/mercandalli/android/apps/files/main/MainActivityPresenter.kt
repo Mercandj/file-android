@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
+import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.split_install.SplitFeature
 import com.mercandalli.android.apps.files.split_install.SplitInstallManager
@@ -18,6 +19,7 @@ internal class MainActivityPresenter(
     private val fileOnlineCopyCutManager: FileCopyCutManager,
     private val mainActivityFileUiStorage: MainActivityFileUiStorage,
     private val mainActivitySectionStorage: MainActivitySectionStorage,
+    private val remoteConfig: RemoteConfig,
     private val screenManager: ScreenManager,
     private val splitInstallManager: SplitInstallManager,
     private val themeManager: ThemeManager,
@@ -32,6 +34,7 @@ internal class MainActivityPresenter(
     private val themeListener = createThemeListener()
     private val fileToPasteChangedListener = createFileToPasteChangedListener()
     private val splitInstallStateUpdatedListener = createSplitInstallStateUpdatedListener()
+    private val remoteConfigListener = createRemoteConfigListener()
 
     override fun onCreate() {
         themeManager.registerThemeListener(themeListener)
@@ -40,6 +43,7 @@ internal class MainActivityPresenter(
         syncWithCurrentTheme()
         syncToolbarPasteIconVisibility()
         splitInstallManager.registerListener(SplitFeature.Search, splitInstallStateUpdatedListener)
+        remoteConfig.registerListener(remoteConfigListener)
 
         val firstRun = updateManager.isFirstRun()
         val searchInstalled = splitInstallManager.isInstalled(SplitFeature.Search)
@@ -53,6 +57,7 @@ internal class MainActivityPresenter(
         fileCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
         fileOnlineCopyCutManager.unregisterFileToPasteChangedListener(fileToPasteChangedListener)
         splitInstallManager.unregisterListener(SplitFeature.Search, splitInstallStateUpdatedListener)
+        remoteConfig.unregisterListener(remoteConfigListener)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -307,6 +312,11 @@ internal class MainActivityPresenter(
     }
 
     private fun syncToolbarSearchVisibility() {
+        if (!remoteConfig.getSearchEnabled()) {
+            screen.hideToolbarSearch()
+            screen.hideToolbarSearchLoading()
+            return
+        }
         if (selectedSection != Section.FILE_LIST) {
             screen.hideToolbarSearch()
             screen.hideToolbarSearchLoading()
@@ -350,6 +360,12 @@ internal class MainActivityPresenter(
         override fun onFailed(splitFeature: SplitFeature) {
             syncToolbarSearchVisibility()
             toastManager.toast("Download failed")
+        }
+    }
+
+    private fun createRemoteConfigListener() = object : RemoteConfig.RemoteConfigListener {
+        override fun onInitialized() {
+            syncToolbarSearchVisibility()
         }
     }
 

@@ -12,7 +12,9 @@ import com.mercandalli.android.apps.files.file_storage_stats.FileStorageStatsMod
 import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
+import com.mercandalli.android.apps.files.main_thread.MainThreadModule
 import com.mercandalli.android.apps.files.network.Network
+import com.mercandalli.android.apps.files.remote_config.RemoteConfigModule
 import com.mercandalli.android.apps.files.screen.ScreenModule
 import com.mercandalli.android.apps.files.split_install.SplitInstallModule
 import com.mercandalli.android.apps.files.toast.ToastModule
@@ -63,11 +65,13 @@ class ApplicationGraph(
     private val fileSizeManagerInternal by lazy { fileModuleInternal.createFileSizeManager() }
     private val fileSortManagerInternal by lazy { fileModuleInternal.createFileSortManager() }
     private val hashManagerInternal by lazy { HashModule(context).createHashManager() }
+    private val mainThreadPostInternal by lazy { MainThreadModule().createMainThreadPost() }
     private val network = networkModule.createNetwork()
     private val noteManagerInternal by lazy { noteModule.createNoteManager() }
     private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
     private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
     private val okHttpClientLazy = networkModule.createOkHttpClientLazy()
+    private val remoteConfigInternal by lazy { RemoteConfigModule().createRemoteConfig() }
     private val screenManagerInternal by lazy { screenModule.createScreenManager() }
     private val splitInstallManagerInternal by lazy { SplitInstallModule(context).createSplitInstallManager() }
     private val themeManagerInternal by lazy { ThemeModule(context).createThemeManager() }
@@ -113,11 +117,13 @@ class ApplicationGraph(
         fun getFileRenameManager() = graph!!.fileRenameManagerInternal
         fun getFileSizeManager() = graph!!.fileSizeManagerInternal
         fun getFileSortManager() = graph!!.fileSortManagerInternal
+        fun getMainThreadPost() = graph!!.mainThreadPostInternal
         fun getNetwork() = graph!!.network
         fun getHashManager() = graph!!.hashManagerInternal
         fun getNoteManager() = graph!!.noteManagerInternal
         fun getNotificationAudioManager() = graph!!.notificationAudioManagerInternal
         fun getOkHttpClientLazy() = graph!!.okHttpClientLazy
+        fun getRemoteConfig() = graph!!.remoteConfigInternal
         fun getScreenManager() = graph!!.screenManagerInternal
         fun getSplitInstallManager() = graph!!.splitInstallManagerInternal
         fun getThemeManager() = graph!!.themeManagerInternal

@@ -335,6 +335,7 @@ class MainActivity : AppCompatActivity(),
         val mainActivitySectionStorage = MainActivitySectionStorageImpl(
             sectionStorageSharedPreferences
         )
+        val remoteConfig = ApplicationGraph.getRemoteConfig()
         val screenManager = ApplicationGraph.getScreenManager()
         val splitInstallManager = ApplicationGraph.getSplitInstallManager()
         val themeManager = ApplicationGraph.getThemeManager()
@@ -348,6 +349,7 @@ class MainActivity : AppCompatActivity(),
             fileOnlineCopyCutManager,
             mainActivityFileUiStorage,
             mainActivitySectionStorage,
+            remoteConfig,
             screenManager,
             splitInstallManager,
             themeManager,

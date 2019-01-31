@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.main
 
+import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.split_install.SplitInstallManager
 import com.mercandalli.android.apps.files.theme.Theme
@@ -28,6 +29,8 @@ class MainPresenterTest {
     private lateinit var fileCopyCutManager: FileCopyCutManager
     @Mock
     private lateinit var fileOnlineCopyCutManager: FileCopyCutManager
+    @Mock
+    private lateinit var remoteConfig: RemoteConfig
     @Mock
     private lateinit var screenManager: ScreenManager
     @Mock
@@ -101,6 +104,7 @@ class MainPresenterTest {
             fileOnlineCopyCutManager,
             mainActivityFileUiStorage,
             mainActivitySectionStorage,
+            remoteConfig,
             screenManager,
             splitInstallManager,
             themeManager,
