@@ -34,4 +34,15 @@ class ScreenManagerImpl(
         }
         context.startActivity(intent)
     }
+
+    override fun startSearch() {
+        val intent = Intent()
+        if (context !is Activity) {
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        intent.setClassName(
+            "com.mercandalli.android.apps.files",
+            "com.mercandalli.android.apps.search_dynamic.SearchActivity"
+        ).also { context.startActivity(it) }
+    }
 }

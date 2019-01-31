@@ -80,7 +80,7 @@
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginStart="@dimen/default_space_3"
                 android:layout_marginEnd="@dimen/default_space_3"
-                android:layout_marginBottom="@dimen/default_space_1_5"
+                android:layout_marginBottom="@dimen/default_space"
                 android:background="@drawable/bg_default_btn"
                 android:fontFamily="@font/google_sans_regular"
                 android:paddingStart="10dp"

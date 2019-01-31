@@ -1,0 +1,28 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.mercandalli.android.apps.search_dynamic">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_app_search_dynamic">
+
+        <dist:fusing dist:include="true" />
+
+    </dist:module>
+
+    <application android:allowBackup="false">
+
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/activity_dynamic_search_label"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>
+

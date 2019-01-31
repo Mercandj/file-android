@@ -12,4 +12,6 @@ interface ScreenManager {
     fun startPermission()
 
     fun startSystemSettingsStorage()
+
+    fun startSearch()
 }

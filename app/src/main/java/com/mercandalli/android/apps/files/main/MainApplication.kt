@@ -1,8 +1,10 @@
 package com.mercandalli.android.apps.files.main
 
 import android.app.Application
+import android.content.Context
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
+import com.google.android.play.core.splitcompat.SplitCompat
 import com.mercandalli.android.apps.files.BuildConfig
 import com.mercandalli.android.apps.files.audio.AudioManager
 import io.fabric.sdk.android.Fabric
@@ -34,6 +36,11 @@ class MainApplication : Application() {
 
         val notificationAudioManager = ApplicationGraph.getNotificationAudioManager()
         notificationAudioManager.initialize()
+    }
+
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(context)
+        SplitCompat.install(this)
     }
 
     private fun setupCrashlytics() {

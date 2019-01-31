@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_height_2">112dp</dimen>
     <dimen name="bottom_bar_height">56dp</dimen>
     <dimen name="bottom_bar_height_plus_6">62dp</dimen>
     <dimen name="bottom_bar_height_plus_16">72dp</dimen>

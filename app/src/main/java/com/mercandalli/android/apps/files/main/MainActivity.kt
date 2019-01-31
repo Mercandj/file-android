@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity(),
     private val toolbarShare: View by bind(R.id.activity_main_toolbar_share)
     private val toolbarAdd: View by bind(R.id.activity_main_toolbar_add)
     private val toolbarUpload: View by bind(R.id.activity_main_toolbar_upload)
+    private val toolbarSearch: View by bind(R.id.activity_main_toolbar_search)
+    private val toolbarSearchLoading: View by bind(R.id.activity_main_toolbar_search_loading)
     private val toolbarFilePaste: View by bind(R.id.activity_main_toolbar_file_paste)
     private val toolbarFileList: View by bind(R.id.activity_main_toolbar_file_list)
     private val toolbarFileColumn: View by bind(R.id.activity_main_toolbar_file_column)
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity(),
         toolbarShare.setOnClickListener { userAction.onToolbarShareClicked() }
         toolbarAdd.setOnClickListener { userAction.onToolbarAddClicked() }
         toolbarUpload.setOnClickListener { userAction.onToolbarUploadClicked() }
+        toolbarSearch.setOnClickListener { userAction.onToolbarSearchClicked() }
         toolbarFileColumn.setOnClickListener { userAction.onToolbarFileColumnClicked() }
         toolbarFileList.setOnClickListener { userAction.onToolbarFileListClicked() }
         toolbarFilePaste.setOnClickListener { userAction.onToolbarFilePasteClicked() }
@@ -166,6 +169,22 @@ class MainActivity : AppCompatActivity(),
 
     override fun hideToolbarUpload() {
         toolbarUpload.visibility = View.GONE
+    }
+
+    override fun showToolbarSearch() {
+        toolbarSearch.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarSearch() {
+        toolbarSearch.visibility = View.GONE
+    }
+
+    override fun showToolbarSearchLoading() {
+        toolbarSearchLoading.visibility = View.VISIBLE
+    }
+
+    override fun hideToolbarSearchLoading() {
+        toolbarSearchLoading.visibility = View.GONE
     }
 
     override fun showToolbarFileColumn() {
@@ -302,7 +321,6 @@ class MainActivity : AppCompatActivity(),
         val fileOnlineCreatorManager = ApplicationGraph.getFileOnlineCreatorManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileOnlineCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
-        val themeManager = ApplicationGraph.getThemeManager()
         val fileUiStorageSharedPreferences = getSharedPreferences(
             MainActivityFileUiStorageImpl.PREFERENCE_NAME,
             Context.MODE_PRIVATE
@@ -317,15 +335,24 @@ class MainActivity : AppCompatActivity(),
         val mainActivitySectionStorage = MainActivitySectionStorageImpl(
             sectionStorageSharedPreferences
         )
+        val screenManager = ApplicationGraph.getScreenManager()
+        val splitInstallManager = ApplicationGraph.getSplitInstallManager()
+        val themeManager = ApplicationGraph.getThemeManager()
+        val toastManager = ApplicationGraph.getToastManager()
+        val updateManager = ApplicationGraph.getUpdateManager()
         return MainActivityPresenter(
             this,
             fileCreatorManager,
             fileOnlineCreatorManager,
             fileCopyCutManager,
             fileOnlineCopyCutManager,
-            themeManager,
             mainActivityFileUiStorage,
             mainActivitySectionStorage,
+            screenManager,
+            splitInstallManager,
+            themeManager,
+            toastManager,
+            updateManager,
             Environment.getExternalStorageDirectory().absolutePath,
             "/"
         )

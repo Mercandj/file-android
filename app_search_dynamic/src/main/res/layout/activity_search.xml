@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/activity_search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_gravity="top|end"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/activity_search_toolbar_back"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_gravity="start|top"
+            android:autoMirrored="true"
+            android:background="?android:selectableItemBackground"
+            android:padding="18dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            tools:ignore="UnusedAttribute" />
+
+        <EditText
+            android:id="@+id/activity_search_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/toolbar_height"
+            android:layout_marginLeft="@dimen/toolbar_height"
+            android:layout_marginEnd="@dimen/toolbar_height_2"
+            android:layout_marginRight="@dimen/toolbar_height_2"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/google_sans_regular"
+            android:hint="@string/activity_search_input_hint"
+            android:imeOptions="actionSearch|flagNoExtractUi"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingStart="2dp"
+            android:paddingLeft="2dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:singleLine="true"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/activity_search_toolbar_input_clear"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_gravity="end|top"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="@dimen/toolbar_height"
+            android:layout_marginRight="@dimen/toolbar_height"
+            android:background="?android:selectableItemBackground"
+            android:padding="18dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:tint="@android:color/black"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/activity_search_toolbar_search_icon"
+            android:layout_width="@dimen/toolbar_height"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_gravity="end|top"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@string/search"
+            android:padding="16dp"
+            android:src="@drawable/ic_search_black_24dp"
+            android:tint="@android:color/black" />
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_search_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:clipToPadding="false"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:paddingTop="6dp"
+        android:paddingBottom="@dimen/bottom_bar_height_plus_fab"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        tools:itemCount="5"
+        tools:listitem="@layout/view_file_list_row_preview" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:background="@drawable/shadow_bottom"
+        android:clickable="false" />
+
+</merge>

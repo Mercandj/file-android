@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_app_search_dynamic" translatable="false">Search</string>
+    <item name="activity_dynamic_search_label" translatable="false" type="string" />
+</resources>

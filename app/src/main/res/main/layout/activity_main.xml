@@ -31,6 +31,27 @@
             android:paddingEnd="6dp">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/activity_main_toolbar_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?android:selectableItemBackground"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/ic_search_black_24dp" />
+
+            <ProgressBar
+                android:id="@+id/activity_main_toolbar_search_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?android:selectableItemBackground"
+                android:paddingStart="10dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="16dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/activity_main_toolbar_file_paste"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

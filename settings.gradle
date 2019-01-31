@@ -1,7 +1,8 @@
 include ':app',
-        ':app-tv',
-        ':file-api',
-        ':file-api-android',
-        ':file-api-online',
-        ':file-api-online-android',
+        ':app_search_dynamic',
+        ':app_tv',
+        ':file_api',
+        ':file_api_android',
+        ':file_api_online',
+        ':file_api_online_android',
         ':server'

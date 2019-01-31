@@ -8,6 +8,7 @@ import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
+import com.mercandalli.android.apps.files.settings_dynamic.SettingsDynamicView
 import com.mercandalli.android.apps.files.settings_storage.SettingsStorageView
 import com.mercandalli.android.apps.files.settings_theme.SettingsThemeView
 
@@ -16,11 +17,13 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
     init {
         delegatesManager.addDelegate(SettingsThemeAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsStorageAdapterDelegate() as AdapterDelegate<List<Any>>)
+        delegatesManager.addDelegate(SettingsDynamicAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
         populate(listOf(
             SettingsTheme(),
             SettingsStorage(),
+            SettingsDynamic(),
             SettingsDeveloper(),
             SettingsAbout()
         ))
@@ -71,6 +74,26 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 
     private class SettingsStorageViewHolder(view: View) : RecyclerView.ViewHolder(view)
     //endregion SettingsStorage
+
+    //region SettingsDynamic
+    class SettingsDynamic
+
+    private class SettingsDynamicAdapterDelegate :
+        AbsListItemAdapterDelegate<Any, Any, SettingsDynamicViewHolder>() {
+
+        override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsDynamic
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup): SettingsDynamicViewHolder {
+            val view = SettingsDynamicView(viewGroup.context)
+            view.layoutParams = createDefaultRecyclerViewLayoutParam()
+            return SettingsDynamicViewHolder(view)
+        }
+
+        override fun onBindViewHolder(model: Any, titleViewHolder: SettingsDynamicViewHolder, list: List<Any>) {}
+    }
+
+    private class SettingsDynamicViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    //endregion SettingsDynamic
 
     //region SettingsDeveloper
     class SettingsDeveloper

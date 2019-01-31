@@ -31,7 +31,7 @@ class FileListView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), FileListContract.Screen {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val view = View.inflate(context, R.layout.view_file_list, this)
     private val refresh: SwipeRefreshLayout = view.findViewById(R.id.view_file_list_refresh)
@@ -64,65 +64,6 @@ class FileListView @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         userAction.onDetached()
         super.onDetachedFromWindow()
-    }
-
-    override fun showEmptyView() {
-        emptyTextView.visibility = VISIBLE
-    }
-
-    override fun hideEmptyView() {
-        emptyTextView.visibility = GONE
-    }
-
-    override fun showErrorMessage() {
-        errorTextView.visibility = VISIBLE
-    }
-
-    override fun hideErrorMessage() {
-        errorTextView.visibility = GONE
-    }
-
-    override fun showFiles(files: List<File>) {
-        recyclerView.visibility = VISIBLE
-        adapter.populate(files)
-    }
-
-    override fun hideFiles() {
-        recyclerView.visibility = GONE
-    }
-
-    override fun showLoader() {
-        refresh.isRefreshing = true
-    }
-
-    override fun selectPath(path: String?) {
-        adapter.selectPath(path)
-    }
-
-    override fun hideLoader() {
-        refresh.isRefreshing = false
-    }
-
-    override fun showFabUpArrow() {
-        fab.show()
-    }
-
-    override fun hideFabUpArrow() {
-        fab.hide()
-    }
-
-    override fun setEmptyTextColorRes(@ColorRes colorRes: Int) {
-        val color = ContextCompat.getColor(context, colorRes)
-        emptyTextView.setTextColor(color)
-    }
-
-    override fun setErrorTextColorRes(@ColorRes colorRes: Int) {
-        val color = ContextCompat.getColor(context, colorRes)
-        errorTextView.setTextColor(color)
-    }
-
-    override fun notifyListenerCurrentPathChanged(currentPath: String) {
-        fileListViewSelectedFileListener?.onSelectedFilePathChanged(currentPath)
     }
 
     fun setFileLongClickListener(listener: FileListRow.FileLongClickListener?) {
@@ -165,6 +106,68 @@ class FileListView @JvmOverloads constructor(
         }
     }
 
+    private fun createScreen(): FileListContract.Screen = object : FileListContract.Screen {
+
+        override fun showEmptyView() {
+            emptyTextView.visibility = VISIBLE
+        }
+
+        override fun hideEmptyView() {
+            emptyTextView.visibility = GONE
+        }
+
+        override fun showErrorMessage() {
+            errorTextView.visibility = VISIBLE
+        }
+
+        override fun hideErrorMessage() {
+            errorTextView.visibility = GONE
+        }
+
+        override fun showFiles(files: List<File>) {
+            recyclerView.visibility = VISIBLE
+            adapter.populate(files)
+        }
+
+        override fun hideFiles() {
+            recyclerView.visibility = GONE
+        }
+
+        override fun showLoader() {
+            refresh.isRefreshing = true
+        }
+
+        override fun selectPath(path: String?) {
+            adapter.selectPath(path)
+        }
+
+        override fun hideLoader() {
+            refresh.isRefreshing = false
+        }
+
+        override fun showFabUpArrow() {
+            fab.show()
+        }
+
+        override fun hideFabUpArrow() {
+            fab.hide()
+        }
+
+        override fun setEmptyTextColorRes(@ColorRes colorRes: Int) {
+            val color = ContextCompat.getColor(context, colorRes)
+            emptyTextView.setTextColor(color)
+        }
+
+        override fun setErrorTextColorRes(@ColorRes colorRes: Int) {
+            val color = ContextCompat.getColor(context, colorRes)
+            errorTextView.setTextColor(color)
+        }
+
+        override fun notifyListenerCurrentPathChanged(currentPath: String) {
+            fileListViewSelectedFileListener?.onSelectedFilePathChanged(currentPath)
+        }
+    }
+
     private fun createUserAction() = if (isInEditMode) {
         object : FileListContract.UserAction {
             override fun onAttached() {}
@@ -182,12 +185,13 @@ class FileListView @JvmOverloads constructor(
             override fun getCurrentPath() = "/"
         }
     } else {
+        val screen = createScreen()
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
         FileListPresenter(
-            this,
+            screen,
             fileChildrenManager,
             fileOpenManager,
             fileSortManager,
