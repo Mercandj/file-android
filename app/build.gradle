@@ -130,7 +130,7 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':file_api_android')
+    api project(':file_api_android')
     implementation project(':file_api_online_android')
 
     // Language
@@ -145,7 +145,7 @@ dependencies {
     api "androidx.recyclerview:recyclerview:1.0.0"
 
     // Google - Firebase
-    implementation "com.google.firebase:firebase-core:16.0.6"
+    implementation "com.google.firebase:firebase-core:16.0.7"
     implementation "com.google.firebase:firebase-config:16.1.3"
 
     // Google dynamic delivery feature
@@ -172,7 +172,7 @@ dependencies {
 
     // Testing-only dependencies
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.23.4'
+    testImplementation 'org.mockito:mockito-core:2.24.0'
 
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

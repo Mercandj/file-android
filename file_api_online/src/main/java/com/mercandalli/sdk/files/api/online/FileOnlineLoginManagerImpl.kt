@@ -42,7 +42,7 @@ internal class FileOnlineLoginManagerImpl(
         if (listeners.contains(listener)) {
             return
         }
-        listeners.remove(listener)
+        listeners.add(listener)
     }
 
     override fun unregisterLoginListener(listener: FileOnlineLoginManager.LoginListener) {

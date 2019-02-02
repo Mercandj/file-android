@@ -76,10 +76,7 @@ class SettingsAboutPresenter(
         screen.setSubtitlesTextColorRes(theme.textSecondaryColorRes)
     }
 
-    private fun consumeDialogActionPositiveClicked(dialogAction: DialogManager.DialogAction?) {
-        if (dialogAction == null) {
-            return
-        }
+    private fun consumeDialogActionPositiveClicked(dialogAction: DialogManager.DialogAction) : Boolean {
         when (dialogAction.dialogId) {
             DIALOG_ID_VERSION_NAME -> {
                 dialogManager.prompt(
@@ -89,13 +86,16 @@ class SettingsAboutPresenter(
                     R.string.view_settings_developer_activation_ok,
                     R.string.view_settings_developer_activation_cancel
                 )
+                return true
             }
             DIALOG_ID_PROMPT_PASS -> {
-                val isAppDeveloperModeEnabled = hashManager.sha256(dialogAction.userInput, 32) ==
+                val appDeveloperModeEnabled = hashManager.sha256(dialogAction.userInput, 32) ==
                     "1753549de2d885325195f6ab9e3f86174f7f2626ccd3d4eccae82398b48de19d"
-                setIsAppDeveloperEnabled(isAppDeveloperModeEnabled)
+                setIsAppDeveloperEnabled(appDeveloperModeEnabled)
+                return true
             }
         }
+        return false
     }
 
     private fun setIsAppDeveloperEnabled(isAppDeveloperModeEnabled: Boolean) {
@@ -128,8 +128,7 @@ class SettingsAboutPresenter(
 
     private fun createDialogListener() = object : DialogManager.Listener {
         override fun onDialogPositiveClicked(dialogAction: DialogManager.DialogAction): Boolean {
-            consumeDialogActionPositiveClicked(dialogAction)
-            return true
+            return consumeDialogActionPositiveClicked(dialogAction)
         }
 
         override fun onDialogNegativeClicked(dialogAction: DialogManager.DialogAction) {

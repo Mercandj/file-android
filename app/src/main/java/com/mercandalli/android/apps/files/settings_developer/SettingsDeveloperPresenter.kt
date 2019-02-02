@@ -24,11 +24,13 @@ class SettingsDeveloperPresenter(
     private val themeListener = createThemeListener()
     private val dialogListener = createDialogListener()
     private val appDeveloperListener = createAppDeveloperListener()
+    private val loginListener = createLoginListener()
 
     override fun onAttached() {
         themeManager.registerThemeListener(themeListener)
         dialogManager.registerListener(dialogListener)
         developerManager.registerDeveloperModeListener(appDeveloperListener)
+        fileOnlineLoginManager.registerLoginListener(loginListener)
         updateTheme()
         syncDeveloperSection()
     }
@@ -37,6 +39,7 @@ class SettingsDeveloperPresenter(
         themeManager.unregisterThemeListener(themeListener)
         dialogManager.unregisterListener(dialogListener)
         developerManager.unregisterDeveloperModeListener(appDeveloperListener)
+        fileOnlineLoginManager.unregisterLoginListener(loginListener)
     }
 
     override fun onOnlineLoginRowClicked() {
@@ -118,6 +121,12 @@ class SettingsDeveloperPresenter(
         }
     }
 
+    private fun createLoginListener() = object : FileOnlineLoginManager.LoginListener{
+        override fun onOnlineLogChanged() {
+            syncDeveloperSection()
+        }
+    }
+
     private fun createDialogListener() = object : DialogManager.Listener {
 
         override fun onDialogPositiveClicked(dialogAction: DialogManager.DialogAction): Boolean {
@@ -139,8 +148,8 @@ class SettingsDeveloperPresenter(
     }
 
     companion object {
-        private const val DIALOG_ID_ONLINE_LOGIN = "DIALOG_ID_ONLINE_LOGIN"
-        private const val DIALOG_ID_ONLINE_PASSWORD = "DIALOG_ID_ONLINE_PASSWORD"
+        private const val DIALOG_ID_ONLINE_LOGIN = "SettingsDeveloperPresenter.DIALOG_ID_ONLINE_LOGIN"
+        private const val DIALOG_ID_ONLINE_PASSWORD = "SettingsDeveloperPresenter.DIALOG_ID_ONLINE_PASSWORD"
     }
 
     interface AddOn {
