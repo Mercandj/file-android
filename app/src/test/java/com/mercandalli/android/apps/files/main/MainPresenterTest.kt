@@ -1,5 +1,6 @@
 package com.mercandalli.android.apps.files.main
 
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.split_install.SplitInstallManager
@@ -30,6 +31,12 @@ class MainPresenterTest {
     @Mock
     private lateinit var fileOnlineCopyCutManager: FileCopyCutManager
     @Mock
+    private lateinit var developerManager: DeveloperManager
+    @Mock
+    private lateinit var mainActivityFileUiStorage: MainActivityFileUiStorage
+    @Mock
+    private lateinit var mainActivitySectionStorage: MainActivitySectionStorage
+    @Mock
     private lateinit var remoteConfig: RemoteConfig
     @Mock
     private lateinit var screenManager: ScreenManager
@@ -43,10 +50,6 @@ class MainPresenterTest {
     private lateinit var updateManager: UpdateManager
     @Mock
     private lateinit var theme: Theme
-    @Mock
-    private lateinit var mainActivityFileUiStorage: MainActivityFileUiStorage
-    @Mock
-    private lateinit var mainActivitySectionStorage: MainActivitySectionStorage
     private val rootPathLocal = "/0/"
     private val rootPathOnline = "/"
 
@@ -102,6 +105,7 @@ class MainPresenterTest {
             fileOnlineCreatorManager,
             fileCopyCutManager,
             fileOnlineCopyCutManager,
+            developerManager,
             mainActivityFileUiStorage,
             mainActivitySectionStorage,
             remoteConfig,
