@@ -38,6 +38,10 @@ class SearchActivityPresenter(
     override fun onInputFocusChanged(hasFocus: Boolean) {
     }
 
+    override fun onSearchIconClicked(search: String) {
+        performSearchInternal(search)
+    }
+
     private fun syncScreen() {
         val files = ArrayList<File>()
         search?.let {

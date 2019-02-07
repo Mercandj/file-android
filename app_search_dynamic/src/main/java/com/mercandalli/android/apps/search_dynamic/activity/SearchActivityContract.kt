@@ -20,6 +20,8 @@ interface SearchActivityContract {
         fun onInputChanged(inputCharSequence: CharSequence?)
 
         fun onInputFocusChanged(hasFocus: Boolean)
+
+        fun onSearchIconClicked(search: String)
     }
 
     interface Screen {

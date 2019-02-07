@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.search_dynamic.R
 import com.mercandalli.sdk.files.api.File
 
@@ -22,6 +23,7 @@ class SearchListView @JvmOverloads constructor(
     private val view = View.inflate(context, R.layout.view_search_list, this)
     private val recyclerView: RecyclerView = view.findViewById(R.id.view_search_list_recycler_view)
     private val adapter = createAdapter()
+    private val userAction = createUserAction()
 
     init {
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -34,6 +36,24 @@ class SearchListView @JvmOverloads constructor(
 
     private fun createAdapter() = SearchListAdapter(object : FileListRow.FileClickListener {
         override fun onFileClicked(file: File) {
+            userAction.onFileClicked(file)
         }
     })
+
+    private fun createScreen() = object : SearchListContract.Screen {
+    }
+
+    private fun createUserAction(): SearchListContract.UserAction {
+        if (isInEditMode) {
+            return object : SearchListContract.UserAction {
+                override fun onFileClicked(file: File) {}
+            }
+        }
+        val screen = createScreen()
+        val fileOpenManager = ApplicationGraph.getFileOpenManager()
+        return SearchListPresenter(
+            screen,
+            fileOpenManager
+        )
+    }
 }

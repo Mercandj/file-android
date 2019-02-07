@@ -24,6 +24,7 @@ class SearchActivity : Activity(),
 
     private val back: View by bind(R.id.activity_search_toolbar_back)
     private val input: EditText by bind(R.id.activity_search_input)
+    private val searchIcon: View by bind(R.id.activity_search_toolbar_search_icon)
     private val searchListView: SearchListView by bind(R.id.activity_search_list)
 
     private val userAction = createUserAction()
@@ -40,6 +41,9 @@ class SearchActivity : Activity(),
         input.addTextChangedListener(inputTextWatcher)
         input.setOnFocusChangeListener { _, hasFocus ->
             userAction.onInputFocusChanged(hasFocus)
+        }
+        searchIcon.setOnClickListener {
+            userAction.onSearchIconClicked(input.text.toString())
         }
         userAction.onCreate()
     }
