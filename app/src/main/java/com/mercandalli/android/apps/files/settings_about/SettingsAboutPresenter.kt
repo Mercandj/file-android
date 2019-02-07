@@ -76,7 +76,7 @@ class SettingsAboutPresenter(
         screen.setSubtitlesTextColorRes(theme.textSecondaryColorRes)
     }
 
-    private fun consumeDialogActionPositiveClicked(dialogAction: DialogManager.DialogAction) : Boolean {
+    private fun consumeDialogActionPositiveClicked(dialogAction: DialogManager.DialogAction): Boolean {
         when (dialogAction.dialogId) {
             DIALOG_ID_VERSION_NAME -> {
                 dialogManager.prompt(

@@ -1,3 +1,6 @@
+@file:Suppress("PackageName")
+
+/* ktlint-disable package-name */
 package com.mercandalli.android.apps.search_dynamic
 
 import android.annotation.SuppressLint

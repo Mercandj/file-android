@@ -84,10 +84,10 @@ class FileColumnRowPresenterTest {
         Mockito.`when`(themeManager.getTheme()).thenReturn(theme)
         return FileColumnRowPresenter(
             screen,
+            audioManager,
             fileDeleteManager,
             fileCopyCutManager,
             fileRenameManager,
-            audioManager,
             themeManager,
             toastManager,
             drawableRightIconDirectoryDrawableRes,
