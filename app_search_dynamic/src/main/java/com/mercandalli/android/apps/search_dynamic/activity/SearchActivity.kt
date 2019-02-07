@@ -58,6 +58,10 @@ class SearchActivity : Activity(),
         KeyboardUtils.showSoftInput(input)
     }
 
+    override fun hideKeyBoard() {
+        KeyboardUtils.hideSoftInput(input)
+    }
+
     override fun quit() {
         finish()
     }

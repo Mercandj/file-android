@@ -12,7 +12,7 @@ class SearchActivityPresenter(
 ) : SearchActivityContract.UserAction {
 
     private val fileSearchListener = createFileSearchListener()
-    private var lastSearchInput: String? = null
+    private var search: String? = null
 
     override fun onCreate() {
         screen.showKeyboard()
@@ -29,7 +29,7 @@ class SearchActivityPresenter(
     }
 
     override fun onSearchPerformed(search: String) {
-        fileSearchManager.search(search)
+        performSearchInternal(search)
     }
 
     override fun onInputChanged(inputCharSequence: CharSequence?) {
@@ -40,7 +40,7 @@ class SearchActivityPresenter(
 
     private fun syncScreen() {
         val files = ArrayList<File>()
-        lastSearchInput?.let {
+        search?.let {
             val searchResult = fileSearchManager.getSearchResult(it)
             files.addAll(searchResult.files)
         }
@@ -48,11 +48,18 @@ class SearchActivityPresenter(
     }
 
     private fun performSearchInternal(search: String) {
-        lastSearchInput = search
+        this.search = search
+        fileSearchManager.search(search)
+        screen.hideKeyBoard()
+        syncScreen()
     }
 
     private fun createFileSearchListener() = object : FileSearchManager.FileSearchListener {
         override fun onFileSearchResultChanged(query: String) {
+            if (search != query) {
+                return
+            }
+            syncScreen()
         }
     }
 }

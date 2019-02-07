@@ -28,6 +28,8 @@ interface SearchActivityContract {
 
         fun showKeyboard()
 
+        fun hideKeyBoard()
+
         fun quit()
     }
 }

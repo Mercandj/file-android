@@ -42,7 +42,7 @@ class ScreenManagerImpl(
         }
         intent.setClassName(
             "com.mercandalli.android.apps.files",
-            "com.mercandalli.android.apps.search_dynamic.SearchActivity"
+            "com.mercandalli.android.apps.search_dynamic.activity.SearchActivity"
         ).also { context.startActivity(it) }
     }
 }
