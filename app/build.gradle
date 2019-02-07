@@ -131,7 +131,7 @@ configurations {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':file_api_android')
-    implementation project(':file_api_online_android')
+    api project(':file_api_online_android')
 
     // Language
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -162,7 +162,7 @@ dependencies {
     implementation "com.squareup.okhttp:okhttp-urlconnection:2.7.5"
 
     // Third party - UI
-    implementation 'com.hannesdorfmann:adapterdelegates4:4.0.0'
+    api 'com.hannesdorfmann:adapterdelegates4:4.0.0'
     // https://github.com/Dimezis/BlurView
     implementation 'com.eightbitlab:blurview:1.5.0'
 

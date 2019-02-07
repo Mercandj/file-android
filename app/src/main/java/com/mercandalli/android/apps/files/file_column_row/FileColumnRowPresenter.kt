@@ -15,10 +15,10 @@ import com.mercandalli.sdk.files.api.FileRenameManager
 
 class FileColumnRowPresenter(
     private val screen: FileColumnRowContract.Screen,
+    private val audioManager: AudioManager,
     private val fileDeleteManager: FileDeleteManager,
     private val fileCopyCutManager: FileCopyCutManager,
     private val fileRenameManager: FileRenameManager,
-    private val audioManager: AudioManager,
     private val themeManager: ThemeManager,
     private val toastManager: ToastManager,
     @DrawableRes

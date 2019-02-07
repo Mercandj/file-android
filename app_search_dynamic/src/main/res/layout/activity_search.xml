@@ -75,19 +75,13 @@
 
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_search_recycler_view"
+    <com.mercandalli.android.apps.search_dynamic.list.SearchListView
+        android:id="@+id/activity_search_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:clipToPadding="false"
-        android:layout_marginTop="@dimen/toolbar_height"
-        android:paddingTop="6dp"
-        android:paddingBottom="@dimen/bottom_bar_height_plus_fab"
-        android:scrollbarStyle="outsideOverlay"
-        android:scrollbars="vertical"
-        tools:itemCount="5"
-        tools:listitem="@layout/view_file_list_row_preview" />
+        android:layout_marginTop="@dimen/toolbar_height"/>
 
     <View
         android:layout_width="match_parent"

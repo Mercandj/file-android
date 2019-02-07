@@ -172,18 +172,18 @@ class FileColumnRow @JvmOverloads constructor(
             override fun onRenameConfirmedClicked(fileName: String) {}
         }
     } else {
+        val audioManager = ApplicationGraph.getAudioManager()
         val fileDeleteManager = ApplicationGraph.getFileDeleteManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileRenameManager = ApplicationGraph.getFileRenameManager()
-        val audioManager = ApplicationGraph.getAudioManager()
         val themeManager = ApplicationGraph.getThemeManager()
         val toastManager = ApplicationGraph.getToastManager()
         FileColumnRowPresenter(
             this,
+            audioManager,
             fileDeleteManager,
             fileCopyCutManager,
             fileRenameManager,
-            audioManager,
             themeManager,
             toastManager,
             R.drawable.ic_play_arrow_black_24dp,

@@ -14,7 +14,7 @@
     <application android:allowBackup="false">
 
         <activity
-            android:name=".SearchActivity"
+            android:name=".activity.SearchActivity"
             android:label="@string/activity_dynamic_search_label"
             android:theme="@style/AppTheme">
             <intent-filter>

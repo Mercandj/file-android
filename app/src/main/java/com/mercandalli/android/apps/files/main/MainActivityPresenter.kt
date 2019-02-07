@@ -1,6 +1,7 @@
 package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.split_install.SplitFeature
@@ -17,6 +18,7 @@ internal class MainActivityPresenter(
     private val fileOnlineCreatorManager: FileCreatorManager,
     private val fileCopyCutManager: FileCopyCutManager,
     private val fileOnlineCopyCutManager: FileCopyCutManager,
+    private val developerManager: DeveloperManager,
     private val mainActivityFileUiStorage: MainActivityFileUiStorage,
     private val mainActivitySectionStorage: MainActivitySectionStorage,
     private val remoteConfig: RemoteConfig,
@@ -312,7 +314,9 @@ internal class MainActivityPresenter(
     }
 
     private fun syncToolbarSearchVisibility() {
-        if (!remoteConfig.getSearchEnabled()) {
+        val searchEnabled = remoteConfig.getSearchEnabled()
+        val developerMode = developerManager.isDeveloperMode()
+        if (!searchEnabled && !developerMode) {
             screen.hideToolbarSearch()
             screen.hideToolbarSearchLoading()
             return

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/view_search_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:clipToPadding="false"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:paddingTop="6dp"
+        android:paddingBottom="@dimen/bottom_bar_height_plus_fab"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        tools:itemCount="5"
+        tools:listitem="@layout/view_file_list_row_preview" />
+
+</merge>

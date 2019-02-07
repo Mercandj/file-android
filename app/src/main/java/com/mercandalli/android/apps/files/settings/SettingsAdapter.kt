@@ -21,8 +21,11 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsDynamicAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
+        val developerManager = ApplicationGraph.getDeveloperManager()
         val remoteConfig = ApplicationGraph.getRemoteConfig()
-        val list = if (remoteConfig.getSearchEnabled()) {
+        val developerMode = developerManager.isDeveloperMode()
+        val searchEnabled = remoteConfig.getSearchEnabled()
+        val list = if (searchEnabled || developerMode) {
             listOf(
                 SettingsTheme(),
                 SettingsStorage(),

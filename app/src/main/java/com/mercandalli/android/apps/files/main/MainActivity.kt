@@ -321,6 +321,7 @@ class MainActivity : AppCompatActivity(),
         val fileOnlineCreatorManager = ApplicationGraph.getFileOnlineCreatorManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileOnlineCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
+        val developerManager = ApplicationGraph.getDeveloperManager()
         val fileUiStorageSharedPreferences = getSharedPreferences(
             MainActivityFileUiStorageImpl.PREFERENCE_NAME,
             Context.MODE_PRIVATE
@@ -347,6 +348,7 @@ class MainActivity : AppCompatActivity(),
             fileOnlineCreatorManager,
             fileCopyCutManager,
             fileOnlineCopyCutManager,
+            developerManager,
             mainActivityFileUiStorage,
             mainActivitySectionStorage,
             remoteConfig,

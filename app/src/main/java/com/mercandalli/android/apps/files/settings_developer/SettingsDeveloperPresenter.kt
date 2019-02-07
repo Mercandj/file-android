@@ -121,7 +121,7 @@ class SettingsDeveloperPresenter(
         }
     }
 
-    private fun createLoginListener() = object : FileOnlineLoginManager.LoginListener{
+    private fun createLoginListener() = object : FileOnlineLoginManager.LoginListener {
         override fun onOnlineLogChanged() {
             syncDeveloperSection()
         }
