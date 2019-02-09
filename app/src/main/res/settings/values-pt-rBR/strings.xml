@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="view_settings_store_section_label">Versão completa</string>
+    <string name="view_settings_store_label">Versão completa gratuita</string>
+    <string name="view_settings_store_sublabel">Promoção para desbloquear a versão completa gratuitamente e apoiar o desenvolvedor de aplicativos</string>
+    <string name="view_settings_store_badge">PROMOÇÃO</string>
+
+    <string name="view_settings_full_version_section_label">Versão completa</string>
+    <string name="view_settings_full_version_label">Versão completa desbloqueada</string>
+    <string name="view_settings_full_version_sublabel">Todas as funcionalidades e futuras melhorias desbloqueadas</string>
+    <string name="view_settings_full_version_badge">VIP</string>
+
+</resources>
