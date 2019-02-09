@@ -24,12 +24,12 @@ internal class ProductManagerImpl(
         if (developerMode) {
             return true
         }
-        val fullVersionSku = getFullVersionSku()
+        val fullVersionSku = getFullVersionSku() ?: return true
         return purchaseManager.isPurchased(fullVersionSku)
     }
 
     override fun purchaseFullVersion(activityContainer: ProductManager.ActivityContainer) {
-        val fullVersionSku = getFullVersionSku()
+        val fullVersionSku = getFullVersionSku() ?: return
         val activityContainerPurchase = object : PurchaseManager.ActivityContainer {
             override fun get() = activityContainer.get()
         }
@@ -51,8 +51,12 @@ internal class ProductManagerImpl(
         productListeners.remove(listener)
     }
 
-    private fun getFullVersionSku(): String {
-        return remoteConfig.getSubscriptionFullVersionSku()
+    private fun getFullVersionSku(): String? {
+        val fullVersionSku = remoteConfig.getSubscriptionFullVersionSku()
+        if (fullVersionSku == "") {
+            return null
+        }
+        return fullVersionSku
     }
 
     private fun createPurchaseListener() = object : PurchaseManager.Listener {

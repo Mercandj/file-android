@@ -12,7 +12,7 @@ interface RemoteConfig {
 
     fun getSearchEnabled(): Boolean
 
-    fun getSubscriptionFullVersionSku(): String
+    fun getSubscriptionFullVersionSku(): String?
 
     fun registerListener(listener: RemoteConfigListener)
 

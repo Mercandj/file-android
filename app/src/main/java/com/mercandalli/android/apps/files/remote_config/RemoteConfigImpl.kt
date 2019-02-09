@@ -55,7 +55,7 @@ internal class RemoteConfigImpl(
 
     override fun getSubscriptionFullVersionSku() = firebaseRemoteConfig.getString(
         FIREBASE_KEY_SUBSCRIPTION_FULL_VERSION_SKU
-    )!!
+    )
 
     override fun registerListener(listener: RemoteConfig.RemoteConfigListener) {
         if (!listeners.contains(listener)) {
