@@ -1,5 +1,6 @@
 include ':app',
         ':app_tv',
+        ':feature_purchase',
         ':file_api',
         ':file_api_android',
         ':file_api_online',

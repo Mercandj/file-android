@@ -130,6 +130,7 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':feature_purchase')
     api project(':file_api_android')
     api project(':file_api_online_android')
 
@@ -152,9 +153,7 @@ dependencies {
     api "com.google.android.play:core:1.3.6"
 
     // Third party - Monitoring
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.8@aar') {
-        transitive = true
-    }
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 
     // Third party - Network
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"

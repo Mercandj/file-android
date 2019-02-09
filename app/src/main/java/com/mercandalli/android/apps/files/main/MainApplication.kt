@@ -22,20 +22,9 @@ class MainApplication : Application() {
 
         ApplicationGraph.init(this)
 
-        val audioManager = ApplicationGraph.getAudioManager()
-        val audioQueueManager = ApplicationGraph.getAudioQueueManager()
-        audioManager.registerCompletionListener(object : AudioManager.CompletionListener {
-            override fun onCompleted() {
-                val sourcePath = audioManager.getSourcePath() ?: return
-                val nextPath = audioQueueManager.next(sourcePath)
-                audioManager.reset()
-                audioManager.setSourcePath(nextPath)
-                audioManager.prepareAsync()
-            }
-        })
-
-        val notificationAudioManager = ApplicationGraph.getNotificationAudioManager()
-        notificationAudioManager.initialize()
+        initializeAudio()
+        initializeNotificationAudio()
+        initializeProduct()
     }
 
     override fun attachBaseContext(context: Context) {
@@ -45,8 +34,36 @@ class MainApplication : Application() {
 
     private fun setupCrashlytics() {
         val crashlyticsKit = Crashlytics.Builder()
-                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build()
+            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+            .build()
         Fabric.with(this, crashlyticsKit)
+    }
+
+    companion object {
+
+        private fun initializeAudio() {
+            val audioManager = ApplicationGraph.getAudioManager()
+            val audioQueueManager = ApplicationGraph.getAudioQueueManager()
+            val audioManagerCompletionListener = object : AudioManager.CompletionListener {
+                override fun onCompleted() {
+                    val sourcePath = audioManager.getSourcePath() ?: return
+                    val nextPath = audioQueueManager.next(sourcePath)
+                    audioManager.reset()
+                    audioManager.setSourcePath(nextPath)
+                    audioManager.prepareAsync()
+                }
+            }
+            audioManager.registerCompletionListener(audioManagerCompletionListener)
+        }
+
+        private fun initializeNotificationAudio() {
+            val notificationAudioManager = ApplicationGraph.getNotificationAudioManager()
+            notificationAudioManager.initialize()
+        }
+
+        private fun initializeProduct() {
+            val productManager = ApplicationGraph.getProductManager()
+            productManager.initialize()
+        }
     }
 }

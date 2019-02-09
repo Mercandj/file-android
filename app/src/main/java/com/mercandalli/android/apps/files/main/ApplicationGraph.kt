@@ -14,6 +14,7 @@ import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
 import com.mercandalli.android.apps.files.main_thread.MainThreadModule
 import com.mercandalli.android.apps.files.network.Network
+import com.mercandalli.android.apps.files.product.ProductModule
 import com.mercandalli.android.apps.files.remote_config.RemoteConfigModule
 import com.mercandalli.android.apps.files.screen.ScreenModule
 import com.mercandalli.android.apps.files.split_install.SplitInstallModule
@@ -66,11 +67,12 @@ class ApplicationGraph(
     private val fileSortManagerInternal by lazy { fileModuleInternal.createFileSortManager() }
     private val hashManagerInternal by lazy { HashModule(context).createHashManager() }
     private val mainThreadPostInternal by lazy { MainThreadModule().createMainThreadPost() }
-    private val network = networkModule.createNetwork()
+    private val network by lazy { networkModule.createNetwork() }
     private val noteManagerInternal by lazy { noteModule.createNoteManager() }
     private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
     private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
-    private val okHttpClientLazy = networkModule.createOkHttpClientLazy()
+    private val okHttpClientLazy by lazy { networkModule.createOkHttpClientLazy() }
+    private val productManagerInternal by lazy { ProductModule(context).createProductManager() }
     private val remoteConfigInternal by lazy { RemoteConfigModule().createRemoteConfig() }
     private val screenManagerInternal by lazy { screenModule.createScreenManager() }
     private val splitInstallManagerInternal by lazy { SplitInstallModule(context).createSplitInstallManager() }
@@ -123,6 +125,7 @@ class ApplicationGraph(
         fun getNoteManager() = graph!!.noteManagerInternal
         fun getNotificationAudioManager() = graph!!.notificationAudioManagerInternal
         fun getOkHttpClientLazy() = graph!!.okHttpClientLazy
+        fun getProductManager() = graph!!.productManagerInternal
         fun getRemoteConfig() = graph!!.remoteConfigInternal
         fun getScreenManager() = graph!!.screenManagerInternal
         fun getSplitInstallManager() = graph!!.splitInstallManagerInternal

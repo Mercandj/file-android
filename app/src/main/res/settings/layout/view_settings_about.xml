@@ -4,14 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:parentTag="android.widget.ScrollView">
+    android:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <TextView
+        android:id="@+id/view_settings_about_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/google_sans_regular"
+        android:text="@string/view_settings_about_label"
+        android:textColor="@color/text_secondary_color_light"
+        android:textSize="@dimen/text_size_l" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/view_settings_version_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/settings_horizontal_margins"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/settings_horizontal_margins"
         android:layout_marginBottom="@dimen/default_space"
         app:cardCornerRadius="@dimen/settings_card_radius">

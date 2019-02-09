@@ -33,6 +33,8 @@ internal class RemoteConfigImpl(
 
         val defaultMap = HashMap<String, Any>()
         defaultMap[FIREBASE_KEY_SEARCH_ENABLED] = defaultSearchEnabled
+        defaultMap[FIREBASE_KEY_SUBSCRIPTION_FULL_VERSION_SKU] =
+            "googleplay.com.mercandalli.android.apps.files.subscription.1"
         firebaseRemoteConfig.setDefaults(defaultMap)
 
         val firstLaunchAfterUpdate = updateManager.isFirstRunAfterUpdate()
@@ -48,7 +50,12 @@ internal class RemoteConfigImpl(
     }
 
     override fun isInitialized() = isInitializedInternal
+
     override fun getSearchEnabled() = firebaseRemoteConfig.getBoolean(FIREBASE_KEY_SEARCH_ENABLED)
+
+    override fun getSubscriptionFullVersionSku() = firebaseRemoteConfig.getString(
+        FIREBASE_KEY_SUBSCRIPTION_FULL_VERSION_SKU
+    )!!
 
     override fun registerListener(listener: RemoteConfig.RemoteConfigListener) {
         if (!listeners.contains(listener)) {
@@ -72,6 +79,7 @@ internal class RemoteConfigImpl(
 
     companion object {
         private const val FIREBASE_KEY_SEARCH_ENABLED = "search_enabled"
+        private const val FIREBASE_KEY_SUBSCRIPTION_FULL_VERSION_SKU = "subscription_full_version_sku"
         private const val defaultSearchEnabled = false
     }
 }

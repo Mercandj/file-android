@@ -12,10 +12,11 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ScrollView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.cardview.widget.CardView
 import com.google.android.material.snackbar.Snackbar
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
@@ -24,15 +25,17 @@ class SettingsAboutView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : ScrollView(context, attrs, defStyleAttr), SettingsAboutContract.Screen {
+) : LinearLayout(context, attrs, defStyleAttr),
+    SettingsAboutContract.Screen {
 
     private val view = View.inflate(context, R.layout.view_settings_about, this)
     private val versionTitle: TextView = view.findViewById(R.id.view_settings_version_title)
     private val versionSubtitle: TextView = view.findViewById(R.id.view_settings_version_subtitle)
-    private val versionCard: androidx.cardview.widget.CardView = view.findViewById(R.id.view_settings_version_section)
+    private val versionCard: CardView = view.findViewById(R.id.view_settings_version_section)
     private val userAction = createUserAction()
 
     init {
+        orientation = VERTICAL
         findViewById<View>(R.id.view_settings_rate).setOnClickListener {
             userAction.onRateClicked()
         }

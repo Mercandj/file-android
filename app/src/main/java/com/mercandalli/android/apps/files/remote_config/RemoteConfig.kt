@@ -12,6 +12,8 @@ interface RemoteConfig {
 
     fun getSearchEnabled(): Boolean
 
+    fun getSubscriptionFullVersionSku(): String
+
     fun registerListener(listener: RemoteConfigListener)
 
     fun unregisterListener(listener: RemoteConfigListener)
