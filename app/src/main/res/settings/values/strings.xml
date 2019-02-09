@@ -35,4 +35,8 @@
     <string name="view_settings_description">I hope you like this version\nStill a lot of features to come =)️</string>
     <string name="view_settings_rate_text️">RATE THIS APP ❤️</string>
     <string name="view_settings_team_apps_text">OTHER GREAT APPS</string>
+
+    <string name="view_settings_store_section_label">Support</string>
+    <string name="view_settings_store_label">Free</string>
+    <string name="view_settings_store_sublabel">Support this app developer =)</string>
 </resources>

@@ -11,6 +11,7 @@ import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
 import com.mercandalli.android.apps.files.settings_dynamic.SettingsDynamicView
 import com.mercandalli.android.apps.files.settings_storage.SettingsStorageView
+import com.mercandalli.android.apps.files.settings_store.SettingsStoreView
 import com.mercandalli.android.apps.files.settings_theme.SettingsThemeView
 
 class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
@@ -21,6 +22,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsDynamicAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
+        delegatesManager.addDelegate(SettingsStoreAdapterDelegate() as AdapterDelegate<List<Any>>)
         val developerManager = ApplicationGraph.getDeveloperManager()
         val remoteConfig = ApplicationGraph.getRemoteConfig()
         val developerMode = developerManager.isDeveloperMode()
@@ -29,6 +31,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
             listOf(
                 SettingsTheme(),
                 SettingsStorage(),
+                SettingsStore(),
                 SettingsDynamic(),
                 SettingsDeveloper(),
                 SettingsAbout()
@@ -37,6 +40,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
             listOf(
                 SettingsTheme(),
                 SettingsStorage(),
+                SettingsStore(),
                 SettingsDeveloper(),
                 SettingsAbout()
             )
@@ -89,6 +93,25 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 
     private class SettingsStorageViewHolder(view: View) : RecyclerView.ViewHolder(view)
     //endregion SettingsStorage
+
+    //region SettingsStore
+    class SettingsStore
+
+    private class SettingsStoreAdapterDelegate : AbsListItemAdapterDelegate<Any, Any, SettingsStoreViewHolder>() {
+
+        override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsStore
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup): SettingsStoreViewHolder {
+            val view = SettingsStoreView(viewGroup.context)
+            view.layoutParams = createDefaultRecyclerViewLayoutParam()
+            return SettingsStoreViewHolder(view)
+        }
+
+        override fun onBindViewHolder(model: Any, titleViewHolder: SettingsStoreViewHolder, list: List<Any>) {}
+    }
+
+    private class SettingsStoreViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    //endregion SettingsStore
 
     //region SettingsDynamic
     class SettingsDynamic
