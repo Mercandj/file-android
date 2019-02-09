@@ -6,7 +6,6 @@ package com.mercandalli.android.sdk.purchase
 import android.app.Activity
 import androidx.annotation.StringDef
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.SkuDetails
 
 interface PurchaseManager {
 

@@ -1,9 +1,8 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.android.apps.files.settings_store
+package com.mercandalli.android.apps.files.settings_full_version
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.AnimationDrawable
 import android.util.AttributeSet
@@ -17,30 +16,26 @@ import androidx.core.content.ContextCompat
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.files.R
 
-class SettingsStoreView @JvmOverloads constructor(
+class SettingsFullVersionView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr),
-    SettingsStoreContract.Screen {
+    SettingsFullVersionContract.Screen {
 
-    private val view = LayoutInflater.from(context).inflate(R.layout.view_settings_store, this)
+    private val view = LayoutInflater.from(context).inflate(R.layout.view_settings_full_version, this)
 
-    private val row: View = view.findViewById(R.id.view_settings_store_row)
-    private val section: CardView = view.findViewById(R.id.view_settings_store_section)
-    private val sectionLabel: TextView = view.findViewById(R.id.view_settings_store_section_label)
-    private val label: TextView = view.findViewById(R.id.view_settings_store_label)
-    private val subLabel: TextView = view.findViewById(R.id.view_settings_store_sublabel)
-    private val promotionGradient: View = view.findViewById(R.id.view_settings_store_promotion_gradient)
+    private val row: View = view.findViewById(R.id.view_settings_full_version_row)
+    private val section: CardView = view.findViewById(R.id.view_settings_full_version_section)
+    private val sectionLabel: TextView = view.findViewById(R.id.view_settings_full_version_section_label)
+    private val label: TextView = view.findViewById(R.id.view_settings_full_version_label)
+    private val subLabel: TextView = view.findViewById(R.id.view_settings_full_version_sublabel)
+    private val promotionGradient: View = view.findViewById(R.id.view_settings_full_version_promotion_gradient)
 
     private val userAction = createUserAction()
 
     init {
         orientation = LinearLayout.VERTICAL
-        row.setOnClickListener {
-            val activity = context as Activity
-            userAction.onRowClicked(activity)
-        }
     }
 
     override fun onAttachedToWindow() {
@@ -81,18 +76,15 @@ class SettingsStoreView @JvmOverloads constructor(
         animationDrawable.start()
     }
 
-    private fun createUserAction(): SettingsStoreContract.UserAction = if (isInEditMode) {
-        object : SettingsStoreContract.UserAction {
+    private fun createUserAction(): SettingsFullVersionContract.UserAction = if (isInEditMode) {
+        object : SettingsFullVersionContract.UserAction {
             override fun onAttached() {}
             override fun onDetached() {}
-            override fun onRowClicked(activity: Activity) {}
         }
     } else {
-        val productManager = ApplicationGraph.getProductManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        SettingsStorePresenter(
+        SettingsFullVersionPresenter(
             this,
-            productManager,
             themeManager
         )
     }

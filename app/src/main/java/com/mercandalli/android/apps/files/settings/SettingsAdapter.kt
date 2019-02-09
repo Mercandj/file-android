@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
 import com.mercandalli.android.apps.files.settings_dynamic.SettingsDynamicView
+import com.mercandalli.android.apps.files.settings_full_version.SettingsFullVersionView
 import com.mercandalli.android.apps.files.settings_storage.SettingsStorageView
 import com.mercandalli.android.apps.files.settings_store.SettingsStoreView
 import com.mercandalli.android.apps.files.settings_theme.SettingsThemeView
@@ -23,6 +23,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsStoreAdapterDelegate() as AdapterDelegate<List<Any>>)
+        delegatesManager.addDelegate(SettingsFullVersionAdapterDelegate() as AdapterDelegate<List<Any>>)
     }
 
     fun populate(list: List<Any>) {
@@ -89,6 +90,25 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 
     private class SettingsStoreViewHolder(view: View) : RecyclerView.ViewHolder(view)
     //endregion SettingsStore
+
+    //region SettingsFullVersion
+    class SettingsFullVersion
+
+    private class SettingsFullVersionAdapterDelegate : AbsListItemAdapterDelegate<Any, Any, SettingsFullVersionViewHolder>() {
+
+        override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsFullVersion
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup): SettingsFullVersionViewHolder {
+            val view = SettingsFullVersionView(viewGroup.context)
+            view.layoutParams = createDefaultRecyclerViewLayoutParam()
+            return SettingsFullVersionViewHolder(view)
+        }
+
+        override fun onBindViewHolder(model: Any, titleViewHolder: SettingsFullVersionViewHolder, list: List<Any>) {}
+    }
+
+    private class SettingsFullVersionViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    //endregion SettingsFullVersion
 
     //region SettingsDynamic
     class SettingsDynamic

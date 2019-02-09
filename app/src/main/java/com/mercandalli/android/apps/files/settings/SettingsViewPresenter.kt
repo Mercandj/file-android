@@ -35,7 +35,9 @@ class SettingsViewPresenter(
         val list = ArrayList<Any>()
         list.add(SettingsAdapter.SettingsTheme())
         list.add(SettingsAdapter.SettingsStorage())
-        if (!fullVersionUnlocked) {
+        if (fullVersionUnlocked) {
+            list.add(SettingsAdapter.SettingsFullVersion())
+        } else {
             list.add(SettingsAdapter.SettingsStore())
         }
         if (searchEnabled || developerMode) {
