@@ -8,4 +8,6 @@ internal interface PurchaseRepository {
     fun addPurchased(sku: String): Boolean
 
     fun isPurchased(sku: String): Boolean
+
+    fun isEmpty(): Boolean
 }

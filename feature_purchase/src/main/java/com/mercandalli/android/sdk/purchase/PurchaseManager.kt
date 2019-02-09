@@ -25,6 +25,8 @@ interface PurchaseManager {
 
     fun isPurchased(sku: String): Boolean
 
+    fun isPurchasedEmpty(): Boolean
+
     fun registerListener(listener: Listener)
 
     fun unregisterListener(listener: Listener)

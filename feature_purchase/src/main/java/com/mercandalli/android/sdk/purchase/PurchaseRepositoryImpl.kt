@@ -5,9 +5,6 @@ package com.mercandalli.android.sdk.purchase
 
 import android.content.SharedPreferences
 import org.json.JSONArray
-/*
-import java.util.*
-*/
 
 internal class PurchaseRepositoryImpl(
     private val sharedPreferences: SharedPreferences
@@ -34,6 +31,8 @@ internal class PurchaseRepositoryImpl(
         initializeIfNeeded()
         return purchasedSkus.contains(sku)
     }
+
+    override fun isEmpty() = purchasedSkus.isEmpty()
 
     private fun initializeIfNeeded() {
         if (initialized) {

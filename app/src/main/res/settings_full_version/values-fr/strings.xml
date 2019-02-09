@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="view_settings_full_version_section_label">Version complète</string>
+    <string name="view_settings_full_version_label">Version complète  débloquée</string>
+    <string name="view_settings_full_version_sublabel">Toutes les fonctionnalités et celles à venir sont débloquées</string>
+    <string name="view_settings_full_version_badge">VIP</string>
+
+</resources>

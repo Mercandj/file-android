@@ -89,7 +89,9 @@ android {
                     'src/main/res/notification',
                     'src/main/res/permission',
                     'src/main/res/search',
-                    'src/main/res/settings'
+                    'src/main/res/settings',
+                    'src/main/res/settings_full_version',
+                    'src/main/res/settings_store'
             ]
         }
 

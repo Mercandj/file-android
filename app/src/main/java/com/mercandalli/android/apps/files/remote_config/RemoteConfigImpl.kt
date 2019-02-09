@@ -53,7 +53,7 @@ internal class RemoteConfigImpl(
 
     override fun getSearchEnabled() = firebaseRemoteConfig.getBoolean(FIREBASE_KEY_SEARCH_ENABLED)
 
-    override fun getSubscriptionFullVersionSku() = firebaseRemoteConfig.getString(
+    override fun getSubscriptionFullVersionSku(): String? = firebaseRemoteConfig.getString(
         FIREBASE_KEY_SUBSCRIPTION_FULL_VERSION_SKU
     )
 

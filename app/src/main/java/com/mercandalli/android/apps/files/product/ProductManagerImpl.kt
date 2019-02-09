@@ -12,11 +12,13 @@ internal class ProductManagerImpl(
 ) : ProductManager {
 
     private val productListeners = ArrayList<ProductManager.ProductListener>()
+    private val developerListener = createDeveloperListener()
 
     override fun initialize() {
         purchaseManager.initialize()
         val purchaseListener = createPurchaseListener()
         purchaseManager.registerListener(purchaseListener)
+        developerManager.registerDeveloperModeListener(developerListener)
     }
 
     override fun isFullVersionUnlocked(): Boolean {
@@ -25,7 +27,11 @@ internal class ProductManagerImpl(
             return true
         }
         val fullVersionSku = getFullVersionSku() ?: return true
-        return purchaseManager.isPurchased(fullVersionSku)
+        val purchased = purchaseManager.isPurchased(fullVersionSku)
+        if (purchased) {
+            return true
+        }
+        return !purchaseManager.isPurchasedEmpty()
     }
 
     override fun purchaseFullVersion(activityContainer: ProductManager.ActivityContainer) {
@@ -64,6 +70,14 @@ internal class ProductManagerImpl(
         }
 
         override fun onPurchasedChanged() {
+            for (listener in productListeners) {
+                listener.onProductChanged()
+            }
+        }
+    }
+
+    private fun createDeveloperListener() = object : DeveloperManager.DeveloperModeListener {
+        override fun onDeveloperModeChanged() {
             for (listener in productListeners) {
                 listener.onProductChanged()
             }

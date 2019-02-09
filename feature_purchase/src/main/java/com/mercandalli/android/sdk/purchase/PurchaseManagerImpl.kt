@@ -38,7 +38,7 @@ internal class PurchaseManagerImpl(
         @PurchaseManager.Companion.SkuType skuType: String
     ) {
         val skuTypeGoogle = convertSkuType(skuType)
-        playBillingManager.executeServiceRequest(Runnable {
+        val runnable = Runnable {
             val builder = BillingFlowParams
                 .newBuilder()
                 .setSku(sku)
@@ -74,7 +74,8 @@ internal class PurchaseManagerImpl(
                 )
                 BillingClient.BillingResponse.ITEM_NOT_OWNED -> purchaseAnalyticsManager?.sendEventPurchaseItemNotOwned(sku)
             }
-        })
+        }
+        playBillingManager.executeServiceRequest(runnable)
     }
 
     override fun requestSkuDetails(
@@ -83,7 +84,7 @@ internal class PurchaseManagerImpl(
         @BillingClient.SkuType skuType: String
     ) {
         val skuTypeGoogle = convertSkuType(skuType)
-        playBillingManager.executeServiceRequest(Runnable {
+        val runnable = Runnable {
             val subsSkuDetailsParams = SkuDetailsParams.newBuilder()
                 .setSkusList(
                     listOf(
@@ -102,10 +103,13 @@ internal class PurchaseManagerImpl(
 
             val subsPurchasesResult = playBillingManager.queryPurchases(BillingClient.SkuType.SUBS)
             subsPurchasesResult.purchasesList
-        })
+        }
+        playBillingManager.executeServiceRequest(runnable)
     }
 
     override fun isPurchased(sku: String) = purchaseRepository.isPurchased(sku)
+
+    override fun isPurchasedEmpty() = purchaseRepository.isEmpty()
 
     override fun registerListener(listener: PurchaseManager.Listener) {
         if (listeners.contains(listener)) {

@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="view_settings_store_section_label">Versão completa</string>
+    <string name="view_settings_store_label">Versão completa gratuita</string>
+    <string name="view_settings_store_sublabel">Promoção para desbloquear a versão completa gratuitamente e apoiar o desenvolvedor de aplicativos</string>
+    <string name="view_settings_store_badge">PROMOÇÃO</string>
+
+</resources>
