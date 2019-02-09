@@ -76,6 +76,13 @@ pushd "$PROJECT_DIR"
     pwd
 
     log_delimiter
+    log_d "PRE-BUILD"
+    log_delimiter
+
+    gradle_task "file_api_android" "assemble"
+    gradle_task "file_api_online" "assemble"
+
+    log_delimiter
     log_d "APP"
     log_delimiter
 
@@ -89,23 +96,23 @@ pushd "$PROJECT_DIR"
     log_d "APP TV"
     log_delimiter
 
-    gradle_task "app-tv" "clean"
-    gradle_task "app-tv" "assembleDebug"
-    gradle_task "app-tv" "check"
-    gradle_task "app-tv" "ktlint"
+    gradle_task "app_tv" "clean"
+    gradle_task "app_tv" "assembleDebug"
+    gradle_task "app_tv" "check"
+    gradle_task "app_tv" "ktlint"
 
     log_delimiter
     log_d "FILE-API"
     log_delimiter
 
-    gradle_task "file-api" "check"
-    gradle_task "file-api" "ktlint"
-    gradle_task "file-api-android" "check"
-    gradle_task "file-api-android" "ktlint"
-    gradle_task "file-api-online" "check"
-    gradle_task "file-api-online" "ktlint"
-    gradle_task "file-api-online-android" "check"
-    gradle_task "file-api-online-android" "ktlint"
+    gradle_task "file_api" "check"
+    gradle_task "file_api" "ktlint"
+    gradle_task "file_api_android" "check"
+    gradle_task "file_api_android" "ktlint"
+    gradle_task "file_api_online" "check"
+    gradle_task "file_api_online" "ktlint"
+    gradle_task "file_api_online_android" "check"
+    gradle_task "file_api_online_android" "ktlint"
 
     log_delimiter
     log_d "SERVER"
