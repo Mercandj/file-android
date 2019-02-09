@@ -1,73 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/view_settings_store_section_label"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="26dp"
-        android:fontFamily="@font/google_sans_regular"
-        android:text="@string/view_settings_store_section_label"
-        android:textColor="@color/text_secondary_color_light"
-        android:textSize="@dimen/text_size_l" />
+        android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/view_settings_store_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/settings_horizontal_margins"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="@dimen/settings_horizontal_margins"
-        android:layout_marginBottom="@dimen/default_space"
-        app:cardCornerRadius="@dimen/settings_card_radius">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/view_settings_store_section_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="26dp"
+            android:fontFamily="@font/google_sans_regular"
+            android:text="@string/view_settings_store_section_label"
+            android:textColor="@color/text_secondary_color_light"
+            android:textSize="@dimen/text_size_l" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/view_settings_store_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/settings_horizontal_margins"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/settings_horizontal_margins"
+            android:layout_marginBottom="@dimen/default_space"
+            app:cardCornerRadius="@dimen/settings_card_radius">
 
             <LinearLayout
-                android:id="@+id/view_settings_store_row"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/default_space_1_5"
-                android:paddingBottom="@dimen/default_space_1_5">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/view_settings_store_label"
+                <LinearLayout
+                    android:id="@+id/view_settings_store_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/google_sans_regular"
-                    android:paddingStart="@dimen/default_space_2"
-                    android:paddingEnd="@dimen/default_space_2"
-                    android:text="@string/view_settings_store_label"
-                    android:textColor="@color/text_primary_color_light"
-                    android:textSize="@dimen/text_size_xl" />
+                    android:background="?android:selectableItemBackground"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/default_space_1_5"
+                    android:paddingBottom="@dimen/default_space_1_5">
 
-                <TextView
-                    android:id="@+id/view_settings_store_sublabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="@font/google_sans_regular"
-                    android:paddingStart="@dimen/default_space_2"
-                    android:paddingEnd="@dimen/default_space_2"
-                    android:textColor="@color/text_secondary_color_light"
-                    android:text="@string/view_settings_store_sublabel" />
+                    <TextView
+                        android:id="@+id/view_settings_store_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:paddingStart="@dimen/default_space_2"
+                        android:paddingEnd="@dimen/default_space_2"
+                        android:text="@string/view_settings_store_label"
+                        android:textColor="@color/text_primary_color_light"
+                        android:textSize="@dimen/text_size_xl" />
+
+                    <TextView
+                        android:id="@+id/view_settings_store_sublabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:paddingStart="@dimen/default_space_2"
+                        android:paddingEnd="@dimen/default_space_2"
+                        android:text="@string/view_settings_store_sublabel"
+                        android:textColor="@color/text_secondary_color_light" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/view_settings_store_promotion_gradient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/settings_store_gradient_light_list"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="3dp"
+            android:text="PROMOTION"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+</FrameLayout>

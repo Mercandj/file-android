@@ -5,6 +5,7 @@ package com.mercandalli.android.apps.files.settings_store
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class SettingsStoreView @JvmOverloads constructor(
     private val themeSectionLabel: TextView = view.findViewById(R.id.view_settings_store_section_label)
     private val themeLabel: TextView = view.findViewById(R.id.view_settings_store_label)
     private val themeSubLabel: TextView = view.findViewById(R.id.view_settings_store_sublabel)
+    private val promotionGradient: View = view.findViewById(R.id.view_settings_store_promotion_gradient)
 
     private val userAction = createUserAction()
 
@@ -65,6 +67,18 @@ class SettingsStoreView @JvmOverloads constructor(
         val color = ContextCompat.getColor(context, colorRes)
         themeSectionLabel.setTextColor(color)
         themeSubLabel.setTextColor(color)
+    }
+
+    override fun setPromotionGradient(dark: Boolean) {
+        if (dark) {
+            promotionGradient.setBackgroundResource(R.drawable.settings_store_gradient_dark_list)
+        } else {
+            promotionGradient.setBackgroundResource(R.drawable.settings_store_gradient_light_list)
+        }
+        val animationDrawable = promotionGradient.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(0)
+        animationDrawable.setExitFadeDuration(2_000)
+        animationDrawable.start()
     }
 
     private fun createUserAction(): SettingsStoreContract.UserAction = if (isInEditMode) {

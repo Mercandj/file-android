@@ -36,7 +36,7 @@
     <string name="view_settings_rate_text️">RATE THIS APP ❤️</string>
     <string name="view_settings_team_apps_text">OTHER GREAT APPS</string>
 
-    <string name="view_settings_store_section_label">Support</string>
-    <string name="view_settings_store_label">Free</string>
-    <string name="view_settings_store_sublabel">Support this app developer =)</string>
+    <string name="view_settings_store_section_label">Full version</string>
+    <string name="view_settings_store_label">Full version for free</string>
+    <string name="view_settings_store_sublabel">Promotion to unlock full version for free and support app developer</string>
 </resources>

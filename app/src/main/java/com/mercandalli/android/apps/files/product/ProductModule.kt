@@ -10,9 +10,11 @@ class ProductModule(
 ) {
 
     fun createProductManager(): ProductManager {
+        val developerManager = ApplicationGraph.getDeveloperManager()
         val purchaseManager = createPurchaseManager()
         val remoteConfig = ApplicationGraph.getRemoteConfig()
         return ProductManagerImpl(
+            developerManager,
             purchaseManager,
             remoteConfig
         )

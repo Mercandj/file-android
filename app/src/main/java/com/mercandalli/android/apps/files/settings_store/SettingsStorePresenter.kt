@@ -5,6 +5,7 @@ package com.mercandalli.android.apps.files.settings_store
 
 import android.app.Activity
 import com.mercandalli.android.apps.files.product.ProductManager
+import com.mercandalli.android.apps.files.theme.DarkTheme
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 
@@ -36,6 +37,7 @@ class SettingsStorePresenter(
         screen.setTextPrimaryColorRes(theme.textPrimaryColorRes)
         screen.setTextSecondaryColorRes(theme.textSecondaryColorRes)
         screen.setSectionColor(theme.cardBackgroundColorRes)
+        screen.setPromotionGradient(theme is DarkTheme)
     }
 
     private fun createThemeListener() = object : ThemeManager.ThemeListener {

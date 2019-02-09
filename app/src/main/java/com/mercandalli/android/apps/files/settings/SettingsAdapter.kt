@@ -23,32 +23,9 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsStoreAdapterDelegate() as AdapterDelegate<List<Any>>)
-        val developerManager = ApplicationGraph.getDeveloperManager()
-        val remoteConfig = ApplicationGraph.getRemoteConfig()
-        val developerMode = developerManager.isDeveloperMode()
-        val searchEnabled = remoteConfig.getSearchEnabled()
-        val list = if (searchEnabled || developerMode) {
-            listOf(
-                SettingsTheme(),
-                SettingsStorage(),
-                SettingsStore(),
-                SettingsDynamic(),
-                SettingsDeveloper(),
-                SettingsAbout()
-            )
-        } else {
-            listOf(
-                SettingsTheme(),
-                SettingsStorage(),
-                SettingsStore(),
-                SettingsDeveloper(),
-                SettingsAbout()
-            )
-        }
-        populate(list)
     }
 
-    private fun populate(list: List<Any>) {
+    fun populate(list: List<Any>) {
         setItems(list)
         notifyDataSetChanged()
     }

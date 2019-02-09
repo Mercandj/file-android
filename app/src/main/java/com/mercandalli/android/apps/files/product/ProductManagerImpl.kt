@@ -1,10 +1,12 @@
 package com.mercandalli.android.apps.files.product
 
+import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.sdk.purchase.PurchaseDetails
 import com.mercandalli.android.sdk.purchase.PurchaseManager
 
 internal class ProductManagerImpl(
+    private val developerManager: DeveloperManager,
     private val purchaseManager: PurchaseManager,
     private val remoteConfig: RemoteConfig
 ) : ProductManager {
@@ -18,6 +20,10 @@ internal class ProductManagerImpl(
     }
 
     override fun isFullVersionUnlocked(): Boolean {
+        val developerMode = developerManager.isDeveloperMode()
+        if (developerMode) {
+            return true
+        }
         val fullVersionSku = getFullVersionSku()
         return purchaseManager.isPurchased(fullVersionSku)
     }

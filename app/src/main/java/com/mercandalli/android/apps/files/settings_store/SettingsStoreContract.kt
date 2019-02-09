@@ -15,6 +15,8 @@ interface SettingsStoreContract {
         fun setTextPrimaryColorRes(@ColorRes colorRes: Int)
 
         fun setTextSecondaryColorRes(@ColorRes colorRes: Int)
+
+        fun setPromotionGradient(dark: Boolean)
     }
 
     interface UserAction {
