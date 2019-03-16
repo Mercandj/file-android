@@ -25,7 +25,7 @@ internal class NetworkUploaderImpl(
         headers: Map<String, String>,
         jsonObject: JSONObject,
         javaFile: File,
-        listener: Network.UploadProgressListener
+        listener: NetworkManager.UploadProgressListener
     ): String? {
         val mimeTypeString = getMimeType(javaFile.absolutePath)
         val mimeType = if (mimeTypeString == null) {

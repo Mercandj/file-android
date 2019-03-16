@@ -9,6 +9,6 @@ interface NetworkDownloader {
         headers: Map<String, String>,
         jsonObject: JSONObject,
         outputJavaFile: java.io.File,
-        listener: Network.DownloadProgressListener
+        listener: NetworkManager.DownloadProgressListener
     ): String?
 }

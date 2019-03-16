@@ -13,7 +13,7 @@ import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
 import com.mercandalli.android.apps.files.hash.HashModule
 import com.mercandalli.android.apps.files.main_thread.MainThreadModule
-import com.mercandalli.android.apps.files.network.Network
+import com.mercandalli.android.apps.files.network.NetworkManager
 import com.mercandalli.android.apps.files.product.ProductModule
 import com.mercandalli.android.apps.files.remote_config.RemoteConfigModule
 import com.mercandalli.android.apps.files.screen.ScreenModule
@@ -180,7 +180,7 @@ class ApplicationGraph(
                 headers,
                 jsonObject,
                 javaFile,
-                object : Network.DownloadProgressListener {
+                object : NetworkManager.DownloadProgressListener {
                     override fun onDownloadProgress(current: Long, size: Long) {
                         listener.onDownloadProgress(current, size)
                     }
@@ -198,7 +198,7 @@ class ApplicationGraph(
                 headers,
                 jsonObject,
                 javaFile,
-                object : Network.UploadProgressListener {
+                object : NetworkManager.UploadProgressListener {
                     override fun onUploadProgress(current: Long, size: Long) {
                         listener.onUploadProgress(current, size)
                     }

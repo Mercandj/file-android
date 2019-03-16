@@ -2,7 +2,7 @@ package com.mercandalli.android.apps.files.network
 
 import org.json.JSONObject
 
-interface Network {
+interface NetworkManager {
 
     fun getSync(
         url: String,

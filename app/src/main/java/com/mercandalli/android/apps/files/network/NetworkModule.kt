@@ -38,7 +38,7 @@ class NetworkModule {
 
     fun createOkHttpClientLazy(): Lazy<OkHttpClient> = okHttpClient
 
-    fun createNetwork() = object : Network {
+    fun createNetwork() = object : NetworkManager {
 
         override fun getSync(
             url: String,
@@ -70,7 +70,7 @@ class NetworkModule {
             headers: Map<String, String>,
             jsonObject: JSONObject,
             javaFile: File,
-            listener: Network.DownloadProgressListener
+            listener: NetworkManager.DownloadProgressListener
         ) = networkDownloader.postDownloadSync(
             url,
             headers,
@@ -84,7 +84,7 @@ class NetworkModule {
             headers: Map<String, String>,
             jsonObject: JSONObject,
             javaFile: java.io.File,
-            listener: Network.UploadProgressListener
+            listener: NetworkManager.UploadProgressListener
         ) = networkUploader.postUploadSync(
             url,
             headers,

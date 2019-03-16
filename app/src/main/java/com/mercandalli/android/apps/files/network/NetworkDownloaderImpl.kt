@@ -21,7 +21,7 @@ internal class NetworkDownloaderImpl(
         headers: Map<String, String>,
         jsonObject: JSONObject,
         outputJavaFile: File,
-        listener: Network.DownloadProgressListener
+        listener: NetworkManager.DownloadProgressListener
     ): String? {
         val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
         val request = Request.Builder()

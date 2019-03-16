@@ -9,6 +9,6 @@ interface NetworkUploader {
         headers: Map<String, String>,
         jsonObject: JSONObject,
         javaFile: java.io.File,
-        listener: Network.UploadProgressListener
+        listener: NetworkManager.UploadProgressListener
     ): String?
 }
