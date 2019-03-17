@@ -18,6 +18,7 @@ import io.ktor.http.content.forEachPart
 import io.ktor.http.content.streamProvider
 import io.ktor.network.util.ioCoroutineDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
 import org.json.JSONObject
@@ -267,7 +268,7 @@ class FileHandlerPostImpl(
         out: OutputStream,
         bufferSize: Int = DEFAULT_BUFFER_SIZE,
         yieldSize: Int = 4 * 1_024 * 1_024,
-        dispatcher: CoroutineDispatcher = ioCoroutineDispatcher
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
     ): Long {
         return withContext(dispatcher) {
             val buffer = ByteArray(bufferSize)

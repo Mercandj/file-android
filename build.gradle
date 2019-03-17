@@ -16,7 +16,7 @@ buildscript {
 
         // Check dependencies.
         // https://github.com/ben-manes/gradle-versions-plugin
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
 
         // Fabric
         // We recommend changing it to the latest version from our changelog:

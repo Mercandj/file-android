@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
+import com.mercandalli.server.files.android_remote_config.AndroidRemoteConfigHandler.androidRemoteConfigGet
 import com.mercandalli.server.files.android_tos.AndroidTosHandler.androidTermsOfUseGet
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
@@ -265,6 +266,16 @@ class ServerManagerImpl(
                 get("/android/apps/terms-of-use/{appName}") {
                     val appName = call.parameters["appName"]
                     androidTermsOfUseGet(appName.toString())
+                }
+                get("/android/apps/remote-config/{appPackageName}/{appVersionName}/{localCountryIso31662}") {
+                    val appPackageName = call.parameters["appPackageName"]
+                    val appVersionName = call.parameters["appVersionName"]
+                    val localCountryIso31662 = call.parameters["localCountryIso31662"]
+                    androidRemoteConfigGet(
+                        appPackageName.toString(),
+                        appVersionName.toString(),
+                        localCountryIso31662.toString()
+                    )
                 }
                 static("/1418") {
                     staticRootFolder = File("$rootServerPath/static")

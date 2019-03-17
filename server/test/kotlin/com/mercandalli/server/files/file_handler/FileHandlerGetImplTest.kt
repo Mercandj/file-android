@@ -6,7 +6,7 @@ package com.mercandalli.server.files.file_handler
 import com.mercandalli.server.files.authorization.AuthorizationManager
 import com.mercandalli.server.files.file_repository.FileRepository
 import com.mercandalli.server.files.log.LogManager
-import io.ktor.http.EmptyHeaders
+import io.ktor.http.Headers
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -33,7 +33,7 @@ class FileHandlerGetImplTest {
         val fileHandlerGet = createInstanceToTest()
 
         // When
-        fileHandlerGet.get(EmptyHeaders)
+        fileHandlerGet.get(Headers.Empty)
 
         // Then
         Mockito.verify(logManager).d("FileHandlerGet", "get()")
