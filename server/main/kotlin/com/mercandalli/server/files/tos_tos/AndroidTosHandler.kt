@@ -1,7 +1,7 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.server.files.android_tos
+package com.mercandalli.server.files.tos_tos
 
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call

@@ -1,19 +1,19 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.server.files.android_remote_config
+package com.mercandalli.server.files.remote_config_ios
 
-import com.mercandalli.server.files.android_remote_config.AndroidRemoteConfigSpeedometer.APP_PACKAGE_NAME_SPEEDOMETER
-import com.mercandalli.server.files.android_remote_config.AndroidRemoteConfigSpeedometer.createRemoteConfigSpeedometerJson
+import com.mercandalli.server.files.remote_config_ios.RemoteConfigIosYoutube.APP_BUNDLE_YOUTUBE
+import com.mercandalli.server.files.remote_config_ios.RemoteConfigIosYoutube.createRemoteConfigIosYoutubeJson
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.response.respondText
 import io.ktor.util.pipeline.PipelineContext
 import org.json.JSONObject
 
-object AndroidRemoteConfigHandler {
+object RemoteConfigIosHandler {
 
-    suspend fun PipelineContext<Unit, ApplicationCall>.androidRemoteConfigGet(
+    suspend fun PipelineContext<Unit, ApplicationCall>.iosRemoteConfigGet(
         appPackageName: String,
         appVersionName: String,
         localCountryIso31662: String
@@ -29,27 +29,27 @@ object AndroidRemoteConfigHandler {
     }
 
     private fun createRemoteConfigJson(
-        appPackageName: String,
+        appBundle: String,
         appVersionName: String,
         localCountryIso31662: String
     ): JSONObject {
-        return when (appPackageName) {
-            APP_PACKAGE_NAME_SPEEDOMETER -> createRemoteConfigSpeedometerJson(
-                appPackageName,
+        return when (appBundle) {
+            APP_BUNDLE_YOUTUBE -> createRemoteConfigIosYoutubeJson(
+                appBundle,
                 appVersionName,
                 localCountryIso31662
             )
             else -> createRemoteConfigDefaultJson(
-                appPackageName
+                appBundle
             )
         }
     }
 
     private fun createRemoteConfigDefaultJson(
-        appPackageName: String
+        appBundle: String
     ): JSONObject {
         val jsonObject = JSONObject()
-        jsonObject.put("app_package_name", appPackageName)
+        jsonObject.put("app_bundle", appBundle)
         jsonObject.put("debug", "App not supported")
         return jsonObject
     }

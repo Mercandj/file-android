@@ -1,12 +1,13 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
-import com.mercandalli.server.files.android_remote_config.AndroidRemoteConfigHandler.androidRemoteConfigGet
-import com.mercandalli.server.files.android_tos.AndroidTosHandler.androidTermsOfUseGet
+import com.mercandalli.server.files.remote_config_android.RemoteConfigAndroidHandler.androidRemoteConfigGet
+import com.mercandalli.server.files.tos_tos.AndroidTosHandler.androidTermsOfUseGet
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
 import com.mercandalli.server.files.log.LogManager
+import com.mercandalli.server.files.remote_config_ios.RemoteConfigIosHandler.iosRemoteConfigGet
 import com.mercandalli.server.files.server.ServerNotFound.respondNotFound
 import com.mercandalli.server.files.server.ServerStatus.respondStatus
 import com.mercandalli.server.files.shell.ShellManager
@@ -273,6 +274,16 @@ class ServerManagerImpl(
                     val localCountryIso31662 = call.parameters["localCountryIso31662"]
                     androidRemoteConfigGet(
                         appPackageName.toString(),
+                        appVersionName.toString(),
+                        localCountryIso31662.toString()
+                    )
+                }
+                get("/ios/apps/remote-config/{appBundle}/{appVersionName}/{localCountryIso31662}") {
+                    val appBundle = call.parameters["appBundle"]
+                    val appVersionName = call.parameters["appVersionName"]
+                    val localCountryIso31662 = call.parameters["localCountryIso31662"]
+                    iosRemoteConfigGet(
+                        appBundle.toString(),
                         appVersionName.toString(),
                         localCountryIso31662.toString()
                     )

@@ -1,12 +1,12 @@
-package com.mercandalli.server.files.android_remote_config
+package com.mercandalli.server.files.remote_config_android
 
 import org.json.JSONObject
 
-object AndroidRemoteConfigSpeedometer {
+object RemoteConfigAndroidSpeedometer {
 
     const val APP_PACKAGE_NAME_SPEEDOMETER = "com.mercandalli.android.apps.speedometer"
 
-    fun createRemoteConfigSpeedometerJson(
+    fun createRemoteConfigAndroidSpeedometerJson(
         appPackageName: String,
         appVersionName: String,
         localCountryIso31662: String
