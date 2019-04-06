@@ -31,14 +31,14 @@ configurations {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.annotation:annotation:1.0.1"
+    implementation "androidx.annotation:annotation:1.0.2"
 
     // InApp
-    implementation 'com.android.billingclient:billing:1.2'
+    implementation 'com.android.billingclient:billing:1.2.2'
 
     // KtLint - Static code analysis
     // https://proandroiddev.com/kotlin-static-analysis-why-and-how-a12042e34a98
-    ktlint "com.github.shyiko:ktlint:0.30.0"
+    ktlint "com.github.shyiko:ktlint:0.31.0"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

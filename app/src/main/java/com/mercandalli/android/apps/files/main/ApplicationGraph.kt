@@ -31,28 +31,28 @@ class ApplicationGraph(
     private val context: Context
 ) {
 
-    private val fileModuleInternal by lazy { FileModule(context, createPermissionRequestAddOn()) }
+    private val fileModule by lazy { FileModule(context, createPermissionRequestAddOn()) }
     private val developerModule by lazy { DeveloperModule(context) }
     private val networkModule by lazy { NetworkModule() }
     private val noteModule by lazy { NoteModule(context) }
     private val screenModule by lazy { ScreenModule(context) }
 
-    private val audioManagerInternal by lazy { audioModuleInternal.createAudioManager() }
-    private val audioQueueManagerInternal by lazy { audioModuleInternal.createAudioQueueManager(audioManagerInternal) }
+    private val audioManager by lazy { audioModuleInternal.createAudioManager() }
+    private val audioQueueManager by lazy { audioModuleInternal.createAudioQueueManager(audioManager) }
     private val audioModuleInternal by lazy { AudioModule(fileSortManagerInternal) }
-    private val developerManagerInternal by lazy { developerModule.createDeveloperManager() }
-    private val dialogManagerInternal by lazy { DialogModule(context).createDialogManager() }
-    private val fileManagerInternal by lazy { fileModuleInternal.createFileManager() }
-    private val fileChildrenManagerInternal by lazy { fileModuleInternal.createFileChildrenManager() }
-    private val fileMediaScannerInternal by lazy { fileModuleInternal.getMediaScanner() }
-    private val fileOpenManagerInternal by lazy { fileModuleInternal.createFileOpenManager() }
-    private val fileDeleteManagerInternal by lazy { fileModuleInternal.createFileDeleteManager() }
-    private val fileCopyCutManagerInternal by lazy { fileModuleInternal.createFileCopyCutManager() }
-    private val fileCreatorManagerInternal by lazy { fileModuleInternal.createFileCreatorManager() }
-    private val fileOnlineManagerInternal by lazy { FileOnlineGraph.getFileOnlineManager() }
-    private val fileOnlineChildrenManagerInternal by lazy { FileOnlineGraph.getFileOnlineChildrenManager() }
-    private val fileOnlineCopyCutManagerInternal by lazy { FileOnlineGraph.getFileOnlineCopyCutManager() }
-    private val fileOnlineCreatorManagerInternal by lazy { FileOnlineGraph.getFileOnlineCreatorManager() }
+    private val developerManager by lazy { developerModule.createDeveloperManager() }
+    private val dialogManager by lazy { DialogModule(context).createDialogManager() }
+    private val fileManager by lazy { fileModule.createFileManager() }
+    private val fileChildrenManager by lazy { fileModule.createFileChildrenManager() }
+    private val fileMediaScannerInternal by lazy { fileModule.getMediaScanner() }
+    private val fileOpenManager by lazy { fileModule.createFileOpenManager() }
+    private val fileDeleteManager by lazy { fileModule.createFileDeleteManager() }
+    private val fileCopyCutManager by lazy { fileModule.createFileCopyCutManager() }
+    private val fileCreatorManager by lazy { fileModule.createFileCreatorManager() }
+    private val fileOnlineManager by lazy { FileOnlineGraph.getFileOnlineManager() }
+    private val fileOnlineChildrenManager by lazy { FileOnlineGraph.getFileOnlineChildrenManager() }
+    private val fileOnlineCopyCutManager by lazy { FileOnlineGraph.getFileOnlineCopyCutManager() }
+    private val fileOnlineCreatorManager by lazy { FileOnlineGraph.getFileOnlineCreatorManager() }
     private val fileOnlineDeleteManagerInternal by lazy { FileOnlineGraph.getFileOnlineDeleteManager() }
     private val fileOnlineDownloadManagerInternal by lazy { FileOnlineGraph.getFileOnlineDownloadManager() }
     private val fileOnlineLoginManagerInternal by lazy { FileOnlineGraph.getFileOnlineLoginManager() }
@@ -60,16 +60,16 @@ class ApplicationGraph(
     private val fileOnlineShareManagerInternal by lazy { FileOnlineGraph.getFileOnlineShareManager() }
     private val fileOnlineSizeManagerInternal by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
     private val fileOnlineUploadManagerInternal by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
-    private val fileShareManagerInternal by lazy { fileModuleInternal.createFileShareManager() }
+    private val fileShareManagerInternal by lazy { fileModule.createFileShareManager() }
     private val fileStorageStatsManagerInternal by lazy { FileStorageStatsModule().createFileStorageStatsManager() }
-    private val fileRenameManagerInternal by lazy { fileModuleInternal.createFileRenameManager() }
-    private val fileSizeManagerInternal by lazy { fileModuleInternal.createFileSizeManager() }
-    private val fileSortManagerInternal by lazy { fileModuleInternal.createFileSortManager() }
+    private val fileRenameManagerInternal by lazy { fileModule.createFileRenameManager() }
+    private val fileSizeManagerInternal by lazy { fileModule.createFileSizeManager() }
+    private val fileSortManagerInternal by lazy { fileModule.createFileSortManager() }
     private val hashManagerInternal by lazy { HashModule(context).createHashManager() }
     private val mainThreadPostInternal by lazy { MainThreadModule().createMainThreadPost() }
     private val network by lazy { networkModule.createNetwork() }
     private val noteManagerInternal by lazy { noteModule.createNoteManager() }
-    private val notificationModuleInternal by lazy { NotificationModule(context, audioManagerInternal) }
+    private val notificationModuleInternal by lazy { NotificationModule(context, audioManager) }
     private val notificationAudioManagerInternal by lazy { notificationModuleInternal.createNotificationAudioManager() }
     private val okHttpClientLazy by lazy { networkModule.createOkHttpClientLazy() }
     private val productManagerInternal by lazy { ProductModule(context).createProductManager() }
@@ -79,7 +79,7 @@ class ApplicationGraph(
     private val themeManagerInternal by lazy { ThemeModule(context).createThemeManager() }
     private val toastManagerInternal by lazy { ToastModule(context).createToastManager() }
     private val updateManagerInternal by lazy { UpdateModule(context).createUpdateManager() }
-    private val versionManagerInternal by lazy { VersionModule(context).createVersionManager() }
+    private val versionManager by lazy { VersionModule(context).createVersionManager() }
 
     private fun createPermissionRequestAddOn() = object : PermissionRequestAddOn {
         override fun requestStoragePermission() {
@@ -92,21 +92,21 @@ class ApplicationGraph(
         @SuppressLint("StaticFieldLeak")
         private var graph: ApplicationGraph? = null
 
-        fun getAudioManager() = graph!!.audioManagerInternal
-        fun getAudioQueueManager() = graph!!.audioQueueManagerInternal
-        fun getDeveloperManager() = graph!!.developerManagerInternal
-        fun getDialogManager() = graph!!.dialogManagerInternal
-        fun getFileManager() = graph!!.fileManagerInternal
-        fun getFileModule() = graph!!.fileModuleInternal
-        fun getFileChildrenManager() = graph!!.fileChildrenManagerInternal
-        fun getFileOpenManager() = graph!!.fileOpenManagerInternal
-        fun getFileDeleteManager() = graph!!.fileDeleteManagerInternal
-        fun getFileCopyCutManager() = graph!!.fileCopyCutManagerInternal
-        fun getFileCreatorManager() = graph!!.fileCreatorManagerInternal
-        fun getFileOnlineManager() = graph!!.fileOnlineManagerInternal
-        fun getFileOnlineChildrenManager() = graph!!.fileOnlineChildrenManagerInternal
-        fun getFileOnlineCopyCutManager() = graph!!.fileOnlineCopyCutManagerInternal
-        fun getFileOnlineCreatorManager() = graph!!.fileOnlineCreatorManagerInternal
+        fun getAudioManager() = graph!!.audioManager
+        fun getAudioQueueManager() = graph!!.audioQueueManager
+        fun getDeveloperManager() = graph!!.developerManager
+        fun getDialogManager() = graph!!.dialogManager
+        fun getFileManager() = graph!!.fileManager
+        fun getFileModule() = graph!!.fileModule
+        fun getFileChildrenManager() = graph!!.fileChildrenManager
+        fun getFileOpenManager() = graph!!.fileOpenManager
+        fun getFileDeleteManager() = graph!!.fileDeleteManager
+        fun getFileCopyCutManager() = graph!!.fileCopyCutManager
+        fun getFileCreatorManager() = graph!!.fileCreatorManager
+        fun getFileOnlineManager() = graph!!.fileOnlineManager
+        fun getFileOnlineChildrenManager() = graph!!.fileOnlineChildrenManager
+        fun getFileOnlineCopyCutManager() = graph!!.fileOnlineCopyCutManager
+        fun getFileOnlineCreatorManager() = graph!!.fileOnlineCreatorManager
         fun getFileOnlineDeleteManager() = graph!!.fileOnlineDeleteManagerInternal
         fun getFileOnlineDownloadManager() = graph!!.fileOnlineDownloadManagerInternal
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
@@ -132,7 +132,7 @@ class ApplicationGraph(
         fun getThemeManager() = graph!!.themeManagerInternal
         fun getToastManager() = graph!!.toastManagerInternal
         fun getUpdateManager() = graph!!.updateManagerInternal
-        fun getVersionManager() = graph!!.versionManagerInternal
+        fun getVersionManager() = graph!!.versionManager
 
         fun init(context: Context) {
             if (graph == null) {

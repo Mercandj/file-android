@@ -22,6 +22,6 @@ class ProductModule(
 
     private fun createPurchaseManager(): PurchaseManager {
         val purchaseModule = PurchaseModule(context)
-        return purchaseModule.createInAppManager()
+        return purchaseModule.createPurchaseManager()
     }
 }

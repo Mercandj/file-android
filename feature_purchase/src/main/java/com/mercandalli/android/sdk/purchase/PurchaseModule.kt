@@ -4,28 +4,35 @@
 package com.mercandalli.android.sdk.purchase
 
 import android.content.Context
+import com.mercandalli.android.sdk.purchase.internal.PlayBillingManagerImpl
+import com.mercandalli.android.sdk.purchase.internal.PurchaseManagerImpl
+import com.mercandalli.android.sdk.purchase.internal.PurchaseRepository
+import com.mercandalli.android.sdk.purchase.internal.PurchaseRepositoryImpl
 
 class PurchaseModule(
     private val context: Context
 ) {
 
-    fun createInAppManager(
+    fun createPurchaseManager(
         purchaseAnalyticsManager: PurchaseAnalyticsManager? = null
     ): PurchaseManager {
         val playBillingManager = createPlayBillingManager()
-        val inAppRepository = createInAppRepository()
+        val purchaseRepository = createPurchaseRepository()
         return PurchaseManagerImpl(
             playBillingManager,
-            inAppRepository,
+            purchaseRepository,
             purchaseAnalyticsManager
         )
     }
 
-    private fun createPlayBillingManager() = PlayBillingManagerImpl(context.applicationContext)
+    private fun createPlayBillingManager() = PlayBillingManagerImpl(
+        context.applicationContext
+    )
 
-    private fun createInAppRepository(): PurchaseRepository {
+    private fun createPurchaseRepository(): PurchaseRepository {
         val sharedPreferences = context.getSharedPreferences(
-            PurchaseRepositoryImpl.PREFERENCE_NAME, Context.MODE_PRIVATE
+            PurchaseRepositoryImpl.PREFERENCE_NAME,
+            Context.MODE_PRIVATE
         )
         return PurchaseRepositoryImpl(
             sharedPreferences

@@ -1,8 +1,8 @@
 <resources>
 
     <string name="view_settings_store_section_label">Version complète</string>
-    <string name="view_settings_store_label">Version complète gratuite</string>
-    <string name="view_settings_store_sublabel">Promotion pour débloquer la version complète et supporter le développeur</string>
-    <string name="view_settings_store_badge">PROMO</string>
+    <string name="view_settings_store_label">Débloquer plus de fonctionnalités</string>
+    <string name="view_settings_store_sublabel">Gestion de la RAM, augmenter l\'espace mémoire…</string>
+    <string name="view_settings_store_badge">Mémoire</string>
 
 </resources>

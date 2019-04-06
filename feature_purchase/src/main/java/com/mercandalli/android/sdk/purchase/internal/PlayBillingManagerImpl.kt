@@ -1,7 +1,7 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.android.sdk.purchase
+package com.mercandalli.android.sdk.purchase.internal
 
 import android.app.Activity
 import android.content.Context
@@ -92,9 +92,7 @@ internal class PlayBillingManagerImpl(
                     isServiceConnected = true
                     executeOnSuccess?.run()
                 } else {
-                    if (listener != null) {
-                        listener!!.connectionToServiceFailed()
-                    }
+                    listener?.connectionToServiceFailed()
                 }
             }
 
