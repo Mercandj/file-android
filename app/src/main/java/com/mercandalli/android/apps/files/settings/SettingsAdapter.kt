@@ -10,6 +10,7 @@ import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
 import com.mercandalli.android.apps.files.settings_dynamic.SettingsDynamicView
 import com.mercandalli.android.apps.files.settings_full_version.SettingsFullVersionView
+import com.mercandalli.android.apps.files.settings_ram.SettingsRamView
 import com.mercandalli.android.apps.files.settings_storage.SettingsStorageView
 import com.mercandalli.android.apps.files.settings_store.SettingsStoreView
 import com.mercandalli.android.apps.files.settings_theme.SettingsThemeView
@@ -19,6 +20,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
     init {
         delegatesManager.addDelegate(SettingsThemeAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsStorageAdapterDelegate() as AdapterDelegate<List<Any>>)
+        delegatesManager.addDelegate(SettingsRamAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDynamicAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
@@ -71,6 +73,26 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 
     private class SettingsStorageViewHolder(view: View) : RecyclerView.ViewHolder(view)
     //endregion SettingsStorage
+
+    //region SettingsRam
+    class SettingsRam
+
+    private class SettingsRamAdapterDelegate :
+        AbsListItemAdapterDelegate<Any, Any, SettingsRamViewHolder>() {
+
+        override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsRam
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup): SettingsRamViewHolder {
+            val view = SettingsRamView(viewGroup.context)
+            view.layoutParams = createDefaultRecyclerViewLayoutParam()
+            return SettingsRamViewHolder(view)
+        }
+
+        override fun onBindViewHolder(model: Any, titleViewHolder: SettingsRamViewHolder, list: List<Any>) {}
+    }
+
+    private class SettingsRamViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    //endregion SettingsRam
 
     //region SettingsStore
     class SettingsStore

@@ -1,7 +1,4 @@
-@file:Suppress("PackageName")
-
-/* ktlint-disable package-name */
-package com.mercandalli.android.apps.files.settings_storage
+package com.mercandalli.android.apps.files.settings_ram
 
 import android.content.Context
 import android.util.AttributeSet
@@ -15,20 +12,20 @@ import androidx.core.content.ContextCompat
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 
-class SettingsStorageView @JvmOverloads constructor(
+class SettingsRamView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private val view = LayoutInflater.from(context).inflate(R.layout.view_settings_storage, this)
-    private val storageSection: CardView = view.findViewById(R.id.view_settings_storage_section)
-    private val storageLocalRow: View = view.findViewById(R.id.view_settings_storage_local_row)
-    private val localLabel: TextView = view.findViewById(R.id.view_settings_storage_local_label)
-    private val localSubLabel: TextView = view.findViewById(R.id.view_settings_storage_local_sublabel)
-    private val busy: TextView = view.findViewById(R.id.view_settings_storage_local_busy)
-    private val total: TextView = view.findViewById(R.id.view_settings_storage_local_total)
-    private val progress: ProgressBar = view.findViewById(R.id.view_settings_storage_local_progress)
+    private val view = LayoutInflater.from(context).inflate(R.layout.view_settings_ram, this)
+    private val storageSection: CardView = view.findViewById(R.id.view_settings_ram_section)
+    private val storageLocalRow: View = view.findViewById(R.id.view_settings_ram_local_row)
+    private val localLabel: TextView = view.findViewById(R.id.view_settings_ram_local_label)
+    private val localSubLabel: TextView = view.findViewById(R.id.view_settings_ram_local_sublabel)
+    private val busy: TextView = view.findViewById(R.id.view_settings_ram_local_busy)
+    private val total: TextView = view.findViewById(R.id.view_settings_ram_local_total)
+    private val progress: ProgressBar = view.findViewById(R.id.view_settings_ram_local_progress)
 
     private val userAction = createUserAction()
 
@@ -48,7 +45,7 @@ class SettingsStorageView @JvmOverloads constructor(
         super.onDetachedFromWindow()
     }
 
-    private fun createScreen() = object : SettingsStorageContract.Screen {
+    private fun createScreen() = object : SettingsRamContract.Screen {
 
         override fun setTextPrimaryColorRes(colorRes: Int) {
             val color = ContextCompat.getColor(context, colorRes)
@@ -85,20 +82,20 @@ class SettingsStorageView @JvmOverloads constructor(
         }
     }
 
-    private fun createUserAction(): SettingsStorageContract.UserAction = if (isInEditMode) {
-        object : SettingsStorageContract.UserAction {
+    private fun createUserAction(): SettingsRamContract.UserAction = if (isInEditMode) {
+        object : SettingsRamContract.UserAction {
             override fun onAttached() {}
             override fun onDetached() {}
             override fun onStorageLocalRowClicked() {}
         }
     } else {
         val screen = createScreen()
-        val fileStorageStatsManager = ApplicationGraph.getFileStorageStatsManager()
+        val ramStatsManager = ApplicationGraph.getRamStatsManager()
         val screenManager = ApplicationGraph.getScreenManager()
         val themeManager = ApplicationGraph.getThemeManager()
-        SettingsStoragePresenter(
+        SettingsRamPresenter(
             screen,
-            fileStorageStatsManager,
+            ramStatsManager,
             screenManager,
             themeManager
         )

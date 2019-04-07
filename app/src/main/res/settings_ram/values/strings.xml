@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="view_settings_ram_label">RAM</string>
+    <string name="view_settings_ram_local_label">RAM</string>
+
+</resources>

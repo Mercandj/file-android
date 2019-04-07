@@ -1,27 +1,27 @@
 @file:Suppress("PackageName")
 
 /* ktlint-disable package-name */
-package com.mercandalli.android.apps.files.settings_storage
+package com.mercandalli.android.apps.files.settings_ram
 
-import com.mercandalli.android.apps.files.file_storage_stats.FileStorageStatsManager
+import com.mercandalli.android.apps.files.ram_stats.RamStatsManager
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileSizeUtils
 
-class SettingsStoragePresenter(
-    private val screen: SettingsStorageContract.Screen,
-    private val fileStorageStatsManager: FileStorageStatsManager,
+class SettingsRamPresenter(
+    private val screen: SettingsRamContract.Screen,
+    private val ramStatsManager: RamStatsManager,
     private val screenManager: ScreenManager,
     private val themeManager: ThemeManager
-) : SettingsStorageContract.UserAction {
+) : SettingsRamContract.UserAction {
 
     private val themeListener = createThemeListener()
 
     override fun onAttached() {
         themeManager.registerThemeListener(themeListener)
         updateTheme()
-        updateStorage()
+        updateScreen()
     }
 
     override fun onDetached() {
@@ -29,13 +29,13 @@ class SettingsStoragePresenter(
     }
 
     override fun onStorageLocalRowClicked() {
-        screenManager.startSystemSettingsStorage()
+        updateScreen()
     }
 
-    private fun updateStorage() {
-        val freeMemory = fileStorageStatsManager.getFreeMemory()
-        val busyMemory = fileStorageStatsManager.getBusyMemory()
-        val totalMemory = fileStorageStatsManager.getTotalMemory()
+    private fun updateScreen() {
+        val freeMemory = ramStatsManager.getFreeMemory()
+        val busyMemory = ramStatsManager.getBusyMemory()
+        val totalMemory = ramStatsManager.getTotalMemory()
         val busyPercent = ((busyMemory.toFloat() * 100f) / totalMemory).toInt()
         val freeMemoryString = FileSizeUtils.humanReadableByteCount(freeMemory)
         val busyMemoryString = FileSizeUtils.humanReadableByteCount(busyMemory)

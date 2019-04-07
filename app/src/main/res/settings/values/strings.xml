@@ -5,9 +5,6 @@
     <string name="view_settings_theme_label">Theme</string>
     <string name="view_settings_theme_sublabel">Dark theme</string>
 
-    <string name="view_settings_storage_label">Storage</string>
-    <string name="view_settings_storage_local_label">Local storage</string>
-
     <string name="view_settings_developer_mode_enabled">Developer mode enabled</string>
     <string name="view_settings_developer_mode_disabled">Developer mode disabled</string>
     <string name="view_settings_developer_activation_message_title">Enable developer mode</string>

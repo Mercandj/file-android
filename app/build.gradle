@@ -91,6 +91,8 @@ android {
                     'src/main/res/search',
                     'src/main/res/settings',
                     'src/main/res/settings_full_version',
+                    'src/main/res/settings_ram',
+                    'src/main/res/settings_storage',
                     'src/main/res/settings_store'
             ]
         }

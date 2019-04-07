@@ -36,6 +36,7 @@ class SettingsViewPresenter(
         list.add(SettingsAdapter.SettingsTheme())
         list.add(SettingsAdapter.SettingsStorage())
         if (fullVersionUnlocked) {
+            list.add(SettingsAdapter.SettingsRam())
             list.add(SettingsAdapter.SettingsFullVersion())
         } else {
             list.add(SettingsAdapter.SettingsStore())

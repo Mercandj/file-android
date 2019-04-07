@@ -15,6 +15,7 @@ import com.mercandalli.android.apps.files.hash.HashModule
 import com.mercandalli.android.apps.files.main_thread.MainThreadModule
 import com.mercandalli.android.apps.files.network.NetworkManager
 import com.mercandalli.android.apps.files.product.ProductModule
+import com.mercandalli.android.apps.files.ram_stats.RamStatsModule
 import com.mercandalli.android.apps.files.remote_config.RemoteConfigModule
 import com.mercandalli.android.apps.files.screen.ScreenModule
 import com.mercandalli.android.apps.files.split_install.SplitInstallModule
@@ -73,6 +74,7 @@ class ApplicationGraph(
     private val notificationAudioManager by lazy { notificationModule.createNotificationAudioManager() }
     private val okHttpClientLazy by lazy { networkModule.createOkHttpClientLazy() }
     private val productManager by lazy { ProductModule(context).createProductManager() }
+    private val ramStatsManager by lazy { RamStatsModule(context).createRamStatsManager() }
     private val remoteConfig by lazy { RemoteConfigModule().createRemoteConfig() }
     private val screenManager by lazy { screenModule.createScreenManager() }
     private val splitInstallManager by lazy { SplitInstallModule(context).createSplitInstallManager() }
@@ -126,6 +128,7 @@ class ApplicationGraph(
         fun getNotificationAudioManager() = graph!!.notificationAudioManager
         fun getOkHttpClientLazy() = graph!!.okHttpClientLazy
         fun getProductManager() = graph!!.productManager
+        fun getRamStatsManager() = graph!!.ramStatsManager
         fun getRemoteConfig() = graph!!.remoteConfig
         fun getScreenManager() = graph!!.screenManager
         fun getSplitInstallManager() = graph!!.splitInstallManager
