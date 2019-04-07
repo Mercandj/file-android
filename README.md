@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Mercandj/file-android.svg?branch=master)](https://travis-ci.org/Mercandj/file-android)
-[![Version](https://img.shields.io/badge/version-1.00.35-607D8B.svg?style=flat-square&label=version)](https://github.com/Mercandj/file-android/releases/tag/1.00.35)
+[![Version](https://img.shields.io/badge/version-1.00.36-607D8B.svg?style=flat-square&label=version)](https://github.com/Mercandj/file-android/releases/tag/1.00.36)
 [![Kotlin](https://img.shields.io/badge/kotlin-1.3.21-f5801e.svg?style=flat-square)](http://kotlinlang.org) 
-[![Ktor](https://img.shields.io/badge/ktor-1.0.0-f50057.svg?style=flat-square)](https://ktor.io/) 
+[![Ktor](https://img.shields.io/badge/ktor-1.1.3-f50057.svg?style=flat-square)](https://ktor.io/) 
 [![PlayStore URL](https://img.shields.io/badge/play%20store-team%20mercan-1DA1F2.svg?style=flat-square&logo=android)](https://play.google.com/store/apps/details?id=com.mercandalli.android.apps.files)
 
 # File manager on Android
