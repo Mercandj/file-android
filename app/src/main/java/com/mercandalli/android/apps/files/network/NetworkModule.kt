@@ -26,7 +26,7 @@ class NetworkModule {
 
     fun createOkHttpClientLazy(): Lazy<OkHttpClient> = okHttpClient
 
-    fun createNetwork(): NetworkManager {
+    fun createNetworkManager(): NetworkManager {
         return NetworkManagerImpl(
             networkDownloader,
             networkUploader,

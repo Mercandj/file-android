@@ -80,9 +80,11 @@ internal class FileChildrenManagerAndroid(
             }
             val ioFiles = ioFile.listFiles()
             val files = ArrayList<File>()
-            for (ioFileLoop in ioFiles) {
-                val file = File.create(ioFileLoop)
-                files.add(file)
+            if (ioFiles != null) {
+                for (ioFileLoop in ioFiles) {
+                    val file = File.create(ioFileLoop)
+                    files.add(file)
+                }
             }
             return FileChildrenResult.createLoaded(path, files)
         }
