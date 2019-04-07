@@ -43,9 +43,9 @@ class SettingsStoragePresenterTest {
     private fun createInstanceToTest(): SettingsStorageContract.UserAction {
         return SettingsStoragePresenter(
             screen,
-            themeManager,
             fileStorageStatsManager,
-            screenManager
+            screenManager,
+            themeManager
         )
     }
 }
