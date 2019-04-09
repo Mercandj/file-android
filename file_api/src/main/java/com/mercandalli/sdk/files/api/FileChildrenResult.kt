@@ -22,35 +22,46 @@ data class FileChildrenResult(
     companion object {
 
         @JvmStatic
-        fun createUnloaded(path: String) = FileChildrenResult(
+        fun createUnloaded(
+            path: String
+        ) = FileChildrenResult(
             path,
             Status.UNLOADED,
             ArrayList()
         )
 
         @JvmStatic
-        fun createLoading(path: String) = FileChildrenResult(
+        fun createLoading(
+            path: String
+        ) = FileChildrenResult(
             path,
             Status.LOADING,
             ArrayList()
         )
 
         @JvmStatic
-        fun createLoaded(path: String, files: List<File>) = FileChildrenResult(
+        fun createLoaded(
+            path: String,
+            files: List<File>
+        ) = FileChildrenResult(
             path,
             Status.LOADED_SUCCEEDED,
             ArrayList(files)
         )
 
         @JvmStatic
-        fun createErrorNotFolder(path: String) = FileChildrenResult(
+        fun createErrorNotFolder(
+            path: String
+        ) = FileChildrenResult(
             path,
             Status.ERROR_NOT_FOLDER,
             ArrayList()
         )
 
         @JvmStatic
-        fun createErrorNetwork(path: String) = FileChildrenResult(
+        fun createErrorNetwork(
+            path: String
+        ) = FileChildrenResult(
             path,
             Status.ERROR_NETWORK,
             ArrayList()

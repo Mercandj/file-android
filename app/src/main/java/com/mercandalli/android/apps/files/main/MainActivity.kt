@@ -1,12 +1,13 @@
 package com.mercandalli.android.apps.files.main
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import android.view.View
@@ -321,6 +322,7 @@ class MainActivity : AppCompatActivity(),
         val fileOnlineCreatorManager = ApplicationGraph.getFileOnlineCreatorManager()
         val fileCopyCutManager = ApplicationGraph.getFileCopyCutManager()
         val fileOnlineCopyCutManager = ApplicationGraph.getFileOnlineCopyCutManager()
+        val fileProviderRootManager = ApplicationGraph.getFileProviderRootManager()
         val developerManager = ApplicationGraph.getDeveloperManager()
         val fileUiStorageSharedPreferences = getSharedPreferences(
             MainActivityFileUiStorageImpl.PREFERENCE_NAME,
@@ -357,8 +359,18 @@ class MainActivity : AppCompatActivity(),
             themeManager,
             toastManager,
             updateManager,
-            Environment.getExternalStorageDirectory().absolutePath,
-            "/"
+            fileProviderRootManager
         )
+    }
+
+    companion object {
+
+        fun start(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
+            if (context !is Activity) {
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            context.startActivity(intent)
+        }
     }
 }

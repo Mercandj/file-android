@@ -1,4 +1,4 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.MediaScanner
 

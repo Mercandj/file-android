@@ -3,7 +3,7 @@
 /* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_column_list
 
-import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.file_provider.FileTest
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult

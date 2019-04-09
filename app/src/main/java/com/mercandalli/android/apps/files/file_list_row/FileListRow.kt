@@ -17,7 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.common.DialogUtils
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileDeleteManager

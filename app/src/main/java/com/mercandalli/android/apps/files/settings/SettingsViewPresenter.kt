@@ -3,10 +3,12 @@ package com.mercandalli.android.apps.files.settings
 import com.mercandalli.android.apps.files.developer.DeveloperManager
 import com.mercandalli.android.apps.files.product.ProductManager
 import com.mercandalli.android.apps.files.remote_config.RemoteConfig
+import com.mercandalli.android.sdk.files.api.FileScopedStorageManager
 
 class SettingsViewPresenter(
     private val screen: SettingsViewContract.Screen,
     private val developerManager: DeveloperManager,
+    private val fileScopedStorageManager: FileScopedStorageManager,
     private val productManager: ProductManager,
     private val remoteConfig: RemoteConfig
 ) : SettingsViewContract.UserAction {
@@ -45,6 +47,9 @@ class SettingsViewPresenter(
             list.add(SettingsAdapter.SettingsDynamic())
         }
         if (developerMode) {
+            if (fileScopedStorageManager.isScopedStorage()) {
+                list.add(SettingsAdapter.SettingsAndroidQ())
+            }
             list.add(SettingsAdapter.SettingsDeveloper())
         }
         list.add(SettingsAdapter.SettingsAbout())

@@ -4,7 +4,6 @@
 package com.mercandalli.android.apps.files.file_list
 
 import android.content.Context
-import android.os.Environment
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mercandalli.android.apps.files.R
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import com.mercandalli.sdk.files.api.File
@@ -188,15 +187,18 @@ class FileListView @JvmOverloads constructor(
         val screen = createScreen()
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
+        val fileParentRootManager = ApplicationGraph.getFileParentRootManager()
+        val fileProviderRootManager = ApplicationGraph.getFileProviderRootManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
         FileListPresenter(
             screen,
             fileChildrenManager,
             fileOpenManager,
+            fileParentRootManager,
+            fileProviderRootManager,
             fileSortManager,
-            themeManager,
-            Environment.getExternalStorageDirectory().absolutePath
+            themeManager
         )
     }
 

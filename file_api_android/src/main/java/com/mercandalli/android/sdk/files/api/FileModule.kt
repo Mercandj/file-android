@@ -10,24 +10,41 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Build.VERSION_CODES.N
-import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import android.widget.Toast
-import com.mercandalli.sdk.files.api.FileZipManager
+import com.mercandalli.android.sdk.files.api.internal.FileRootManagerImpl
+import com.mercandalli.android.sdk.files.api.internal.FileScopedStorageManagerImpl
+import com.mercandalli.android.sdk.files.api.internal.PermissionModule
+import com.mercandalli.android.sdk.files.api.internal.FileManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileOpenManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileParentManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileZipManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileRenameManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileDeleteManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileSizeManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.MediaScannerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileCreatorManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileCopyCutManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileSearchManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FileShareManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.file_children.FileChildrenModule
+import com.mercandalli.sdk.files.api.FileRootManager
 import com.mercandalli.sdk.files.api.MediaScanner
-import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileChildrenManager
-import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
-import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileSortManager
-import com.mercandalli.sdk.files.api.FileSizeManager
+import com.mercandalli.sdk.files.api.FileParentManager
+import com.mercandalli.sdk.files.api.FileOpenManager
 import com.mercandalli.sdk.files.api.FileRenameManager
+import com.mercandalli.sdk.files.api.FileSortManager
 import com.mercandalli.sdk.files.api.FileSortManagerImpl
-import com.mercandalli.sdk.files.api.FileSearchManager
+import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileShareManager
+import com.mercandalli.sdk.files.api.FileSearchManager
+import com.mercandalli.sdk.files.api.FileZipManager
 import java.io.File
 
 class FileModule(
@@ -35,28 +52,20 @@ class FileModule(
     private val permissionRequestAddOn: PermissionRequestAddOn
 ) {
 
-    private val mediaScannerInternal: MediaScanner by lazy {
-        val addOn = object : MediaScannerAndroid.AddOn {
-            override fun refreshSystemMediaScanDataBase(path: String) {
-                refreshSystemMediaScanDataBase(context, path)
-            }
-        }
-        MediaScannerAndroid(addOn)
-    }
-
-    private val externalStorageDirectoryAbsolutePath by lazy {
-        Environment.getExternalStorageDirectory().absolutePath
-    }
-
-    private val permissionManager: PermissionManager by lazy { PermissionManagerImpl(context, permissionRequestAddOn) }
-    private val fileZipManagerInternal: FileZipManager by lazy { FileZipManagerAndroid(mediaScannerInternal) }
+    private val mediaScannerInternal by lazy { createMediaScanner() }
+    private val fileRootManagerInternal by lazy { createFileRootManager() }
+    private val fileScopedStorageManagerInternal by lazy { createFileScopedStorageManager() }
+    private val permissionManagerInternal by lazy { createPermissionManager() }
+    private val fileZipManagerInternal by lazy { createFileZipManager() }
 
     fun getMediaScanner() = mediaScannerInternal
 
+    fun getPermissionManager() = permissionManagerInternal
+
     fun createFileManager(): FileManager {
-        val fileManager = FileManagerAndroid(permissionManager)
+        val fileManager = FileManagerAndroid(permissionManagerInternal)
         val fileObserver = RecursiveFileObserver(
-            externalStorageDirectoryAbsolutePath
+            fileRootManagerInternal.getFileRootPath()
         ) {
             if (it != null && !it.endsWith("/null")) {
                 val path = File(it).parentFile.absolutePath
@@ -73,31 +82,25 @@ class FileModule(
     }
 
     fun createFileChildrenManager(): FileChildrenManager {
-        val fileChildrenManager = FileChildrenManagerAndroid(permissionManager)
-        val fileObserver = RecursiveFileObserver(
-            externalStorageDirectoryAbsolutePath
-        ) {
-            if (it != null && !it.endsWith("/null")) {
-                val path = File(it).parentFile.absolutePath
-                fileChildrenManager.refresh(path)
-            }
-        }
-        mediaScannerInternal.addListener(object : MediaScanner.RefreshListener {
-            override fun onContentChanged(path: String) {
-                fileChildrenManager.refresh(path)
-            }
-        })
-        fileObserver.startWatching()
-        return fileChildrenManager
+        return FileChildrenModule(
+            context,
+            mediaScannerInternal,
+            permissionManagerInternal,
+            fileRootManagerInternal
+        ).createFileChildrenManager()
     }
 
     fun createFileOpenManager(): FileOpenManager {
         val addOn = object : FileOpenManagerAndroid.AddOn {
             override fun startActivity(path: String, mime: String) {
+                val uri = getUriFromFilePath(
+                    context,
+                    path
+                )
                 val intent = Intent()
                 intent.action = Intent.ACTION_VIEW
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                intent.setDataAndType(getUriFromFile(context, File(path)), mime)
+                intent.setDataAndType(uri, mime)
                 if (context !is Activity) {
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
@@ -120,17 +123,31 @@ class FileModule(
     )
 
     fun createFileCreatorManager(): FileCreatorManager = FileCreatorManagerAndroid(
-        permissionManager,
+        permissionManagerInternal,
         mediaScannerInternal
     )
+
+    fun createFileParentManager(): FileParentManager {
+        return FileParentManagerAndroid()
+    }
 
     fun createFileRenameManager(): FileRenameManager = FileRenameManagerAndroid(
         mediaScannerInternal
     )
 
+    fun getFileRootManager(): FileRootManager {
+        return FileRootManagerImpl(
+            fileScopedStorageManagerInternal
+        )
+    }
+
+    fun getFileScopedStorageManager(): FileScopedStorageManager {
+        return fileScopedStorageManagerInternal
+    }
+
     fun createFileSearchManager(): FileSearchManager {
         return FileSearchManagerAndroid(
-            externalStorageDirectoryAbsolutePath
+            fileRootManagerInternal
         )
     }
 
@@ -140,7 +157,7 @@ class FileModule(
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                intent.setDataAndType(getUriFromFile(context, File(path)), mime)
+                intent.setDataAndType(getUriFromIOFile(context, File(path)), mime)
                 if (context !is Activity) {
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
@@ -153,7 +170,7 @@ class FileModule(
 
     fun createFileSizeManager(): FileSizeManager {
         val fileSizeManager = FileSizeManagerAndroid(
-            permissionManager
+            permissionManagerInternal
         )
         mediaScannerInternal.addListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
@@ -165,15 +182,65 @@ class FileModule(
 
     fun createFileSortManager(): FileSortManager = FileSortManagerImpl()
 
+    private fun createMediaScanner(): MediaScanner {
+        val addOn = object : MediaScannerAndroid.AddOn {
+            override fun refreshSystemMediaScanDataBase(path: String) {
+                refreshSystemMediaScanDataBase(context, path)
+            }
+        }
+        return MediaScannerAndroid(
+            addOn
+        )
+    }
+
+    private fun createFileRootManager(): FileRootManager {
+        return FileRootManagerImpl(
+            fileScopedStorageManagerInternal
+        )
+    }
+
+    private fun createFileScopedStorageManager(): FileScopedStorageManager {
+        return FileScopedStorageManagerImpl(context)
+    }
+
+    private fun createPermissionManager(): PermissionManager {
+        val permissionModule = PermissionModule(
+            context,
+            fileScopedStorageManagerInternal,
+            permissionRequestAddOn
+        )
+        return permissionModule.createPermissionManager()
+    }
+
+    private fun createFileZipManager(): FileZipManager {
+        return FileZipManagerAndroid(
+            mediaScannerInternal
+        )
+    }
+
     companion object {
 
-        private fun getUriFromFile(
+        private fun getUriFromFilePath(
             context: Context,
-            file: File
+            filePath: String
+        ): Uri {
+            return if (filePath.startsWith("content://")) {
+                Uri.parse(filePath)
+            } else {
+                getUriFromIOFile(
+                    context,
+                    File(filePath)
+                )
+            }
+        }
+
+        private fun getUriFromIOFile(
+            context: Context,
+            ioFile: File
         ): Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            getUriFromFileOverN(context, file)
+            getUriFromFileOverN(context, ioFile)
         } else {
-            Uri.fromFile(file)
+            Uri.fromFile(ioFile)
         }
 
         private fun getUriFromFileOverN(

@@ -51,11 +51,13 @@ class SettingsView @JvmOverloads constructor(
         }
         val screen = createScreen()
         val developerManager = ApplicationGraph.getDeveloperManager()
+        val fileScopedStorageManager = ApplicationGraph.getFileScopedStorageManager()
         val productManager = ApplicationGraph.getProductManager()
         val remoteConfig = ApplicationGraph.getRemoteConfig()
         return SettingsViewPresenter(
             screen,
             developerManager,
+            fileScopedStorageManager,
             productManager,
             remoteConfig
         )

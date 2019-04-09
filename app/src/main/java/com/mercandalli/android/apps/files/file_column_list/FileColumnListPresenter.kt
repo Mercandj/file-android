@@ -36,7 +36,10 @@ class FileColumnListPresenter(
     }
 
     override fun onRefresh() {
-        val fileChildrenResult = fileChildrenManager.loadFileChildren(currentPath, true)
+        val fileChildrenResult = fileChildrenManager.loadFileChildren(
+            currentPath,
+            true
+        )
         syncFileChildren(fileChildrenResult)
     }
 

@@ -3,22 +3,27 @@
 /* ktlint-disable package-name */
 package com.mercandalli.android.apps.files.file_list
 
+import com.mercandalli.android.apps.files.file_provider.FileProvider
+import com.mercandalli.android.apps.files.file_provider_root.FileProviderRootManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
-import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileOpenManager
+import com.mercandalli.sdk.files.api.File
+import com.mercandalli.sdk.files.api.FileParentManager
 import com.mercandalli.sdk.files.api.FileSortManager
+import com.mercandalli.sdk.files.api.FileChildrenResult
 
 class FileListPresenter(
     private val screen: FileListContract.Screen,
     private var fileChildrenManager: FileChildrenManager,
     private var fileOpenManager: FileOpenManager,
+    private val fileParentManager: FileParentManager,
+    fileProviderRootManager: FileProviderRootManager,
     private val fileSortManager: FileSortManager,
-    private val themeManager: ThemeManager,
-    private var rootPath: String
+    private val themeManager: ThemeManager
 ) : FileListContract.UserAction {
 
+    private var rootPath = fileProviderRootManager.getFileRootPath(FileProvider.Local)
     private var currentPath = rootPath
     private val fileChildrenResultListener = createFileChildrenResultListener()
     private val themeListener = createThemeListener()
@@ -54,9 +59,8 @@ class FileListPresenter(
         if (currentPath == rootPath) {
             return
         }
-        val ioFile = java.io.File(currentPath)
-        val parent = ioFile.parent ?: return
-        currentPath = parent
+        val parentPath = fileParentManager.getParentPath(currentPath) ?: return
+        currentPath = parentPath
         screen.notifyListenerCurrentPathChanged(currentPath)
         syncFileChildren()
     }

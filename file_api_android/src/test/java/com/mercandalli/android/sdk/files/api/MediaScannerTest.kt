@@ -1,5 +1,6 @@
 package com.mercandalli.android.sdk.files.api
 
+import com.mercandalli.android.sdk.files.api.internal.MediaScannerAndroid
 import com.mercandalli.sdk.files.api.MediaScanner
 import org.junit.Before
 import org.junit.Test
@@ -32,7 +33,7 @@ class MediaScannerTest {
 
     private fun createInstanceToTest(): MediaScanner {
         return MediaScannerAndroid(
-                addOn
+            addOn
         )
     }
 }

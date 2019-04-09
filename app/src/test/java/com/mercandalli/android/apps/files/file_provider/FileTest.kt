@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.files.file
+package com.mercandalli.android.apps.files.file_provider
 
 import com.mercandalli.sdk.files.api.File
 

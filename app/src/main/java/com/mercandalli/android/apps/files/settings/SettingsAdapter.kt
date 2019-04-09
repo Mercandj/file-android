@@ -7,6 +7,7 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.mercandalli.android.apps.files.settings_about.SettingsAboutView
+import com.mercandalli.android.apps.files.settings_android_q.SettingsAndroidQView
 import com.mercandalli.android.apps.files.settings_developer.SettingsDeveloperView
 import com.mercandalli.android.apps.files.settings_dynamic.SettingsDynamicView
 import com.mercandalli.android.apps.files.settings_full_version.SettingsFullVersionView
@@ -22,6 +23,7 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
         delegatesManager.addDelegate(SettingsStorageAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsRamAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDynamicAdapterDelegate() as AdapterDelegate<List<Any>>)
+        delegatesManager.addDelegate(SettingsAndroidQAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsDeveloperAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsAboutAdapterDelegate() as AdapterDelegate<List<Any>>)
         delegatesManager.addDelegate(SettingsStoreAdapterDelegate() as AdapterDelegate<List<Any>>)
@@ -151,6 +153,26 @@ class SettingsAdapter : ListDelegationAdapter<List<Any>>() {
 
     private class SettingsDynamicViewHolder(view: View) : RecyclerView.ViewHolder(view)
     //endregion SettingsDynamic
+
+    //region SettingsAndroidQ
+    class SettingsAndroidQ
+
+    private class SettingsAndroidQAdapterDelegate :
+        AbsListItemAdapterDelegate<Any, Any, SettingsAndroidQViewHolder>() {
+
+        override fun isForViewType(o: Any, list: List<Any>, i: Int) = o is SettingsAndroidQ
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup): SettingsAndroidQViewHolder {
+            val view = SettingsAndroidQView(viewGroup.context)
+            view.layoutParams = createDefaultRecyclerViewLayoutParam()
+            return SettingsAndroidQViewHolder(view)
+        }
+
+        override fun onBindViewHolder(model: Any, titleViewHolder: SettingsAndroidQViewHolder, list: List<Any>) {}
+    }
+
+    private class SettingsAndroidQViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    //endregion SettingsAndroidQ
 
     //region SettingsDeveloper
     class SettingsDeveloper

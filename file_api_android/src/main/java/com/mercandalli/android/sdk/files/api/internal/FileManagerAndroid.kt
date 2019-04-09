@@ -1,5 +1,6 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
+import com.mercandalli.android.sdk.files.api.PermissionManager
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileResult
@@ -27,12 +28,12 @@ internal class FileManagerAndroid(
                 return getFile(path)
             }
         }
-        if (permissionManager.shouldRequestStoragePermission()) {
+        if (permissionManager.requestStoragePermissionIfRequired()) {
             return getFile(path)
         }
         fileResultMap[path] = FileResult.createLoading(path)
         GlobalScope.launch(Dispatchers.Default) {
-            val fileResult = FileManagerAndroid.loadFileSync(path)
+            val fileResult = loadFileSync(path)
             GlobalScope.launch(Dispatchers.Main) {
                 fileResultMap[path] = fileResult
                 for (listener in fileResultListeners) {

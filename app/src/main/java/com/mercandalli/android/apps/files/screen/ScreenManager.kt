@@ -1,6 +1,6 @@
 package com.mercandalli.android.apps.files.screen
 
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 
 interface ScreenManager {
 

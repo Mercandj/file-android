@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.android.apps.files.file_details.FileDetailsActivity
 import com.mercandalli.android.apps.files.permission.PermissionActivity
 

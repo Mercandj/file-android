@@ -5,7 +5,7 @@ package com.mercandalli.android.apps.files.file_column_detail
 
 import com.mercandalli.android.apps.files.audio.AudioManager
 import com.mercandalli.android.apps.files.audio.AudioQueueManager
-import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.file_provider.FileTest
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.toast.ToastManager
 import com.mercandalli.sdk.files.api.FileOpenManager

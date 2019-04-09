@@ -4,7 +4,7 @@
 package com.mercandalli.android.apps.files.file_list_row
 
 import com.mercandalli.android.apps.files.audio.AudioManager
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.android.apps.files.toast.ToastManager

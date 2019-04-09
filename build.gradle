@@ -41,9 +41,9 @@ ext {
     appVersionCode = 1_00_1_00_36
     appVersionName = "1.00.36"
 
-    compileSdkVersion = 28
+    compileSdkVersion = 'android-Q'
     buildToolsVersion = "28.0.3"
-    targetSdkVersion = 28
+    targetSdkVersion = 29
     minSdkVersion = 16
 
     spoonEnable = false

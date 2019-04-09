@@ -2,17 +2,29 @@ package com.mercandalli.sdk.files.api
 
 interface FileCopyCutManager {
 
-    fun copy(path: String)
+    fun copy(
+        path: String
+    )
 
-    fun copy(pathInput: String, pathDirectoryOutput: String)
+    fun copy(
+        pathInput: String,
+        pathDirectoryOutput: String
+    )
 
-    fun cut(path: String)
+    fun cut(
+        path: String
+    )
 
-    fun cut(pathInput: String, pathDirectoryOutput: String)
+    fun cut(
+        pathInput: String,
+        pathDirectoryOutput: String
+    )
 
     fun getFileToPastePath(): String?
 
-    fun paste(pathDirectoryOutput: String)
+    fun paste(
+        pathDirectoryOutput: String
+    )
 
     fun cancelCopyCut()
 

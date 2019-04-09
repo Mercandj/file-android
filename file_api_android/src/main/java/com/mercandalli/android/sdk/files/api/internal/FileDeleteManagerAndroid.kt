@@ -1,15 +1,18 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileDeleteManager
 import com.mercandalli.sdk.files.api.MediaScanner
+import java.io.File
 
-class FileDeleteManagerAndroid(
+internal class FileDeleteManagerAndroid(
     private val mediaScanner: MediaScanner
 ) : FileDeleteManager {
 
     private val listeners = ArrayList<FileDeleteManager.FileDeleteCompletionListener>()
 
-    override fun delete(path: String) {
+    override fun delete(
+        path: String
+    ) {
         val ioFile = java.io.File(path)
         val parentPath = ioFile.parentFile.absolutePath
         val deleteSucceeded = if (ioFile.isDirectory) {
@@ -24,14 +27,18 @@ class FileDeleteManagerAndroid(
         }
     }
 
-    override fun registerFileDeleteCompletionListener(listener: FileDeleteManager.FileDeleteCompletionListener) {
+    override fun registerFileDeleteCompletionListener(
+        listener: FileDeleteManager.FileDeleteCompletionListener
+    ) {
         if (listeners.contains(listener)) {
             return
         }
         listeners.add(listener)
     }
 
-    override fun unregisterFileDeleteCompletionListener(listener: FileDeleteManager.FileDeleteCompletionListener) {
+    override fun unregisterFileDeleteCompletionListener(
+        listener: FileDeleteManager.FileDeleteCompletionListener
+    ) {
         listeners.remove(listener)
     }
 
@@ -47,7 +54,7 @@ class FileDeleteManagerAndroid(
             if (ioDirectory.isDirectory) {
                 val children = ioDirectory.list() ?: return ioDirectory.delete()
                 for (str in children) {
-                    val success = deleteDirectory(java.io.File(ioDirectory, str))
+                    val success = deleteDirectory(File(ioDirectory, str))
                     if (!success) {
                         return false
                     }

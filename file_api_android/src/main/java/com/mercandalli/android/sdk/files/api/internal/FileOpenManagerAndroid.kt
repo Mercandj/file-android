@@ -1,24 +1,32 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileOpenManager
 import com.mercandalli.sdk.files.api.FileZipManager
 import java.io.File
 
-class FileOpenManagerAndroid(
+internal class FileOpenManagerAndroid(
     private val fileZipManager: FileZipManager,
     private val addOn: AddOn
 ) : FileOpenManager {
 
-    override fun open(path: String, mime: String?) {
+    override fun open(
+        path: String,
+        mime: String?
+    ) {
         if (fileZipManager.isZip(path)) {
             unzip(path)
             return
         }
         val mimeToUse = mime ?: extractMime(path)
-        addOn.startActivity(path, mimeToUse)
+        addOn.startActivity(
+            path,
+            mimeToUse
+        )
     }
 
-    private fun unzip(path: String) {
+    private fun unzip(
+        path: String
+    ) {
         val file = File(path)
         val parentPath = file.parentFile.absolutePath
         val outputPath = createNewFolderPath(
@@ -44,19 +52,19 @@ class FileOpenManagerAndroid(
                 for (ext in typeModelENUM.type.value) {
                     if (path.endsWith(".$ext")) {
                         when (typeModelENUM) {
-                            FileOpenManagerAndroid.FileTypeModelENUM.APK -> return MIME_APK
-                            FileOpenManagerAndroid.FileTypeModelENUM.TEXT -> return MIME_TEXT
-                            FileOpenManagerAndroid.FileTypeModelENUM.IMAGE -> return MIME_IMAGE
-                            FileOpenManagerAndroid.FileTypeModelENUM.AUDIO -> return MIME_AUDIO
-                            FileOpenManagerAndroid.FileTypeModelENUM.VIDEO -> return MIME_VIDEO
-                            FileOpenManagerAndroid.FileTypeModelENUM.WORD -> return MIME_WORD
-                            FileOpenManagerAndroid.FileTypeModelENUM.OPEN_DOCUMENT -> return MIME_TEXT
-                            FileOpenManagerAndroid.FileTypeModelENUM.VCF -> return MIME_TEXT
-                            FileOpenManagerAndroid.FileTypeModelENUM.PDF -> return MIME_PDF
-                            FileOpenManagerAndroid.FileTypeModelENUM.SOURCE -> return MIME_TEXT
-                            FileOpenManagerAndroid.FileTypeModelENUM.SOURCE_JAVA -> return MIME_TEXT
-                            FileOpenManagerAndroid.FileTypeModelENUM.SOURCE_HTML -> return MIME_HTML
-                            FileOpenManagerAndroid.FileTypeModelENUM.LOG -> return MIME_TEXT
+                            FileTypeModelENUM.APK -> return MIME_APK
+                            FileTypeModelENUM.TEXT -> return MIME_TEXT
+                            FileTypeModelENUM.IMAGE -> return MIME_IMAGE
+                            FileTypeModelENUM.AUDIO -> return MIME_AUDIO
+                            FileTypeModelENUM.VIDEO -> return MIME_VIDEO
+                            FileTypeModelENUM.WORD -> return MIME_WORD
+                            FileTypeModelENUM.OPEN_DOCUMENT -> return MIME_TEXT
+                            FileTypeModelENUM.VCF -> return MIME_TEXT
+                            FileTypeModelENUM.PDF -> return MIME_PDF
+                            FileTypeModelENUM.SOURCE -> return MIME_TEXT
+                            FileTypeModelENUM.SOURCE_JAVA -> return MIME_TEXT
+                            FileTypeModelENUM.SOURCE_HTML -> return MIME_HTML
+                            FileTypeModelENUM.LOG -> return MIME_TEXT
                             else -> return ""
                         }
                     }

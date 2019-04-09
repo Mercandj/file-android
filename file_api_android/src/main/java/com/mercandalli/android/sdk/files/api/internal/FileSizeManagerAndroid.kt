@@ -1,5 +1,6 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
+import com.mercandalli.android.sdk.files.api.PermissionManager
 import com.mercandalli.sdk.files.api.FileSizeManager
 import com.mercandalli.sdk.files.api.FileSizeResult
 import com.mercandalli.sdk.files.api.FileSizeUtils
@@ -24,7 +25,7 @@ internal class FileSizeManagerAndroid(
                 return getSize(path)
             }
         }
-        if (permissionManager.shouldRequestStoragePermission()) {
+        if (permissionManager.requestStoragePermissionIfRequired()) {
             return getSize(path)
         }
         fileSizeResultMap[path] = FileSizeResult.createLoading(path)

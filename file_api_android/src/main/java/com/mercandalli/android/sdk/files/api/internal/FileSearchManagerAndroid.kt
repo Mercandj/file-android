@@ -1,5 +1,6 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
+import com.mercandalli.sdk.files.api.FileRootManager
 import com.mercandalli.sdk.files.api.FileSearchLocal
 import com.mercandalli.sdk.files.api.FileSearchManager
 import com.mercandalli.sdk.files.api.File
@@ -8,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class FileSearchManagerAndroid(
-    private val externalStorageDirectoryAbsolutePath: String
+internal class FileSearchManagerAndroid(
+    private val fileRootManager: FileRootManager
 ) : FileSearchManager {
 
     private val fileSearchResultMap = HashMap<String, FileSearchResult>()
@@ -31,7 +32,7 @@ class FileSearchManagerAndroid(
         GlobalScope.launch(Dispatchers.Default) {
             val fileSearchResult = loadFileSearchSync(
                 query,
-                externalStorageDirectoryAbsolutePath
+                fileRootManager.getFileRootPath()
             )
             GlobalScope.launch(Dispatchers.Main) {
                 fileSearchResultMap[query] = fileSearchResult

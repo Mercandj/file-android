@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegate
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.android.apps.files.file_list_row.FileListRow
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager

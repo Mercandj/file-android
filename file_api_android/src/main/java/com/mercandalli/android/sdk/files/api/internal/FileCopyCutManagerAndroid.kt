@@ -1,4 +1,4 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileCopyCutUtils
@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class FileCopyCutManagerAndroid(
+internal class FileCopyCutManagerAndroid(
     private val mediaScanner: MediaScanner
 ) : FileCopyCutManager {
 
@@ -16,7 +16,9 @@ class FileCopyCutManagerAndroid(
     private val fileToPasteChangedListeners = ArrayList<FileCopyCutManager.FileToPasteChangedListener>()
     private val pasteListeners = ArrayList<FileCopyCutManager.PasteListener>()
 
-    override fun copy(path: String) {
+    override fun copy(
+        path: String
+    ) {
         pathToCopy = path
         pathToCut = null
         for (listener in fileToPasteChangedListeners) {
@@ -24,7 +26,10 @@ class FileCopyCutManagerAndroid(
         }
     }
 
-    override fun copy(pathInput: String, pathDirectoryOutput: String) {
+    override fun copy(
+        pathInput: String,
+        pathDirectoryOutput: String
+    ) {
         GlobalScope.launch(Dispatchers.Default) {
             copySync(pathInput, pathDirectoryOutput)
             val ioFileInput = java.io.File(pathInput)
@@ -43,7 +48,9 @@ class FileCopyCutManagerAndroid(
         }
     }
 
-    override fun cut(path: String) {
+    override fun cut(
+        path: String
+    ) {
         pathToCopy = null
         pathToCut = path
         for (listener in fileToPasteChangedListeners) {
@@ -51,7 +58,10 @@ class FileCopyCutManagerAndroid(
         }
     }
 
-    override fun cut(pathInput: String, pathDirectoryOutput: String) {
+    override fun cut(
+        pathInput: String,
+        pathDirectoryOutput: String
+    ) {
         GlobalScope.launch(Dispatchers.Default) {
             cutSync(pathInput, pathDirectoryOutput)
             val ioFileInput = java.io.File(pathInput)
@@ -70,7 +80,9 @@ class FileCopyCutManagerAndroid(
         }
     }
 
-    override fun paste(pathDirectoryOutput: String) {
+    override fun paste(
+        pathDirectoryOutput: String
+    ) {
         if (pathToCopy != null && pathToCut != null) {
             throw IllegalStateException("copy and cut in the same time not supported")
         }

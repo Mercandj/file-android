@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.mercandalli.android.apps.files.R
 import com.mercandalli.android.apps.files.activity.ActivityExtension.bind
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.android.apps.files.main.ApplicationGraph
 import java.lang.IllegalStateException
 

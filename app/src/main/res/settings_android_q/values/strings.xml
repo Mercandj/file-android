@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="view_settings_android_q_label">Android Q</string>
+    <string name="view_settings_android_q_local_label">Android Q - Storage</string>
+
+</resources>

@@ -8,6 +8,7 @@ import com.mercandalli.android.apps.files.network.NetworkModule
 import com.mercandalli.android.apps.files.note.NoteModule
 import com.mercandalli.android.apps.files.notification.NotificationModule
 import com.mercandalli.android.apps.files.developer.DeveloperModule
+import com.mercandalli.android.apps.files.file_provider_root.FileProviderRootModule
 import com.mercandalli.android.apps.files.file_storage_stats.FileStorageStatsModule
 import com.mercandalli.android.apps.files.theme.ThemeModule
 import com.mercandalli.android.apps.files.version.VersionModule
@@ -45,11 +46,10 @@ class ApplicationGraph(
     private val dialogManager by lazy { DialogModule(context).createDialogManager() }
     private val fileManager by lazy { fileModule.createFileManager() }
     private val fileChildrenManager by lazy { fileModule.createFileChildrenManager() }
-    private val fileMediaScanner by lazy { fileModule.getMediaScanner() }
-    private val fileOpenManager by lazy { fileModule.createFileOpenManager() }
-    private val fileDeleteManager by lazy { fileModule.createFileDeleteManager() }
     private val fileCopyCutManager by lazy { fileModule.createFileCopyCutManager() }
     private val fileCreatorManager by lazy { fileModule.createFileCreatorManager() }
+    private val fileDeleteManager by lazy { fileModule.createFileDeleteManager() }
+    private val fileMediaScanner by lazy { fileModule.getMediaScanner() }
     private val fileOnlineManager by lazy { FileOnlineGraph.getFileOnlineManager() }
     private val fileOnlineChildrenManager by lazy { FileOnlineGraph.getFileOnlineChildrenManager() }
     private val fileOnlineCopyCutManager by lazy { FileOnlineGraph.getFileOnlineCopyCutManager() }
@@ -61,6 +61,11 @@ class ApplicationGraph(
     private val fileOnlineShareManager by lazy { FileOnlineGraph.getFileOnlineShareManager() }
     private val fileOnlineSizeManager by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
     private val fileOnlineUploadManager by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
+    private val fileOpenManager by lazy { fileModule.createFileOpenManager() }
+    private val fileParentManager by lazy { fileModule.createFileParentManager() }
+    private val fileProviderRootManager by lazy { FileProviderRootModule().createFileProviderRootManager() }
+    private val fileRootManager by lazy { fileModule.getFileRootManager() }
+    private val fileScopedStorageManager by lazy { fileModule.getFileScopedStorageManager() }
     private val fileShareManager by lazy { fileModule.createFileShareManager() }
     private val fileStorageStatsManager by lazy { FileStorageStatsModule().createFileStorageStatsManager() }
     private val fileRenameManager by lazy { fileModule.createFileRenameManager() }
@@ -73,6 +78,7 @@ class ApplicationGraph(
     private val notificationModule by lazy { NotificationModule(context, audioManager) }
     private val notificationAudioManager by lazy { notificationModule.createNotificationAudioManager() }
     private val okHttpClientLazy by lazy { networkModule.createOkHttpClientLazy() }
+    private val permissionManager by lazy { fileModule.getPermissionManager() }
     private val productManager by lazy { ProductModule(context).createProductManager() }
     private val ramStatsManager by lazy { RamStatsModule(context).createRamStatsManager() }
     private val remoteConfig by lazy { RemoteConfigModule().createRemoteConfig() }
@@ -116,13 +122,18 @@ class ApplicationGraph(
         fun getFileOnlineShareManager() = graph!!.fileOnlineShareManager
         fun getFileOnlineSizeManager() = graph!!.fileOnlineSizeManager
         fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManager
+        fun getFileParentRootManager() = graph!!.fileParentManager
+        fun getFileProviderRootManager() = graph!!.fileProviderRootManager
+        fun getFileScopedStorageManager() = graph!!.fileScopedStorageManager
         fun getFileShareManager() = graph!!.fileShareManager
         fun getFileStorageStatsManager() = graph!!.fileStorageStatsManager
         fun getFileRenameManager() = graph!!.fileRenameManager
+        fun getFileRootManager() = graph!!.fileRootManager
         fun getFileSizeManager() = graph!!.fileSizeManager
         fun getFileSortManager() = graph!!.fileSortManager
         fun getMainThreadPost() = graph!!.mainThreadPost
         fun getNetworkManager() = graph!!.networkManager
+        fun getPermissionManager() = graph!!.permissionManager
         fun getHashManager() = graph!!.hashManager
         fun getNoteManager() = graph!!.noteManager
         fun getNotificationAudioManager() = graph!!.notificationAudioManager

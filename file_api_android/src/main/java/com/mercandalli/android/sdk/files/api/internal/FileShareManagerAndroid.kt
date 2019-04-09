@@ -1,8 +1,8 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileShareManager
 
-class FileShareManagerAndroid(
+internal class FileShareManagerAndroid(
     private val addOn: AddOn
 ) : FileShareManager {
 

@@ -1,4 +1,4 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileExtension
 import com.mercandalli.sdk.files.api.FileZipManager
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.zip.ZipInputStream
 
-class FileZipManagerAndroid(
+internal class FileZipManagerAndroid(
     private val mediaScanner: MediaScanner
 ) : FileZipManager {
 

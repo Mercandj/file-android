@@ -7,16 +7,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.annotation.StringRes
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.Window
 import com.mercandalli.android.apps.files.R
+import com.mercandalli.android.apps.files.main.ApplicationGraph
 
 class PermissionActivity :
-    AppCompatActivity(),
-    PermissionContract.Screen {
+    AppCompatActivity() {
 
     private val userAction = createUserAction()
 
@@ -45,17 +44,17 @@ class PermissionActivity :
         }
     }
 
-    override fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            PERMISSIONS,
-            REQUEST_CODE)
-    }
-
-    private fun createUserAction(): PermissionContract.UserAction {
-        return PermissionPresenter(
-            this
-        )
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_OPEN_DIRECTORY && resultCode == Activity.RESULT_OK) {
+            finish()
+        } else {
+            showSnackbar("This app needs this permission to work", com.google.android.material.snackbar.Snackbar.LENGTH_LONG)
+        }
     }
 
     private fun showSnackbar(@StringRes text: Int, duration: Int) {
@@ -66,10 +65,35 @@ class PermissionActivity :
         com.google.android.material.snackbar.Snackbar.make(window.decorView, text, duration).show()
     }
 
+    private fun createScreen() = object : PermissionContract.Screen {
+
+        override fun requestStoragePermission() {
+            ActivityCompat.requestPermissions(
+                this@PermissionActivity,
+                PERMISSIONS,
+                REQUEST_CODE)
+        }
+
+        override fun requestScopedStoragePermission() {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+            startActivityForResult(intent, REQUEST_CODE_OPEN_DIRECTORY)
+        }
+    }
+
+    private fun createUserAction(): PermissionContract.UserAction {
+        val screen = createScreen()
+        val fileScopedStorageManager = ApplicationGraph.getFileScopedStorageManager()
+        return PermissionPresenter(
+            screen,
+            fileScopedStorageManager
+        )
+    }
+
     companion object {
 
         private val PERMISSIONS = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         private const val REQUEST_CODE = 26
+        private const val REQUEST_CODE_OPEN_DIRECTORY = 1
 
         @JvmStatic
         fun start(context: Context) {

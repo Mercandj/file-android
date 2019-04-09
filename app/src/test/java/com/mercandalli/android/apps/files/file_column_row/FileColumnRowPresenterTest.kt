@@ -6,7 +6,7 @@ package com.mercandalli.android.apps.files.file_column_row
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.mercandalli.android.apps.files.audio.AudioManager
-import com.mercandalli.android.apps.files.file.FileTest
+import com.mercandalli.android.apps.files.file_provider.FileTest
 import com.mercandalli.android.apps.files.theme.DarkTheme
 import com.mercandalli.android.apps.files.theme.Theme
 import com.mercandalli.android.apps.files.theme.ThemeManager

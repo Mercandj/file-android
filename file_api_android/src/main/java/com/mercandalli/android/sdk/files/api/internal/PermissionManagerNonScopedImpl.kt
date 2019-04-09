@@ -1,22 +1,29 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
+import com.mercandalli.android.sdk.files.api.PermissionManager
+import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
 
-class PermissionManagerImpl(
+internal class PermissionManagerNonScopedImpl(
     private val context: Context,
     private val permissionRequestAddOn: PermissionRequestAddOn
 ) : PermissionManager {
 
-    override fun shouldRequestStoragePermission(): Boolean {
-        val hasPermission = checkStoragePermission(context)
+    override fun hasStoragePermission(): Boolean {
+        return checkStoragePermission(context)
+    }
+
+    override fun requestStoragePermissionIfRequired(): Boolean {
+        val hasPermission = hasStoragePermission()
         if (!hasPermission) {
             permissionRequestAddOn.requestStoragePermission()
+            return true
         }
-        return !hasPermission
+        return false
     }
 
     companion object {

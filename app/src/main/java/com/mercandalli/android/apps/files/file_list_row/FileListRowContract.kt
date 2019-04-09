@@ -4,7 +4,7 @@
 package com.mercandalli.android.apps.files.file_list_row
 
 import androidx.annotation.ColorRes
-import com.mercandalli.android.apps.files.file.FileProvider
+import com.mercandalli.android.apps.files.file_provider.FileProvider
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileCopyCutManager
 import com.mercandalli.sdk.files.api.FileDeleteManager

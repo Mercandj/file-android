@@ -1,6 +1,6 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal.file_children
 
-import com.mercandalli.sdk.files.api.File
+import com.mercandalli.android.sdk.files.api.PermissionManager
 import com.mercandalli.sdk.files.api.FileChildrenResult
 import com.mercandalli.sdk.files.api.FileChildrenManager
 import kotlinx.coroutines.Dispatchers
@@ -8,6 +8,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 internal class FileChildrenManagerAndroid(
+    private val fileChildrenResultLoader: FileChildrenResultLoader,
     private val permissionManager: PermissionManager
 ) : FileChildrenManager {
 
@@ -27,12 +28,12 @@ internal class FileChildrenManagerAndroid(
                 return getFileChildren(path)
             }
         }
-        if (permissionManager.shouldRequestStoragePermission()) {
+        if (permissionManager.requestStoragePermissionIfRequired()) {
             return getFileChildren(path)
         }
         fileChildrenResultMap[path] = FileChildrenResult.createLoading(path)
         GlobalScope.launch(Dispatchers.Default) {
-            val fileChildrenResult = loadFileChildrenSync(path)
+            val fileChildrenResult = fileChildrenResultLoader.loadFileChildrenSync(path)
             GlobalScope.launch(Dispatchers.Main) {
                 fileChildrenResultMap[path] = fileChildrenResult
                 for (listener in fileChildrenResultListeners) {
@@ -43,7 +44,9 @@ internal class FileChildrenManagerAndroid(
         return getFileChildren(path)
     }
 
-    override fun getFileChildren(path: String): FileChildrenResult {
+    override fun getFileChildren(
+        path: String
+    ): FileChildrenResult {
         if (fileChildrenResultMap.contains(path)) {
             return fileChildrenResultMap[path]!!
         }
@@ -52,14 +55,18 @@ internal class FileChildrenManagerAndroid(
         return fileChildrenResultUnloaded
     }
 
-    override fun registerFileChildrenResultListener(listener: FileChildrenManager.FileChildrenResultListener) {
+    override fun registerFileChildrenResultListener(
+        listener: FileChildrenManager.FileChildrenResultListener
+    ) {
         if (fileChildrenResultListeners.contains(listener)) {
             return
         }
         fileChildrenResultListeners.add(listener)
     }
 
-    override fun unregisterFileChildrenResultListener(listener: FileChildrenManager.FileChildrenResultListener) {
+    override fun unregisterFileChildrenResultListener(
+        listener: FileChildrenManager.FileChildrenResultListener
+    ) {
         fileChildrenResultListeners.remove(listener)
     }
 
@@ -68,25 +75,5 @@ internal class FileChildrenManagerAndroid(
             return
         }
         loadFileChildren(path, true)
-    }
-
-    companion object {
-
-        @JvmStatic
-        private fun loadFileChildrenSync(path: String): FileChildrenResult {
-            val ioFile = java.io.File(path)
-            if (!ioFile.isDirectory) {
-                return FileChildrenResult.createErrorNotFolder(path)
-            }
-            val ioFiles = ioFile.listFiles()
-            val files = ArrayList<File>()
-            if (ioFiles != null) {
-                for (ioFileLoop in ioFiles) {
-                    val file = File.create(ioFileLoop)
-                    files.add(file)
-                }
-            }
-            return FileChildrenResult.createLoaded(path, files)
-        }
     }
 }

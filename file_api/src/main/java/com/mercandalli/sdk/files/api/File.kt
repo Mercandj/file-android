@@ -240,6 +240,9 @@ data class File private constructor(
         }
 
         fun cleanPath(path: String): String {
+            if (path.startsWith("content://")) {
+                return path
+            }
             return java.io.File(path).absolutePath
         }
     }

@@ -10,5 +10,7 @@ interface PermissionContract {
     interface Screen {
 
         fun requestStoragePermission()
+
+        fun requestScopedStoragePermission()
     }
 }

@@ -12,7 +12,10 @@ internal class FileOnlineCreatorManagerAndroid(
     private val mediaScanner: MediaScanner
 ) : FileCreatorManager {
 
-    override fun create(parentPath: String, name: String) {
+    override fun create(
+        parentPath: String,
+        name: String
+    ) {
         val file = File.create(
             parentPath,
             name

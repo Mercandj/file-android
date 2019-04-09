@@ -2,6 +2,8 @@ package com.mercandalli.android.apps.files.main
 
 import android.os.Bundle
 import com.mercandalli.android.apps.files.developer.DeveloperManager
+import com.mercandalli.android.apps.files.file_provider.FileProvider
+import com.mercandalli.android.apps.files.file_provider_root.FileProviderRootManager
 import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.split_install.SplitFeature
@@ -27,8 +29,7 @@ internal class MainActivityPresenter(
     private val themeManager: ThemeManager,
     private val toastManager: ToastManager,
     private val updateManager: UpdateManager,
-    private val rootPathLocal: String,
-    private val rootPathOnline: String
+    private val fileProviderRootManager: FileProviderRootManager
 ) : MainActivityContract.UserAction {
 
     private var currentPath: String? = null
@@ -308,9 +309,9 @@ internal class MainActivityPresenter(
 
     private fun getRootPath(): String {
         if (selectedSection == Section.ONLINE) {
-            return rootPathOnline
+            return fileProviderRootManager.getFileRootPath(FileProvider.Online)
         }
-        return rootPathLocal
+        return fileProviderRootManager.getFileRootPath(FileProvider.Local)
     }
 
     private fun syncToolbarSearchVisibility() {

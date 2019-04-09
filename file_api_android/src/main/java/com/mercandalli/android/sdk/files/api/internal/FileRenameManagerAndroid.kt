@@ -1,10 +1,10 @@
-package com.mercandalli.android.sdk.files.api
+package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileRenameUtils
 import com.mercandalli.sdk.files.api.MediaScanner
 
-class FileRenameManagerAndroid(
+internal class FileRenameManagerAndroid(
     private val mediaScanner: MediaScanner
 ) : FileRenameManager {
 
