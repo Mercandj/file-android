@@ -26,7 +26,7 @@ class FileScopedStorageManagerImpl(
      * @param context The current [Context].
      * @return True if all the permissions are [PackageManager.PERMISSION_GRANTED].
      */
-    fun checkStoragePermission(): Boolean {
+    private fun checkStoragePermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val checkSelfPermission = ContextCompat.checkSelfPermission(
                 context,

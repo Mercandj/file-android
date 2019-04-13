@@ -15,7 +15,10 @@ internal class FileSizeManagerAndroid(
     private val fileSizeResultMap = HashMap<String, FileSizeResult>()
     private val fileSizeResultListeners = ArrayList<FileSizeManager.FileSizeResultListener>()
 
-    override fun loadSize(path: String, forceRefresh: Boolean): FileSizeResult {
+    override fun loadSize(
+        path: String,
+        forceRefresh: Boolean
+    ): FileSizeResult {
         if (fileSizeResultMap.contains(path)) {
             val status = fileSizeResultMap[path]!!.status
             if (status == FileSizeResult.Status.LOADING) {
@@ -41,6 +44,16 @@ internal class FileSizeManagerAndroid(
         return getSize(path)
     }
 
+    override fun setSize(
+        path: String,
+        size: Long
+    ) {
+        fileSizeResultMap[path] = FileSizeResult.createLoaded(
+            path,
+            size
+        )
+    }
+
     override fun getSize(path: String): FileSizeResult {
         if (fileSizeResultMap.contains(path)) {
             return fileSizeResultMap[path]!!
@@ -61,10 +74,11 @@ internal class FileSizeManagerAndroid(
         fileSizeResultListeners.remove(listener)
     }
 
-    companion object {
-
-        private fun computeSizeSync(path: String): FileSizeResult {
-            return FileSizeUtils.computeSizeFromJavaFileSync(path)
-        }
+    private fun computeSizeSync(
+        path: String
+    ): FileSizeResult {
+        return FileSizeUtils.computeSizeFromJavaFileSync(
+            path
+        )
     }
 }

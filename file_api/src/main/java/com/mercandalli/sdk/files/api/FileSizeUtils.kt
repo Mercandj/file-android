@@ -49,7 +49,9 @@ object FileSizeUtils {
         return FileSizeResult.createLoaded(path, folderLength)
     }
 
-    private fun computeSizeFromJavaFolderSync(directory: java.io.File): Long {
+    private fun computeSizeFromJavaFolderSync(
+        directory: java.io.File
+    ): Long {
         var length: Long = 0
         val listFiles = directory.listFiles() ?: return 0
         for (file in listFiles) {

@@ -6,7 +6,10 @@ import java.io.FileOutputStream
 
 object FileCopyCutUtils {
 
-    fun copyJavaFileSync(pathInput: String, pathDirectoryOutput: String): Boolean {
+    fun copyJavaFileSync(
+        pathInput: String,
+        pathDirectoryOutput: String
+    ): Boolean {
         try {
             val dir = File(pathDirectoryOutput)
             if (!dir.exists()) {
@@ -59,7 +62,10 @@ object FileCopyCutUtils {
         return true
     }
 
-    fun cutJavaFileSync(pathInput: String, pathDirectoryOutput: String): Boolean {
+    fun cutJavaFileSync(
+        pathInput: String,
+        pathDirectoryOutput: String
+    ): Boolean {
         val ioFileInput = java.io.File(pathInput)
         val ioFileOutputDirectory = java.io.File(pathDirectoryOutput)
         val ioFileOutput = java.io.File(ioFileOutputDirectory.absolutePath, ioFileInput.name)

@@ -7,14 +7,22 @@ interface FileSearchManager {
         forceRefresh: Boolean = false
     ): FileSearchResult
 
-    fun getSearchResult(query: String): FileSearchResult
+    fun getSearchResult(
+        query: String
+    ): FileSearchResult
 
-    fun registerFileSearchListener(listener: FileSearchListener)
+    fun registerFileSearchListener(
+        listener: FileSearchListener
+    )
 
-    fun unregisterFileSearchListener(listener: FileSearchListener)
+    fun unregisterFileSearchListener(
+        listener: FileSearchListener
+    )
 
     interface FileSearchListener {
 
-        fun onFileSearchResultChanged(query: String)
+        fun onFileSearchResultChanged(
+            query: String
+        )
     }
 }

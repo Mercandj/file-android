@@ -2,12 +2,22 @@ package com.mercandalli.sdk.files.api
 
 interface MediaScanner {
 
-    fun refresh(path: String)
+    fun refresh(
+        path: String
+    )
 
-    fun addListener(listener: RefreshListener)
+    fun registerListener(
+        listener: RefreshListener
+    )
+
+    fun unregisterListener(
+        listener: RefreshListener
+    )
 
     interface RefreshListener {
 
-        fun onContentChanged(path: String)
+        fun onContentChanged(
+            path: String
+        )
     }
 }

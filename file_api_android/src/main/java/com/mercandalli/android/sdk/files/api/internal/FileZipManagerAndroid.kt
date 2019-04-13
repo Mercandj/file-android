@@ -34,14 +34,18 @@ internal class FileZipManagerAndroid(
         }
     }
 
-    override fun registerFileZipListener(listener: FileZipManager.FileZipListener) {
+    override fun registerFileZipListener(
+        listener: FileZipManager.FileZipListener
+    ) {
         if (listeners.contains(listener)) {
             return
         }
         listeners.add(listener)
     }
 
-    override fun unregisterFileZipListener(listener: FileZipManager.FileZipListener) {
+    override fun unregisterFileZipListener(
+        listener: FileZipManager.FileZipListener
+    ) {
         listeners.remove(listener)
     }
 

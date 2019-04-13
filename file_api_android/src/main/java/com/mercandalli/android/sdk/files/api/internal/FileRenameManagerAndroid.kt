@@ -8,7 +8,10 @@ internal class FileRenameManagerAndroid(
     private val mediaScanner: MediaScanner
 ) : FileRenameManager {
 
-    override fun rename(path: String, fileName: String) {
+    override fun rename(
+        path: String,
+        fileName: String
+    ) {
         if (fileName.contains("/")) {
             return
         }

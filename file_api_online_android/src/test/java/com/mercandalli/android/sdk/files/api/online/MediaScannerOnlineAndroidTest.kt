@@ -22,7 +22,7 @@ class MediaScannerOnlineAndroidTest {
         // Given
         val path = "/path"
         val mediaScanner = createInstanceToTest()
-        mediaScanner.addListener(listener)
+        mediaScanner.registerListener(listener)
 
         // When
         mediaScanner.refresh(path)

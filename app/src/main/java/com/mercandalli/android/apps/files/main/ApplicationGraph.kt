@@ -69,7 +69,7 @@ class ApplicationGraph(
     private val fileShareManager by lazy { fileModule.createFileShareManager() }
     private val fileStorageStatsManager by lazy { FileStorageStatsModule().createFileStorageStatsManager() }
     private val fileRenameManager by lazy { fileModule.createFileRenameManager() }
-    private val fileSizeManager by lazy { fileModule.createFileSizeManager() }
+    private val fileSizeManager by lazy { fileModule.getFileSizeManager() }
     private val fileSortManager by lazy { fileModule.createFileSortManager() }
     private val hashManager by lazy { HashModule(context).createHashManager() }
     private val mainThreadPost by lazy { MainThreadModule().createMainThreadPost() }

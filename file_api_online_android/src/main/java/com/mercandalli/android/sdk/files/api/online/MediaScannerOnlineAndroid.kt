@@ -7,17 +7,27 @@ internal class MediaScannerOnlineAndroid : MediaScanner {
 
     private var refreshListeners = ArrayList<MediaScanner.RefreshListener>()
 
-    override fun refresh(path: String) {
+    override fun refresh(
+        path: String
+    ) {
         val cleanedPath = File.cleanPath(path)
         for (listener in refreshListeners) {
             listener.onContentChanged(cleanedPath)
         }
     }
 
-    override fun addListener(listener: MediaScanner.RefreshListener) {
+    override fun registerListener(
+        listener: MediaScanner.RefreshListener
+    ) {
         if (refreshListeners.contains(listener)) {
             return
         }
         refreshListeners.add(listener)
+    }
+
+    override fun unregisterListener(
+        listener: MediaScanner.RefreshListener
+    ) {
+        refreshListeners.remove(listener)
     }
 }

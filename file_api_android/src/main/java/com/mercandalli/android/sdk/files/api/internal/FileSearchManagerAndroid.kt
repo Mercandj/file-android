@@ -44,7 +44,9 @@ internal class FileSearchManagerAndroid(
         return getSearchResult(query)
     }
 
-    override fun getSearchResult(query: String): FileSearchResult {
+    override fun getSearchResult(
+        query: String
+    ): FileSearchResult {
         if (fileSearchResultMap.contains(query)) {
             return fileSearchResultMap[query]!!
         }
@@ -53,14 +55,18 @@ internal class FileSearchManagerAndroid(
         return fileSearchResultUnloaded
     }
 
-    override fun registerFileSearchListener(listener: FileSearchManager.FileSearchListener) {
+    override fun registerFileSearchListener(
+        listener: FileSearchManager.FileSearchListener
+    ) {
         if (fileSearchResultListeners.contains(listener)) {
             return
         }
         fileSearchResultListeners.add(listener)
     }
 
-    override fun unregisterFileSearchListener(listener: FileSearchManager.FileSearchListener) {
+    override fun unregisterFileSearchListener(
+        listener: FileSearchManager.FileSearchListener
+    ) {
         fileSearchResultListeners.remove(listener)
     }
 

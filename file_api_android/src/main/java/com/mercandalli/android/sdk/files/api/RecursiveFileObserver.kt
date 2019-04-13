@@ -64,9 +64,4 @@ class RecursiveFileObserver private constructor(
             this@RecursiveFileObserver.onEvent(event, newPath)
         }
     }
-
-    companion object {
-
-        var CHANGES_ONLY = FileObserver.CLOSE_WRITE or FileObserver.MOVE_SELF or FileObserver.MOVED_FROM
-    }
 }

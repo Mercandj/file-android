@@ -1,12 +1,12 @@
 package com.mercandalli.android.sdk.files.api.internal
 
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.provider.DocumentsContract
 import androidx.annotation.RequiresApi
 import com.mercandalli.android.sdk.files.api.PermissionManager
 import com.mercandalli.android.sdk.files.api.PermissionRequestAddOn
-import java.io.Closeable
 
 @RequiresApi(21)
 class PermissionManagerScopedImpl(
@@ -34,12 +34,13 @@ class PermissionManagerScopedImpl(
     }
 
     private fun hasPermission(): Boolean {
+        var cursor: Cursor? = null
         try {
             val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(
                 externalStorageUri,
                 DocumentsContract.getTreeDocumentId(externalStorageUri)
             )
-            val cursor = contentResolver.query(
+            cursor = contentResolver.query(
                 childrenUri,
                 arrayOf(
                     DocumentsContract.Document.COLUMN_DOCUMENT_ID,
@@ -52,24 +53,14 @@ class PermissionManagerScopedImpl(
                 null
             )
             var length = 0
-            while (cursor.moveToNext()) {
+            while (cursor?.moveToNext() == true) {
                 length++
             }
-            closeSilently(cursor)
             return length > 2
         } catch (e: SecurityException) {
             return false
-        }
-    }
-
-    companion object {
-        private fun closeSilently(vararg xs: Closeable?) {
-            for (x in xs) {
-                try {
-                    x?.close()
-                } catch (ignored: Throwable) {
-                }
-            }
+        } finally {
+            cursor?.close()
         }
     }
 }

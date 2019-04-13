@@ -54,6 +54,7 @@ class FileModule(
 
     private val mediaScannerInternal by lazy { createMediaScanner() }
     private val fileRootManagerInternal by lazy { createFileRootManager() }
+    private val fileSizeManagerInternal by lazy { createFileSizeManager() }
     private val fileScopedStorageManagerInternal by lazy { createFileScopedStorageManager() }
     private val permissionManagerInternal by lazy { createPermissionManager() }
     private val fileZipManagerInternal by lazy { createFileZipManager() }
@@ -72,7 +73,7 @@ class FileModule(
                 fileManager.refresh(path)
             }
         }
-        mediaScannerInternal.addListener(object : MediaScanner.RefreshListener {
+        mediaScannerInternal.registerListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileManager.refresh(path)
             }
@@ -82,11 +83,22 @@ class FileModule(
     }
 
     fun createFileChildrenManager(): FileChildrenManager {
+        val addOn = object : FileChildrenModule.AddOn {
+            override fun onFileSizeComputed(
+                path: String,
+                length: Long
+            ) {
+                fileSizeManagerInternal.setSize(
+                    path,
+                    length)
+            }
+        }
         return FileChildrenModule(
             context,
+            fileRootManagerInternal,
             mediaScannerInternal,
             permissionManagerInternal,
-            fileRootManagerInternal
+            addOn
         ).createFileChildrenManager()
     }
 
@@ -135,6 +147,8 @@ class FileModule(
         mediaScannerInternal
     )
 
+    fun getFileSizeManager() = fileSizeManagerInternal
+
     fun getFileRootManager(): FileRootManager {
         return FileRootManagerImpl(
             fileScopedStorageManagerInternal
@@ -153,7 +167,10 @@ class FileModule(
 
     fun createFileShareManager(): FileShareManager {
         val addOn = object : FileShareManagerAndroid.AddOn {
-            override fun startActivity(path: String, mime: String) {
+            override fun startActivity(
+                path: String,
+                mime: String
+            ) {
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -168,11 +185,11 @@ class FileModule(
         return FileShareManagerAndroid(addOn)
     }
 
-    fun createFileSizeManager(): FileSizeManager {
+    private fun createFileSizeManager(): FileSizeManager {
         val fileSizeManager = FileSizeManagerAndroid(
             permissionManagerInternal
         )
-        mediaScannerInternal.addListener(object : MediaScanner.RefreshListener {
+        mediaScannerInternal.registerListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileSizeManager.loadSize(path, true)
             }

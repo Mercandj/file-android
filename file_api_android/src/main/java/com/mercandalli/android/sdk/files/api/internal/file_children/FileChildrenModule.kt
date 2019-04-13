@@ -12,9 +12,10 @@ import java.io.File
 
 internal class FileChildrenModule(
     private val context: Context,
+    private val fileRootManager: FileRootManager,
     private val mediaScanner: MediaScanner,
     private val permissionManager: PermissionManager,
-    private val fileRootManager: FileRootManager
+    private val addOn: AddOn
 ) {
 
     fun createFileChildrenManager(): FileChildrenManager {
@@ -31,7 +32,7 @@ internal class FileChildrenModule(
                 fileChildrenManager.refresh(path)
             }
         }
-        mediaScanner.addListener(object : MediaScanner.RefreshListener {
+        mediaScanner.registerListener(object : MediaScanner.RefreshListener {
             override fun onContentChanged(path: String) {
                 fileChildrenManager.refresh(path)
             }
@@ -51,7 +52,26 @@ internal class FileChildrenModule(
         )
         return FileChildrenResultLoaderImpl(
             fileChildrenResultLoaderFile,
-            fileChildrenResultLoaderContentResolver
+            fileChildrenResultLoaderContentResolver,
+            object : FileChildrenResultLoaderImpl.AddOn {
+                override fun onFileSizeComputed(
+                    path: String,
+                    length: Long
+                ) {
+                    addOn.onFileSizeComputed(
+                        path,
+                        length
+                    )
+                }
+            }
+        )
+    }
+
+    interface AddOn {
+
+        fun onFileSizeComputed(
+            path: String,
+            length: Long
         )
     }
 }

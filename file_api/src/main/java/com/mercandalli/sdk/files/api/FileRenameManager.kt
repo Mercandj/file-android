@@ -2,5 +2,8 @@ package com.mercandalli.sdk.files.api
 
 interface FileRenameManager {
 
-    fun rename(path: String, fileName: String)
+    fun rename(
+        path: String,
+        fileName: String
+    )
 }

@@ -6,12 +6,16 @@ internal class FileShareManagerAndroid(
     private val addOn: AddOn
 ) : FileShareManager {
 
-    override fun share(path: String) {
+    override fun share(
+        path: String
+    ) {
         val mime = extractMime(path)
         addOn.startActivity(path, mime)
     }
 
-    override fun isShareSupported(path: String): Boolean {
+    override fun isShareSupported(
+        path: String
+    ): Boolean {
         val ioFile = java.io.File(path)
         if (!ioFile.exists()) {
             return false
@@ -23,7 +27,11 @@ internal class FileShareManagerAndroid(
     }
 
     interface AddOn {
-        fun startActivity(path: String, mime: String)
+
+        fun startActivity(
+            path: String,
+            mime: String
+        )
     }
 
     companion object {

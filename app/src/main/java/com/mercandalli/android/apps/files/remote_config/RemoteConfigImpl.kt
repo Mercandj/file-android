@@ -42,7 +42,7 @@ internal class RemoteConfigImpl(
         (if (bypassCache) firebaseRemoteConfig.fetch(0) else firebaseRemoteConfig.fetch())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    firebaseRemoteConfig.activateFetched()
+                    firebaseRemoteConfig.activate()
                     isInitializedInternal = true
                     notifyInitialized()
                 }

@@ -1,6 +1,8 @@
 package com.mercandalli.android.apps.files.main
 
 import com.mercandalli.android.apps.files.developer.DeveloperManager
+import com.mercandalli.android.apps.files.file_provider.FileProvider
+import com.mercandalli.android.apps.files.file_provider_root.FileProviderRootManager
 import com.mercandalli.android.apps.files.remote_config.RemoteConfig
 import com.mercandalli.android.apps.files.screen.ScreenManager
 import com.mercandalli.android.apps.files.split_install.SplitInstallManager
@@ -49,6 +51,8 @@ class MainPresenterTest {
     @Mock
     private lateinit var updateManager: UpdateManager
     @Mock
+    private lateinit var fileProviderRootManager: FileProviderRootManager
+    @Mock
     private lateinit var theme: Theme
     private val rootPathLocal = "/0/"
     private val rootPathOnline = "/"
@@ -57,6 +61,8 @@ class MainPresenterTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
         `when`(themeManager.getTheme()).thenReturn(theme)
+        `when`(fileProviderRootManager.getFileRootPath(FileProvider.Local)).thenReturn(rootPathLocal)
+        `when`(fileProviderRootManager.getFileRootPath(FileProvider.Online)).thenReturn(rootPathOnline)
     }
 
     @Test
@@ -114,8 +120,7 @@ class MainPresenterTest {
             themeManager,
             toastManager,
             updateManager,
-            rootPathLocal,
-            rootPathOnline
+            fileProviderRootManager
         )
     }
 }

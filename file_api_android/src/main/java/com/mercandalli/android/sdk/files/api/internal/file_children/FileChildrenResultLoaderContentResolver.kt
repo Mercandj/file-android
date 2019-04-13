@@ -6,7 +6,6 @@ import android.provider.DocumentsContract
 import androidx.annotation.RequiresApi
 import com.mercandalli.sdk.files.api.File
 import com.mercandalli.sdk.files.api.FileChildrenResult
-import java.io.Closeable
 
 @RequiresApi(21)
 internal class FileChildrenResultLoaderContentResolver(
@@ -42,14 +41,14 @@ internal class FileChildrenResultLoaderContentResolver(
             null,
             null
         )
-        try {
+        childCursor.use { cursor ->
             val files = ArrayList<File>()
-            while (childCursor!!.moveToNext()) {
-                val documentId = childCursor.getString(0)
-                val name = childCursor.getString(1)
-                val mimeType = childCursor.getString(2)
-                val size = childCursor.getLong(3)
-                val lastModified = childCursor.getLong(4)
+            while (cursor!!.moveToNext()) {
+                val documentId = cursor.getString(0)
+                val name = cursor.getString(1)
+                val mimeType = cursor.getString(2)
+                val size = cursor.getLong(3)
+                val lastModified = cursor.getLong(4)
                 val directory = mimeType == DocumentsContract.Document.MIME_TYPE_DIR
                 val path = DocumentsContract.buildDocumentUriUsingTree(
                     parentUri,
@@ -71,20 +70,6 @@ internal class FileChildrenResultLoaderContentResolver(
                 parentPath,
                 files
             )
-        } finally {
-            closeSilently(childCursor)
-        }
-    }
-
-    companion object {
-
-        private fun closeSilently(vararg xs: Closeable?) {
-            for (x in xs) {
-                try {
-                    x?.close()
-                } catch (ignored: Throwable) {
-                }
-            }
         }
     }
 }
