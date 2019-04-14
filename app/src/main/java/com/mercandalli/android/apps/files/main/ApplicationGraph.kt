@@ -62,7 +62,7 @@ class ApplicationGraph(
     private val fileOnlineSizeManager by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
     private val fileOnlineUploadManager by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileOpenManager by lazy { fileModule.createFileOpenManager() }
-    private val fileParentManager by lazy { fileModule.createFileParentManager() }
+    private val fileParentManager by lazy { fileModule.getFileParentManager() }
     private val fileProviderRootManager by lazy { FileProviderRootModule().createFileProviderRootManager() }
     private val fileRootManager by lazy { fileModule.getFileRootManager() }
     private val fileScopedStorageManager by lazy { fileModule.getFileScopedStorageManager() }

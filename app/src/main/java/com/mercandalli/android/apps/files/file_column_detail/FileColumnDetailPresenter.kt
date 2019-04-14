@@ -185,8 +185,13 @@ class FileColumnDetailPresenter(
     }
 
     private fun createFileDeleteCompletionListener() = object : FileDeleteManager.FileDeleteCompletionListener {
-        override fun onFileDeletedCompleted(path: String, succeeded: Boolean) {
-            screen.showToast(deleteFailedTextRes)
+        override fun onFileDeletedCompleted(
+            path: String,
+            succeeded: Boolean
+        ) {
+            if (!succeeded) {
+                screen.showToast(deleteFailedTextRes)
+            }
         }
     }
 
@@ -200,7 +205,7 @@ class FileColumnDetailPresenter(
         private fun humanReadableByteCount(bytes: Long, si: Boolean): String {
             val unit = if (si) 1000 else 1024
             if (bytes < unit) {
-                return bytes.toString() + " B"
+                return "$bytes B"
             }
             val exp = (Math.log(bytes.toDouble()) / Math.log(unit.toDouble())).toInt()
             val pre = (if (si) "kMGTPE" else "KMGTPE")[exp - 1] + if (si) "" else "i"

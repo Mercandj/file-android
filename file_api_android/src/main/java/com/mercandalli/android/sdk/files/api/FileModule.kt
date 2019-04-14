@@ -46,6 +46,8 @@ import com.mercandalli.sdk.files.api.FileShareManager
 import com.mercandalli.sdk.files.api.FileSearchManager
 import com.mercandalli.sdk.files.api.FileZipManager
 import java.io.File
+import android.media.MediaScannerConnection
+import androidx.documentfile.provider.DocumentFile
 
 class FileModule(
     private val context: Context,
@@ -53,11 +55,12 @@ class FileModule(
 ) {
 
     private val mediaScannerInternal by lazy { createMediaScanner() }
+    private val fileParentManagerInternal by lazy { createFileParentManager() }
     private val fileRootManagerInternal by lazy { createFileRootManager() }
     private val fileSizeManagerInternal by lazy { createFileSizeManager() }
     private val fileScopedStorageManagerInternal by lazy { createFileScopedStorageManager() }
-    private val permissionManagerInternal by lazy { createPermissionManager() }
     private val fileZipManagerInternal by lazy { createFileZipManager() }
+    private val permissionManagerInternal by lazy { createPermissionManager() }
 
     fun getMediaScanner() = mediaScannerInternal
 
@@ -126,9 +129,24 @@ class FileModule(
         )
     }
 
-    fun createFileDeleteManager(): FileDeleteManager = FileDeleteManagerAndroid(
-        mediaScannerInternal
-    )
+    fun createFileDeleteManager(): FileDeleteManager {
+        val addOn = object : FileDeleteManagerAndroid.AddOn {
+            override fun deleteFromContentResolver(
+                path: String
+            ): Boolean {
+                val documentFile = DocumentFile.fromSingleUri(
+                    context,
+                    Uri.parse(path)
+                ) ?: return false
+                return documentFile.delete()
+            }
+        }
+        return FileDeleteManagerAndroid(
+            mediaScannerInternal,
+            fileParentManagerInternal,
+            addOn
+        )
+    }
 
     fun createFileCopyCutManager(): FileCopyCutManager = FileCopyCutManagerAndroid(
         mediaScannerInternal
@@ -139,8 +157,8 @@ class FileModule(
         mediaScannerInternal
     )
 
-    fun createFileParentManager(): FileParentManager {
-        return FileParentManagerAndroid()
+    fun getFileParentManager(): FileParentManager {
+        return fileParentManagerInternal
     }
 
     fun createFileRenameManager(): FileRenameManager = FileRenameManagerAndroid(
@@ -185,6 +203,12 @@ class FileModule(
         return FileShareManagerAndroid(addOn)
     }
 
+    fun createFileSortManager(): FileSortManager = FileSortManagerImpl()
+
+    private fun createFileParentManager(): FileParentManager {
+        return FileParentManagerAndroid()
+    }
+
     private fun createFileSizeManager(): FileSizeManager {
         val fileSizeManager = FileSizeManagerAndroid(
             permissionManagerInternal
@@ -196,8 +220,6 @@ class FileModule(
         })
         return fileSizeManager
     }
-
-    fun createFileSortManager(): FileSortManager = FileSortManagerImpl()
 
     private fun createMediaScanner(): MediaScanner {
         val addOn = object : MediaScannerAndroid.AddOn {
@@ -308,6 +330,12 @@ class FileModule(
             val contentUri = Uri.fromFile(File(docPath))
             mediaScanIntent.data = contentUri
             context.sendBroadcast(mediaScanIntent)
+            MediaScannerConnection.scanFile(
+                context,
+                arrayOf(docPath),
+                null
+            ) { _, _ ->
+            }
         }
     }
 }

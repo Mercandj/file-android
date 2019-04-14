@@ -1,11 +1,14 @@
 package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileDeleteManager
+import com.mercandalli.sdk.files.api.FileParentManager
 import com.mercandalli.sdk.files.api.MediaScanner
 import java.io.File
 
 internal class FileDeleteManagerAndroid(
-    private val mediaScanner: MediaScanner
+    private val mediaScanner: MediaScanner,
+    private val fileParentManager: FileParentManager,
+    private val addOn: AddOn
 ) : FileDeleteManager {
 
     private val listeners = ArrayList<FileDeleteManager.FileDeleteCompletionListener>()
@@ -13,17 +16,29 @@ internal class FileDeleteManagerAndroid(
     override fun delete(
         path: String
     ) {
-        val ioFile = java.io.File(path)
-        val parentPath = ioFile.parentFile.absolutePath
-        val deleteSucceeded = if (ioFile.isDirectory) {
-            deleteDirectory(ioFile)
+        val deleteSucceeded = if (path.startsWith("content://")) {
+            addOn.deleteFromContentResolver(
+                path
+            )
         } else {
-            ioFile.delete()
+            val ioFile = java.io.File(path)
+            val deleteSucceeded = if (ioFile.isDirectory) {
+                deleteDirectory(ioFile)
+            } else {
+                ioFile.delete()
+            }
+            deleteSucceeded
         }
+        val parentPath = fileParentManager.getParentPath(path)
         mediaScanner.refresh(path)
-        mediaScanner.refresh(parentPath)
+        if (parentPath != null) {
+            mediaScanner.refresh(parentPath)
+        }
         for (listener in listeners) {
-            listener.onFileDeletedCompleted(path, deleteSucceeded)
+            listener.onFileDeletedCompleted(
+                path,
+                deleteSucceeded
+            )
         }
     }
 
@@ -40,6 +55,13 @@ internal class FileDeleteManagerAndroid(
         listener: FileDeleteManager.FileDeleteCompletionListener
     ) {
         listeners.remove(listener)
+    }
+
+    interface AddOn {
+
+        fun deleteFromContentResolver(
+            path: String
+        ): Boolean
     }
 
     companion object {
