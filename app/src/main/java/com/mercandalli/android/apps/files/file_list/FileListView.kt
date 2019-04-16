@@ -187,7 +187,7 @@ class FileListView @JvmOverloads constructor(
         val screen = createScreen()
         val fileChildrenManager = ApplicationGraph.getFileChildrenManager()
         val fileOpenManager = ApplicationGraph.getFileOpenManager()
-        val fileParentRootManager = ApplicationGraph.getFileParentRootManager()
+        val filePathRootManager = ApplicationGraph.getFilePathRootManager()
         val fileProviderRootManager = ApplicationGraph.getFileProviderRootManager()
         val fileSortManager = ApplicationGraph.getFileSortManager()
         val themeManager = ApplicationGraph.getThemeManager()
@@ -195,7 +195,7 @@ class FileListView @JvmOverloads constructor(
             screen,
             fileChildrenManager,
             fileOpenManager,
-            fileParentRootManager,
+            filePathRootManager,
             fileProviderRootManager,
             fileSortManager,
             themeManager

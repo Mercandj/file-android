@@ -9,7 +9,7 @@ import com.mercandalli.android.apps.files.theme.ThemeManager
 import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 import com.mercandalli.sdk.files.api.File
-import com.mercandalli.sdk.files.api.FileParentManager
+import com.mercandalli.sdk.files.api.FilePathManager
 import com.mercandalli.sdk.files.api.FileSortManager
 import com.mercandalli.sdk.files.api.FileChildrenResult
 
@@ -17,7 +17,7 @@ class FileListPresenter(
     private val screen: FileListContract.Screen,
     private var fileChildrenManager: FileChildrenManager,
     private var fileOpenManager: FileOpenManager,
-    private val fileParentManager: FileParentManager,
+    private val filePathManager: FilePathManager,
     fileProviderRootManager: FileProviderRootManager,
     private val fileSortManager: FileSortManager,
     private val themeManager: ThemeManager
@@ -59,7 +59,7 @@ class FileListPresenter(
         if (currentPath == rootPath) {
             return
         }
-        val parentPath = fileParentManager.getParentPath(currentPath) ?: return
+        val parentPath = filePathManager.getParentPath(currentPath) ?: return
         currentPath = parentPath
         screen.notifyListenerCurrentPathChanged(currentPath)
         syncFileChildren()

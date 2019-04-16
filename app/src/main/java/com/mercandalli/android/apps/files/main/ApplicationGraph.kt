@@ -62,7 +62,7 @@ class ApplicationGraph(
     private val fileOnlineSizeManager by lazy { FileOnlineGraph.getFileOnlineSizeManager() }
     private val fileOnlineUploadManager by lazy { FileOnlineGraph.getFileOnlineUploadManager() }
     private val fileOpenManager by lazy { fileModule.createFileOpenManager() }
-    private val fileParentManager by lazy { fileModule.getFileParentManager() }
+    private val filePathManager by lazy { fileModule.getFilePathManager() }
     private val fileProviderRootManager by lazy { FileProviderRootModule().createFileProviderRootManager() }
     private val fileRootManager by lazy { fileModule.getFileRootManager() }
     private val fileScopedStorageManager by lazy { fileModule.getFileScopedStorageManager() }
@@ -122,7 +122,7 @@ class ApplicationGraph(
         fun getFileOnlineShareManager() = graph!!.fileOnlineShareManager
         fun getFileOnlineSizeManager() = graph!!.fileOnlineSizeManager
         fun getFileOnlineUploadManager() = graph!!.fileOnlineUploadManager
-        fun getFileParentRootManager() = graph!!.fileParentManager
+        fun getFilePathRootManager() = graph!!.filePathManager
         fun getFileProviderRootManager() = graph!!.fileProviderRootManager
         fun getFileScopedStorageManager() = graph!!.fileScopedStorageManager
         fun getFileShareManager() = graph!!.fileShareManager

@@ -39,7 +39,11 @@ internal class NetworkDownloaderImpl(
             if (outputJavaFile.exists()) {
                 outputJavaFile.delete()
             }
-            outputJavaFile.createNewFile()
+            val fileCreated = outputJavaFile.createNewFile()
+            if (!fileCreated) {
+                Log.e("jm/debug", "Download error 1/3 - File creation failed")
+                return null
+            }
             var inputStream: InputStream? = null
             try {
                 val body = response.body() ?: return null
@@ -74,13 +78,13 @@ internal class NetworkDownloaderImpl(
                 responseJson.put("succeeded", succeeded)
                 return responseJson.toString()
             } catch (e: IOException) {
-                Log.e("jm/debug", "Download error 1/2", e)
+                Log.e("jm/debug", "Download error 2/3", e)
                 return null
             } finally {
                 inputStream?.close()
             }
         } catch (e: IOException) {
-            Log.e("jm/debug", "Download error 2/2", e)
+            Log.e("jm/debug", "Download error 3/3", e)
             return null
         }
     }

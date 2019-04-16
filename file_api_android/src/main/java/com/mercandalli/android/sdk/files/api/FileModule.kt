@@ -18,7 +18,7 @@ import com.mercandalli.android.sdk.files.api.internal.FileScopedStorageManagerIm
 import com.mercandalli.android.sdk.files.api.internal.PermissionModule
 import com.mercandalli.android.sdk.files.api.internal.FileManagerAndroid
 import com.mercandalli.android.sdk.files.api.internal.FileOpenManagerAndroid
-import com.mercandalli.android.sdk.files.api.internal.FileParentManagerAndroid
+import com.mercandalli.android.sdk.files.api.internal.FilePathManagerAndroid
 import com.mercandalli.android.sdk.files.api.internal.FileZipManagerAndroid
 import com.mercandalli.android.sdk.files.api.internal.FileRenameManagerAndroid
 import com.mercandalli.android.sdk.files.api.internal.FileDeleteManagerAndroid
@@ -35,7 +35,7 @@ import com.mercandalli.sdk.files.api.FileChildrenManager
 import com.mercandalli.sdk.files.api.FileManager
 import com.mercandalli.sdk.files.api.FileCreatorManager
 import com.mercandalli.sdk.files.api.FileCopyCutManager
-import com.mercandalli.sdk.files.api.FileParentManager
+import com.mercandalli.sdk.files.api.FilePathManager
 import com.mercandalli.sdk.files.api.FileOpenManager
 import com.mercandalli.sdk.files.api.FileRenameManager
 import com.mercandalli.sdk.files.api.FileSortManager
@@ -55,7 +55,7 @@ class FileModule(
 ) {
 
     private val mediaScannerInternal by lazy { createMediaScanner() }
-    private val fileParentManagerInternal by lazy { createFileParentManager() }
+    private val filePathManagerInternal by lazy { createFilePathManager() }
     private val fileRootManagerInternal by lazy { createFileRootManager() }
     private val fileSizeManagerInternal by lazy { createFileSizeManager() }
     private val fileScopedStorageManagerInternal by lazy { createFileScopedStorageManager() }
@@ -143,7 +143,7 @@ class FileModule(
         }
         return FileDeleteManagerAndroid(
             mediaScannerInternal,
-            fileParentManagerInternal,
+            filePathManagerInternal,
             addOn
         )
     }
@@ -152,13 +152,44 @@ class FileModule(
         mediaScannerInternal
     )
 
-    fun createFileCreatorManager(): FileCreatorManager = FileCreatorManagerAndroid(
-        permissionManagerInternal,
-        mediaScannerInternal
-    )
+    fun createFileCreatorManager(): FileCreatorManager {
 
-    fun getFileParentManager(): FileParentManager {
-        return fileParentManagerInternal
+        val addOn = object : FileCreatorManagerAndroid.AddOn {
+            override fun createFileFromContentResolver(
+                parentPath: String,
+                name: String
+            ): Boolean {
+                val documentFile = DocumentFile.fromSingleUri(
+                    context,
+                    Uri.parse(parentPath)
+                ) ?: return false
+                // TODO
+                return documentFile.createFile(
+                    "image/png",
+                    name
+                ) != null
+            }
+
+            override fun createDirectoryFromContentResolver(
+                parentPath: String,
+                name: String
+            ): Boolean {
+                val documentFile = DocumentFile.fromSingleUri(
+                    context,
+                    Uri.parse(parentPath)
+                ) ?: return false
+                return documentFile.createDirectory(name) != null
+            }
+        }
+        return FileCreatorManagerAndroid(
+            permissionManagerInternal,
+            mediaScannerInternal,
+            addOn
+        )
+    }
+
+    fun getFilePathManager(): FilePathManager {
+        return filePathManagerInternal
     }
 
     fun createFileRenameManager(): FileRenameManager = FileRenameManagerAndroid(
@@ -205,8 +236,8 @@ class FileModule(
 
     fun createFileSortManager(): FileSortManager = FileSortManagerImpl()
 
-    private fun createFileParentManager(): FileParentManager {
-        return FileParentManagerAndroid()
+    private fun createFilePathManager(): FilePathManager {
+        return FilePathManagerAndroid()
     }
 
     private fun createFileSizeManager(): FileSizeManager {

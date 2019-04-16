@@ -1,9 +1,9 @@
 package com.mercandalli.android.sdk.files.api.internal
 
-import com.mercandalli.sdk.files.api.FileParentManager
+import com.mercandalli.sdk.files.api.FilePathManager
 import java.lang.StringBuilder
 
-internal class FileParentManagerAndroid : FileParentManager {
+internal class FilePathManagerAndroid : FilePathManager {
 
     override fun getParentPath(
         path: String
@@ -29,5 +29,26 @@ internal class FileParentManagerAndroid : FileParentManager {
             val parentFile = ioFile.parentFile ?: return null
             return parentFile.absolutePath
         }
+    }
+
+    override fun createPath(
+        parentPath: String,
+        fileName: String
+    ): String? {
+        val len = parentPath.length
+        if (len < 1 || fileName.isEmpty()) {
+            return null
+        }
+        var pathToUse = parentPath
+        if (parentPath.startsWith("content://")) {
+            if (!pathToUse.endsWith("%2F")) {
+                pathToUse += "%2F"
+            }
+            return pathToUse + fileName
+        }
+        if (pathToUse[len - 1] != '/') {
+            pathToUse += "/"
+        }
+        return pathToUse + fileName
     }
 }

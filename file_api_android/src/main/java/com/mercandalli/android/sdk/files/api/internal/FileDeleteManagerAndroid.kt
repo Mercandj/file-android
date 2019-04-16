@@ -1,13 +1,13 @@
 package com.mercandalli.android.sdk.files.api.internal
 
 import com.mercandalli.sdk.files.api.FileDeleteManager
-import com.mercandalli.sdk.files.api.FileParentManager
+import com.mercandalli.sdk.files.api.FilePathManager
 import com.mercandalli.sdk.files.api.MediaScanner
 import java.io.File
 
 internal class FileDeleteManagerAndroid(
     private val mediaScanner: MediaScanner,
-    private val fileParentManager: FileParentManager,
+    private val filePathManager: FilePathManager,
     private val addOn: AddOn
 ) : FileDeleteManager {
 
@@ -29,7 +29,7 @@ internal class FileDeleteManagerAndroid(
             }
             deleteSucceeded
         }
-        val parentPath = fileParentManager.getParentPath(path)
+        val parentPath = filePathManager.getParentPath(path)
         mediaScanner.refresh(path)
         if (parentPath != null) {
             mediaScanner.refresh(parentPath)
