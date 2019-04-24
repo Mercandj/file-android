@@ -17,7 +17,7 @@ class SplitInstallModule(
         return SplitInstallManagerImpl(
             splitInstallManager,
             splitUninstallStorage,
-            context.getString(R.string.module_app_search_dynamic)
+            context.getString(R.string.module_feature_search_dynamic)
         )
     }
 

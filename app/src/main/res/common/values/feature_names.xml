@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="module_app_search_dynamic" translatable="false">app_search_dynamic</string>
+    <string name="module_feature_search_dynamic" translatable="false">feature_search_dynamic</string>
 </resources>

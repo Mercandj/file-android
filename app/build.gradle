@@ -117,7 +117,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dynamicFeatures = [":app_search_dynamic"]
+    dynamicFeatures = [":feature_search_dynamic"]
 }
 
 repositories {

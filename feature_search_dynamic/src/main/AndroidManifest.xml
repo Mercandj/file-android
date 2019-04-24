@@ -5,7 +5,7 @@
     <dist:module
         dist:instant="false"
         dist:onDemand="true"
-        dist:title="@string/title_app_search_dynamic">
+        dist:title="@string/title_feature_search_dynamic">
 
         <dist:fusing dist:include="true" />
 
