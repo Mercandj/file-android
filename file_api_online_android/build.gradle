@@ -52,7 +52,7 @@ dependencies {
 
     // Testing-only dependencies
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:2.26.0'
+    testImplementation 'org.mockito:mockito-core:2.27.0'
 
     // Third party - Network
     androidTestImplementation "com.squareup.okhttp3:okhttp:$okhttp_version"
