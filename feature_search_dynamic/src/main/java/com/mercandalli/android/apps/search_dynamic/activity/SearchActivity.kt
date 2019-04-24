@@ -19,8 +19,7 @@ import com.mercandalli.android.apps.search_dynamic.SearchGraph
 import com.mercandalli.android.apps.search_dynamic.list.SearchListView
 import com.mercandalli.sdk.files.api.File
 
-class SearchActivity : Activity(),
-    SearchActivityContract.Screen {
+class SearchActivity : Activity() {
 
     private val back: View by bind(R.id.activity_search_toolbar_back)
     private val input: EditText by bind(R.id.activity_search_input)
@@ -53,23 +52,6 @@ class SearchActivity : Activity(),
         super.onDestroy()
     }
 
-    override fun populate(list: List<File>) {
-        searchListView.populate(list)
-    }
-
-    override fun showKeyboard() {
-        input.requestFocus()
-        KeyboardUtils.showSoftInput(input)
-    }
-
-    override fun hideKeyBoard() {
-        KeyboardUtils.hideSoftInput(input)
-    }
-
-    override fun quit() {
-        finish()
-    }
-
     private fun onEditorAction(actionId: Int) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             userAction.onSearchPerformed(input.text.toString())
@@ -93,10 +75,31 @@ class SearchActivity : Activity(),
         }
     }
 
+    private fun createScreen() = object : SearchActivityContract.Screen {
+
+        override fun populate(list: List<File>) {
+            searchListView.populate(list)
+        }
+
+        override fun showKeyboard() {
+            input.requestFocus()
+            KeyboardUtils.showSoftInput(input)
+        }
+
+        override fun hideKeyBoard() {
+            KeyboardUtils.hideSoftInput(input)
+        }
+
+        override fun quit() {
+            finish()
+        }
+    }
+
     private fun createUserAction(): SearchActivityContract.UserAction {
+        val screen = createScreen()
         val fileSearchManager = SearchGraph.getFileSearchManager()
         return SearchActivityPresenter(
-            this,
+            screen,
             fileSearchManager
         )
     }
