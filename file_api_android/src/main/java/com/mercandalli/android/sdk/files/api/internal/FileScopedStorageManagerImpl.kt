@@ -13,11 +13,14 @@ class FileScopedStorageManagerImpl(
 ) : FileScopedStorageManager {
 
     override fun isScopedStorage(): Boolean {
+        return false
+        /*
         if (checkStoragePermission()) {
             return false
         }
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ||
             BuildCompat.isAtLeastQ()
+            */
     }
 
     /**
