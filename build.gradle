@@ -10,7 +10,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0-beta01'
+        classpath 'com.android.tools.build:gradle:3.5.0-beta02'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.2.0'
 
@@ -38,8 +38,8 @@ task clean(type: Delete) {
 
 ext {
     // Why 1_00_X_XX_XX? -> Previous support of density split
-    appVersionCode = 1_00_1_00_36
-    appVersionName = "1.00.36"
+    appVersionCode = 1_00_1_00_37
+    appVersionName = "1.00.37"
 
     compileSdkVersion = 'android-Q'
     buildToolsVersion = "28.0.3"

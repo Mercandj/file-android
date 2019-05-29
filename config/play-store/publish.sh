@@ -85,9 +85,9 @@ pushd "$BASE_DIR"
         rm -r "./app/build/outputs"
         log_jump
 
-        log_d "Generate bundleRelease file ./config/play-store/build/app.aab\n\n"
+        log_d "Generate bundleRelease file ./config/play-store/build/app-release.aab\n\n"
         bash ./gradlew app:bundleRelease
-        cp ./app/build/outputs/bundle/release/app.aab ./config/play-store/build/app.aab
+        cp ./app/build/outputs/bundle/release/app-release.aab ./config/play-store/build/app.aab
         log_d "Generate bundleRelease ended\n\n"
         log_jump
 

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
-import androidx.core.os.BuildCompat
 import com.mercandalli.android.sdk.files.api.FileScopedStorageManager
 
 class FileScopedStorageManagerImpl(
