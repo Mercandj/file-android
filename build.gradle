@@ -10,7 +10,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0-beta02'
+        classpath 'com.android.tools.build:gradle:3.5.0-beta04'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.2.0'
 
@@ -41,7 +41,7 @@ ext {
     appVersionCode = 1_00_1_00_37
     appVersionName = "1.00.37"
 
-    compileSdkVersion = 'android-Q'
+    compileSdkVersion = 29
     buildToolsVersion = "28.0.3"
     targetSdkVersion = 29
     minSdkVersion = 16
