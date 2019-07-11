@@ -40,8 +40,8 @@ configurations {
 }
 
 dependencies {
-    compile project(':file_api')
-    compile project(':file_api_online')
+    //implementation project(path: ':file_api', configuration: 'default')
+    compile project(path: ':file_api_online', configuration: 'default')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
