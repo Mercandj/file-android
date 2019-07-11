@@ -247,6 +247,14 @@ class ServerManagerImpl(
                     files("timothe")
                     default("timothe/index.html")
                 }
+                get("/mvp") {
+                    call.respondRedirect("/mvp/index.html")
+                }
+                static("/mvp") {
+                    staticRootFolder = File("$rootServerPath/static")
+                    files("mvp")
+                    default("mvp/index.html")
+                }
                 get("/1418") {
                     call.respondRedirect("/1418/index.html")
                 }

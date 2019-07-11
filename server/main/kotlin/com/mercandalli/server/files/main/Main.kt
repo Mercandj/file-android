@@ -59,7 +59,8 @@ private fun createPullSubRepositoryShellFile(rootPath: String): File {
         listOf(
             "$rootPath/static",
             "$rootPath/static/1418",
-            "$rootPath/static/timothe"
+            "$rootPath/static/timothe",
+            "$rootPath/static/mvp"
         )
     ))
     return pullSubRepositoryShellFile
