@@ -1,4 +1,4 @@
 {
   "format_version": 0,
-  "contents": "[{\"uuid\":\"6152ab44-3f6b-4fca-bfe6-69500be4e114\",\"key\":\"main_activity_created_saved_state_null\",\"value\":\"\",\"metadata_boolean\":{},\"metadata_long\":{\"application_version_code\":10014},\"metadata_string\":{\"application_version_code\":10014}}]"
+  "contents": "[{\"uuid\":\"c3e4f13f-6fc7-4814-bdad-430c7ee8686f\",\"key\":\"main_activity_created_saved_state_null\",\"value\":\"\",\"metadata_boolean\":{},\"metadata_long\":{\"application_version_code\":10014},\"metadata_string\":{\"application_package_name\":\"com.mercandalli.android.apps.music\",\"application_version_name\":\"1.00.14.dev\"}}]"
 }

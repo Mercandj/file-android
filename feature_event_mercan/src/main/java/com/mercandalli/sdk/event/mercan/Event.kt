@@ -69,21 +69,21 @@ class Event(
             val metadataBoolean = HashMap<String, Boolean>()
             val metadataBooleanJsonObject = jsonObject.getJSONObject("metadata_boolean")
             for (metadataKey in metadataBooleanJsonObject.keySet()) {
-                val metadataValue = metadataBooleanJsonObject.getBoolean(key)
+                val metadataValue = metadataBooleanJsonObject.getBoolean(metadataKey)
                 metadataBoolean[metadataKey] = metadataValue
             }
 
             val metadataLong = HashMap<String, Long>()
             val metadataLongJsonObject = jsonObject.getJSONObject("metadata_long")
             for (metadataKey in metadataLongJsonObject.keySet()) {
-                val metadataValue = metadataLongJsonObject.getLong(key)
+                val metadataValue = metadataLongJsonObject.getLong(metadataKey)
                 metadataLong[metadataKey] = metadataValue
             }
 
             val metadataString = HashMap<String, String>()
             val metadataStringJsonObject = jsonObject.getJSONObject("metadata_string")
             for (metadataKey in metadataStringJsonObject.keySet()) {
-                val metadataValue = metadataStringJsonObject.getString(key)
+                val metadataValue = metadataStringJsonObject.getString(metadataKey)
                 metadataString[metadataKey] = metadataValue
             }
 
