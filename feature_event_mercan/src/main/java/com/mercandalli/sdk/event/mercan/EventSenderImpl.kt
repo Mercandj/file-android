@@ -1,6 +1,6 @@
 package com.mercandalli.sdk.event.mercan
 
-import java.util.*
+import java.util.UUID
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
