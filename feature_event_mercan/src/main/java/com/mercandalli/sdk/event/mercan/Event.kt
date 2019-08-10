@@ -40,7 +40,7 @@ class Event(
             for ((metadataKey, metadataValue) in event.metadataString) {
                 metadataStringJsonObject.put(metadataKey, metadataValue)
             }
-            jsonObject.put("metadata_string", metadataLongJsonObject)
+            jsonObject.put("metadata_string", metadataStringJsonObject)
 
             return jsonObject
         }
