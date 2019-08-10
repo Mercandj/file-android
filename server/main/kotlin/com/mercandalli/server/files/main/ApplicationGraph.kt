@@ -7,14 +7,17 @@ import com.mercandalli.server.files.event.EventModule
 import com.mercandalli.server.files.file_handler.FileHandlerModule
 import com.mercandalli.server.files.file_repository.FileRepositoryModule
 import com.mercandalli.server.files.log.LogModule
+import com.mercandalli.server.files.main_argument.MainArgument
 import com.mercandalli.server.files.server.ServerModule
 import com.mercandalli.server.files.shell.ShellModule
 import com.mercandalli.server.files.time.TimeModule
+import com.mercandalli.sdk.feature_aes.AesModule
 
 class ApplicationGraph(
-    val rootPath: String,
-    val pullSubRepositoryShellFile: java.io.File,
-    val fileOnlineAuthentications: List<FileOnlineAuthentication>
+    private val mainArgument: MainArgument,
+    private val rootPath: String,
+    private val pullSubRepositoryShellFile: java.io.File,
+    private val fileOnlineAuthentications: List<FileOnlineAuthentication>
 ) {
 
     private val authorizationModule = AuthorizationModule()
@@ -26,6 +29,7 @@ class ApplicationGraph(
     private val shellModule = ShellModule()
     private val timeModule = TimeModule()
 
+    private val aesBase64ManagerInternal by lazy { AesModule().createAesBase64Manager() }
     private val authorizationManagerInternal by lazy { authorizationModule.createAuthorizationManager() }
     private val eventHandlerPostInternal by lazy { EventModule().createEventHandlerPost() }
     private val fileHandlerGetInternal by lazy { fileModule.createFileHandlerGet() }
@@ -42,6 +46,7 @@ class ApplicationGraph(
 
         private var graph: ApplicationGraph? = null
 
+        fun getAesBase64Manager() = graph!!.aesBase64ManagerInternal
         fun getAuthorizationManager() = graph!!.authorizationManagerInternal
         fun getEventHandlerPost() = graph!!.eventHandlerPostInternal
         fun getFileGetHandler() = graph!!.fileHandlerGetInternal
@@ -51,6 +56,7 @@ class ApplicationGraph(
         fun getFileOnlineLoginManager() = graph!!.fileOnlineLoginManagerInternal
         fun getFileRepository() = graph!!.fileRepositoryInternal
         fun getLogManager() = graph!!.logManagerInternal
+        fun getMainArgument() = graph!!.mainArgument
         fun getPullSubRepositoryShellFile() = graph!!.pullSubRepositoryShellFile
         fun getRootPath() = graph!!.rootPath
         fun getServerManager() = graph!!.serverManagerInternal
@@ -58,11 +64,13 @@ class ApplicationGraph(
         fun getTimeManager() = graph!!.timeManagerInternal
 
         fun initialize(
+            mainArgument: MainArgument,
             rootPath: String,
             pullSubRepositoryShellFile: java.io.File,
             fileOnlineAuthentications: List<FileOnlineAuthentication>
         ) {
             graph = ApplicationGraph(
+                mainArgument,
                 rootPath,
                 pullSubRepositoryShellFile,
                 fileOnlineAuthentications

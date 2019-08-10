@@ -1,5 +1,7 @@
 include ':app',
         ':app_tv',
+        ':feature_aes',
+        ':feature_base64',
         ':feature_event_mercan',
         ':feature_purchase',
         ':feature_search_dynamic',

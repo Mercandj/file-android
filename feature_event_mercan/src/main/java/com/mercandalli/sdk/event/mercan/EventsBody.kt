@@ -8,7 +8,7 @@ class EventsBody(
     private val events: List<Event>
 ) {
 
-    private val formatVersion = 0L
+    private val formatVersion = 1L
 
     fun getFormatVersion(): Long {
         return formatVersion

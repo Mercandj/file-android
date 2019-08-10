@@ -41,8 +41,9 @@ configurations {
 
 dependencies {
     //implementation project(path: ':file_api', configuration: 'default')
-    compile project(path: ':file_api_online', configuration: 'default')
+    compile project(path: ':feature_aes', configuration: 'default')
     compile project(path: ':feature_event_mercan', configuration: 'default')
+    compile project(path: ':file_api_online', configuration: 'default')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 

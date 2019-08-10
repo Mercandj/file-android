@@ -1,18 +1,30 @@
 package com.mercandalli.server.files.main
 
 import com.mercandalli.sdk.files.api.online.FileOnlineAuthentication
+import com.mercandalli.server.files.main_argument.MainArgument
 import com.mercandalli.server.files.window.MainFrame
 import java.io.File
 import java.lang.StringBuilder
 import java.net.URLDecoder
 
 fun main(args: Array<String>) {
+    if (args.isNotEmpty()) {
+        println("Arg should be empty. Found ${args[0]}")
+        return
+    }
     val tag = "Main"
-    val fileOnlineAuthentications = extractFileOnlineAuthentications(args)
     val rootPath = extractRootPath()
+    val projectFolder = File(rootPath).parentFile
+    val configFile = File(projectFolder, "server_config/server_config.json")
+    val mainArgument = MainArgument.fromJsonFile(configFile)
+    val fileOnlineAuthentications = listOf(FileOnlineAuthentication(
+        mainArgument.getFileOnlineAuthenticationLogin(),
+        mainArgument.getFileOnlineAuthenticationPasswordSha1()
+    ))
     val pullSubRepositoryShellFile = createPullSubRepositoryShellFile(rootPath)
 
     ApplicationGraph.initialize(
+        mainArgument,
         rootPath,
         pullSubRepositoryShellFile,
         fileOnlineAuthentications
@@ -28,19 +40,6 @@ fun main(args: Array<String>) {
         val serverManager = ApplicationGraph.getServerManager()
         serverManager.start()
     }
-}
-
-private fun extractFileOnlineAuthentications(args: Array<String>): List<FileOnlineAuthentication> {
-    if (args.size != 2) {
-        return listOf()
-    }
-    val fileOnlineAuthentication = FileOnlineAuthentication(
-        args[0],
-        args[1]
-    )
-    return listOf(
-        fileOnlineAuthentication
-    )
 }
 
 private fun extractRootPath(): String {

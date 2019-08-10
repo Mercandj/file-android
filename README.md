@@ -81,7 +81,8 @@ Default location of gradle wrapper. All Android Studio and gradle project have t
 
 ## Run the server
 
-* ```./run-server.sh```
+- Update `./sercer_config/server_config.json`
+- ```./run-server.sh```
 
 <br/>
 
