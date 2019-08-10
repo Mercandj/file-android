@@ -8,7 +8,7 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":feature_base64")
+    compile project(path: ':feature_base64', configuration: 'default')
 
     // Language
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
