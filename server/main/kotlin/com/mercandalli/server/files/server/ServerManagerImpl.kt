@@ -1,12 +1,14 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
+import com.mercandalli.server.files.event_android.EventAndroidHandler.androidEventPost
 import com.mercandalli.server.files.remote_config_android.RemoteConfigAndroidHandler.androidRemoteConfigGet
 import com.mercandalli.server.files.tos_tos.AndroidTosHandler.androidTermsOfUseGet
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
 import com.mercandalli.server.files.log.LogManager
+import com.mercandalli.server.files.main.ApplicationGraph
 import com.mercandalli.server.files.remote_config_ios.RemoteConfigIosHandler.iosRemoteConfigGet
 import com.mercandalli.server.files.server.ServerNotFound.respondNotFound
 import com.mercandalli.server.files.server.ServerStatus.respondStatus
@@ -50,7 +52,7 @@ class ServerManagerImpl(
     private val fileHandlerDelete: FileHandlerDelete,
     private val shellManager: ShellManager,
     private val logManager: LogManager,
-    private val pullSubRepositoryShellFile: java.io.File
+    private val pullSubRepositoryShellFile: File
 ) : ServerManager {
 
     private val server: NettyApplicationEngine
@@ -294,6 +296,17 @@ class ServerManagerImpl(
                         appBundle.toString(),
                         appVersionName.toString(),
                         localCountryIso31662.toString()
+                    )
+                }
+                post("/android/apps/events/{appPackageName}/{appVersionName}") {
+                    val appPackageName = call.parameters["appPackageName"]
+                    val appVersionName = call.parameters["appVersionName"]
+                    val requestBody = call.receiveText()
+                    ApplicationGraph.getEventHandlerPost()
+                    androidEventPost(
+                        appPackageName.toString(),
+                        appVersionName.toString(),
+                        requestBody
                     )
                 }
                 static("/1418") {

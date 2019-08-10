@@ -17,7 +17,8 @@ object ServerStatus {
 
     suspend fun PipelineContext<Unit, ApplicationCall>.respondStatus() {
         val rootPath = ApplicationGraph.getRootPath()
-        val lastCommitDate = "git log -1 --format=%cd".runCommand(java.io.File(rootPath))
+        val timeString = ApplicationGraph.getTimeManager().getTimeString()
+        val lastCommitDate = "git log -1 --format=%cd".runCommand(File(rootPath))
         call.application.environment.log.debug("/status")
         val uri = call.request.uri
         val origin = call.request.origin
@@ -27,6 +28,7 @@ object ServerStatus {
         responseJson.put("origin", origin)
         responseJson.put("root_server_path", rootPath)
         responseJson.put("last_commit_date", lastCommitDate)
+        responseJson.put("time", timeString)
         call.respondText(responseJson.toString(), ContentType.Text.Plain)
     }
 

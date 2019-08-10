@@ -6,5 +6,7 @@ interface TimeManager {
 
     fun getTimeString(): String
 
+    fun getTimeFileNameString(): String
+
     fun getTimeLong(): Long
 }
