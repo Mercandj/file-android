@@ -10,7 +10,7 @@ import java.io.File
 
 class EventModule {
 
-    private val eventManager = createEventManager()
+    private val eventManager by lazy { createEventManager() }
 
     fun createEventHandlerGet(): EventHandlerGet {
         val logManager = ApplicationGraph.getLogManager()
