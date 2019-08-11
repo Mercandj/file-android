@@ -4,5 +4,6 @@
   "file_online_authentication_login": "",
   "file_online_authentication_password_sha1": "",
   "event_secure_key": "",
-  "event_secure_iv": ""
+  "event_secure_iv": "",
+  "admin_ip_addresses": []
 }

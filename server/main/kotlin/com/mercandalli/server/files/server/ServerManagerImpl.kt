@@ -1,6 +1,7 @@
 package com.mercandalli.server.files.server
 
 import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
+import com.mercandalli.server.files.event_android.EventAndroidHandler.androidEventGet
 import com.mercandalli.server.files.event_android.EventAndroidHandler.androidEventPost
 import com.mercandalli.server.files.remote_config_android.RemoteConfigAndroidHandler.androidRemoteConfigGet
 import com.mercandalli.server.files.tos_tos.AndroidTosHandler.androidTermsOfUseGet
@@ -303,12 +304,21 @@ class ServerManagerImpl(
                     val appVersionName = call.parameters["appVersionName"]
                     val idAddress = call.request.local.remoteHost
                     val requestBody = call.receiveText()
-                    ApplicationGraph.getEventHandlerPost()
                     androidEventPost(
                         appPackageName.toString(),
                         appVersionName.toString(),
                         idAddress,
                         requestBody
+                    )
+                }
+                get("/android/apps/events/{appPackageName}/{appVersionName}") {
+                    val appPackageName = call.parameters["appPackageName"]
+                    val appVersionName = call.parameters["appVersionName"]
+                    val idAddress = call.request.local.remoteHost
+                    androidEventGet(
+                        appPackageName.toString(),
+                        appVersionName.toString(),
+                        idAddress
                     )
                 }
                 static("/1418") {

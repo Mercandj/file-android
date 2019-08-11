@@ -7,7 +7,8 @@ class MainArgument(
     private val fileOnlineAuthenticationLogin: String,
     private val fileOnlineAuthenticationPasswordSha1: String,
     private val eventSecureKey: String,
-    private val eventSecureIv: String
+    private val eventSecureIv: String,
+    private val adminIpAddresses: Set<String>
 ) {
 
     fun getFileOnlineAuthenticationLogin() = fileOnlineAuthenticationLogin
@@ -17,6 +18,8 @@ class MainArgument(
     fun getEventSecureKey() = eventSecureKey
 
     fun getEventSecureIv() = eventSecureIv
+
+    fun getAdminIpAddresses() = HashSet(adminIpAddresses)
 
     companion object {
 
@@ -38,11 +41,19 @@ class MainArgument(
             val eventSecureIv = jsonObject.getString(
                 "event_secure_iv"
             )
+            val adminIpAddressesJsonArray = jsonObject.getJSONArray(
+                "admin_ip_addresses"
+            )
+            val adminIpAddresses = HashSet<String>()
+            for (i in 0 until adminIpAddressesJsonArray.length()) {
+                adminIpAddresses.add(adminIpAddressesJsonArray.getString(i))
+            }
             return MainArgument(
                 fileOnlineAuthenticationLogin,
                 fileOnlineAuthenticationPasswordSha1,
                 eventSecureKey,
-                eventSecureIv
+                eventSecureIv,
+                adminIpAddresses
             )
         }
     }
