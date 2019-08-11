@@ -41,4 +41,123 @@ class EventManagerImpl(
             events
         )
     }
+
+    override fun get(
+        platform: String,
+        applicationPackageName: String,
+        applicationVersionName: String
+    ): List<String> {
+        val lines = ArrayList<String>()
+        val events = eventRepository.get(
+            platform, applicationPackageName, applicationVersionName
+        )
+        val eventCount = events.size.toLong()
+        val distinctInstallationIdCount = extractDistinctInstallationIdCount(events)
+        val keyToCount = extractKeyToCount(events)
+        val keyToDistinctUserCount = extractKeyToDistinctUserCount(events)
+
+
+        lines.add("----------------------------------------------------------------------------------------------------")
+        lines.add("eventCount -> distinctInstallationIdCount      $eventCount\t$distinctInstallationIdCount")
+        lines.add("----------------------------------------------------------------------------------------------------")
+        for ((key, count) in keyToCount) {
+            val distinctUserCount = keyToDistinctUserCount.getValue(key)
+            lines.add("count -> distinctUserCount -> key              $count\t$distinctUserCount\t$key")
+        }
+        lines.add("----------------------------------------------------------------------------------------------------")
+        val sessionJvmIndexToDistinctInstallationIdCount =
+            extractSessionJvmIndexToDistinctInstallationIdCount(events)
+        for ((sessionJvmIndex, distinctUserCount) in sessionJvmIndexToDistinctInstallationIdCount) {
+            lines.add("sessionJvmIndex -> distinctUserCount           $sessionJvmIndex\t$distinctUserCount")
+        }
+        return lines
+    }
+
+    private fun extractDistinctInstallationIds(events: List<Event>): Set<String> {
+        val installationIds = HashSet<String>()
+        for (event in events) {
+            installationIds.add(event.getInstallationId())
+        }
+        return installationIds
+    }
+
+    private fun extractDistinctInstallationIdCount(events: List<Event>): Long {
+        return extractDistinctInstallationIds(events).size.toLong()
+    }
+
+    private fun extractSessionJvmIndexToDistinctInstallationIdCount(events: List<Event>): Map<Long, Long> {
+        val installationIdToSessionJvmIndex = HashMap<String, Long>()
+        for (event in events) {
+            val installationId = event.getInstallationId()
+            val sessionJvmIndex = event.getSessionJvmIndex()
+            if (installationIdToSessionJvmIndex.containsKey(installationId)) {
+                val currentSessionJvmIndex =
+                    installationIdToSessionJvmIndex.getValue(installationId)
+                if (sessionJvmIndex > currentSessionJvmIndex) {
+                    installationIdToSessionJvmIndex[installationId] = sessionJvmIndex
+                }
+            } else {
+                installationIdToSessionJvmIndex[installationId] = sessionJvmIndex
+            }
+        }
+        val sessionJvmIndexToDistinctInstallationIds = HashMap<Long, HashSet<String>>()
+        for ((installationId, sessionJvmIndex) in installationIdToSessionJvmIndex) {
+            val installationIds =
+                if (sessionJvmIndexToDistinctInstallationIds.containsKey(sessionJvmIndex)) {
+                    sessionJvmIndexToDistinctInstallationIds.getValue(sessionJvmIndex)
+                } else {
+                    HashSet()
+                }
+            installationIds.add(installationId)
+            sessionJvmIndexToDistinctInstallationIds[sessionJvmIndex] = installationIds
+        }
+        val sessionJvmIndexToDistinctInstallationIdCount = HashMap<Long, Long>()
+        for ((sessionJvmIndex, distinctInstallationIds) in sessionJvmIndexToDistinctInstallationIds) {
+            sessionJvmIndexToDistinctInstallationIdCount[sessionJvmIndex] =
+                distinctInstallationIds.size.toLong()
+        }
+        return sessionJvmIndexToDistinctInstallationIdCount
+    }
+
+    private fun extractKeyToCount(events: List<Event>): Map<String, Long> {
+        val keyToCount = HashMap<String, Long>()
+        for (event in events) {
+            val key = event.getKey()
+            val count = if (keyToCount.containsKey(key)) {
+                keyToCount.getValue(key)
+            } else {
+                0
+            }
+            keyToCount[key] = count + 1L
+        }
+        return keyToCount
+    }
+
+    private fun extractKeyToDistinctUserCount(events: List<Event>): Map<String, Long> {
+        val keyToDistinctUserCount = HashMap<String, Long>()
+        val keyToInstallationIds = HashMap<String, HashSet<String>>()
+        for (event in events) {
+            val key = event.getKey()
+            val installationId = event.getInstallationId()
+            val installationIds = if (keyToInstallationIds.containsKey(key)) {
+                keyToInstallationIds.getValue(key)
+            } else {
+                HashSet()
+            }
+            installationIds.add(installationId)
+            keyToInstallationIds[key] = installationIds
+        }
+        for ((key, installationIds) in keyToInstallationIds) {
+            keyToDistinctUserCount[key] = installationIds.size.toLong()
+        }
+        return keyToDistinctUserCount
+    }
+
+    private fun Event.getInstallationId(): String {
+        return getMetadataString().getValue("installation_id")
+    }
+
+    private fun Event.getSessionJvmIndex(): Long {
+        return getMetadataLong().getValue("session_jvm_index")
+    }
 }

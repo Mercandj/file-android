@@ -37,6 +37,18 @@ class EventRepositoryImpl(
         )
     }
 
+    override fun get(
+        platform: String,
+        applicationPackageName: String,
+        applicationVersionName: String
+    ): List<Event> {
+        return eventContainer.get(
+            platform,
+            applicationPackageName,
+            applicationVersionName
+        )
+    }
+
     class EventContainer(
         private val fileName: String,
         private val folder: File,
@@ -65,6 +77,19 @@ class EventRepositoryImpl(
             )
             platformToEventPlatformContainer[platform] = eventPlatformContainer
             return eventResponse
+        }
+
+        fun get(
+            platform: String,
+            applicationPackageName: String,
+            applicationVersionName: String
+        ): List<Event> {
+            val eventPlatformContainer = platformToEventPlatformContainer[platform]
+                ?: return listOf()
+            return eventPlatformContainer.get(
+                applicationPackageName,
+                applicationVersionName
+            )
         }
     }
 
@@ -97,6 +122,17 @@ class EventRepositoryImpl(
             applicationPackageNameToEventPlatformApplicationContainer[applicationPackageName] = eventPlatformApplicationContainer
             return eventResponse
         }
+
+        fun get(
+            applicationPackageName: String,
+            applicationVersionName: String
+        ): List<Event> {
+            val eventPlatformApplicationContainer = applicationPackageNameToEventPlatformApplicationContainer[applicationPackageName]
+                ?: return listOf()
+            return eventPlatformApplicationContainer.get(
+                applicationVersionName
+            )
+        }
     }
 
     class EventPlatformApplicationContainer(
@@ -128,6 +164,14 @@ class EventRepositoryImpl(
             versionToEventPlatformApplicationVersionContainer[applicationVersionName] = eventPlatformApplicationVersionContainer
             return eventResponse
         }
+
+        fun get(
+            applicationVersionName: String
+        ): List<Event> {
+            val eventPlatformApplicationVersionContainer = versionToEventPlatformApplicationVersionContainer[applicationVersionName]
+                ?: return listOf()
+            return eventPlatformApplicationVersionContainer.get()
+        }
     }
 
     class EventPlatformApplicationVersionContainer(
@@ -158,6 +202,10 @@ class EventRepositoryImpl(
                 events.size.toLong(),
                 uuidToEvent.size.toLong()
             )
+        }
+
+        fun get(): List<Event> {
+            return ArrayList(uuidToEvent.values)
         }
     }
 }

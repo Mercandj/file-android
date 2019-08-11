@@ -21,6 +21,7 @@ class ApplicationGraph(
 ) {
 
     private val authorizationModule = AuthorizationModule()
+    private val eventModule = EventModule()
     private val fileModule = FileHandlerModule()
     private val fileOnlineModule = FileOnlineModule()
     private val fileRepositoryModule = FileRepositoryModule(rootPath)
@@ -31,7 +32,8 @@ class ApplicationGraph(
 
     private val aesBase64ManagerInternal by lazy { AesModule().createAesBase64Manager() }
     private val authorizationManagerInternal by lazy { authorizationModule.createAuthorizationManager() }
-    private val eventHandlerPostInternal by lazy { EventModule().createEventHandlerPost() }
+    private val eventHandlerGetInternal by lazy { eventModule.createEventHandlerGet() }
+    private val eventHandlerPostInternal by lazy { eventModule.createEventHandlerPost() }
     private val fileHandlerGetInternal by lazy { fileModule.createFileHandlerGet() }
     private val fileHandlerPostInternal by lazy { fileModule.createFileHandlerPost() }
     private val fileHandlerDeleteInternal by lazy { fileModule.createFileHandlerDelete() }
@@ -48,6 +50,7 @@ class ApplicationGraph(
 
         fun getAesBase64Manager() = graph!!.aesBase64ManagerInternal
         fun getAuthorizationManager() = graph!!.authorizationManagerInternal
+        fun getEventHandlerGet() = graph!!.eventHandlerGetInternal
         fun getEventHandlerPost() = graph!!.eventHandlerPostInternal
         fun getFileGetHandler() = graph!!.fileHandlerGetInternal
         fun getFilePostHandler() = graph!!.fileHandlerPostInternal

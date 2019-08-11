@@ -10,4 +10,10 @@ interface EventRepository {
         applicationVersionName: String,
         events: List<Event>
     ): EventResponse
+
+    fun get(
+        platform: String,
+        applicationPackageName: String,
+        applicationVersionName: String
+    ): List<Event>
 }

@@ -10,8 +10,17 @@ import java.io.File
 
 class EventModule {
 
+    private val eventManager = createEventManager()
+
+    fun createEventHandlerGet(): EventHandlerGet {
+        val logManager = ApplicationGraph.getLogManager()
+        return EventHandlerGetImpl(
+            eventManager,
+            logManager
+        )
+    }
+
     fun createEventHandlerPost(): EventHandlerPost {
-        val eventManager = createEventManager()
         val eventReceiver = createEventReceiver()
         val logManager = ApplicationGraph.getLogManager()
         return EventHandlerPostImpl(

@@ -42,6 +42,16 @@ object EventAndroidHandler {
         appVersionName: String,
         idAddress: String
     ) {
+        val lines = if (idAddress == "192.168.1.254") {
+            val eventHandlerGet = ApplicationGraph.getEventHandlerGet()
+            eventHandlerGet.get(
+                "android",
+                appPackageName,
+                appVersionName
+            )
+        } else {
+            listOf()
+        }
         call.respondHtml {
             head {
                 title { +"Event dashboard" }
@@ -52,6 +62,11 @@ object EventAndroidHandler {
                 }
                 p {
                     +"Ip address $idAddress"
+                }
+                for (line in lines) {
+                    p {
+                        +line
+                    }
                 }
             }
         }
