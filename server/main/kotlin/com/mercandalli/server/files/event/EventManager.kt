@@ -8,6 +8,7 @@ interface EventManager {
         platform: String,
         applicationPackageName: String,
         applicationVersionName: String,
+        idAddress: String,
         events: List<Event>
     ): EventResponse
 }

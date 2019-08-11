@@ -13,6 +13,7 @@ class EventHandlerPostImpl(
         platform: String,
         applicationPackageName: String,
         applicationVersionName: String,
+        idAddress: String,
         body: String
     ): EventResponse {
         logManager.d("EventHandlerPost", "$platform $applicationPackageName $applicationVersionName $body")
@@ -21,6 +22,7 @@ class EventHandlerPostImpl(
             platform,
             applicationPackageName,
             applicationVersionName,
+            idAddress,
             events
         )
     }

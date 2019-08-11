@@ -301,11 +301,13 @@ class ServerManagerImpl(
                 post("/android/apps/events/{appPackageName}/{appVersionName}") {
                     val appPackageName = call.parameters["appPackageName"]
                     val appVersionName = call.parameters["appVersionName"]
+                    val idAddress = call.request.local.remoteHost
                     val requestBody = call.receiveText()
                     ApplicationGraph.getEventHandlerPost()
                     androidEventPost(
                         appPackageName.toString(),
                         appVersionName.toString(),
+                        idAddress,
                         requestBody
                     )
                 }

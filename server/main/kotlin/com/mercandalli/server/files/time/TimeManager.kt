@@ -8,5 +8,5 @@ interface TimeManager {
 
     fun getTimeFileNameString(): String
 
-    fun getTimeLong(): Long
+    fun getTimeMillis(): Long
 }

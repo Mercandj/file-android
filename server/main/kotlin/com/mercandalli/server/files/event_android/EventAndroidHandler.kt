@@ -15,6 +15,7 @@ object EventAndroidHandler {
     suspend fun PipelineContext<Unit, ApplicationCall>.androidEventPost(
         appPackageName: String,
         appVersionName: String,
+        idAddress: String,
         requestBody: String
     ) {
         val eventHandlerPost = ApplicationGraph.getEventHandlerPost()
@@ -22,6 +23,7 @@ object EventAndroidHandler {
             "android",
             appPackageName,
             appVersionName,
+            idAddress,
             requestBody
         )
         val responseJsonObject = JSONObject()

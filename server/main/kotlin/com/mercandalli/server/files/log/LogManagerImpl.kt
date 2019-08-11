@@ -34,7 +34,7 @@ internal class LogManagerImpl(
             tags,
             timeManager.getDayString(),
             timeManager.getTimeString(),
-            timeManager.getTimeLong(),
+            timeManager.getTimeMillis(),
             contentString,
             HashMap(),
             HashMap()
@@ -51,7 +51,7 @@ internal class LogManagerImpl(
             tags,
             timeManager.getDayString(),
             timeManager.getTimeString(),
-            timeManager.getTimeLong(),
+            timeManager.getTimeMillis(),
             contentString,
             HashMap(),
             HashMap()
@@ -76,7 +76,7 @@ internal class LogManagerImpl(
             tags,
             timeManager.getDayString(),
             timeManager.getTimeString(),
-            timeManager.getTimeLong(),
+            timeManager.getTimeMillis(),
             contentString,
             HashMap(),
             HashMap()
@@ -95,7 +95,7 @@ internal class LogManagerImpl(
             tags,
             timeManager.getDayString(),
             timeManager.getTimeString(),
-            timeManager.getTimeLong(),
+            timeManager.getTimeMillis(),
             contentString,
             HashMap(),
             HashMap()

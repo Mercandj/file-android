@@ -6,6 +6,7 @@ interface EventHandlerPost {
         platform: String,
         applicationPackageName: String,
         applicationVersionName: String,
+        idAddress: String,
         body: String
     ): EventResponse
 }

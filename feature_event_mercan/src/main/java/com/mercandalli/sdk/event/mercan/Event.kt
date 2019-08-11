@@ -16,6 +16,26 @@ class Event(
         return uuid
     }
 
+    fun getKey(): String {
+        return key
+    }
+
+    fun getValue(): String {
+        return value
+    }
+
+    fun getMetadataBoolean(): Map<String, Boolean> {
+        return HashMap(metadataBoolean)
+    }
+
+    fun getMetadataLong(): Map<String, Long> {
+        return HashMap(metadataLong)
+    }
+
+    fun getMetadataString(): Map<String, String> {
+        return HashMap(metadataString)
+    }
+
     companion object {
 
         fun toJson(event: Event): JSONObject {

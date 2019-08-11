@@ -23,8 +23,10 @@ class EventModule {
 
     private fun createEventManager(): EventManager {
         val eventRepository = createEventRepository()
+        val timeManager = ApplicationGraph.getTimeManager()
         return EventManagerImpl(
-            eventRepository
+            eventRepository,
+            timeManager
         )
     }
 

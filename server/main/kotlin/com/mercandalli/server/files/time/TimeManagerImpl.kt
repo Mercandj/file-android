@@ -19,5 +19,5 @@ internal class TimeManagerImpl : TimeManager {
 
     override fun getTimeFileNameString() = fileNameDateFormat.format(Date())!!.toLowerCase()
 
-    override fun getTimeLong() = System.currentTimeMillis()
+    override fun getTimeMillis() = System.currentTimeMillis()
 }
