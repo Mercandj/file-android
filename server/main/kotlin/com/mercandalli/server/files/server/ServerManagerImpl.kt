@@ -4,12 +4,11 @@ import com.mercandalli.sdk.files.api.online.response_json.ServerResponse
 import com.mercandalli.server.files.event_android.EventAndroidHandler.androidEventGet
 import com.mercandalli.server.files.event_android.EventAndroidHandler.androidEventPost
 import com.mercandalli.server.files.remote_config_android.RemoteConfigAndroidHandler.androidRemoteConfigGet
-import com.mercandalli.server.files.tos_tos.AndroidTosHandler.androidTermsOfUseGet
+import com.mercandalli.server.files.tos.AndroidTosHandler.androidTermsOfUseGet
 import com.mercandalli.server.files.file_handler.FileHandlerDelete
 import com.mercandalli.server.files.file_handler.FileHandlerGet
 import com.mercandalli.server.files.file_handler.FileHandlerPost
 import com.mercandalli.server.files.log.LogManager
-import com.mercandalli.server.files.main.ApplicationGraph
 import com.mercandalli.server.files.remote_config_ios.RemoteConfigIosHandler.iosRemoteConfigGet
 import com.mercandalli.server.files.server.ServerNotFound.respondNotFound
 import com.mercandalli.server.files.server.ServerStatus.respondStatus

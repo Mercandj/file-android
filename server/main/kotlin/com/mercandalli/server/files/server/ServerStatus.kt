@@ -17,18 +17,20 @@ object ServerStatus {
 
     suspend fun PipelineContext<Unit, ApplicationCall>.respondStatus() {
         val rootPath = ApplicationGraph.getRootPath()
-        val timeString = ApplicationGraph.getTimeManager().getTimeString()
+        val timeManager = ApplicationGraph.getTimeManager()
         val lastCommitDate = "git log -1 --format=%cd".runCommand(File(rootPath))
         call.application.environment.log.debug("/status")
         val uri = call.request.uri
-        val origin = call.request.origin
         val responseJson = JSONObject()
         responseJson.put("running", true)
         responseJson.put("uri", uri)
-        responseJson.put("origin", origin)
+        responseJson.put("origin_host", call.request.origin.host)
+        responseJson.put("id_address", call.request.local.remoteHost)
         responseJson.put("root_server_path", rootPath)
         responseJson.put("last_commit_date", lastCommitDate)
-        responseJson.put("time", timeString)
+        responseJson.put("time", timeManager.getTimeString())
+        responseJson.put("time_file_name", timeManager.getTimeFileNameString())
+        responseJson.put("time_millis", timeManager.getTimeMillis())
         call.respondText(responseJson.toString(), ContentType.Text.Plain)
     }
 
