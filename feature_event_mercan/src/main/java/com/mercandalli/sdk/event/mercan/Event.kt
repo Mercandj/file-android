@@ -126,5 +126,15 @@ class Event(
             }
             return events
         }
+
+        fun fromJsonUuidToEventMap(jsonObject: JSONObject): Map<String, Event> {
+            val uuidToEvent = HashMap<String, Event>()
+            val uuids = jsonObject.keySet()
+            for (uuid in uuids) {
+                val event = fromJson(jsonObject.getJSONObject(uuid))
+                uuidToEvent[uuid] = event
+            }
+            return uuidToEvent
+        }
     }
 }

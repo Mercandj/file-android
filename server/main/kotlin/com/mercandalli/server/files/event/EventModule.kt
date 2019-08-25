@@ -30,8 +30,17 @@ class EventModule {
         )
     }
 
+    fun createEventRepository(): EventRepository {
+        val timeManager = ApplicationGraph.getTimeManager()
+        val rootPath = ApplicationGraph.getRootPath()
+        return EventRepositoryImpl(
+            timeManager,
+            File(rootPath)
+        )
+    }
+
     private fun createEventManager(): EventManager {
-        val eventRepository = createEventRepository()
+        val eventRepository = ApplicationGraph.getEventRepository()
         val timeManager = ApplicationGraph.getTimeManager()
         return EventManagerImpl(
             eventRepository,
@@ -70,14 +79,5 @@ class EventModule {
                 ).decrypt(message)
             }
         }
-    }
-
-    private fun createEventRepository(): EventRepository {
-        val timeManager = ApplicationGraph.getTimeManager()
-        val rootPath = ApplicationGraph.getRootPath()
-        return EventRepositoryImpl(
-            timeManager,
-            File(rootPath)
-        )
     }
 }
