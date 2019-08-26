@@ -1,10 +1,13 @@
 package com.mercandalli.server.files.event
 
+import io.ktor.application.ApplicationCall
+
 interface EventHandlerGet {
 
-    fun get(
+    suspend fun get(
         platform: String,
         applicationPackageName: String,
-        applicationVersionName: String
-    ): List<String>
+        applicationVersionName: String,
+        call: ApplicationCall
+    )
 }

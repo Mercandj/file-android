@@ -13,9 +13,11 @@ class EventModule {
     private val eventManager by lazy { createEventManager() }
 
     fun createEventHandlerGet(): EventHandlerGet {
+        val eventRepository = ApplicationGraph.getEventRepository()
         val logManager = ApplicationGraph.getLogManager()
         return EventHandlerGetImpl(
             eventManager,
+            eventRepository,
             logManager
         )
     }

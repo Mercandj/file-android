@@ -56,18 +56,20 @@ class EventManagerImpl(
         val keyToCount = extractKeyToCount(events)
         val keyToDistinctUserCount = extractKeyToDistinctUserCount(events)
 
-
         lines.add("----------------------------------------------------------------------------------------------------")
         lines.add("eventCount -> distinctInstallationIdCount      $eventCount\t$distinctInstallationIdCount")
         lines.add("----------------------------------------------------------------------------------------------------")
-        for ((key, count) in keyToCount) {
+        for (key in keyToCount.keys.sorted()) {
+            val count = keyToCount.getValue(key)
             val distinctUserCount = keyToDistinctUserCount.getValue(key)
             lines.add("count -> distinctUserCount -> key              $count\t$distinctUserCount\t$key")
         }
         lines.add("----------------------------------------------------------------------------------------------------")
         val sessionJvmIndexToDistinctInstallationIdCount =
             extractSessionJvmIndexToDistinctInstallationIdCount(events)
-        for ((sessionJvmIndex, distinctUserCount) in sessionJvmIndexToDistinctInstallationIdCount) {
+        val sessionJvmIndexes = ArrayList(sessionJvmIndexToDistinctInstallationIdCount.keys).sorted()
+        for (sessionJvmIndex in sessionJvmIndexes) {
+            val distinctUserCount = sessionJvmIndexToDistinctInstallationIdCount[sessionJvmIndex]
             lines.add("sessionJvmIndex -> distinctUserCount           $sessionJvmIndex\t$distinctUserCount")
         }
         return lines
